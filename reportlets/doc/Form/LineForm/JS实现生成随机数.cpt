@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20170720" releaseVersion="10.0.0">
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR/>
+<FR/>
+<HC/>
+<FC/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[723900,723900,381000,723900,723900,1371600,723900,723900,1219200,723900,723900,723900,723900,723900,304800,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[952500,2628900,2743200,2743200,1943100,2743200,2743200,2743200,1181100,2743200,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0" cs="9" rs="3" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="3" rs="2" s="1">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="3" rs="2" s="2">
+<O>
+<![CDATA[最小值：]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="3" cs="2" rs="2" s="3">
+<PrivilegeControl/>
+<Widget class="com.fr.form.ui.NumberEditor">
+<WidgetName name="min"/>
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<allowBlank>
+<![CDATA[false]]></allowBlank>
+<NumberAttr allowDecimals="false">
+<widgetValue/>
+</NumberAttr>
+</Widget>
+<Expand/>
+</C>
+<C c="4" r="3" rs="2" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="3" rs="2" s="2">
+<O>
+<![CDATA[最大值：]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="3" cs="2" rs="2" s="3">
+<PrivilegeControl/>
+<Widget class="com.fr.form.ui.NumberEditor">
+<WidgetName name="max"/>
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<allowBlank>
+<![CDATA[false]]></allowBlank>
+<NumberAttr allowDecimals="false">
+<widgetValue/>
+</NumberAttr>
+</Widget>
+<Expand/>
+</C>
+<C c="8" r="3" rs="2" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="5" cs="9" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="6" cs="4" rs="2" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="6" rs="2" s="0">
+<PrivilegeControl/>
+<Widget class="com.fr.form.ui.FreeButton">
+<Listener event="click">
+<JavaScript class="com.fr.js.JavaScriptImpl">
+<Parameters/>
+<Content>
+<![CDATA[if(FR.R===undefined)FR.R = false; //状态位
+var max=contentPane.getWidgetByName("max").getValue();
+var min=contentPane.getWidgetByName("min").getValue();
+var num=$("tr#r-9-0","div.content-container").children().eq(2);
+var btn=_g().getWidgetByName('R');
+a();
+function count(){
+  num.html(parseInt(Math.random()*(max-min+1)+min),10);
+        }
+function a(){
+if (true==FR.R){
+	clearInterval(FR.timerID);
+	btn.setText("开始");
+	FR.R = false;
+	}else if(false==FR.R){
+		FR.timerID=setInterval(count,10);
+		btn.setText("暂停");
+		FR.R = true;
+		
+	} 
+}
+]]></Content>
+</JavaScript>
+</Listener>
+<WidgetName name="R"/>
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[开始]]></Text>
+</Widget>
+<Expand/>
+</C>
+<C c="5" r="6" cs="4" rs="2" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="8" cs="9" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="9" rs="2" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="9" rs="2" s="2">
+<O>
+<![CDATA[随机数：]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="9" cs="5" rs="2" s="3">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="9" cs="2" rs="2" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="11" cs="9" rs="4" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="17" s="4">
+<PrivilegeControl/>
+<Expand/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting/>
+<Background name="ColorBackground" color="-1"/>
+</ReportSettings>
+<Header reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Footer>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0" useParamsTemplate="true"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList>
+<Style imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="ColorBackground" color="-133658"/>
+<Border/>
+</Style>
+<Style imageLayout="1">
+<FRFont name="SimSun" style="0" size="72" foreground="-1"/>
+<Background name="ColorBackground" color="-133658"/>
+<Border/>
+</Style>
+<Style imageLayout="1">
+<FRFont name="微软雅黑" style="0" size="96"/>
+<Background name="ColorBackground" color="-133658"/>
+<Border/>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="微软雅黑" style="0" size="88"/>
+<Background name="ColorBackground" color="-1"/>
+<Border>
+<Top style="1" color="-5932959"/>
+<Bottom style="1" color="-5932959"/>
+<Left style="1" color="-5932959"/>
+<Right style="1" color="-5932959"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="ColorBackground" color="-1"/>
+<Border/>
+</Style>
+</StyleList>
+<DesignerVersion DesignerVersion="KAA"/>
+<PreviewType PreviewType="1"/>
+<TemplateIdAttMark class="com.fr.base.iofile.attr.TemplateIdAttrMark">
+<TemplateIdAttMark TemplateId="672eac37-ffbd-48d8-af5c-2aaf5eae129a"/>
+</TemplateIdAttMark>
+</WorkBook>

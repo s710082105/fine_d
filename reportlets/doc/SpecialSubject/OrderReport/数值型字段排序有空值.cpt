@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20170720" releaseVersion="10.0.0">
+<TableDataMap>
+<TableData name="ds1" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[订单ID,,.,,客户ID,,.,,雇员ID,,.,,订购日期,,.,,到货日期,,.,,发货日期,,.,,运货商,,.,,运货费,,.,,货主名称,,.,,货主地址,,.,,货主城市,,.,,货主地区,,.,,货主邮政编码,,.,,货主国家,,.,,是否已付,,.,,货主省份,,.,,应付金额]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.Double,java.lang.String,java.lang.Double,java.lang.String,java.lang.String,java.lang.String,java.lang.Double,java.lang.Double,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Double]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.Double,java.lang.String,java.lang.Double,java.lang.String,java.lang.String,java.lang.String,java.lang.Double,java.lang.Double,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Double">
+<![CDATA[NL.gd)b1Tsf?I7X"[(>5n"$#$jao5g,33:*7C(&cQ[Mbd">Ct@ja\dr;ttsXYV=[lJAQRLog
+l_a:<u?b"'orI[%V+lo?H1mq+hMt8qD@K4kjW^8JhVWNro;qP^\nqMDZ&Lj2DoaS426.H;ka
+^a[lGX`uVSDqb?(9<oW9]ADJaaQrDWkGC9HA=ph0Wt,B<&K!W`:9.-^IeDYKUtp<2nhju3:=L
+hge.As*NU'7^U%Uc%nk_E:[]AR!]A?V!*U.RJAi`:A9d`-,JABue6SU;HS7L\'KdOucSsYU[O9
+$%6jRP7b"7*ZiTFP[p%[0H;SH>Oa2q;/[b`9=4C:Wm<E^V>7YZ7e%0nA:/to#<DJa1!^Kk>#
+_=[(A]A/caS64-^-1o5k?;4.ClFMVLgJbp8sC'5N$$#7Y8$Ac272`o3#BmK2aO2S`.psjQ#s/
+r4m690;'kLrEdV6]Al0*>B.iNB"t,=.F&9;dC\PGVn<j?e/6U5Ko#96m<stbKht:I,<e#J,&G
+=AG&$&FLq"GhRLbJS5h%UN"%6D*:%kbNF<$9JuUR6'T)r"@+i>aXIu!f'ZsfK)(Qsc=WlQ^M
+O-8aTOq3X;kL\)qe?7m%PV=h@^B(7-H)?H:<h$:P`c"J*af#tJh@]Am(0Q:LD<I;,.rja3D^m
+RoUh1XUg[XNN:<G">))SC&1:#R2L'hM!S06)@ab<7'(68q.'@VN?8m$WuBWe'7:s+^?$\P#9
+_;8mh<1lQL`R(m!/XtV5$s$pFX/'?$WC0`Z^2M6>9TOS:n95f^f5tE&HliBL6=?bkPB!<^md
+9m&<#JIPg[D8akM9BDUUaF<,&;@S<`mS\5%@PjShq6[1,V3nYE,-1"[\+N-3:/X"XaKuRtRG
+4%&anOYjnNF"(_#Ag&upPAIRTD!6hsP'MX+/1n(`Y;]A%T+JaI\i8>8ROlinVQG]A?^b*aH,M]A
+p6Fq8%6+rYsjNjG7N!M.<^I`X@fP8&797!ZZ(V`',P=.'heB3(n#3a[O00YbI`RSLI5'gS@B
+/pV)CtZ(PWcI%\B6@R#n:qTD%(!T/isL?KA,71K]AmX@`\p3f4n#E/E<]A0hA<6o7*5d(EM#2M
+XhW]Ab7i\;[\GM%c]A>V#U``>Qsl?RHYLeX3l,)GA>aJ`rDc"JNPUr>T\D]A^k)2p0&>PCa(APt
+qZ6-k;VR.L]AC>h/:8W)!2UZdknSk/]AJl5F&KBA<B@MYL13#k=eN06<i(P9UfhWpcC;*$KJ0i
+d'21&kbADBNJF1hSS]A/Wr=X%Bh(O,WuI_I]AqWWiV`]A_Rq#bU^l);8AA5"tFCB44]A[)`kR.e>
+D:N%1Rs\!<YE6^?$AqSl+o%gGl=h8m11El?p2>Y`-;io'MXB@Gq_2KE,KbOjS.l/D<HJ&+g7
+9gpD.X^EK!2)`]AKeHEYE.e9%q&6M>&).VA1k&"X/7NK]A@Yubu7G+^7La^SbM/"#ESs_(')&(
+A^$d,F.\^ERHkjJm(CX?9P(Q3o.jY-bF(L.>!?J(W0U/FEKo"CXf9\rj+4JS!uBi1S)]A"A89
+9A#OFpm3"p]A"8B"lY$%h2eQHcj5nQU.EekZXLe>4R?2;=^A_T.MfL]A]AGg+/+2SXM52Sk'8hh
+hN3)g8']A[cPhdkq5s0PqTfos=5_(V9^+s67_T<npFR4`W%?MG$~
+]]></RowData>
+</TableData>
+</TableDataMap>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR F="0" T="0"/>
+<FR/>
+<HC/>
+<FC/>
+<UPFCR COLUMN="false" ROW="true"/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[723900,1230283,723900,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[3200400,3200400,3657600,3657600,3200400,3200400,2705100,2743200,2743200,2743200,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0" s="0">
+<O>
+<![CDATA[订单ID]]></O>
+<PrivilegeControl/>
+<NameJavaScriptGroup>
+<NameJavaScript name="升序">
+<JavaScript class="com.fr.js.ParameterJavaScript">
+<Parameters>
+<Parameter>
+<Attributes name="a"/>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=if($a = 1, 0, 1)]]></Attributes>
+</O>
+</Parameter>
+</Parameters>
+</JavaScript>
+</NameJavaScript>
+</NameJavaScriptGroup>
+<CellGUIAttr/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="1" r="0" s="1">
+<O>
+<![CDATA[客户ID]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="0" s="1">
+<O>
+<![CDATA[订购日期]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="0" s="1">
+<O>
+<![CDATA[到货日期]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="0" s="1">
+<O>
+<![CDATA[运货商]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="0" s="1">
+<O>
+<![CDATA[运货费]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="0" s="1">
+<O>
+<![CDATA[是否已付]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="1" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="订单ID"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<SortFormula>
+<![CDATA[=if($a==1,if(len($$$)=0,max(ds1.select(订单id))+1,$$$),if(len($$$)=0,-(max(ds1.select(订单id))+1),-$$$))]]></SortFormula>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr/>
+<CellPageAttr/>
+<Expand dir="0" order="1">
+<SortFormula>
+<![CDATA[=if($a=1,if(len($$$)=0,min(ds1.select(订单ID))-1,$$$),if(len($$$)=0,-(min(ds1.select(订单ID))-1),-$$$))]]></SortFormula>
+</Expand>
+</C>
+<C c="1" r="1" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="客户ID"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="2" r="1" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="订购日期"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="3" r="1" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="到货日期"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="4" r="1" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="运货商"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="1" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="运货费"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<SortFormula>
+<![CDATA[if($b==1,$$$,-$$$)]]></SortFormula>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="1" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="是否已付"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings shrinkToFitMode="0" headerHeight="0" footerHeight="0">
+<PaperSetting/>
+<Background name="ColorBackground" color="-1"/>
+</ReportSettings>
+<Header reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Footer>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0" useParamsTemplate="false" currentIndex="0"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+<Parameter>
+<Attributes name="a"/>
+<O>
+<![CDATA[1]]></O>
+</Parameter>
+</ReportParameterAttr>
+<StyleList>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="SimSun" style="0" size="72" foreground="-16776961" underline="1"/>
+<Background name="ColorBackground" color="-1577999"/>
+<Border>
+<Top style="1" color="-6697729"/>
+<Bottom style="1" color="-6697729"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="ColorBackground" color="-1577999"/>
+<Border>
+<Top style="1" color="-6697729"/>
+<Bottom style="1" color="-6697729"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1" color="-6697729"/>
+<Bottom style="1" color="-6697729"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#0.00]]></Format>
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1" color="-6697729"/>
+<Bottom style="1" color="-6697729"/>
+</Border>
+</Style>
+</StyleList>
+<DesignerVersion DesignerVersion="KAA"/>
+<PreviewType PreviewType="0"/>
+<TemplateIdAttMark class="com.fr.base.iofile.attr.TemplateIdAttrMark">
+<TemplateIdAttMark TemplateId="e4b5fcbb-30e6-4f20-9411-088009419916"/>
+</TemplateIdAttMark>
+</WorkBook>

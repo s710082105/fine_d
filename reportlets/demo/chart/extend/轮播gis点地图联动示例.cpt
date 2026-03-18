@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20170720" releaseVersion="11.0.0">
+<TableDataMap>
+<TableData name="ds1" class="com.fr.data.impl.DBTableData">
+<Parameters/>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[select * from gismap]]></Query>
+<PageQuery>
+<![CDATA[]]></PageQuery>
+</TableData>
+<TableData name="ds2" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="区域名"/>
+<O>
+<![CDATA[南京市]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[select * from gismap where 区域名='${区域名}']]></Query>
+<PageQuery>
+<![CDATA[]]></PageQuery>
+</TableData>
+</TableDataMap>
+<ReportFitAttr fitStateInPC="2" fitFont="false"/>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR/>
+<FR/>
+<HC/>
+<FC/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0" cs="8" rs="13">
+<O t="CC">
+<LayoutAttr selectedIndex="0"/>
+<ChangeAttr enable="false" changeType="button" timeInterval="5" showArrow="true">
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="PingFangSC-Regular" style="0" size="96">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</Attr>
+</TextAttr>
+<buttonColor>
+<FineColor color="-6710887" hor="-1" ver="-1"/>
+</buttonColor>
+<carouselColor>
+<FineColor color="-8421505" hor="-1" ver="-1"/>
+</carouselColor>
+</ChangeAttr>
+<Chart name="默认" chartClass="com.fr.plugin.chart.kpi.KPIMainTypeChart">
+<SubChart class="com.fr.plugin.chart.kpi.KPIElectronChart" pluginID="com.fr.plugin.bigScreen.v10" plugin-version="4.5.1">
+<attr refreshEnabled="false" refreshTime="10.0"/>
+<DataSet class="com.fr.extended.chart.ExtendedTableDataSet">
+<TableData class="com.fr.data.impl.NameTableData">
+<Name>
+<![CDATA[ds2]]></Name>
+</TableData>
+<AbstractDataConfig class="com.fr.plugin.chart.kpi.KPIDataConfig" pluginID="com.fr.plugin.bigScreen.v10" plugin-version="4.5.1">
+<attr names="区域名" title="利润额" values="值" values_function="com.fr.data.util.function.SumFunction" customName="false"/>
+</AbstractDataConfig>
+</DataSet>
+<ETitle>
+<attr align="left" title=""/>
+<moreAttr isShow="true" useHtml="false" floating="false" x="0.0" y="0.0" limitSize="false" maxPro="15.0"/>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<FRFont name="Microsoft YaHei" style="0" size="128">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</ETitle>
+<ELegend>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<attr visible="true" type="gradual" layout="vertical" horizontalAlign="left" verticalAlign="bottom"/>
+<GradualIntervalConfig>
+<IntervalConfigAttr divStage="2.0">
+<subColor>
+<FineColor color="-14374913" hor="-1" ver="-1"/>
+</subColor>
+</IntervalConfigAttr>
+<ValueRange IsCustomMin="false" IsCustomMax="false"/>
+<ColorDistList>
+<ColorDist dist="0.0">
+<color>
+<FineColor color="-4791553" hor="-1" ver="-1"/>
+</color>
+</ColorDist>
+<ColorDist dist="0.5">
+<color>
+<FineColor color="-9583361" hor="-1" ver="-1"/>
+</color>
+</ColorDist>
+<ColorDist dist="1.0">
+<color>
+<FineColor color="-14374913" hor="-1" ver="-1"/>
+</color>
+</ColorDist>
+</ColorDistList>
+</GradualIntervalConfig>
+<MapHotAreaColor>
+<MC_Attr minValue="0.0" maxValue="100.0" useType="0" areaNumber="5">
+<mainColor>
+<FineColor color="-14374913" hor="-1" ver="-1"/>
+</mainColor>
+</MC_Attr>
+</MapHotAreaColor>
+<FRFont name="Microsoft YaHei" style="0" size="88">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</ELegend>
+<ETooltip>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</color>
+</Background>
+<Attr gradientType="normal" shadow="true" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.5"/>
+</AttrAlpha>
+</GI>
+<attr show="true" fixed="true" follow="true" textStyleAuto="false"/>
+<FRFont name="Adelle Basic" style="0" size="72">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+<itemList>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+</ETooltipItem>
+</item>
+</itemList>
+</ETooltip>
+<EGraphics>
+<Attr timeUnit="HH:mm:ss" themeColorFirst="-16712452" themeColorSecond="-16712452" fontScale="1.0" fontColor="-1" showIndex="true"/>
+<title>
+<AutoCustomTextFont>
+<textFontAutoCustom auto="true"/>
+<FRFont name="Microsoft YaHei" style="0" size="72">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</AutoCustomTextFont>
+</title>
+<value>
+<AutoCustomTextFont>
+<textFontAutoCustom auto="true"/>
+<FRFont name="Microsoft YaHei" style="0" size="72">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</AutoCustomTextFont>
+</value>
+</EGraphics>
+<Label>
+<attr useLabel="true" intervalAuto="true" intervalValue="1" align="outside"/>
+<itemList/>
+<AutoCustomTextFont>
+<textFontAutoCustom auto="true"/>
+<FRFont name="Adelle Basic" style="0" size="72">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</AutoCustomTextFont>
+</Label>
+<EAutoLink>
+<attr intervaltime="6.0"/>
+</EAutoLink>
+<AttrBackground>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-15329992" hor="-1" ver="-1"/>
+</color>
+</Background>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+<KPIGraphic>
+<kpiGraphicAttr themeColor="-16712452"/>
+<MapHotAreaColor>
+<MC_Attr minValue="0.0" maxValue="100.0" useType="0" areaNumber="3">
+<mainColor>
+<FineColor color="-14374913" hor="-1" ver="-1"/>
+</mainColor>
+</MC_Attr>
+<ColorList>
+<AreaColor>
+<AC_Attr minValue="=80" maxValue="=120">
+<color>
+<FineColor color="-14374913" hor="-1" ver="-1"/>
+</color>
+</AC_Attr>
+</AreaColor>
+<AreaColor>
+<AC_Attr minValue="=40" maxValue="=80">
+<color>
+<FineColor color="-9583361" hor="-1" ver="-1"/>
+</color>
+</AC_Attr>
+</AreaColor>
+<AreaColor>
+<AC_Attr minValue="=0" maxValue="=40">
+<color>
+<FineColor color="-4791553" hor="-1" ver="-1"/>
+</color>
+</AC_Attr>
+</AreaColor>
+</ColorList>
+</MapHotAreaColor>
+<title>
+<AutoCustomTextFont>
+<textFontAutoCustom auto="true"/>
+<FRFont name="Microsoft YaHei" style="0" size="72">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</AutoCustomTextFont>
+</title>
+<name>
+<AutoCustomTextFont>
+<textFontAutoCustom auto="true"/>
+<FRFont name="Microsoft YaHei" style="0" size="72">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</AutoCustomTextFont>
+</name>
+<value>
+<AutoCustomTextFont>
+<textFontAutoCustom auto="true"/>
+<FRFont name="Microsoft YaHei" style="0" size="72">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</AutoCustomTextFont>
+</value>
+</KPIGraphic>
+</SubChart>
+</Chart>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="13" cs="8" rs="20">
+<O t="CC">
+<LayoutAttr selectedIndex="0"/>
+<ChangeAttr enable="false" changeType="button" timeInterval="5" showArrow="true">
+<TextAttr>
+<Attr alignText="0" themed="false"/>
+</TextAttr>
+<buttonColor>
+<FineColor color="-8421505" hor="-1" ver="-1"/>
+</buttonColor>
+<carouselColor>
+<FineColor color="-8421505" hor="-1" ver="-1"/>
+</carouselColor>
+</ChangeAttr>
+<Chart name="默认" chartClass="com.fr.plugin.chart.map.MapMainTypeChart">
+<SubChart class="com.fr.plugin.chart.globe.slideshowmap.SlideShowMapChart" pluginID="com.fr.plugin.bigScreen.v10" plugin-version="4.5.1">
+<attr refreshEnabled="false" refreshTime="10.0"/>
+<DataSet class="com.fr.extended.chart.ExtendedTableDataSet">
+<TableData class="com.fr.data.impl.NameTableData">
+<Name>
+<![CDATA[ds1]]></Name>
+</TableData>
+<AbstractDataConfig class="com.fr.plugin.chart.globe.slideshowmap.SlideShowMapDataConfig" pluginID="com.fr.plugin.bigScreen.v10" plugin-version="4.5.1">
+<attr longitude="经度" longitude_customName="" latitude="纬度" latitude_customName="" areaName="区域名" areaName_customName="" description="说明" description_customName="" customName="false" customField_0="系列名" customField_0_customName="" customField_1="值" customField_1_function="com.fr.data.util.function.NoneFunction" customField_1_customName=""/>
+</AbstractDataConfig>
+</DataSet>
+<ETitle>
+<attr align="left" title=""/>
+<moreAttr isShow="true" useHtml="false" floating="false" x="0.0" y="0.0" limitSize="false" maxPro="15.0"/>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<FRFont name="Microsoft YaHei" style="0" size="128">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</ETitle>
+<ELegend>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<attr visible="true" type="gradual" layout="vertical" horizontalAlign="left" verticalAlign="bottom"/>
+<GradualIntervalConfig>
+<IntervalConfigAttr divStage="2.0">
+<subColor>
+<FineColor color="-14374913" hor="-1" ver="-1"/>
+</subColor>
+</IntervalConfigAttr>
+<ValueRange IsCustomMin="false" IsCustomMax="false"/>
+<ColorDistList>
+<ColorDist dist="0.0">
+<color>
+<FineColor color="-4791553" hor="-1" ver="-1"/>
+</color>
+</ColorDist>
+<ColorDist dist="0.5">
+<color>
+<FineColor color="-9583361" hor="-1" ver="-1"/>
+</color>
+</ColorDist>
+<ColorDist dist="1.0">
+<color>
+<FineColor color="-14374913" hor="-1" ver="-1"/>
+</color>
+</ColorDist>
+</ColorDistList>
+</GradualIntervalConfig>
+<MapHotAreaColor>
+<MC_Attr minValue="0.0" maxValue="100.0" useType="0" areaNumber="5">
+<mainColor>
+<FineColor color="-14374913" hor="-1" ver="-1"/>
+</mainColor>
+</MC_Attr>
+</MapHotAreaColor>
+<FRFont name="Microsoft YaHei" style="0" size="88">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</ELegend>
+<ETooltip>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</color>
+</Background>
+<Attr gradientType="normal" shadow="true" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.5"/>
+</AttrAlpha>
+</GI>
+<attr show="true" fixed="true" follow="false" textStyleAuto="false"/>
+<FRFont name="Adelle Basic" style="0" size="72">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+<itemList>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+</ETooltipItem>
+</item>
+</itemList>
+</ETooltip>
+<EGraphics>
+<Attr timeUnit="HH:mm:ss" themeColorFirst="-16712452" themeColorSecond="-16712452" fontScale="1.0" fontColor="-1" showIndex="true"/>
+<title>
+<AutoCustomTextFont>
+<textFontAutoCustom auto="true"/>
+<FRFont name="Microsoft YaHei" style="0" size="72">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</AutoCustomTextFont>
+</title>
+<value>
+<AutoCustomTextFont>
+<textFontAutoCustom auto="true"/>
+<FRFont name="Microsoft YaHei" style="0" size="72">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</AutoCustomTextFont>
+</value>
+</EGraphics>
+<Label>
+<attr useLabel="true" intervalAuto="true" intervalValue="1" align="outside"/>
+<itemList/>
+<AutoCustomTextFont>
+<textFontAutoCustom auto="true"/>
+<FRFont name="Adelle Basic" style="0" size="72">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</AutoCustomTextFont>
+</Label>
+<EAutoLink>
+<attr intervaltime="6.0"/>
+<NameJavaScriptGroup>
+<NameJavaScript name="联动单元格1">
+<JavaScript class="com.fr.chart.web.ChartHyperRelateCellLink">
+<JavaScript class="com.fr.chart.web.ChartHyperRelateCellLink">
+<Parameters>
+<Parameter>
+<Attributes name="区域名"/>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=AREANAME]]></Attributes>
+</O>
+</Parameter>
+</Parameters>
+<TargetFrame>
+<![CDATA[_blank]]></TargetFrame>
+<Features width="500" height="270"/>
+<realateName realateValue="A1" animateType="increment"/>
+</JavaScript>
+</JavaScript>
+</NameJavaScript>
+</NameJavaScriptGroup>
+</EAutoLink>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-65536" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+<SlideShowMapGraphics>
+<attr shape="pillar" graphicsSize="5.0" opacity="100.0" themeColor="-16711684"/>
+</SlideShowMapGraphics>
+<SlideShowMapType>
+<GisLayer>
+<Attr gislayer="gao_de_api" layerName="black" gaodetype="WHITE_SMOKE"/>
+</GisLayer>
+<SlideShowMapTypeAttr initZoom="11" playZoom="8"/>
+<ViewCenter auto="true" longitude="0.0" latitude="0.0"/>
+</SlideShowMapType>
+<slideShowMapAttr fontFamily="Microsoft YaHei" tooltipScale="1.0"/>
+</SubChart>
+</Chart>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting/>
+<FollowingTheme background="false"/>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</color>
+</Background>
+</ReportSettings>
+<Header reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Footer>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0" useParamsTemplate="true" currentIndex="0"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList/>
+<DesignerVersion DesignerVersion="LAA"/>
+<PreviewType PreviewType="0"/>
+<TemplateThemeAttrMark class="com.fr.base.iofile.attr.TemplateThemeAttrMark">
+<TemplateThemeAttrMark name="兼容主题" dark="false"/>
+</TemplateThemeAttrMark>
+<StrategyConfigsAttr class="com.fr.esd.core.strategy.persistence.StrategyConfigsAttr">
+<StrategyConfigs>
+<StrategyConfig dsName="ds2" enabled="false" useGlobal="true" shouldMonitor="true" shouldEvolve="false" scheduleBySchema="false" timeToLive="1500000" timeToIdle="86400000" updateInterval="1500000" terminalTime="" updateSchema="0 0 8 * * ? *" activeInitiation="false"/>
+</StrategyConfigs>
+</StrategyConfigsAttr>
+<TemplateIdAttMark class="com.fr.base.iofile.attr.TemplateIdAttrMark">
+<TemplateIdAttMark TemplateId="9ef75311-6784-4efd-a63c-af77e271d367"/>
+</TemplateIdAttMark>
+</WorkBook>

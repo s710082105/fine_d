@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20170720" releaseVersion="10.0.0">
+<ElementCaseMobileAttr>
+<ElementCaseMobileAttrProvider horizontal="1" vertical="1" zoom="true" refresh="false" isUseHTML="false" isMobileCanvasSize="false" appearRefresh="false" allowFullScreen="false" allowDoubleClickOrZoom="true" functionalWhenUnactivated="false"/>
+</ElementCaseMobileAttr>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR/>
+<FR/>
+<HC/>
+<FC/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[2743200,3200400,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0" rs="5" s="0">
+<O>
+<![CDATA[选择方式]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="0" s="0">
+<PrivilegeControl/>
+<Widget class="com.fr.form.ui.RadioGroup">
+<Listener event="statechange">
+<JavaScript class="com.fr.js.JavaScriptImpl">
+<Parameters/>
+<Content>
+<![CDATA[var location = this.options.location; 
+var cr = FR.cellStr2ColumnRow(location);
+var col = cr.col; 
+var ro = cr.row; 
+var zybck = contentPane.getWidgetByCell(FR.columnRow2CellStr({col: col, row: ro}));
+val = zybck.getValue();
+if(val==1){
+	contentPane.getWidgetByName("dx2").setValue(0);
+	contentPane.getWidgetByName("dx3").setValue(0);
+	contentPane.getWidgetByName("dx4").setValue(0);
+	contentPane.getWidgetByName("dx5").setValue(0);
+	contentPane.setCellValue("B2",null,0);
+	contentPane.setCellValue("B3",null,0);
+	contentPane.setCellValue("B4",null,0);
+	contentPane.setCellValue("B5",null,0);
+}
+]]></Content>
+</JavaScript>
+</Listener>
+<WidgetName name="dx1"/>
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Dictionary class="com.fr.data.impl.CustomDictionary">
+<CustomDictAttr>
+<Dict key="1" value="方式1"/>
+</CustomDictAttr>
+</Dictionary>
+<widgetValue/>
+<MaxRowsMobileAttr maxShowRows="5"/>
+</Widget>
+<Present class="com.fr.base.present.FormulaPresent">
+<Content>
+<![CDATA[=if($$$=1,'●'+'方式1','○'+'方式1')]]></Content>
+</Present>
+<Expand/>
+</C>
+<C c="1" r="1" s="0">
+<PrivilegeControl/>
+<Widget class="com.fr.form.ui.RadioGroup">
+<Listener event="statechange">
+<JavaScript class="com.fr.js.JavaScriptImpl">
+<Parameters/>
+<Content>
+<![CDATA[var location = this.options.location; 
+var cr = FR.cellStr2ColumnRow(location);
+var col = cr.col; 
+var ro = cr.row; 
+var zybck = contentPane.getWidgetByCell(FR.columnRow2CellStr({col: col, row: ro}));
+val = zybck.getValue();
+if(val==2){
+	contentPane.getWidgetByName("dx1").setValue(0);
+	contentPane.getWidgetByName("dx3").setValue(0);
+	contentPane.getWidgetByName("dx4").setValue(0);
+	contentPane.getWidgetByName("dx5").setValue(0);
+	contentPane.setCellValue("B1",null,0);
+	contentPane.setCellValue("B3",null,0);
+	contentPane.setCellValue("B4",null,0);
+	contentPane.setCellValue("B5",null,0);
+}
+]]></Content>
+</JavaScript>
+</Listener>
+<WidgetName name="dx2"/>
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Dictionary class="com.fr.data.impl.CustomDictionary">
+<CustomDictAttr>
+<Dict key="2" value="方式2"/>
+</CustomDictAttr>
+</Dictionary>
+<widgetValue/>
+<MaxRowsMobileAttr maxShowRows="5"/>
+</Widget>
+<Present class="com.fr.base.present.FormulaPresent">
+<Content>
+<![CDATA[=if($$$=2,'●'+'方式2','○'+'方式2')]]></Content>
+</Present>
+<Expand/>
+</C>
+<C c="1" r="2" s="0">
+<PrivilegeControl/>
+<Widget class="com.fr.form.ui.RadioGroup">
+<Listener event="statechange">
+<JavaScript class="com.fr.js.JavaScriptImpl">
+<Parameters/>
+<Content>
+<![CDATA[var location = this.options.location; 
+var cr = FR.cellStr2ColumnRow(location);
+var col = cr.col; 
+var ro = cr.row; 
+var zybck = contentPane.getWidgetByCell(FR.columnRow2CellStr({col: col, row: ro}));
+val = zybck.getValue();
+if(val==3){
+	contentPane.getWidgetByName("dx2").setValue(0);
+	contentPane.getWidgetByName("dx1").setValue(0);
+	contentPane.getWidgetByName("dx4").setValue(0);
+	contentPane.getWidgetByName("dx5").setValue(0);
+	contentPane.setCellValue("B2",null,0);
+	contentPane.setCellValue("B1",null,0);
+	contentPane.setCellValue("B4",null,0);
+	contentPane.setCellValue("B5",null,0);
+}
+]]></Content>
+</JavaScript>
+</Listener>
+<WidgetName name="dx3"/>
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Dictionary class="com.fr.data.impl.CustomDictionary">
+<CustomDictAttr>
+<Dict key="3" value="方式3"/>
+</CustomDictAttr>
+</Dictionary>
+<widgetValue/>
+<MaxRowsMobileAttr maxShowRows="5"/>
+</Widget>
+<Present class="com.fr.base.present.FormulaPresent">
+<Content>
+<![CDATA[=if($$$=3,'●'+'方式3','○'+'方式3')]]></Content>
+</Present>
+<Expand/>
+</C>
+<C c="1" r="3" s="0">
+<PrivilegeControl/>
+<Widget class="com.fr.form.ui.RadioGroup">
+<Listener event="statechange">
+<JavaScript class="com.fr.js.JavaScriptImpl">
+<Parameters/>
+<Content>
+<![CDATA[var location = this.options.location; 
+var cr = FR.cellStr2ColumnRow(location);
+var col = cr.col; 
+var ro = cr.row; 
+var zybck = contentPane.getWidgetByCell(FR.columnRow2CellStr({col: col, row: ro}));
+val = zybck.getValue();
+if(val==4){
+	contentPane.getWidgetByName("dx2").setValue(0);
+	contentPane.getWidgetByName("dx3").setValue(0);
+	contentPane.getWidgetByName("dx1").setValue(0);
+	contentPane.getWidgetByName("dx5").setValue(0);
+	contentPane.setCellValue("B2",null,0);
+	contentPane.setCellValue("B3",null,0);
+	contentPane.setCellValue("B1",null,0);
+	contentPane.setCellValue("B5",null,0);
+}
+]]></Content>
+</JavaScript>
+</Listener>
+<WidgetName name="dx4"/>
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Dictionary class="com.fr.data.impl.CustomDictionary">
+<CustomDictAttr>
+<Dict key="4" value="方式4"/>
+</CustomDictAttr>
+</Dictionary>
+<widgetValue/>
+<MaxRowsMobileAttr maxShowRows="5"/>
+</Widget>
+<Present class="com.fr.base.present.FormulaPresent">
+<Content>
+<![CDATA[=if($$$=4,'●'+'方式4','○'+'方式4')]]></Content>
+</Present>
+<Expand/>
+</C>
+<C c="1" r="4" s="0">
+<PrivilegeControl/>
+<Widget class="com.fr.form.ui.RadioGroup">
+<Listener event="statechange">
+<JavaScript class="com.fr.js.JavaScriptImpl">
+<Parameters/>
+<Content>
+<![CDATA[var location = this.options.location; 
+var cr = FR.cellStr2ColumnRow(location);
+var col = cr.col; 
+var ro = cr.row; 
+var zybck = contentPane.getWidgetByCell(FR.columnRow2CellStr({col: col, row: ro}));
+val = zybck.getValue();
+if(val==5){
+	//修改控件值
+	contentPane.getWidgetByName("dx2").setValue(0);
+	contentPane.getWidgetByName("dx3").setValue(0);
+	contentPane.getWidgetByName("dx4").setValue(0);
+	contentPane.getWidgetByName("dx1").setValue(0);
+	//修改单元格的值
+	contentPane.setCellValue("B2",null,0);
+	contentPane.setCellValue("B3",null,0);
+	contentPane.setCellValue("B4",null,0);
+	contentPane.setCellValue("B1",null,0);
+}
+]]></Content>
+</JavaScript>
+</Listener>
+<WidgetName name="dx5"/>
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Dictionary class="com.fr.data.impl.CustomDictionary">
+<CustomDictAttr>
+<Dict key="5" value="其他"/>
+</CustomDictAttr>
+</Dictionary>
+<widgetValue/>
+<MaxRowsMobileAttr maxShowRows="5"/>
+</Widget>
+<Present class="com.fr.base.present.FormulaPresent">
+<Content>
+<![CDATA[=if($$$=5,'●'+'方式5','○'+'方式5')]]></Content>
+</Present>
+<Expand/>
+</C>
+<C c="6" r="7">
+<PrivilegeControl/>
+<Expand/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting>
+<Margin top="986400" left="2743200" bottom="986400" right="2743200"/>
+</PaperSetting>
+<Background name="ColorBackground" color="-1"/>
+</ReportSettings>
+</ReportAttrSet>
+<ReportWriteAttr>
+<SubmitVisitor class="com.fr.report.write.BuiltInSQLSubmiter">
+<Name>
+<![CDATA[内置SQL1]]></Name>
+<Attributes dsName="FRDemo"/>
+<DMLConfig class="com.fr.write.config.IntelliDMLConfig">
+<Table schema="" name="测试"/>
+<ColumnConfig name="选择方式" isKey="false" skipUnmodified="false">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=max(B1,B2,B3,B4,B5)]]></Attributes>
+</O>
+</ColumnConfig>
+</DMLConfig>
+</SubmitVisitor>
+</ReportWriteAttr>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0" useParamsTemplate="true" currentIndex="0"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList>
+<Style imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+</StyleList>
+<DesignerVersion DesignerVersion="KAA"/>
+<PreviewType PreviewType="1"/>
+<TemplateIdAttMark class="com.fr.base.iofile.attr.TemplateIdAttrMark">
+<TemplateIdAttMark TemplateId="92c6a112-8652-423f-af99-ae1c6dd80591"/>
+</TemplateIdAttMark>
+</WorkBook>

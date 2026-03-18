@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20170720" releaseVersion="10.0.0">
+<TableDataMap>
+<TableData name="2020年部分国家石油储量" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[国家,,.,,储备量]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String">
+<![CDATA[*K3Vu_CuZma"OL8Y>&;o@)XrF'T2R=3)H?EMDM(dS*>:9?'m[bpM`+U)dJ]A65*</oB8'sigd
+V,:DF5UXhgruZ`NVCe$[D1aN8SO=.lt*]A1/n+[ZWK7">"]AWZNOO0_JD`JV@1e9\2I3md10iY
+7CW?)ioMg82e6WfXJ23Y6cPd;rW''qX~
+]]></RowData>
+</TableData>
+</TableDataMap>
+<ElementCaseMobileAttr>
+<ElementCaseMobileAttrProvider horizontal="1" vertical="1" zoom="true" refresh="false" isUseHTML="false" isMobileCanvasSize="false" appearRefresh="false" allowFullScreen="false" allowDoubleClickOrZoom="true" functionalWhenUnactivated="false"/>
+</ElementCaseMobileAttr>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR/>
+<FR/>
+<HC/>
+<FC/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0" cs="11" rs="25">
+<O t="CC">
+<LayoutAttr selectedIndex="0"/>
+<ChangeAttr enable="false" changeType="button" timeInterval="5" buttonColor="-8421505" carouselColor="-8421505" showArrow="true">
+<TextAttr>
+<Attr alignText="0"/>
+</TextAttr>
+</ChangeAttr>
+<Chart name="默认" chartClass="com.fr.plugin.chart.column.ColumnMainTypeChart">
+<SubChart class="com.fr.plugin.chart.column.shapecolumn.ShapeColumnChart" pluginID="com.fr.plugin.bigScreen.v10">
+<ChartDataDefinitionProvider class="com.fr.chartx.data.DataSetDefinition">
+<AbstractColumnFieldCollection class="com.fr.plugin.chart.column.shapecolumn.ShapeColumnFieldCollection" pluginID="com.fr.plugin.bigScreen.v10">
+<category type="ColumnField">
+<ColumnField>
+<attr fieldName="国家"/>
+<DataFilterProperties>
+<attr useTop="false" top="0" merge="false" hideNull="false"/>
+</DataFilterProperties>
+</ColumnField>
+</category>
+<SeriesValueCorrelationDefinition>
+<attr customFieldValue="false"/>
+<seriesValueFieldList>
+<SeriesValueField>
+<series>
+<ColumnField>
+<attr fieldName="国家"/>
+<DataFilterProperties>
+<attr useTop="false" top="0" merge="false" hideNull="false"/>
+</DataFilterProperties>
+</ColumnField>
+</series>
+<value>
+<ColumnField>
+<attr fieldName="储备量" function="com.fr.data.util.function.NoneFunction"/>
+<DataFilterProperties>
+<attr useTop="false" top="0" merge="false" hideNull="false"/>
+</DataFilterProperties>
+</ColumnField>
+</value>
+</SeriesValueField>
+</seriesValueFieldList>
+<DataFilterProperties>
+<attr useTop="false" top="0" merge="false" hideNull="false"/>
+</DataFilterProperties>
+</SeriesValueCorrelationDefinition>
+</AbstractColumnFieldCollection>
+<TableData class="com.fr.data.impl.NameTableData">
+<Name>
+<![CDATA[2020年部分国家石油储量]]></Name>
+</TableData>
+</ChartDataDefinitionProvider>
+<ETitle>
+<attr align="center" title="2020年部分国家石油储量"/>
+<moreAttr isShow="true" useHtml="false" floating="false" x="0.0" y="0.0" limitSize="false" maxPro="15.0"/>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" gradientStartColor="-12146441" gradientEndColor="-9378161" shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<FRFont name="微软雅黑" style="0" size="80" foreground="-1"/>
+</ETitle>
+<ShapeColumnLegend visible="false" layout="aligned" highlight="true" auto="false" number="15.0">
+<FRFont name="微软雅黑" style="0" size="80" foreground="-4604473"/>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" gradientStartColor="-12146441" gradientEndColor="-9378161" shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-3355444"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<PositionAttr align="right" customPos="false" x="0.0" y="0.0"/>
+</ShapeColumnLegend>
+<ShapeColumnLabel>
+<LabelAttr visible="false" adjust="true"/>
+<FRFont name="宋体" style="0" size="72" foreground="-3355444"/>
+<LabelContentAttr customHtml="false">
+<LabelItems>
+<itemList>
+<item>
+<ETooltipItem>
+<Attr enable="false"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="false"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</ETooltipItem>
+</item>
+</itemList>
+</LabelItems>
+<HtmlLabel customText="function(){ return this.value;}" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</LabelContentAttr>
+</ShapeColumnLabel>
+<ShapeColumnGraphic shapeType="column_3d" customGradient="false" color0="-12146441" color1="-9375601" categoryGap="20.0" seriesGap="-100.0" auto="false" number="40.0">
+<ColorInfoAttr colorType="server_pre_style" name="经典高亮"/>
+</ShapeColumnGraphic>
+<xAxis>
+<ShapeColumnAxis align="bottom" reverse="false" auto="false" number="15.0">
+<AxisTitleAttr visible="false" useHtml="false" align="center" rotate="0.0" title="">
+<FRFont name="微软雅黑" style="0" size="80" foreground="-4604473"/>
+</AxisTitleAttr>
+<AxisLabelAttr visible="true" rotate="0.0" auto="true" number="=1">
+<FRFont name="微软雅黑" style="0" size="80" foreground="-4604473"/>
+</AxisLabelAttr>
+<AxisLineAttr mainTick="true" subTick="false" width="1" arrow="false" color="-10982783"/>
+<AxisLabelContentAttr customHtml="false">
+<HtmlLabel customText="function(){return this;}" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AxisLabelContentAttr>
+<AxisValueDefinitionAttr>
+<min auto="true" number=""/>
+<max auto="true" number=""/>
+<mainTick auto="true" number=""/>
+<subTick auto="true" number=""/>
+<log auto="true" number=""/>
+</AxisValueDefinitionAttr>
+</ShapeColumnAxis>
+</xAxis>
+<yAxis>
+<ShapeColumnAxis align="left" reverse="false" auto="false" number="15.0">
+<AxisTitleAttr visible="false" useHtml="false" align="center" rotate="-90.0" title="">
+<FRFont name="微软雅黑" style="0" size="80" foreground="-4604473"/>
+</AxisTitleAttr>
+<AxisLabelAttr visible="true" rotate="0.0" auto="true" number="=1">
+<FRFont name="微软雅黑" style="0" size="80" foreground="-4604473"/>
+</AxisLabelAttr>
+<AxisLineAttr mainTick="false" subTick="false" width="0" arrow="false" color="-10982783"/>
+<AxisLabelContentAttr customHtml="false">
+<HtmlLabel customText="function(){return this;}" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AxisLabelContentAttr>
+<AxisValueDefinitionAttr>
+<min auto="true" number=""/>
+<max auto="true" number="=3500"/>
+<mainTick auto="true" number=""/>
+<subTick auto="true" number=""/>
+<log auto="true" number=""/>
+</AxisValueDefinitionAttr>
+</ShapeColumnAxis>
+</yAxis>
+<ShapeColumnBackground>
+<chartBack>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground" color="-15329992"/>
+<Attr gradientType="normal" gradientStartColor="-12146441" gradientEndColor="-9378161" shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+</chartBack>
+<plotBack>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" gradientStartColor="-12146441" gradientEndColor="-9378161" shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+</plotBack>
+<horizontalLine>
+<LineAttr lineType="solid" color="-13219745"/>
+</horizontalLine>
+<verticalLine>
+<LineAttr lineType="NONE" color="-13219745"/>
+</verticalLine>
+</ShapeColumnBackground>
+<ShapeColumnTooltip>
+<TooltipAttr visible="true" followMouse="false" duration="4.0" showAllSeries="false"/>
+<AutoCustomTextFont>
+<textFontAutoCustom auto="false"/>
+<FRFont name="微软雅黑" style="0" size="80" foreground="-1"/>
+</AutoCustomTextFont>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground" color="-16777216"/>
+<Attr gradientType="normal" gradientStartColor="-12146441" gradientEndColor="-9378161" shadow="true"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.5"/>
+</AttrAlpha>
+</GI>
+<LabelContentAttr customHtml="false">
+<LabelItems>
+<itemList>
+<item>
+<ETooltipItem>
+<Attr enable="false"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="false"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#0亿桶]]></Format>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</ETooltipItem>
+</item>
+</itemList>
+</LabelItems>
+<HtmlLabel customText="function(){ return this.category + this.seriesName + this.value;}" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</LabelContentAttr>
+</ShapeColumnTooltip>
+<ShapeColumnInteractiveAttr axisReverse="false" zoomWidget="false" animate="true" zoomResize="true" zoomDirection="xy" left="" right="" auto="false" number="6.0">
+<ShapeColumnTooltip>
+<TooltipAttr visible="true" followMouse="false" duration="4.0" showAllSeries="false"/>
+<AutoCustomTextFont>
+<textFontAutoCustom auto="true"/>
+<FRFont name="宋体" style="0" size="72" foreground="-3355444"/>
+</AutoCustomTextFont>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground" color="-1"/>
+<Attr gradientType="normal" gradientStartColor="-12146441" gradientEndColor="-9378161" shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="4"/>
+<newColor borderColor="-15395563"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.8"/>
+</AttrAlpha>
+</GI>
+<LabelContentAttr customHtml="false">
+<LabelItems>
+<itemList>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</ETooltipItem>
+</item>
+</itemList>
+</LabelItems>
+<HtmlLabel customText="function(){ return this.category + this.seriesName + this.value + this.changedValue;}" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</LabelContentAttr>
+</ShapeColumnTooltip>
+</ShapeColumnInteractiveAttr>
+<ConditionCollection>
+<DefaultAttr class="com.fr.chart.chartglyph.ConditionAttr">
+<ConditionAttr name=""/>
+</DefaultAttr>
+</ConditionCollection>
+</SubChart>
+</Chart>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting>
+<PaperSize width="42768000" height="60480000"/>
+<Margin top="986400" left="2743200" bottom="986400" right="2743200"/>
+</PaperSetting>
+<Background name="ColorBackground" color="-1"/>
+</ReportSettings>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0" useParamsTemplate="true" currentIndex="0"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList/>
+<DesignerVersion DesignerVersion="KAA"/>
+<PreviewType PreviewType="0"/>
+<TemplateIdAttMark class="com.fr.base.iofile.attr.TemplateIdAttrMark">
+<TemplateIdAttMark TemplateId="75d97e68-4bba-4f77-9ff5-885ebd2561b3"/>
+</TemplateIdAttMark>
+</WorkBook>

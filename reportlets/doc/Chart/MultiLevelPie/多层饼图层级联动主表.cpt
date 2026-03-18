@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20170720" releaseVersion="10.0.0">
+<TableDataMap>
+<TableData name="ds1" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[订单ID,,.,,客户ID,,.,,雇员ID,,.,,订购日期,,.,,到货日期,,.,,发货日期,,.,,运货商,,.,,运货费,,.,,货主名称,,.,,货主地址,,.,,货主城市,,.,,货主地区,,.,,货主邮政编码,,.,,货主国家,,.,,是否已付,,.,,货主省份,,.,,应付金额]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.Double,java.lang.String,java.lang.Double,java.lang.String,java.lang.String,java.lang.String,java.lang.Double,java.lang.Double,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Double]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.Double,java.lang.String,java.lang.Double,java.lang.String,java.lang.String,java.lang.String,java.lang.Double,java.lang.Double,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Double">
+<![CDATA[NEOG*<(RiG7t1\,:j9l?iq<eC&saY`JlSk,4m3s[W#p*<$M)VC&O@!\/\=Xe7%4;drL(;Wah
+R$QO8I'^VR9G71bsp"j2=.YluOeSPVVgIjJDB,U'RZUIRb9'7O\51s&<bL=VK>S+G(uX]A)AS
+9N%%L_VsE$m9(pFXa_oAd:R8?+[BmdF,E0g.CupboIlk^>8@ITn+H/$i.I"3`ZAhfRYCHKIY
+Jh"hdtobmRMr>^AG-NB*l?%Sbk175U/<V`)P[RO<NS".4OK+XmCeHLHd<aD7ish[9nu\>iK<
+8pQF!DFLD7HF;Gq:PJb3l1q>3AWlMeNp9"WnA5!^Mb09*Dr*0(O;['$MCXV*-h:p",)8Q16K
+6-U/eT5CckE:.-qllS+mQpsXnFYfZk-#7Cu4CAIH(n2J"Hc,tc!_*Ycds=8*98"S(ot/nZ]AA
+86H,]ADS_T<IA2Y=Gtm.(_FHZB`*)V,$!s"q;oC1_BfW>mk(W)WId<m$5broC]AWYhZpJ"CSCe
+UamM?L.,fI-h<hQ#?N@.=H#(:95C\q=h^ku]AD6-IZLb]A#.\L:Y)/JB2*NYJE9auBGQ7FkE?W
+_Jk80Nb2h.[?r0+Fh%jhd$Bg,H2/5p%^:'HsQjY#$@CpODKn^4^pdu->"mVes(\.*8h*:RAh
+Fn4@q+-DlnQ#5G.DWE_-FFAV$pq.kCG3Bn95[`YD*Hb>j]Alp00#S2$'U$Xi[j$.jV6gO/N^N
+aBCs9R'aZ5.M3ep8!+A=p!`?[JX7ma0tH:/gOA"6?Z6CbE^6^kiEU./3@-nM:JFQLADltALB
+hT!=f_R_0EKQ$AUP846BndJIu2=j7A+Lq]Ao[_)/7NCS0Np;B)h26PD!$c(3Aje2$tGMq9MUS
+-Q5R[Sjl/fki!mL6`3LZ]A8uOU[1mOlKI':s$^uc1IMZ?eBF3kI$0Gh1&W<^YgGjEfE"DH+X_
+!,gRbj17_O:kGW"V\HO\9kO0C!V!ahdm`G%^leMo:7g*m/VKg=P/lsjWQj7m)UA-m-Ik_[*m
+`nQuOl>IVE]A$*bR>9ENhbd@h3-0iMr2ZTn%]AW!RC,N%jP>Z5i2h6D"h+aePI(C-@I+@#Xb%K
+N.T9tbtVNGA(1e(Dt&AkV%SSXp3ANFHm_"(#6jcS5J3F:*ePsC!K0cA:jXQK+nH&6JB!BZ"_
+uJ=g9Nh;T4^i\5@#-k5@-j=0U54?XmQoHW_dH1qJ`mIT5Er)1]Amo6ar2Plp!*F%6@fi\R;.@
+[^SS0("@4^gjf&`k<MVK5#M3mL16d3>&qYXen[+llTADgCFkRr/rN.IUdD]AY.S,&8eP-'IQ7
+WAW_J8lB._6%=d=#6^`QDHsJamALQ36ftb>3G%4ZDo&Ug!<=EXcL:BL&`m_m]AF/SW;ufeJKb
+:kf%AIs2WXb'WJ`R/724Y,JSQ'X72-2o]A**b%XUGZ#1LGVB]A'D_a"4GK:HG4g&,-=g('r5r`
+\]Ag5l(_M:%Ec,XSdUcK>$NLM7aq:<F=iR"./pLDIBA(S"hYPE_B0$g8SS.cCXTGgr"dI'kbF
+713bYZVT>B:Hh4VLBR&dUooKBD[T.PZO*"r'=`g>+\<:srUC=b0RZ:jab^b0*psT^nsVG`<=
+W.Au8(f'&r&_sf0hH?dA6ENtA+27$,e2]Au9!LBGoYCunZM/rCugWPIq=NeJOP0?F#pBD5G_J
+ASH_dkl#50!o5&>GXgI,[aa4)a6c-V\,2_jTg-p^Et;]A]Ap5%'"E14RlV"Sb'*J?EEY_>?R<%
+_(Eq88/,Y4?'*fhQbs$kM3F\':Lp.gn]A.P)TN0AlUW;ZUJos/lP>X=LZ@=>79Z'@eH8>XZT;
+Tm+ee!&kf9-?PtMV2dG(k*s\C:Ca&!\^i;K*5uCq\b;clE4^u]AE*/kIQI(aDfb\'gAhQqS[V
+A\ufJW_Qqi13W#YU=D>V/!-Dm:<V*F2!U@l<"E/tF5bMGl(CQ:W/$@jqX#$P>!`>(KQqRNN1
+Lb@Z`gMbPV'lWCj37H72Og5',[dG!tKKhYhu)N!&#h0A!!>f5XT`DXspJt+"*)eoS3)OdTSd
+BZukG1p$`2>HcX%4-*ZJf9jX$nNWGP&*BT3"&VrihWFYn=Z";`&#Iu.0Gg9-=<>;*d$JgNBt
+6;^):3DCk8;8A\7u#?#VNsTm^YLiP9jD[Q1%02O@W'4aI._$!(IH#X1?J*:VS,WsHb!me'r!
+:O`F)o*XhCJF9ScG9>V]AQENYDU\GU8roHlKl('dH$.bEiJTqFd)B'!%F?h8;Am07W9$ro[RR
+ne)A4)0,ldTagh/$o;p]A>T!gm"L']AKciqao2/>-Bncc":C>IS(PHCLnJ:)VKLj,koV1FC_CI
+:S#68)Xr+d=JC[UpXhB3D!ERuqAM!`GC1Kf,Ep(WPD"hXp)&bEL(!6jm]A/n-!._u08"=**L>
+8Lo;0h10E&L'1,/EM^-+FudMBG@,]Ac(C9O"/<GXa)M//iqf;Zkhf]A+2QsbCEMpr[NDLWS"JN
+*2#L:H@pr%7p3(M'+Z,8E<HJD6QC:+Nk"Rsp=i*O-:2;`fM_S't3<^q1=F78tK3&gHm5a`pe
+KrJc]A$pAJ?"("el+`3?.1/mjK9^;pFAWT9?;*d&Ol20=sG(J-J(lbb?]A6SXaZt?2Us'0k,Ke
+u.V]AXe)p80hntp=NT!'H5pB)9ZuBZB.4R-nc\/S4#s7`[nj&#rMttMk!2d=Mm$VWn+BT5GJ?
+`*Q!!.]Aq+V?XCDnl2Ub0B%o\[kaf3\@Z@XO$=t)jO<M*9u19n3.:;T'1h<"J#B.sLuYEj5V>
+[N2Z``b3e6t>*c=qd)k%_^gehl%Gcb?WT"\NP_YnrW8)%LktEa_n#))M\*>$*/9rY.lU0csZ
+'Kdk>7Do@`;*=/-#5,Wm:G"ZDSF>^YQ9*:i66^ZNr@K]A)?BVu>-,R"udGnNkDk8:[o?a-#<\
+bj'an^I[AcC^!KU#N3K1!+b,(_OXn21)3L+hfF>#Ic`$0C'WZ*n6>Mb_EGfe4R.et(]Ad:p7_
+ke$q>h"F!&^9BY3&$l,ME%)"mV(i0^lf@:cSk5EON(Xh/MW53#"6&Z%XXZ:K92=O-PjYpk9+
++Ue`6#V@a$s4p`qMLm<%CjZ<k>lHW3g=Nld8H?U-1SVr#Fs*<4C^(a:qGJm+&%5We\Zl2d7;
+ea'aHH_nLRlr_0"#1N+MVqFS)K-5kMLQ(Wn':mgqPWQ+@OgMq]ACjck8uK[<5e/`.8H:fhAU)
+T,8NSgd4Zup\5pHhn7YIr_E9=$SL@cN.(Tl*^`A!Z!O[^..a]A^ZTLK]A0RS?S34<m2c\n2nY"
+d!Q(c87WE[*<+p/pjhl#l!h*oU28[3Q("J2``_;D%-TP")EhI#`#?`ANQ=@,C;LT\B4eT"]A@
+4LWgru\rk,5g$@VXm2E]AuS!>sb=kOrAtO9HkH&XYc2\(9Uh2B?l6=X$BG,aE]Aa/ZZTnE#WKI
+orFlqd=q[#">4frPdg:(?19M(b=?pY22dBqmTEEe:c`Wa[".C!hE.u#lE"aV&!2-`mZ=c,)Z
+dm%#^`@i[qWa6%8YQ"<?$Z_W7Y<'n2nLt^A#IFg:rO>>h1jtl0j&j#ei3>a1'$'R);'G'rVW
+o'bQ_AT7DJs3)KXtY"*\G]APLJ`FI',3bASYD3_q,a!$0-0Se%Y6R+%WhU&&Bt7J>:3JL\oce
+6%KjU('r>i_?+6PSMB0MZPcSJlQoTZ3;-@iiMFV!6QVo6P4_]A@eoEU5VAN(#DA:nQ^uW96Xg
+#Tm#tdmnd/G*~
+]]></RowData>
+</TableData>
+</TableDataMap>
+<ReportWebAttr>
+<ServerPrinter/>
+<WebPageContent>
+<ToolBars/>
+<WebPage isPage="false" showAsImage="false" autoScale="false" tdHeavy="false"/>
+</WebPageContent>
+<WebWriteContent>
+<ToolBars/>
+<EditRowColor setColor="false"/>
+<WebWrite SheetPosition="3"/>
+<RptLocation isShowAtLeft="true"/>
+<UnloadCheck/>
+<ShowWidgets/>
+<OtherAttr autoStash="false"/>
+</WebWriteContent>
+</ReportWebAttr>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR/>
+<FR/>
+<HC/>
+<FC/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,342900,0,0,0,57150,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,3562350,2743200,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0" cs="12" rs="36">
+<O t="CC">
+<LayoutAttr selectedIndex="0"/>
+<ChangeAttr enable="false" changeType="button" timeInterval="5" buttonColor="-8421505" carouselColor="-8421505" showArrow="true">
+<TextAttr>
+<Attr alignText="0"/>
+</TextAttr>
+</ChangeAttr>
+<Chart name="默认" chartClass="com.fr.plugin.chart.vanchart.VanChart">
+<Chart class="com.fr.plugin.chart.vanchart.VanChart">
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-1118482"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<ChartAttr isJSDraw="true" isStyleGlobal="false"/>
+<Title4VanChart>
+<Title>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<O>
+<![CDATA[多层饼图]]></O>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Microsoft YaHei UI" style="0" size="160" foreground="-5723992"/>
+</Attr>
+</TextAttr>
+<TitleVisible value="true" position="2"/>
+</Title>
+<Attr4VanChart useHtml="false" floating="false" x="0.0" y="0.0" limitSize="false" maxHeight="15.0"/>
+</Title4VanChart>
+<Plot class="com.fr.plugin.chart.multilayer.VanChartMultiPiePlot">
+<VanChartPlotVersion version="20170715"/>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-1118482"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isNullValueBreak="true" autoRefreshPerSecond="0" seriesDragEnable="false" plotStyle="4" combinedSize="50.0"/>
+<newHotTooltipStyle>
+<AttrContents>
+<Attr showLine="false" position="1" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${VALUE}"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##]]></Format>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.##%]]></Format>
+</PercentFormat>
+</AttrContents>
+</newHotTooltipStyle>
+<ConditionCollection>
+<DefaultAttr class="com.fr.chart.chartglyph.ConditionAttr">
+<ConditionAttr name="">
+<AttrList>
+<Attr class="com.fr.plugin.chart.base.AttrTooltip">
+<AttrTooltip>
+<Attr enable="true" duration="4" followMouse="false" showMutiSeries="true" isCustom="false"/>
+<TextAttr>
+<Attr alignText="0"/>
+</TextAttr>
+<AttrToolTipContent>
+<Attr isCommon="true"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##]]></Format>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.multilayer.style.AttrTooltipMultiLevelNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="true"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground" color="-16777216"/>
+<Attr shadow="true"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.5"/>
+</AttrAlpha>
+</GI>
+</AttrTooltip>
+</Attr>
+<Attr class="com.fr.chart.base.AttrBorder">
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-1"/>
+</AttrBorder>
+</Attr>
+<Attr class="com.fr.plugin.chart.base.AttrLabel">
+<AttrLabel>
+<labelAttr enable="true"/>
+<labelDetail class="com.fr.plugin.chart.base.AttrLabelDetail">
+<Attr showLine="true" autoAdjust="false" position="6" align="9" isCustom="true"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Verdana" style="1" size="80"/>
+</Attr>
+</TextAttr>
+<AttrToolTipContent>
+<Attr isCommon="true"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##]]></Format>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.multilayer.style.AttrTooltipMultiLevelNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="function(){ return this.name;}" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+</labelDetail>
+</AttrLabel>
+</Attr>
+</AttrList>
+</ConditionAttr>
+</DefaultAttr>
+</ConditionCollection>
+<Legend4VanChart>
+<Legend>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-3355444"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr position="4" visible="false"/>
+<FRFont name="SimSun" style="0" size="88" foreground="-10066330"/>
+</Legend>
+<Attr4VanChart floating="false" x="0.0" y="0.0" layout="aligned" customSize="true" maxHeight="100.0" isHighlight="true"/>
+</Legend4VanChart>
+<DataSheet>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isVisible="false"/>
+</DataSheet>
+<NameJavaScriptGroup>
+<NameJavaScript name="网络报表1">
+<JavaScript class="com.fr.js.ReportletHyperlink">
+<JavaScript class="com.fr.js.ReportletHyperlink">
+<Parameters>
+<Parameter>
+<Attributes name="a"/>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=LEVEL]]></Attributes>
+</O>
+</Parameter>
+</Parameters>
+<TargetFrame>
+<![CDATA[_blank]]></TargetFrame>
+<Features width="600" height="400"/>
+<ReportletName showPI="true">
+<![CDATA[/多层饼图层级联动子表.cpt]]></ReportletName>
+<Attr>
+<DialogAttr class="com.fr.js.ReportletHyperlinkDialogAttr">
+<O>
+<![CDATA[]]></O>
+<Location center="true"/>
+</DialogAttr>
+</Attr>
+</JavaScript>
+</JavaScript>
+</NameJavaScript>
+</NameJavaScriptGroup>
+<DataProcessor class="com.fr.base.chart.chartdata.model.NormalDataModel"/>
+<newPlotFillStyle>
+<AttrFillStyle>
+<AFStyle colorStyle="1"/>
+<FillStyleName fillStyleName="雅致"/>
+<isCustomFillStyle isCustomFillStyle="false"/>
+<ColorList>
+<OColor colvalue="-13204802"/>
+<OColor colvalue="-12212362"/>
+<OColor colvalue="-1027290"/>
+<OColor colvalue="-1124489"/>
+<OColor colvalue="-13414555"/>
+<OColor colvalue="-5007538"/>
+<OColor colvalue="-13055107"/>
+<OColor colvalue="-2249165"/>
+<OColor colvalue="-8107085"/>
+<OColor colvalue="-7092907"/>
+<OColor colvalue="-10525036"/>
+<OColor colvalue="-2148223"/>
+<OColor colvalue="-13725034"/>
+<OColor colvalue="-13204802"/>
+<OColor colvalue="-12212362"/>
+<OColor colvalue="-1027290"/>
+<OColor colvalue="-1124489"/>
+<OColor colvalue="-13414555"/>
+<OColor colvalue="-5007538"/>
+<OColor colvalue="-13055107"/>
+<OColor colvalue="-2249165"/>
+<OColor colvalue="-8107085"/>
+<OColor colvalue="-7092907"/>
+<OColor colvalue="-10525036"/>
+<OColor colvalue="-2148223"/>
+<OColor colvalue="-13725034"/>
+<OColor colvalue="-13204802"/>
+<OColor colvalue="-12212362"/>
+<OColor colvalue="-1027290"/>
+<OColor colvalue="-1124489"/>
+<OColor colvalue="-13414555"/>
+<OColor colvalue="-5007538"/>
+</ColorList>
+</AttrFillStyle>
+</newPlotFillStyle>
+<VanChartPlotAttr isAxisRotation="false" categoryNum="1"/>
+<PieAttr4VanChart roseType="normal" startAngle="0.0" endAngle="360.0" innerRadius="0.0" supportRotation="true"/>
+<VanChartRadius radiusType="auto" radius="100"/>
+<VanChartMultiPie isLight="true" isDrill="true"/>
+</Plot>
+<ChartDefinition>
+<MultiPieValueDefinition>
+<OneValueCDDefinition valueName="运货费" function="com.fr.data.util.function.NoneFunction">
+<Top topCate="-1" topValue="-1" isDiscardOtherCate="false" isDiscardOtherSeries="false" isDiscardNullCate="false" isDiscardNullSeries="false"/>
+<TableData class="com.fr.data.impl.NameTableData">
+<Name>
+<![CDATA[ds1]]></Name>
+</TableData>
+</OneValueCDDefinition>
+<MultiPie>
+<Attr levelCount="3" seriesName=""/>
+<LevelColumnNameList>
+<LevelColumnName levelName="货主地区"/>
+<LevelColumnName levelName="货主省份"/>
+<LevelColumnName levelName="货主城市"/>
+</LevelColumnNameList>
+</MultiPie>
+</MultiPieValueDefinition>
+</ChartDefinition>
+</Chart>
+<UUID uuid="ab571f32-f1c8-4f33-8213-982571dbeb1e"/>
+<tools hidden="false" sort="false" export="false" fullScreen="false"/>
+<VanChartZoom>
+<zoomAttr zoomVisible="false" zoomGesture="true" zoomResize="true" zoomType="xy"/>
+<from>
+<![CDATA[]]></from>
+<to>
+<![CDATA[]]></to>
+</VanChartZoom>
+<refreshMoreLabel>
+<attr moreLabel="true" autoTooltip="true"/>
+<AttrTooltip>
+<Attr enable="true" duration="4" followMouse="false" showMutiSeries="true" isCustom="false"/>
+<TextAttr>
+<Attr alignText="0"/>
+</TextAttr>
+<AttrToolTipContent>
+<Attr isCommon="true"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="false"/>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.multilayer.style.AttrTooltipMultiLevelNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="false"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="true"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground" color="-1"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="4"/>
+<newColor borderColor="-15395563"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.8"/>
+</AttrAlpha>
+</GI>
+</AttrTooltip>
+</refreshMoreLabel>
+</Chart>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting>
+<PaperSize width="40320000" height="36000000"/>
+<Margin top="986400" left="2743200" bottom="986400" right="2743200"/>
+</PaperSetting>
+<Background name="ColorBackground" color="-1"/>
+</ReportSettings>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0" useParamsTemplate="false"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList/>
+<DesignerVersion DesignerVersion="KAA"/>
+<PreviewType PreviewType="0"/>
+<TemplateIdAttMark class="com.fr.base.iofile.attr.TemplateIdAttrMark">
+<TemplateIdAttMark TemplateId="a5d39cff-2907-4394-8052-85edb2ba522b"/>
+</TemplateIdAttMark>
+</WorkBook>

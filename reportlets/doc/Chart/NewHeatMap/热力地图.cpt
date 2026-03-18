@@ -1,0 +1,2706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20211223" releaseVersion="11.0.0">
+<TableDataMap>
+<TableData name="File1" class="com.fr.data.impl.EmbeddedTableData">
+<Desensitizations desensitizeOpen="false"/>
+<Parameters/>
+<DSName>
+<![CDATA[null]]></DSName>
+<ColumnNames>
+<![CDATA[地震区域,,.,,地震参考地点,,.,,日期时间,,.,,震级(bin),,.,,深度(公里),,.,,纬度,,.,,经度,,.,,记录数,,.,,震级]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String">
+<![CDATA[c+Ver)`O*7Hn@R:0>#gsVcI9J9L)BdaVnEQASW>=>EWQIX]A`))o>CJp<n13b_N0K^+HsnmMb
+K;qZeF_\aod14\;/]AKiu>0kT0D[kH8iG+FnFtQrn5'+Da'.5Hos=$nS7O4RH]A2T3dlJLr8-Z
+8chllYNuu(Es%*,ar"n3Sf_obtI,`]A?d^N_t;!S&rq!7go+"s\T7<tssVM\m'DqSWC\YY@dA
+*'$QDL=9n;!%5A5$k7!-4D,XU%HB?]AB(^RoA/iTX.tS3p[4S3Q@Fn.^)t%u4?E<8pu^]A.m?\
+'mSIIf((OL@U)S^_\h1\_H96\V>413nEoeBflH1YOSWjVJn^CO[[b]A-R)HVs.KXfiOVO.3@Y
+e)+WCm!#3\VtY\T4hCR$=g.))F`?[$q#'jL`i6Y`&+f8;qkrJD2qrapFklcP.e[H/<f%o1b8
+W(Znf-ZL*GgU'f0Y6+,C9At]A^t=]AmInK-RdUW.4:K'kd(_bV_]A5[d:2O^g:T_@cJ+@G@:KQb
+goB1`[X`rZ]Am_(s50=FB3mrY#M`Gt:+CG]AB?1E(>ueX#`>-L]Ae3]At]AX$b.mX6rI&YNm:b\Dk
+el0Fo;A:qs6k^V@?&9F5(pZgIZH[?)kHs_r'%XjF8/PJ^TdV*n_WpH9t0in_B.=k\Aa3S"o?
+1C'm@dDGNks<ldb1396VbtX5nH5a-@#Q34'c&P]AL'3@e8`od?X+h"7F))C\6k`rN@<_p[0-9
+\Mpbq0>AC^H4iE>C#3j%LZZK#ENH7!@lA--UUCkTNGA8`0tqcRN+6u(6+c1P2e>afINI>D3r
+8eCcYU2]APs&H,;ce[6ojKCU@5tFDZ;mF<jnJ!9G6\Z9*rPe\r8^.VO7%LC0tKJmIBe9#K`qp
+`527f;X3enWh9q%5?@<X`_>*KnR-a`$r%D*8D<%,'d;OO1YFi^O`qQ'IAmL,&3p[b(c_A7!n
+R:n-L\_`ENVbnU8KBu`E?<#DRd`Ht^1QRkhY:ORdgr_$8([8-j"ECj+5VZ8@W>29O8j69+KF
+AfXcAb,^`NrB>&T+%Ga'[QkchsU9p@8\c430riC9r0X#eOBfYla]AGZd@\HFTsc5+N%]AG-(M)
+s)X/i'PgXc7l6a?@nMLk_0K.3g;7]AcM)g&g5%/j<hWWppGgGaS3I:4tk7dL^8fcN[*.n$S<E
+h?K8X7<1a?A+]AB!<"Lf[APi,qg[c$`^;f`Ogkk9\JmB%^S(`?5gOgQ7Hgd48<pji9Te"h]A9n
+T6:^#/p^MtlqsiD(nK7Yc*fOJ+g-.$e`4KFeh@49ElaF[?oDTW@IN>j*B-[B/s)nR0]AQ5hb4
+F[#mDOoUSZhkPgn!WQ^^Zsh_rfX$S@YZF5Ct4Qp;m3jtiLoOeR9YshpP]AIF;T_/C=4!?eQgX
+M12'/=E%UV3lEdr*QY)GSOOo:NrDKk7O<[[6g(FSp+^,b_UoR;;"-Zh=(Hs_!/<RkLYMtFe)
+qC[hI4pdRnkbm2+[JO$sNG`%eIVjMGTOiuiXo2;Qg+H'@3W!O1*8\F`Qg*AY$PQV,l[RtIDY
+F\NMm*68"-.6'jX]A%CVHW'5>e#X*e*a*hHA*AQMW;igDcaGDIEa!IZ!d:;h4<`=PHJ`BamK'
+f[o@ia'Yu[;(320kD(q$g,UZf)D<>0g9$t!S*RJ]An>H/CLA=0XR]Aue-@s7:r$Bl^^FnU3k84
+;Ic)(LGJ$b2LYFqLpG]AIc8>f1K]A4!PP\^*KQ_>irpW;-\NO0Io;L5\'6l'K=BnjE-&]AES)r3
+Z:5'B]Ah4a]A?jIDR,W"n#Mlj)(OT(A;<jh4qGQ3VsfAfpMXQ:<HG(^TfhlV1W1rNaHe=E,kKL
+/SDRm72;_<SRtZ"[Y+Id-Y@sKK[o&?P7[r0.s11L'@H-UNGlQK^O(s$r9YBiRpUUO%s77@MX
+=JS_hJOA1`pmLTsi*)IUG8m_6B:d6'&2ASg3Xlg8MN'^,\^3>jkE)?i+:0i;W^9N-Ogag[VC
+QU*\32YD23N-L9/b)$MZ<XHhlg2n1IT^Ed%\.mKml]A!sEq<:cLJ/PR2_nuM;9YP^N^$=C2jk
+tPjNi:a/KDc_Q[1OAh8U:CUXJAIdTUUBU.BuS]A$>^D`\Y?r=+fJ$iq2af8h?1[p#AXo'_%;/
+oK")Ri*:Vq(_$`Ds]AWIiuFZql;JlR_s$[l/_B7q\q4%cIhG52<b3O(!"Is-Nc'nAN-.O:t`+
+6Yj_".dDT!q9KlNY.^"1HM?GGr,*%P`W6DVJh?3MQtf9\\?(tJ<V9O-_sq1D:VUg[6YsVcd/
+D\)o0O7%dPRP-Z#52lULiWAogG<:-iX";%.@l<0(9l2a+@!($O;+cp@qEb%Y">-#fD_1g4"H
+=>BjWKMGmGS@4pZQ$eC<$O48.LIJ<?8k6F6,_>X<2O3rl8g0Xt!"3tO56#dh()CsKM+ie"oR
+r%Q9R>DCjlj80,<IWChcOSJ$m`EgK=ScE#fpTlt1!<8.J!#_d4_@+P8Z?Eme[)B9]Akb(g&"U
+ACjDRePZ\2m(]AO6auF#Lm`m^GfTp.sj<LM-JDZd(_:Ge5AZ4,hI!\/s]AT=#%X?Qns0VgVMPN
+d=/_$!@E/?Pef<o^Ctem,A?%]A%VE<Gab*ebn3b)g%,[^nYnOB$/?e'kEQK/'p:<IeOgs2><f
+!UiKX!5E(*bat+/S>d):j:$H)#Rrn`3>^lL>r$-a1\?>iZ$3[ZP2"TIe(1_>f<5=YPdGY+r3
+]Ap.t[DETCJGfUn_M3$/+1pZ2=l'XkbS_t5VmY;i/1i2A).X6U%al=bp,jY-5r4"O"'A*Bt+k
+h,/:DfunEs4d.LG>jmk:)F,JmEPO"feNt-LYFm[LFcaT9U=_4qmVOh)4rK,G#H4iW%-F..[e
+9S".YsHdHPlMqsEXVGZ8)2@Ad(`45``8-D#e=RV&@dO.qUW%9thQ7Pn.]A)_lMmG>!<8S7;u_
+%1Xu8:*]A,=q24B4HN5p@&#;lEQs_L5S"X=4:VdAjo]A<QA$dGh`kfb=hg;o+$omkD<3cVZ4QG
+5U2[\dKAYJAQ5.>"X`A+MbWN4h-kkf(6_Mm#+#@:=)ENR$hNgMp3E^\.BX-Fk?*2hO*4Y*7n
+E2iq:/Gf.AbQJl<:Bm;ak`l]AUh[X=L+S-TAn>Z(g9c\@u"YOD#E:0Z]A1YV?Dbj7Z?Qoi4NU9
+a7bW<T6/EIT+4(9%IS2EIDeEr9eH8^[-D//WU*:Fm^9`GNg_<k4DQ@jM98#^YpXpl//N9$7t
+d*Zb:=2GT5c:(gOrI1b0;Hs(0JP\ALZUm1+@_(%JH-d!f(lDn!l_)fpK-Wp.#]Ai\+OHZsoE&
+EfMT7Gqk+=@t0<2@H]AF\UqmEP/If[p8pEJ!\[VKgpIuLT,*uHYW$Looo<mWgSkSV5W)bTMfR
+>N+ao]A]Ab\D3BVI$$Rsl$U;1gF'8pOCEJ1Cna)H]AYT4S<S6aGa9LC+D:S/7_:p1u9)^]AZqJ:9
+LG?Sd3NBY(;:>GP-j#7M12sd)nQ[5OKiPrlsP9LS-1[J-WNU):iXkaL(7]A0UQ?9T@ri4rc24
+hn:Hl$W)=R@*o)7I3tP#l_9\n;UsoXqXU_]ACQ()ZdpZ3s"qqDgrW1*g,33sg-u$RF]AXW0^t!
+K[(!CJcXB\9f7f"g[5*pC>lt4f`'ZlnJ+Cn@tQ#FK?au/l*/Q^hWM-X3*O*sPMZqrlCkej\>
+2`k\8Y`j;slV8hnRk8`VEL5DS,pbWELN@\fs82VidH+_*kC*kqkMY4Ms8BSnh(9;R<@`Am-W
+>1pcK`AloWc-EQbO45dGB@:9\YFqC-1QiI1DF*Opb1Lhups'i%W&f9a."DI]AoHo:tt(*%tUZ
+B\qX1f6o<cU7cZsXTqBZuSNAS&jX4R`1GBt7!`(G.?GGip+q%Td@0rL;MW!D8p6!"Fbnu(W^
+B-sR1+Q=X^hcji0+-!e/J&2jCM&7pIP)LQ]A`3-Pjjq@"e;S#)(o*t'Ns.d^:/Z]APR<WQ^1L&
+Mk;fq32N^l(>&#$m5dftc`XD7EEA=2<PIs!q2]ARn-q1s9;O9peJdV%QC>,sqgWcL;\(Lbn!K
+0f7g/[^-q$]ADQDfk?`Xu`\8950mO,a8JncDQ47>NQ4KMb/g=:B!%S8YYC_%ZU<9Du>k6TbQ$
+*<Y[G?BX&@1p@He+!O-j9+G<t9+TO60LB21Bj`r.+dtP6\<<07E`$dA%'S\)740e#:8-e-u8
+B@t^j36dS7qG7;U*2Q]AXAfc\J`jG&U/5Y":!<s1`nr[1'X%L#1AN^=R#guoAZEEI]A/M&1!O8
+lj+F3=<+\\q>>GAYAGY@2W6gQ5jB^#10)2m'P;$8dQ_=W@"\cGD_ltU3lX%Gn&BF]A>'H*mke
+'$e/c$+p(HadQW/IWA,"`+BsH-Kp+Zf+n1]AuJN#RS<dM"CW@E\3([rJ5ds#GQ$%Y*[;;mCc^
+M/F5bO)U.qM(^QoBg#hZpti-1HSNToA'SRF=qTtrA%:3oYn*L',AoI<O0!t?>Jf,MRT7>26R
+TdKB7Iq.iR;ZUp2:CBX-Gugd44K$cMrLS7i@!!9:MI%H7Kj2Fd\>&H;,2Qe"MM['YJ@Y/JUs
+8$Cun:V&jsS/SjLj-le8;au'0!%5UdV218ni]Ah@,??a"XJ&`J5o=,`tWA!%!R%Cf?crR^.Il
+_m$>GB+YsA#F;f=0%1@5UMmY3$2!14o!!8oo<rRBq!B\hF/sC!NHD:?"h?WnAJa;\m#s^+Hl
+C\r?&k2[bD=YPWWc((d)+]A?UXtpiN]AaYRKpb\VE5-<<RAAsCnEAqI?_O@iZi$=I2o_Wd^)4A
+9eJ*\mj?a=nPpk^c"Ou6"<nD$NEY,sS\j&Th"dp*;i>'/[]AYIk]A/`-p?4>9Mk<!-,[]AuCP8c
+A&_Qm;n(O'orbqH'mpOgU#%CcQ'qU72Nh$"loh,E=KN7^.rk]Aj)0[D&EhdN[@)1l*=DNYe83
+q@`]A+rc>]As%-K0JVHKHcpKf+uuAO\3biYFs97B\5J,b=b8+U&ER_`<S39]ALleV0[1L(2cRNO
+YdLAP[P"jHkF8!o.i]Ao/!Nt$SW0KaoKtGN><V=sm3D[K'6;au"_/(GJ&?NK\[qcWo__>,4S@
+@M2L7='82tle.TS5OSZK<Nf,_#M7M^g3K,3[TC0qK%K!40P\Na!U[/6BsciGBEW`hXf<S)jT
+Km%!;q\F,m&t]A+$qY8UkSfnqSgcXm.[+Q(SFiS5Afe%i(o^b;.hkl6TH"$aL]A8='W7,V6/#3
+!7sOb%R;\ZXI0q^cUPPP$(2Mc1Y<<!2hj_.Q9d!E394WiL0FU6lGM5.h<_fYcliIjY8X3Z=U
+nh1oXmq%WDc[G/_tmMt"FeZCQNH>7Ze<OrTfgjaH1J!0H]AoLYR:XVs<&M=:\qZ2*dY^(JBZY
+"<qOo^Q,Ojn7ql>OUS?S@n[iqojL>X=::YSRM3MQ8$^i%GgH%rQq4PG/'U5Y"1ulGp19d)K'
+M4_H#OZ76KVUK'[r41O;9rlWEYQ,3B1;*lW.12(Y[bI>`AgW?U?hl4ue7e?f%n[s_$M[kIZ<
+%Hu$%.:PDBQ^mJ_nXI*=/\ii[@pbq%dh>cR@D'dJLe3rRWgISDT]A@t!Jn'"9FN"f9M5ZPUcl
+M/Y.\?K*F6rd2^LFV*D$u`Z$'nV,`bGf7R#%ToACY/2b$&Bm=`hog7:h#+Q_V8e.A8R>r,O1
+K"K]A,pL$9M_hN<K2AL'-b*Ml`B+JN'b1p.W(FLL.hpR[/*SG5o-oZLEQ5CkF:OH+=s>;40:T
+!#F@h[b]A/C_s>BmTaMY[fqOT.U;[CSs<3UM:9ClK=fpg"Q;5b['BQ2rm%N/JeBMT"F$Adn0C
+(0_>@6NI&sp[Nh$6$m`!^e!F.T85]AJAUj`l$(G0(H56.SUOjK,"4;I1S;jLQ?ehuW8[3OjP@
+O4NJUj0rClh^o]AaCg03GKW0a17KDKh^N<baU3'bkJr__:EY[b_`[U6icKE$c7u(tEM9bkf9o
+NQ?E_ThmId3W=DH7lBr;1O*Rbg3.hN_X)p`(,g^LCJ+TA^*F#\gV@<8lnWE4EWp8"\<o<9Ad
+.&DI]AP6VsR)CeNk+LiK><##NE@ZjBerc=7T'!4IOd!2HS!`I8R&gbo7B"?<pKW^rJ'E6+,(E
+9g+.VUFdRT7H[I]AF,F5!r:nC:04@:h%(=kL<Z^k/n;C!aR2.rB9B+!Akf&aq/F6eFM./bDdQ
+QFQnmYA<lbE/9VrU7^=P@Y"?]A*RTZc]Auk.rM/1'YE'H'85*42m^4*#k87LHUP@<W(/3DIX:a
+UT?L>L-P,)noT9T8lL`ms0Ml8-kT5^[L4Rd1MQpF.RaIBDr:XdoS7#Lg.5Pp&p`it"kTqbLI
+Wf)HLbkLjl5M'3<?>MmbDP]AG=[6GJjTZ8KShU>H;^JT[4R5#&eSkJWn`4=>Dh$>bslLBm`6a
+"rAo>CF/cGeIK$b+IaotoeM+TJN"HAbY[+B'Kp^Wlp_uJSWQMYZ!T5&*rdF8#5OI/:]A$cq_e
+\?V5k&^WE`u%)N$A9S.Rqi!8@N;IA+Rb_0V\>&7d`Ijbdo1ASl3Lm%k;0EUF)?<n5Fqe9@+R
+0=6m;iA3k.M>Ea(3d;7\7inBeOOOFXH0/ldg"4=&m/kcLVJ?7VG?iVt>0p;=QWbI#F+@^>O7
+lP"+h9u39(4oebGTQER'D!&=Y!rm:tB`\B\*-`JaD`44o.V%rWcA*'P8@Sb`?-9F]A%=G[^j(
+dRZ=\O7S?-76%o[i=)j%fI[_l)6R33LDe?UMkjSHkG45Q,_HB(?M"9O`^V=Q_AE;8Sj)(;bp
+$h/N,1<IF5dn\Z`Fem\:,S7hrjJj\Wl]AjR#1h>[2seW)44m?^jCcQm3YCHUQTa&inap\Ao0%
+@[=D]Aad\]AW&d?d_AkOr3QO(I8!<d"=n&3uh%9dJAq>bHd>OPq;M\^"K;R\,BCJGdU/cA\hMp
+F+k]ArG.R"a6c*/PtUFk,EIbgDqVU'1pifT3oFXDRr=0L[P%QYE5VOL4"RY.0h!U$F[TVIdB@
+h(NN?$<abL(7Fq5[[MUkQ\3OR-P"b<R=`]A9jcH#(o@bM.[2SR6*nm"5N[8(^@t':a@P1jk?o
+UW4o"DR?VpG^BZBfIb`+<4,!'JFd&>nHX1RM230D&L'L>Jg`Jo$K0PIGA!hXO#9p9D;gV/[e
+a5'3sU1P.QDp^OPD-FI<u<KYMSODdW^=Z*5)9`utaSfak>JCKZ?P)'<8IN2cM;eDu9ZLlC@Z
+%/`7c4-1Z-;2g]A*1We;Eol6(M7r5)jkM#^ru]AO/HR2["f^gNg#9T[M0mPeC]A,0qai``VHf:j
+Mkh<L\'dXqGW_F,k@;U??V=QhYH[VBm>.Kg8!M[%*Foc%V<Hsbf]An+N(R?9NLf8H>aU]AeOhQ
+[V#tp!bi"PW;1!e8bJBUZG[E1Rr;%10Cc,GXMnp\XY]Ap-&YtmPZN,:j*/d>VMbu^^TkG=$8l
+L4qc^>_$;:'h4+uhBdpm_ppD:]A_EWYjZWH8h0t_bpaf@WpQZAYrF;#[o\=)oX+r:"eSs,^p5
+MgA"NU4DYq;A,9QtoF2JNf\KQM`Rcet8$>*8VJu-^e;>U2;V*<AZ]AS<"?p$*nP?lTVX(%;@4
+AsbNpct4Po]ADG;TS,\$o;pS[9q-!F.]A`CBcYnIA@\Q(U1WW4=[#hClFlc*9KK;j/#D24VK/a
+5DiXfN%caK<Ai:m#-]Adma4`AJ5eqYYL6m6QLPZK[/7*)sqsTFc'6hPU^gV5eh8Y.Yio?g>#$
+#^\=LU8`9_B5BGUdA2u;QKJ!b`q[8&^gB0q1+m`%c(eNMC537,4FV&\C>3ptE9^qA:W:o<Gd
+XER7qRr_ih>GVE`-EkLm_84-R;%52#*6lUN1UXBD+uYN7NaliLc/!4ZiFZV&LJZLkR%(=/q'
+7`0o-b45HX8EE%>#\23ZSQH5QZUBKlsnHLS0$#5mtb97?_Knokh\r08?SmC"QUI\\CfS_h<T
+734'QAT6VObM)sK7LL8a2lKAaSjNBF8N/4G$;lm0ND#jPYelfb6Y9&.lWHLDiqA#@FUufB4n
+Pd9a!l;Lh;`;`<p"Y3A;SUB"L)ki)A&?_.Ha9mM:1b:*t55fl.5&U6;CQ_Ql5Io\rLlJ$Wk"
+:B"fR:QE5\_KPZR]ATUi=;-9$>`3A6.0R;WZ%JG$kCF_IcZF/%1eR/i;d90*p^-,,l4tP=5j!
+rX`d25=\V;r1%Rh<qH-fUAe)t`q%dcCZ`2X#qI#qh@$Y9Tl2WPqM<XgViYbkW"LPbi5#;8QT
+aI*0j1?Zh\b7Ip'Z'#Q%J\OkC@He\oEeL^REQmktrA3,:j`\*QN56O*k*cT$mbktKA,Qmh?8
+]Af/Pp6O,=N2hc"r@);rQ&,lk,L`FhZ57kbj>;.:e_FT)?N3N[Z)gGQA0%O-+<+l8PMTGCC.o
+6rZ","VDLh]A88QXO9hH6"MNR0@^l;77D`j_+V<YN!90`'kM#i2gs*+1*3G&HtE]A5@E9@WY,.
+R>UeV2<-\\A>.-<*)$U+g"`^>=Z*bBHLm]A`&4$bQ"J/k`GJ*%LXs3tT?#iKq(1Zgpb8J95@8
++fk\!TF]A0O#4'UWoEP;fq*KHQA+M@1U).j^ROu@-a&]AN[p0B)?O0MTsR@Ae*-)[h9Smkhqc=
+m$+A1IT5\.k+l'f]Ae2X]A`c$M0/M:T!??b++bXB2Rm^ttSDQUkBhmnL/FK1?\(dgcO'/D-YR8
+hLV>=)e*V7fPKEoETT4iL2%XrTMDCT%Y=\+KiF-1JPP!Hu@n%b.`)]AVpU^7'-GCQ#ns^7#gs
+)V:`TYFV@W2QH:DMgSWeDe?LE7=2%oiE34jD3;qFgGA&UPYZ31;DC3!]A-:;c0DLXF^-L;btd
+<,]Ah*3B@jF;`![Bg't,T"t'4(W]AFi<jHMf:"csY1,6c=">:0Rco"ei?&A<8b(cu;L<4FdlHd
+kI$8q^S<hWC97-m]A-''8[s/41/c(aQjq[&`JO<@,"@Jl;fdg9%m""I[1!I2S>JMK#kh9G70Q
+r+52%[^^ljJBcu#$.8ct[0"gZ2mp<Z[Bc78k#XX87<qG5b3g%DR'Rp.An=#<3QQKjOV`&(7U
+3Y>6WoQ$:aLnLrGj<j!k'+*&-/i7=b"PB<$llCZ'L%\rOE-l83`>nn;7M5lbnE6bekL39+iW
+5s[J*DIRF?1rKI0+f"'3Uu^\6Ock<F9<iS`,(Sr*"MZQ\r]A-(ZNQ-ddBG9)pMc")`r2QD86t
+?tu\-J[>ZAN<VS/ZNkr3"L+l0$%'?SkHXp[b@p(:l,eWLl[\BQ8=:$nk#q?kM%>B1lAhI:6H
+_tPC[dP;#_H#j:`\j#X5=D9\8uW\=aQ;H0:[^Y+ZM'DUi;k^aP0)+pY85tK,@mE(nE/^'"[^
+u]AS?$gp[RYG`lmi6W>%B[p+<V]A<h)AVS<U'`+kk?)J/knWNiG8'RYM"(i"X^Q1-Y*BjZEFjJ
+W="6A@[s^,$@dEkW&@R`UTEW,W$k[iD1a)nW]AttMJAOg>CNsBQ8b_L!oF>+)*j(2G7ma6qTK
+<!W,5PMUoW&A64l4S[BSpMbZ(q(TM@Vl6[<fZUgkqM&g^(6E&#"CaL5,Y.a"gCoP!_OM5">;
+2G.,V`-AMR#OR>MQ.dTW,$N*Ylaam91F]A@FdjueT"]AZP2(@&.[P&i1.U6>4b<&uOn0!D4fjC
+T<8$^,HgH=Xf+9-+U[0:A87N;%JL7%+pDNeqBpI"2rEV]Aju*F-f#DA1!11L8MINcZhgs-[pf
+sm>N>GM,qQ@=d"A/aL[2,gGR@<VG7]AXBo.)BWGC,*-R4%b1@tr+558Y4H'OpD)0Y3P.EXcK(
+H:,-2.rj_@PE3s<h<!&U_onG7"Tk<s'_>P,XbH]AA5[:Dg3`T1'ri?OZ&8DG_;-o0Jc*n?@GM
+lnq&rD<N8MBFFPa-JihO_c<Um2c4TjR,;P[BS"=<81ROfp1d31A8B)!*4s4UXR=g=hc"]AYIL
+X+h'_S9WCGPRAnuXBJ?D&Ki\E,M02h>_jf&<Oi<;B[?;f8I6X'6$'J8G0E'aP>Ra>aKl=%OB
+fJ12[8j;fge@_>KRa[im:Uafjo-e-(Z8U?P!h`3MEBs@3`[l=3%@4q^`i<;3I%f7F$a=<]AGH
+0+%G-Ps4[Ej?_#BSWt\Zte,A6[g^+4X:>o@^S+>-79R(L/RST3l74eB_d1+ki,r>tp\]AoQF/
+(RV21j,:W):Bb-Iic@9T_IeQ&<q8TX9i*e'#4[Eq\bp"#MX<9>A@5uC[=(5b20:.e(E+iWL3
+I[PC]A_O(0a'AW"1#$4n@m<0G8L\+(\C=.:kFdX/sb]AWqBg8;MV^+jb=L)$9HSERC.7[A3ee%
+"hJ1Pbd'S?Urku6/@2jGq^N]A"'2IO5X)dj?6rGsGnT?=a=Y,U!,K4">s/d79]AlL&I4bkK:7h
+YGL=*YY,,]AXdqg^*hP!f0%;6#jPS,Cin*\2@=A)>OChl5t4AG=oh%XsLJ(("G/Zh$.MOqIo8
+:J!tB^V@oJEQV(\7bRQ4Aq2AWc`jI7H_*@r)O64LWe";J7(&^@^eI<eh/E3$ij`We8@2AMTS
+^$jpJk^BYGS:UE=S[cB/I4_+<^]AJMMt03LgUA<?9tPj$]AMdcK+/TK5'_kSO;TQ@>LnJ%CLU:
+7P\W7`rO[bDi=!DjR3>0#YKu-.r-0]A7-Od4Ru6lD#DcrL?ZF7BL/</-]AD<bbjm51r0pEs).1
+;+hJKOGQJ`ABWhHl+up390U%XG!DK-!K,n`2!rIudJZ7M7ot'\C9_J0GI36LUVj%U8&%804h
+<MU;AD*t/LK+s"j/o3kAK]ALKT]AOT0GG-F:mec8P-MV?'SPqla*\RoVcTI\_I.+>S&i%nR^rJ
+DTLf4(i?L)[h4X)ld)mp^,==@1Dc+(iN+n:h=QZ4rIsE.o1CaBNe><nV6W?<Oah@k7WF;)t.
+N:HuH#<3GAGZH;T1o$*YsJJ3+5XBCdbap3gEM#1rcR_p)C<C@Ncom,rQ:XHS)#;o%dtGqI%;
+q!Og,!Tq(+;0^&Q48@9,fp,g=8q(1*/u9Qm!+%ZNWcHqaOs6llL?GgAkrs+;bTG%fo*Tk-7k
+2Ho=O&P?cj%(1s.7^\t;(A6EK1i<Je7Y#gupf`D:rV]AZ*7GFqCP-;515#6[Ok;%[9X^=#uGR
+(s'[acI*mod_hU!n`484\',7Y#nn`cQUgbMKXtM(bqZ;f?0FAG1V'HM80Qr:?8=T?gjUZPFa
+rV^M6,S.@j`COC&II-T[?2[trm<L4;Z/bY'2gb:MC/.q87HTo:29#:+7@U!uneZC#V)-W(IP
+a-2sP.h0T(fisPlZ;r8]Ashte/3Ygqcq+tg"$4spW]Aogen[B>*i9jtI0f/2(:2BmhH_<".7<.
+UW]AM[JpBhB]A%DRt-,>d_blnN3E2fX<"S;90@Y=f6\5r:]AV7@Ah/,8\`7eDW)YLpMfcaTBT!f
+r+\`p$;Dmqgk0s:eCHbPF+m-Gge:2uN2-dimf.O8did1Y@b.V-IA0-cCV<>u<hrcL&$clt<]A
+s]AdD.-\UN.?WU#]Antc5TtqT7[!<pB4&&p[\e[<fni.0j.ttC8dPR,^;H0)YFW?82D@eFI[-R
+SiIQ2f"g7H'f^16Q]AGZ<fLG1Hs@gIqbYG^M&Zi5Mnhf$j%#U)_/oh0O`YnXsC(qfqn=Z@21G
+D9^]A,eO?$-_=]A_)A&Rk$$<YgF0USO1k4^GiKI$.Y(:uo.T$YC,FCKKX=0W)W0fQ%=Cnq9-1:
+L*'.<N-rncM)n>3'cb]A42()\mC"&CrJc7#.7G+krQNOXe,p$GFtr$8Mf+qZZjb?Fi\tg-UTC
+l]A#UF[Sb!u^Q^kWmOFP['Ql#QY]AM>JTuEe"S]A4366PV>=a$;e`8*]A0LS(5U7d0!mN.(?KBJl
+RV7>n!:7A`V<LM`rn1"@lLU+sLVS02"N[?l>Mt/d0<G5*KnSDP2:u$/SQL4Wk&=.#<.UE\3Q
+XAZjYQ;Ii.AU3BL^'K2H5X=^SKYMIp5[1h7+:beuI+[;g28Qn31_5_M[JcAPO"oM.2fr%u:)
+g+0[(Lr5DI14>p=.aK9T0=@+eGDK)Y/e]A;M;aO.>!!M=P,"YKNF>^PLU'3U+K]AYVb`60C9e[
+cW4I?]AE0_$"t*^>qP_.4W&mk!XnYm[H7kbRr2:MT>4F4A9KKJQKT$`G,(S0>NUarbe>L9ON_
+;?bDM/laq">0YW/7a%,Oltud0p[PA=24G>krA%Vdc(1mZf%V%HNlXWr>Zdl%l-Hdj3e#L\Kn
+k^h-58:-C<1l"TMEhge!iXO[nY^QmBEtS0?MHNroq8NKE0c@g:i!i=`EqgYunud2cXf::e'R
+lPK%?WUo"sJ?u7Gq,:?sB$_tj48S`mAa0&%WpR6p2p;1F-0]Ai8(/a&-B"uITV=XA4F$#a?N5
+_sZus%KbIa8X441>sEW-UL4EZ!1d)LSuKKGau;^;hsIDRMeKhj$kjXeLE()'&"U.(uN$r%Ye
+=(O._@=@.9%gSpJtL!2Un3"m\lco%g-M@jN<jie8N`m%_)4@]AH2]Aa<+*;hGLhs1N>`NO.ggW
+&O@=6Y,/ufS&`HS_SkeK'r@'p.AddL^(mbNFs-d:%%(&m>&6lJf3Z(H^R.NDY,G+V9)u@6aW
+n%U]A6tBAUBDi>%-8D,BMi@OTR<cGDMq\GDs.aZ18Ua7I0<OPSV67aNQYb^9RjQQ;.3JZN2$n
+VgM#/m8J^Xb_q/DCYPb"cHoM="&K`VNm9D$NVHc+peGPFVD[uB"$qQND-rCjd.O3t.<eF7@F
+5;J$qmY>GY3V='cI>4;^l-;h94;BqO2eJ?.l%H:/j?#]AGZLAKi2G`(cQktt>&ahJ(R8[`f9*
+\I->7^f_Se?hosG<$-g$96Zre&SO<Rr`8:a,DK^l,)?M?*YC'3%_7tA'N:0,AF&2UMHPA$AK
+K;Mf<=O&:9@)6h5"CN+(5g%ccB`/CG^'?FECsYXp?d]A?&`[T@n;A,3m#^ImiAV;BtkS$u'QK
+aY(.aoVP#ds8-_UUG7(jd!]AE28n;K%1qAKc*m@YtkE%Cai^j'5^gTXCC:89h/otU/g/;+=#d
+OC9`0^4T@[q#,I]AiXcq"4O]Aofh[9%1;4%F$W'31WO]A:PjfPGX_i!k.DN\OmZko;[#"?s/>VW
+#(6-ikc!3M8Z%KK4XjrN?17(c?o<^>HH2V1D,N-h%5um73s]AO`a8FeD-t"nn'ohB0DD\LT0I
+/7&)Nh4olH\daTJ>2#t*+B7'9DOoQ7)J5'iri)W>BGr0W;($m/p.3Y3d39!-kl1sN'(ToqC:
+aj?(4HB-C\/$aH+.NVp]Ai(SlB3a&:!HQ^A)Yur`O4<]A#B_/'qhB.lqpK#nN(i4=eg?.:A/6X
+T?U$9pU#ZLM47;8HhVA?)J4`,S'Vl1(52"%AbJA:\P$3=0o3eOQQS+=!!m9:K^Ni-^f2UY`=
+,pX!6+W@TCS>K#=ZU5>_VLI-n#UGQ:bS=WK?k6l+Lpnk7e'Sts.3(ECd1=m5sGupgn^A`Vu/
+'nFnRH#9$\cW:Z$L6;0X%(Z!WVK;rB+^\nUdlj4'Inla%1tQ?q*)ulkS3tM=,U8[g0[t(<Pd
+!0@Z`J\k1Fj+G,VDik5+XR-E:da6<M**Z#n?$?PoL7M</sL]A<"ABXAPd>H3PS?4"'coi%BuS
+4'b[-l6LPlj#c9?0.BbDmbmH^K6nETn*Z3ShNVsUYL0*Q#IiUjGC)l"LSJ?M^C\tK.M@6#?A
+p/Ch4X87At9)+D!M:qgN+<h"qQ1YLWadLs4b5OTmDVCRsJ2pNG;3u.LNABf+V_dkM>lZQaT1
+kcsE"VgIdfX>Bqt*eHrdjES,dMTk:%OV\f\]AbZ&U1m?41;dJ59ql*]A*]A75\R`E<4Qi.c606L
+L*UqQM'BOjNMK;W"uDjS*N\dPaoqcM?OJCgo?'sI2mUuIcYLf[c&qr1L[TqKYR[0laE<FZFm
+Q'`*bO`D9@U$V]A;u[b^;5\X"58p3aS)MXQ(?E?#&T.bbDe/^94G$719SBiiprgY=G_H,XXIe
+V^B*?YmgafL$5[AlBsVqS5usMeLuN&SQN%:61THZD,nMo\J36[_[.&iLV]AF>?1b^cX9;jknQ
+ZMVGZZX;T)+e/]Al8oA6&D+:0*=)f#P;:.UR8!QgXQ&9J;:!^+2^+%)Q48m'rZk%.+YB@P+"4
+9-&sDSS^(OSP+L+/<:b]A+$(-`;oEbnT%/sAhLpW\;]AjL29(8ndFpqS;O)50.OJAbDIG:<]ACO
+021mo]A8=#L6u,]Aod"Y,Sj]A6QKJ._Bibc9'DLnIfk=CLH%1j"#4M*!QFL,ep7Dh="I8?F23]A[
+f$!A8EkW`d!MQOR\d#:R]AI;3M_=\0;Hf9)Y$^:)QF[R9d`>_<+,sBm+qF48dcgN`SDjr9)q#
+q]A2TF1\X5@K"3N[@TAW>XjAS+2A_%(A@+gM8/+``8k#SdH:e&+@&^_EIN#m^PG02_n5%ffc2
+9V)rlZ^HA.[>b0n'U&E$9kHD-'BJN1coHWCh>V+a172XT,rue.RJ:Z4O+qE(g>BpVt17W0m+
+tCMK&ko8"6,a`8#&ht9A,@C&p9fqXXqJ.3f%&D(ln:l-[AAO=T^bJ3bS4;hH(*@l:,7ZR*AP
+O\/0psG<#a)l&Ck"@YMCG]AP6^s<iB86jE/kRT+cPlQY8Il$"/j!T$\m[i]AALMf=m`%7]Au_ka
+Po0f$S<M3p`b?\L3bK-ALm"EG]AG[6jco_E;!\)L%,%=JS5D`]AA,h.FrVa.$(qL^TiSd0'Sl4
+=\XNI"o!R>N#d/B>H-'tYSJXYq>,5CD/(O^'N+1P-rEY5%l*M'_(4!sJ*DEQM`*/Z1J9m1Wg
+2rf4fO,WFA2iF)An'PV>k$#TUWd!ZgBgo[UX7gmm$6sK<6S^63NEFTglGB8,8\oXKFKi!/B.
+c8=XB3RKu8/b13,h77U1;<\A)"a#PQ&4"A&V$D(aZSN"Ead\1Vuq'^S]Al?oISCGkT5=K3Q,N
+BoM>/B#@f?si;allg)jFq11;WTF+N@;>$H"f*K`QuOQ]A=W&cBcJiaa^*RCYoP=Be/Y6n%q;.
+<Z]AP10#MKnS>3pTDW6l3`*bI,>.AM=>q;[p[^(#+Y4EOecQk2?62@,@Di+0]ADQDAe4'UobRe
+)*\N$`VtNE+piF#hj;+q,g_kuKMbmJ7k`3hQE3'3GJkD<[ttSP]An7_-Q=4X\-9K^SdjP:^W"
+Z\,U9:'tH&Vg9WT?,iUK_!hc#j:H2G'CK'`@On6o0Jc1*qW73rN7W4X7#fhs[K3""dWj`9PF
+ZFWpNm<NUn8ZQ%]AKoN"[%GkN[:`V3Ale6e8>M-KBm,#EV.J&AZI*p)-hh;%?R80E%)N%knN!
+KeTSe1Gi<inWQQ\"tte"&#o7mW9+ELiQ[aUhLO^>]A`4"EqK46fVhLP2#U+)QsrLD#(aSR=L_
+M9X?84`H"$aL]A88^Sj224'M(d6SGL\aAY&`'4]A/N]APK<$2[.ot`'("W7g4T=MNa-U\^3)hjC
+^L&)=rRd)s?+YeX1$.JPNZ%cS,3O\2Sq+YCd4CZ;oHtoZXsH.?ET[aO:r@OdF5$hGZY_!16[
+IS4$+Y>^a3\b#k(F<Y*/+#"ic/`&ZZesEh*b'Z:3_m<3eGuK19K.@A<]A)K\hl-QCEtfq2@-A
+lCC=TDG;O,$BcO(UVM\k$&[jPt_$l9b%in"+,R'*"o&X%u_E]AMi0:dFeS([M]A*N)4oK@#c-+
+%<k@ek[2s=cXckTpYN&b\EtsN[->,""=PeXE$G%9T8pnW7\%*?1Jq7PC5!8`'A1M#aspE@t"
+=k3(q8\nGC)IDOZB7!YVr7RL-+nUHB8kXG]A[:&tUG\:&ODO,".%2&eX#?lWoCbKO;,Y!-G^"
+0"^o^";C0R$3n;AZj*t,Q1FNm/KfR=1t+.VkDpE?&\f9NQI[Z'>uaN%IX:9VqG?>1C#p`C;_
+'%XMk[p8b#@Rc#4S/W;*rW^l[QMKoIQ^hRo1:t/91rnX;GOR3p,nQ\'9Cu/3L-Rd']AOkJ=U(
+]AnI;lB$t:u"N3<CH>@PRb6TCaA2lcU0Fd"9NX[SAPj2+N&j<bg^']AEajr@4^-j`b>d'nHRGS
+<I2u_:8+"EjaK=W@H^9&;`Gu._Ck^e5Q`P]A,4?@%sJTA&&-C4=.q):k/?K^e%K[l_aQGsGuO
+.2"r0ShZ1+BET:Y;8!!+]A@iGu6.-jcC/"liMpAUCCUYA)l_"F?b?;.)[9?WYPcX]AmoWC;;t>
+G`RlA";[L-I01[64ZIB9DI2Xb*(cf6WkA1K_,1#]AS,;C:a8,Pug&@t-.p#[Ies8lL;\QV-D1
+gnUHJc2ck"pW;J/W*6;oCs^i>NJ;0LMhUGV'npnL3+Xg;[#79s&u8Bo[3f"j@$-%q.J^lDj*
+:;61KbCdNT(M/cOk?s&TF4AGk8M!f^(_)*taiCh\!U>23?P9f64V:@Hi,SE>W(T`chZM#-!>
+K<,bh#Jp;,=I*[;Rd%G9%T%%QTcGob#LgQCiHH7l[:lbbN'oX,A/mNf1]AjSho2sZIb-EERV$
+DG3R5NCa[0%/i(4?>k^3O/jM48$5Xf-Z=W;d9]A>s+@Wrsn$71`WEJb[s;0[+MLa@Pf]AqIBm0
+Qo0_-2LgrN7\<Q2h4u?.I:?S`JcqAtM1d-U-pc&D]A<(p"p1C4D$(;V%V>b5VM%D:DdOM0C;"
+6%eC'`;u>fVPS>8F0RmETF2.Np*J!!J?Q-#W+1-JrWAL+D>/OXhjAS)&,U[OI3g2!jEi>DZb
+2m1:3/AQ%3^(Qm0U;hd;P'P,0egQFJOX+oDM-/0)275\G+X9TSZ:I!dBmd+c5i!WPON+fO9)
+sNa&3uS^(1^ZZ8AE>Uo)9C>d=R=p,#inuYEMGofVIXsP!cmr7PJ2L&lkUsT,,5fE*e0'0JmM
+!2,rD,WT2I%uC.[\?h%Z2/&A;L>a<RQ[RK>'4k0fV_,i8j!Y!PEHBHK:3n^:o=q)Bs60iB]AP
+&ND>A-&G>DKNM.4YY<5p:4[/lhJ=BmB,O-*JhiYgC1.e=CUSg#bFH5%9a!MBf\SfcGj87hC0
+*OCFlZFm`8\lg0m5J4nG)s?.'J*nW_as"m?&pE7X6aQHpCIVhZt#L;o;u\"A3(7;J9+,7,LB
+qQIS*3FoX7S#g(P+DiYhoA$QoQ=6NKn9RVF,]A+gkIjD2V,@Ndb>fIG/QRT]Ap&.WT:8aR*@=i
+F*oK@1B@);D'&Wqh33!6aC#qO#o4[k9Mg-<-5`Te.B1XbK]AjpZRPB*$`F>+ck3R!)\PL+#M0
+#/s56/jb2fKp'ObQdTGSHESj!U@r3MW:b:*<+=3BT@$UsA(@.<:Bq#(YL=E*$4a.2&Dg\rn\
+^)2P=V*>u#fQ<ZLr"'Ypgm4R88pVn49.i-eXs,Z(WQ\E.8.-#HM)9*?ZAM%;fNM=\D)TU8o&
+qZsHhJnH8aUtOe7BA]Ac5:n^C7NGhiOYTC&,klY]Ao8"AUbMc$^N9ZD'JtbeO*;d."o]Aqa`8ao
+\^eOHD#.R&QePW(8>m]A%H'[a#ujr2%+HLYSsessiudN&?SZr$[V>TC>@mAjHfe-g-NX.OT#5
+M^g5?afEJq[t+;Y?saVkO%#4R709BB*8cYPWV^NNZISnKZ.R.0e)T4bJ3bCS/OURLC_"A;`G
+L>)?da:\FDs5"%K1fSC;sn#UkZF03g*oLV>4'<;%`(_g*A2GR`u),#NZfQErdeB_NWh/\L:a
+!^e7[P_3,&QG54P+J^[uS\L&I?M.Kt`k&E"bGlE`I^ZOU)5<9VosS$_LO>-_6QSQ_c%7t_0G
+oPJ8j0NmTgNDBFN'tm4:O2;/j^qrZE[a3<L"%fdN)`(`lP2ql^"*tdI5ljqtJ2$nF@65H0l@
+f_>Qs_>N;^eq1=bKG>Sj)VEIfQM)dW2N)nU&Z4P?D/GSYYV%,"#mZU#ei?d0./^iTEYUs[&@
+PY"V:+fKuf[%pkQ@/]A!rqPqTHQV-WDMDa7,ann$^812uiro#t<MXOsU&fd2^1p3m224p;LEX
+r7rI9*D;R="f8er8[k`qr.ag\Zf9J<Z@pD=Ec\#H*@nE=B"d[8d!4[rimN@kPYQ..mu1RO"3
+_sE[83p`8ne2"Nh685Np[PB(M/st=&"d&B&2cMZa#>s280"2oB_N`U\SriRu)H>hq;D^CAQR
+l0_>XecR\:erkZp6o,@XtIXH+a1'\YbemLPar48`u[R]AI`n0aQ,Z8j`s"fm#s#R(:'%0//#T
+1F=R..ifn#=8Q&D@SS""Z_e',,DR0>:$mJ.dG%\AD]A5$23)'Z(_Dd(CoqHa/)gf-B0<B,3.]A
+7:iBJ1<LM+kt@u2"hA!(GLcO#s#)4nJ#/9LVp3s"f2`?!(-6lV7*hL2U\B6//)[YOND8s%i1
+F8A;sku[[f4dZB5fW"K0&1#Ij+%r[8!MQ0n)0irXXOX_/6eTiI>V\Ah,nb6]A\Uh'BmRl5rRi
+67?HfGlb3")_5OtMK*RL(r%:Gdarj+2h)t>nDmo"p\o,]As2+"A%SZ,N37'3`XDfmoi\m9Poe
+]A94m9jHHjWPm;^l^oUgXXsbUj3([&m[Z;]A"T?O=tREj7X.b';bA*7oShE3<d1"+OZe0j,qNZ
+P/gQ&%cMic9M_Zg9#b2Ej21G3jL@toDaLWVC8KP;SkLTa@$(l;.KIfGEd.D7\g/r<`%%!DA]A
+N6&1:A-[)-/DNnMVcFN6M*)]A_QSgDAW[3.`BlUQL^CR$cG)0Wd]Al;#*>QQSQ&']A?\>biHRO>
+&'l0guL#:CV4J5`2Zms]A!lRCLBfOXE$P0Gu*5c`M-S+aSM34@nknHd>.H_O?,e'6'j.X)$VT
+*c0??[?<d+\@\l50"Wf'lM+<8otc_5d#L.emF2PIVIJCGI*mRnj*,^Z]AV?QDGFj"8c16)=)b
+cC@Ydn"k^XCb_"I`JaPcn@6qoWiAAnI"OZ.WW[mSgB>Z"A/mkk+1qZ+qN-$RN$b,Zjk)/<@-
+;-$IAd,2W=c`R2^^37%C:fL$^oDBps7$p$4IEBtL#OG`92<NZ69om_M8R+7X$+"uEc7=<;T3
+)uc"2]ABZBAW4,3M/brV<d=hEW(BPL\O(Pj+'minN.N;W%I%WPM9tNYf><Un7E6m@`/tZuIu>
+K;gX3"mHh@;OPIRYqmYA$.^cG)NO(f3*MGO3!\BNl$No#5Rp`)o!W2)%S6r)IJ"Og_T.f<Si
+OXY,p:#&i2$(4FVT#nCi)0H>BfqEePc.&JM'qnt*db"]AMWm]A<T$(Y+G[=C.dOXjB''[e3OT&
+Mdc8S-UjLjJHP.1$TWUKJmYD3M-LAi`>rO>%oekm9`l@>UdX`E4+ZdLH#-CF5<74@n^Me1:]A
+bY)#dB7"ACup^k"dXb_T_<rcB'N7'/<6M\hg&Uo&V;X!HUp>A0E5_g(#Y[]AP?GLJ66LD5J9'
+&nEil6<21X/4IQW^sOMC+;>6-,n?V(08Lp.(VMkU7=[U'rN$KG"H[ne$8>tTpR<0oH:ZgN1S
+u,<j<>hL)<c.,)Le]ANs%nK#@RtO#rHfjInon]A?l9X`hUW+'VhD@"pWE9eP;kp.&?`_0^[?Su
+cnf=6PaiAOT_WR604IhYEG(&9l%5\]A*]Ah2?"C3@FYZf-D6mle."CK,W5/e@JN[+XoP^#Xr/W
+o!K2AB.:&l$=H`u;@n)>gu"`JFdV&3SGMW)3p8-aT8H+G[=*Ot<Y%b,#g;V)gP:DOCOMBp9>
+HUgbn%?7"4-#S%8VcQMj_8u4V((Rt#KR?SK5s2b75MN`:1<fd;LlrD(?kaDqe`=s/`$0eG2L
+4gHj#!GU!&GNu)c="t+C4_@<%^+<u:gEe3l.6\r)`#1[02Kf97@#'`M7GU=W\NJ@?GeWpEQk
+Ms`-=\L.#1YP7Pm##HLUK6UPbVr(Q#E8nPUKP)U*?!Q;n13mF>(C4)Y'jN[HiDag<t%_-1;2
+RLN<"lf/Pm056%>Y>RlJ9\VUm[SE19j$3(hm$p2(IuRdi+5Qr2@l[JMSm[CtjTom>&Esp5>b
+@g=6kYNYs4qUkRQPBWLK4M7#tT*bK`;Dn-c0D]A]A[_S'7-@hp?$[@FJk>3bnbqVUf:I/*%2D0
+/L8`E<-Pk'AK/"AJqb/Aa$2$Il#:59hf=-Y7;GS\VcVHo`+/7K>8OHR\qP-SpBi>r(P,pb)*
+S-iF>8l;@6"5nb<+977\DUVV$0i6Yg\E$[SAFXKs7p8^Mep8Ol2u7I*1LP0Y*,pr\LU=Mh<H
+ScAZOub[*S,JU@!g\YB[J;[U$RKh:4WP4PSHkeH@+**fG#DO]A7t>;9gE>ZnW=&$fY)jT#Xuc
+F;l/,n@125AMFs8`"XpEZ%8V@lBK*hQlP*RcF79:a:dNOo*02WCSY0)'>r9u#Ugn)"66?qUR
+A"5"S6*A":KfM-uNFtC'E6emA4XIr]Aa:g>-W)\`HI%m<Pk5C@2`R=eXE1NGmnrU%f;dQEFoh
+4bt?Wg<=/!k]Ad]AND3HO0snjSY(dOC2bkls,V8WhoLkPi69GMeCPs8Lp3&R3?X1YdPU,.i#gi
+PYd;2M2=S;K;tY$V9O^XV#9XmTaNqK.jhoN2RppB[mtt[;Mgq=X+i60i=Q<R3_!X0.+#Yd5"
+X-ZdfEb8N!sgj>@CGku>32OcVHUe:_Y;,+h&M%1c49D!n;MBr,s"qCL0dSJ<J&HPB\eB12_Y
+EQEDYEC=q0#`$/7#atXdlpF2_>4U#h6'RVq7PBK^gC2KF>T;L81Uka>A(X<]A/mIZ4JS86jS!
+_Z]Ac<2F=-t:cY!J8`10$`2'GpM*FlAf+*;R[d9W(fAIo&7EU<d^oZ;2NfbBo*lmb^cmMK@nJ
+jMr$TK`U68mT75@*%r"-NL7XWi(BRqsot&ateRtmW\i(&-ZAhmiQ/>ZT;LLo.>X^]ATEqP6!D
++%sCe8(1CI/e*^jNb]A$&5\?1LH>6+TEXj`L3PNr>g5sW!\'P?&g!li,[2iZk'euIo1k5VJ`'
+#"]A2%""iB:HZ\$uD&[t>dj5gZo%&XIE#ZAn@hYo(s#Pi^K^;tt/)X@T]AualEiI8XOp-,T36)
+[bR@]A5aR]A,@O<G4->Nk=*i+bO7pnQ#=h1VF_0#V3+0R$>nT?+@-tA[.5f[XQr4$mRSocDPC/
+udV2H$j5+s`s&QI;Jt>P[1@-bWs'OK_cK%!#VoY)RX18fhKB@s,^Z@EfDn(,[V/NC#L"L)2I
+qUc=QemJZekft?g6QX2WIf==&*m?u<WK^S.MPm=An*+e`GG#Tre1IQD>A+0?^,i7sEQjZ4Aj
+Q59e,PftK.5shORtYS'U6"-W#jM$E,2"7gmc$YZTI),.1ZdoW4*@>lYf&6K":qAuXHd>dWr'
+DXF#1e(1dPYnCY@N2WO$2L)CBd4Z:"e9$oN2r2(u)$/2)D+mjW&,9,;O0\c?-Lhb*+BMU^sL
+%o=DQAD1qL'l?Fu#pG.*QQGsD+-sFlZEoJX(8^8t8Qgra,1.$9BiI&$^5ci8?'%Br"KYW.1*
+M]AiGna`,B-0drpA`2D"W6UeMmubog`LsW2SE#*j,32C&IB+B)O7B$jtr^"7-6.FeJ$n;SUan
+q,]AYBMH'F@.[tl32Yp0pYBa']A1V5#N*TF@<orf151q_Q(ji#BB+NB*;IP&)TO_&"+b!o0LqK
+O1iS:/.$Tk!jHoCTFmkmV`]AkmKJPM9nl$/0OrD!:0kB1$6-[sQ#;!nJs@g,/(>J@jiTfbjd5
+*/Bt(4cCS(;&_"JuV-Wt>+-uFFX$n=h7<)W(cnT9#HWgO[7_qWFM^99s>KFWVLWZG*BM&CJa
+ra'f'8fX3Rem1cE_]A&2?/*NERmib;`YDh]AGOU<9;<0?B0H9=SXo2j6(h>T0<`dIbHrq<#F/N
+3RW7-XTE@0JtE@,*P@k<+0cdCZa&"bGs[RAufsi$pLE3\f<Ha:cgoe_@\U6V*VPDn:3>\:"Q
+;JQ,F\R82(W>]AGq(WrjDML:u9337gpB;W*VC=fWrk02[#?!FV['\WR5Z@CUta$7sH&HO^^D+
+2@^fY+P3SZZZR_bp$8djo3gXWSM5D4!`<KI44F3=X0]A9kT,</(/&0A5Sq\"*k)<4^:Du#hdU
+Y7:5bnXQM"\'`M>E-N8InSa*:sJQ_@8F!6dGV9(d+:,J+YIjMPY@nIbS9bK[@mF[jqj%,8C6
+3@ncdDod`S2b7q)*G)h)L1+gL"=u;*9f2%LO=M5ge9I7)Ub\k,VDm8n)9[_W+>A_#DgL"q((
+(Y+B?J/f?:_2Q=3FF_p"S/dh_oYdCBA)[8.T*u(7;_k!9$`*?ZBWBomE,^i=C#@Zc71%9E]Ah
+Bp,C?B:H"7P./MGpU+&@mj^Z`lY-#RI6N`rLT=TBR8gRWJ?ob!BCFr><?1DE?Ea)#o;hi3D'
+F(Pg)lR8%+Q#&e;AsjQ@+ogWdld"hI!u1fWQ</*W<]AWl,5j1iSKp]AGN*A`m-C_$OQO-Wfp4E
+0H7fT>tkSTF3[3/WKr$CoEC\.o[dO\8+(_'!UTbtJQK>04qK;NBi+_\%J"9QqU,pT6i@tlCs
+roDA"(:Xs3=5ns4S?IrJ!eS<$qE(f]AARPt2JEXi7djsohk*/_Uj2qp1OltIF`%J=><U43uFG
+]Ajl7d7I>S!E!U;U0H&C*5YX/q"q)h:^/[2R\PsE!b<!*8J^%f!?\*j^!#7[e!ak9m#Ncc7"a
+RZ`qY7(]A?7_Xc5fVh-KLg!,9P!g9'd$Z#3*S3l-mq^7V"Hi2,.4O'ik;Z6*&VQgc;kD@pTc\
+OY(T.45I$V'rP%jr66a@+QG)@QP/?+glFN19]AL@P3%IP9,uD5_X3H%,s(g)LmDjF[)b+M*pj
+l:H]Ar/Nc&sA;Cf!ER9+YF2Zn=a3+BIf-)u'P\23ii^lDZ"X=G`0Ii2@BoV=)G\TV&7j#F584
++1'=Ia5Vg@R&`r'=0YRq9jb`;$AnJ#LPJoL.-8H%iQPPs&r._[B_JZ6c"L,<\$Akf[;MK_[u
+hJc,Z`l#lFK!<AQ-R^$r;G4)*,?,&uX(jM4,jW>PInUNh`TE'o(8*nX"<!\/(G*E(n/``.]Au
+8]Ap%`'Rfqs*^M;&.U(>FFW_,^1[@5a/Mc%7#`3iYoPrqrF>0*bj.co@`p=JNgR4e6se(`ni5
+DO5'#gum,SP1gcd0Eru>80M(O&;sr,9:Q^^l9#NMetOfS5BE1C,_W:W`WXD'<er!e'@*P=bp
+pI9hR>b6&LOH,GjG5?':9XM5O,'2/s]AI78X@"O7t*j:bAVTjq=G7+k:[C;jGQhlVuBAo_8BX
+V55MEA;3`n!/c4tp_%6iR\:=S=aYirV`lFj8[0Q-Jt@(qK<#^?2<!RS[rI853fHp^PN7qDgn
+>=CbM5-o$U:@9-s,JJ'-c-]A.Qlp/Sf=sj78/AkYb#FMb(.,\<b:"8VK;LL"VHK*pPARF(Apg
+"mH;Ua>IsO<Bq#/e3i^RO8$,4/`'QY=YN:OX.K#H[NShB;?@Cu^r\oe*-0!l*otWIa&#_\Tm
+@`s!!lA?SlG3MNeoZU9B=.7T%`$tGnaEio;!0pZTSd/m1'kCiiQdlIEmNV_s*AaP<FAcoIi+
+f:oNK+ZDAF6j-<chdTJ-[A$Q:.#*JkU"7PK4pGL'Ls'n0=OCS:@#"Lh`T(O-"^WMq@\3"d+e
+qnb7IP0E#Wb="I(+D^Nalcb>36lj\H?dU[R&c8FqeqTqi-`I3BS:^VWYpRq[ebI)/j',=U[t
+n[o_icUOMED@m#)-lfNCgIJ@.j<`9<^.f:%1$#&2X%<pX.#[=M.G]A-%`hBF"--q7UN>eh4uu
+R4$]AAI@=T_ORCXFJ(K8Ba7mPU/C."?op'GnedsBDp_Gqk&jq92(^>.W'IMj`dGCRNq#ljPYp
+&/qsf7G).9GZ+'OafLK"&jU9';-\u1km1\9E>n/QAh#e+`[Q61nIHXV%\nWb.:5ke9j<<s2G
+jIiKDK_k,%:XGW36&i/k,V9a21%8;gK>ZYDa@#5>`h]AL+P$%u%qsGTSTp+L3+ZbXKPVCM?Tu
+^;l]A)>`,O^d>kDeX=Ml]AD,&nNOiInto+DQ]A,q\PVC)ui3rXLFq.Cr1Qm4`U\_dTO^7A>g?cQ
+CsAV_\l<]Ad"nq;Mr:o67GQb7.lhNI(M%.mdZ8iHe3Efg/BtjGjOb7L/ujo5_No\BR<?j%uQm
+,'d6>p%n8b,Yuj.8+Z+]AR7?KQr+imh5='m'&dP1G+J(Z2+MP;Md)KMVbjt:Z777l+n1N*ncr
+m4;9%*Ls2A/nS%"BLt<dOuA.Rg6t*$o\OpF<QbYc.Ka76-a]A5qRo(a7NX)NJ/PPRm8u5<Y4_
+_QEU,q)X6KcpNo"-ei;$^@Q1"QOjKgA3SOl+;7Ju(_6BlXKp<bbqrqHkEr.d4M7':A##ePF=
+QPJR=cM&JmQ`F6;"fLb\lc@D:IuPNL"_+Jc00?(?K1/t>lf6ktLdBc?k.n-mKGKJ,97gEb7A
+Q+mo!32+&;GlR-,oolJn!"Fo%%F_PM7bb?bIP8D*/!_UPJ>Vr8nO^Hhfu^34%,VmM@!kK.f0
+tLLV\2q&t[`@+&g;\e5q.7.@F=cK.nB8rEBS;bPqg]AE$Z,G=38P:Q@,liDToXAG2!$+/TrGP
+-^Z"U5pKCedJiSoFP5@a=XaP9rP%5"L:&-R!99"lkmQ+C8jJ5-O!MlJfg+Tctk?I'&/CGSG1
+%O\l22JF26jBjpb]AqNn!5%L<-]A4WQ253^-!r7em-A5YGid;\l(']AblD/bY`m(S#o>qbMUC[t
+EVkH>JR!BS3HO)A>ri!(Op,ceY-$uQ!mHhD#M6_a^b>WLh(1`FQ5<G<WL9JH)2h:0k8l$q(*
+EuTAp"%B`,>:R<2$Nf=:5-ha8jt;q9e09s7o!O[,b/p-VY=$*2o"GYb_K$K54aJJ"A:BShct
+P]A*n[n-$j\@9@7t!d'dPfZ'&!%(,M)-EcF9)Qi\(B7Oli%\&80+V\&7%k1%nTnPhlUd5/Z.l
+4h4KE:`#.BAnLaCOW\jCFk!/V,h#,=OEj<^qCmOj^3I'-8a\kOS69c\8,cc^Hdr=<>*Qa:oX
+"tCEq&]AYI7m4:%fX"/mTia/5&T(@lD051#7,GX@Slg2LRsW\2)?Q0uFG&&NSuU8o:ESR)&?'
+?:M+o"0&7mq=6WPffH%U0sVnmi_^+5H4+=*RL\A%GK51tSbP>446hXi7#`Q%dY]A;HiRV04(H
+M\jMu`.[-XgW)A9Rsh,oD#Lja@#q/@J(GIr'=r-Mkp2DL^?OZorijaj?-lBin>7P0;ZT@F[2
+2$KL'`KuYYjYrmGg3(8JWGA/#QW"YPs<5;LYhePH;L&T<keg1NSmifcDls"1"F0%e[fW,j3/
+PL4LQ=2(6!.^pKZCZ[I-Os5j:1YZla,FcN).aRsO2r?:iZ`0(=\&b1!>G*!_36t-KBP"D5!@
+HPh$!!W;+3\FRjAH*I#L/\naO9LhVEH0AP]A)I+1l><;khmR9CCU@S^4*sK)s=(.[=\DC49J@
+3nVuQqT6J<HT5.0"Xb/G\X;-,*j5J/2f^1A#H$T?N^Y?I?%uP-S85L@LN(lU^.)UXk#(g\5K
+6$(73*mKTKm,?RTJgcJ*q#GNF^V9kq3[NCrpKFgdt,JP?beH?-tV5lAm4$B+7eJafE#gZs?&
+jRRD$^k0+5\W99%0--sH9M=C#PK9s7LdGrCj-.gPbpFr]Ao"nnL+-5c;u5+O^PW*#0pU,J*&I
+`Vtq`Ge4X7r`^H0?:r/3n[jd/"OpM?-Zb"g\<]ATqh=QMj/&b(]A2H,f:\DjM(X4$`rG$uk$D5
+BB_-cHGkQ91S?F=W3g"J8sE(U*X/L*BPTYFK;\:U8Y_OF4FeEG/uk+\?0>NP7H>I"Vej;[rq
+/dS1UY'Ql/G(otWra.f-]AB%-Te[6fQk*_quoaI[ZXARL5?D0N;LQ72uWY:X!8ME'E:9G2-L`
+WV8,3gof=-1brB_:?E(d-_&M1:Sk^Ud+h9(`N2l"Jqo^e9h@KKrHEDDRUQiC4Ht9YX%Mmbri
+fSD=#%q<6#JmFJ)E(o/F"&mIc65S_BZe!j3)_'TrLkPWZ^Z_ZgVEscD.",M6KB-l5PF'*iO9
+Kj+85CIoCd\$(j7aI5pKK=4p\!k%`3*qm%^eBdgDI<mJ=+B/^R-m9SJ`[Qa8GHnLO"tFd.RZ
+hU4s7F?X=dPUYh%VWq;S(P]A4)bS6HOIE*)I$hS)ahsJNtMN@;3DDG9!P((,/(@0o*$5>0*h<
+IdQQn'rX^M"f8.@k:+Y##Ya=[$cMK-Mi,&eaA>X%*1qutr5?ZL6lBDH9*(o5&UYFjIdXF\L>
+2uD[#1AU5Wi#H<@$Z&5^igfbqVCOC-^@:MHm*Mm;.Y[Xg^Us4k<KY\BOSqL1R[9c=(ofDWL$
+C"[kJlOm-qgi3U+QcY[j2VXl<H+Gt]AqdL*LVr#eIB/rZ9Z,9*16/Q@u?GL#,eDLIr2"TToBP
+S0SS0L_3l[EH!+K"<E]A-!"j.8:,@Bo\?@\]Ab:W/roc10cIPm)!Z3'$n?C5^D%7F,.7XPpXJW
+^V%4L9IAdc:MI[/(11j?f<G\2RPM;+bhj1CrP8.qh7fb.Ma"ZhJXYNW9BqBTJsQauJsFrR=6
+@[Hiaf?[kXE"Pf-Xp>R=aVF4%P%cBJ.8![f%_uUie_ocuhfnPLgX(;.e&M*<IZ>+4'VH&C&c
+k6NN,'Nk4h(IVksX!C;C(b[1^PWs53u<A3_@L'n-F,gZJ"1Qj>gk!RZ"b^dPs40''h[.9F0p
+_PREgMOXo1MPp?+N\K)Kei`)/_U$ccg4cH.e&muj+2&5Aa#:m'0$-EBmkrUt*6)9A2ORJAq$
+lW\c=]A%ZUW:0515JDM=rniD#)G\F.K\[i+[?I:'q/=P6q(t+c[2#8<@H._Y<Y6TTp57"BrcR
+kmT4hejh\U1M#NX-rSj7l!;8Mi<k`'':.fB=P\L&-=#GXEcR7]Aq:"B)1TYmE==O?kI"fSKf(
+0!.d?&eX2+jCQ_=!f\jUPA:B,"e.umlIJZn4E,90%^tGnCVdIE3#$^X^'a1*-Z,F!RI66B2R
+]A\rm'T+C69(7U,\8+SQ\+&.F9^;$E[eK<4$+)tb]A#)^j*c[V!'dVk,1P)2A5pDO.Y_]A<7$Is
+V7C^X$kdqg/mnWd!6Zl:fhT_124C`@WE6e%Eke/6R[p0e#^j'85V%Yu8dB.To)&n!K]AD(E!5
+5tTZq5:oucKtN+mXIH>:Q3c]A>gR7>,1$nqNSnYTF8e"i?)C4;#K%H8k7ZRM>]A7n_`R6VCTr&
+HD&'1Os&un[0gY<TELl1V-*OWd`"g*mG9S:sr(gX]A!IKZ%H\/$S$IL&a,M4RpU*hu8EaO_>j
+RPL#+HXg3gKMGg+r!O&F$'P(Bcg\GR_\6;";2ehW#YWkUZ[IPgKd@D"=GK^o9LMF,3N\b>#K
+=WhPac?;S5![Xc?\')OLk3/k5:f0R*7)L7c/[6#DAB@p1)FU#g]AuG8dqR5/`.XWcZjQp]Aog_
+a"YYhW*te1*c/9`,nmH%7pQ9.2,df)>@CY7,3eFu0rC`m8)H%-#rkUhDRoUOqh^3D09+4FV:
+c=*uVbJTpd/$h/\Nik<GEad3^=uDImLr??0l>OCT6ELah1'WUZs>Bqn)*(cDdR6\L([E"9A8
+BV[9eZDlZ>kQK-X[!AOCKF-s&>^l(NbieG^s58MVL*4H+O>,*lZ<(A_mcn5!BYP`[Vpm(a;0
++hTb:Q\JrF7T2^Z)N>Z*=CeB6O\)_>2'e@;LF+F/UD*uoQ@)]ApfA0hC,6-Z9mDR93j^1C[`V
+"2EYK*[&5ZO?eEajaP@T?E$KlA`7M`2;&hpcXjrs/J9l2APuVK@E&(0!>1]AsVC&mD`D%=V9B
+WpZ85f`[F5&?4o@1rf/.Jd[MJSY?QZ?/e6<\cTAkG@WL"AW\1B6"JLjjC9/g;LGgH1OLqP4R
+aTGEF6HuP2'c10.=DV3c>B3u=?=q7q3G1&"H\"$@.J-%V-#FVs22<u5Q=4\,G\M;r@fB9oC`
+'`pAclj$JfJ@'[fYlGV=Y`]A]AA4>UL]A:3U-3^*`V*D@kbR?/5ZQ"5:qjJsGJ#e5J0kh8*CW2c
+*Q^@?3H1R=nDD-mj.0P(R:po/Kq6,Uq*(%*9:*qq[1"Fobqgb,UEB`TNPT]A+!5h4V2M8XPIn
+bL<YcMN?;B_g$f@6TEq*NIVbi@Bkp>8#r`6Q2oO$0g=clHR[?AS=fQteAb7j;`'@1Z4?pnV>
+V=]A:\F2dFUEkU;O"[u%)*@MJ[[7KJqR9Hr_T#&3B7CTQ-\7t?::BpKQ:iBEA`VNm+n_:aaAO
+(WF^k?kh_BD997C0_u*XETnBp6gQU99dH^eP4QXgK+cdQC!bPpo:iM1J["%(;\IQ.\tdqNdU
+2%&S;fo/mB%sF(MA_ZM-p%a]Agk6-D&TtUfH9\I.u/CcOOqjkFN6")dQ+>L),:T^T"M/GW'(L
+V@^pO\9.!$gR5$nM`8]A>Y/_[,XmOpTgPsA$h4F+u;%4gL652s#=)9M`rrW~
+]]></RowData>
+</TableData>
+</TableDataMap>
+<ReportWebAttr>
+<ServerPrinter/>
+<WebPageContent>
+<ToolBars/>
+<WebPage isPage="false" showAsImage="false" autoScale="false" tdHeavy="false" pageFixedRow="false" pageFixedRowCount="30"/>
+</WebPageContent>
+<WebViewContent>
+<ToolBars/>
+<SortFuncCheck check="true"/>
+<ConditionFuncCheck check="true"/>
+<ListFuncCheck check="true"/>
+</WebViewContent>
+<WebWriteContent>
+<ToolBars/>
+<EditRowColor setColor="true"/>
+<SelectedColor>
+<color>
+<FineColor color="-10033153" hor="-1" ver="-1"/>
+</color>
+</SelectedColor>
+<WebWrite SheetPosition="3"/>
+<RptLocation isShowAtLeft="true"/>
+<UnloadCheck/>
+<ShowWidgets/>
+<OtherAttr autoStash="false"/>
+</WebWriteContent>
+</ReportWebAttr>
+<ElementCaseMobileAttr>
+<ElementCaseMobileAttrProvider horizontal="1" vertical="1" zoom="true" refresh="false" isUseHTML="false" isMobileCanvasSize="false" appearRefresh="false" allowFullScreen="false" allowDoubleClickOrZoom="true" functionalWhenUnactivated="false"/>
+</ElementCaseMobileAttr>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR/>
+<FR/>
+<HC/>
+<FC/>
+<USE REPEAT="false" PAGE="false" WRITE="false"/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,5295900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,12725400,2743200,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0" cs="9" rs="20">
+<O t="CC">
+<LayoutAttr selectedIndex="0"/>
+<ChangeAttr enable="false" changeType="button" timeInterval="5" showArrow="true">
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="PingFangSC-Regular" style="0" size="96">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</Attr>
+</TextAttr>
+<buttonColor>
+<FineColor color="-6710887" hor="-1" ver="-1"/>
+</buttonColor>
+<carouselColor>
+<FineColor color="-8421505" hor="-1" ver="-1"/>
+</carouselColor>
+</ChangeAttr>
+<Chart name="默认" chartClass="com.fr.plugin.chart.vanchart.VanChart">
+<Chart class="com.fr.plugin.chart.vanchart.VanChart">
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-3355444" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<ChartAttr isJSDraw="true" isStyleGlobal="false"/>
+<Title4VanChart>
+<Title>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</color>
+</Background>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-6908266" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.75"/>
+</AttrAlpha>
+</GI>
+<O>
+<![CDATA[热力地图]]></O>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="Microsoft YaHei UI" style="0" size="160">
+<foreground>
+<FineColor color="-8355712" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</Attr>
+</TextAttr>
+<TitleVisible value="true" position="2"/>
+</Title>
+<Attr4VanChart useHtml="false" floating="false" x="0.0" y="0.0" limitSize="false" maxHeight="15.0"/>
+</Title4VanChart>
+<SwitchTitle>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<O>
+<![CDATA[热力地图]]></O>
+</SwitchTitle>
+<Plot class="com.fr.plugin.chart.heatmap.VanChartHeatMapPlot">
+<VanChartPlotVersion version="20170715"/>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isNullValueBreak="true" autoRefreshPerSecond="0" seriesDragEnable="false" plotStyle="0" combinedSize="50.0"/>
+<newHotTooltipStyle>
+<AttrContents>
+<Attr showLine="false" position="1" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${VALUE}"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##]]></Format>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#0.##%]]></Format>
+</PercentFormat>
+</AttrContents>
+</newHotTooltipStyle>
+<ConditionCollection>
+<DefaultAttr class="com.fr.chart.chartglyph.ConditionAttr">
+<ConditionAttr name="">
+<AttrList>
+<Attr class="com.fr.chart.base.AttrAlpha">
+<AttrAlpha>
+<Attr alpha="0.75"/>
+</AttrAlpha>
+</Attr>
+<Attr class="com.fr.plugin.chart.map.attr.AttrMapTooltip">
+<AttrMapTooltip>
+<areaTooltip class="com.fr.plugin.chart.base.AttrTooltip">
+<AttrTooltip>
+<Attr enable="true" duration="4" followMouse="false" showMutiSeries="true" isCustom="false"/>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="SimSun" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AttrToolTipContent>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="SimSun" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<richText class="com.fr.plugin.chart.base.AttrTooltipRichText">
+<AttrTooltipRichText>
+<Attr content="" isAuto="true" initParamsContent=""/>
+</AttrTooltipRichText>
+</richText>
+<richTextValue class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+</AttrTooltipValueFormat>
+</richTextValue>
+<richTextPercent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</richTextPercent>
+<richTextCategory class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</richTextCategory>
+<richTextSeries class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="true"/>
+</AttrTooltipSeriesFormat>
+</richTextSeries>
+<richTextChangedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</richTextChangedPercent>
+<richTextChangedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</richTextChangedValue>
+<TableFieldCollection/>
+<Attr isCommon="true" isCustom="false" isRichText="false" richTextAlign="left" showAllSeries="false"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="true"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</color>
+</Background>
+<Attr gradientType="normal" shadow="true" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.5"/>
+</AttrAlpha>
+</GI>
+</AttrTooltip>
+</areaTooltip>
+<pointTooltip class="com.fr.plugin.chart.base.AttrTooltip">
+<AttrTooltip>
+<Attr enable="true" duration="4" followMouse="false" showMutiSeries="true" isCustom="false"/>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="SimSun" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AttrToolTipContent>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="SimSun" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<richText class="com.fr.plugin.chart.base.AttrTooltipRichText">
+<AttrTooltipRichText>
+<Attr content="" isAuto="true" initParamsContent=""/>
+</AttrTooltipRichText>
+</richText>
+<richTextValue class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+</AttrTooltipValueFormat>
+</richTextValue>
+<richTextPercent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</richTextPercent>
+<richTextCategory class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</richTextCategory>
+<richTextSeries class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="true"/>
+</AttrTooltipSeriesFormat>
+</richTextSeries>
+<richTextChangedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</richTextChangedPercent>
+<richTextChangedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</richTextChangedValue>
+<TableFieldCollection/>
+<Attr isCommon="true" isCustom="false" isRichText="false" richTextAlign="left" showAllSeries="false"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="true"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</color>
+</Background>
+<Attr gradientType="normal" shadow="true" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.5"/>
+</AttrAlpha>
+</GI>
+</AttrTooltip>
+</pointTooltip>
+<lineTooltip class="com.fr.plugin.chart.base.AttrTooltip">
+<AttrTooltip>
+<Attr enable="true" duration="4" followMouse="false" showMutiSeries="true" isCustom="false"/>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="SimSun" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AttrToolTipContent>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="SimSun" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<richText class="com.fr.plugin.chart.base.AttrTooltipRichText">
+<AttrTooltipRichText>
+<Attr content="" isAuto="true" initParamsContent=""/>
+</AttrTooltipRichText>
+</richText>
+<richTextValue class="com.fr.plugin.chart.base.format.AttrTooltipValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+</AttrTooltipValueFormat>
+</richTextValue>
+<richTextPercent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</richTextPercent>
+<richTextCategory class="com.fr.plugin.chart.base.format.AttrTooltipStartAndEndNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</richTextCategory>
+<richTextSeries class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="true"/>
+</AttrTooltipSeriesFormat>
+</richTextSeries>
+<richTextChangedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</richTextChangedPercent>
+<richTextChangedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</richTextChangedValue>
+<TableFieldCollection/>
+<Attr isCommon="true" isCustom="false" isRichText="false" richTextAlign="left" showAllSeries="false"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.base.format.AttrTooltipStartAndEndNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="true"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</color>
+</Background>
+<Attr gradientType="normal" shadow="true" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.5"/>
+</AttrAlpha>
+</GI>
+</AttrTooltip>
+</lineTooltip>
+</AttrMapTooltip>
+</Attr>
+<Attr class="com.fr.plugin.chart.map.attr.AttrMapLabel">
+<AttrMapLabel>
+<areaLabel class="com.fr.plugin.chart.base.AttrLabel">
+<AttrLabel>
+<labelAttr enable="false"/>
+<labelDetail class="com.fr.plugin.chart.base.AttrLabelDetail">
+<AttrBorderWithShape>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor autoColor="true" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+<shapeAttr isAutoColor="true" shapeType="RectangularMarker"/>
+</AttrBorderWithShape>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.8"/>
+</AttrAlpha>
+</GI>
+<Attr showLine="false" isHorizontal="true" autoAdjust="false" position="5" align="9" isCustom="false"/>
+<TextAttr>
+<Attr alignText="0" themed="true"/>
+</TextAttr>
+<AttrToolTipContent>
+<TextAttr>
+<Attr alignText="0" themed="true"/>
+</TextAttr>
+<richText class="com.fr.plugin.chart.base.AttrTooltipRichText">
+<AttrTooltipRichText>
+<Attr content="" isAuto="true" initParamsContent=""/>
+</AttrTooltipRichText>
+</richText>
+<richTextValue class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="false"/>
+</AttrTooltipValueFormat>
+</richTextValue>
+<richTextPercent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</richTextPercent>
+<richTextCategory class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</richTextCategory>
+<richTextSeries class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</richTextSeries>
+<richTextChangedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</richTextChangedPercent>
+<richTextChangedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</richTextChangedValue>
+<TableFieldCollection/>
+<Attr isCommon="true" isCustom="false" isRichText="false" richTextAlign="center" showAllSeries="false"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="false"/>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+</labelDetail>
+</AttrLabel>
+</areaLabel>
+<pointLabel class="com.fr.plugin.chart.base.AttrLabel">
+<AttrLabel>
+<labelAttr enable="false"/>
+<labelDetail class="com.fr.plugin.chart.base.AttrLabelDetail">
+<AttrBorderWithShape>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor autoColor="true" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+<shapeAttr isAutoColor="true" shapeType="RectangularMarker"/>
+</AttrBorderWithShape>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.8"/>
+</AttrAlpha>
+</GI>
+<Attr showLine="false" isHorizontal="true" autoAdjust="false" position="5" align="9" isCustom="false"/>
+<TextAttr>
+<Attr alignText="0" themed="true">
+<FRFont name="宋体" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AttrToolTipContent>
+<TextAttr>
+<Attr alignText="0" themed="true">
+<FRFont name="宋体" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<richText class="com.fr.plugin.chart.base.AttrTooltipRichText">
+<AttrTooltipRichText>
+<Attr content="" isAuto="true" initParamsContent=""/>
+</AttrTooltipRichText>
+</richText>
+<richTextValue class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="false"/>
+</AttrTooltipValueFormat>
+</richTextValue>
+<richTextPercent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</richTextPercent>
+<richTextCategory class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</richTextCategory>
+<richTextSeries class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</richTextSeries>
+<richTextChangedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</richTextChangedPercent>
+<richTextChangedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</richTextChangedValue>
+<TableFieldCollection/>
+<Attr isCommon="true" isCustom="false" isRichText="false" richTextAlign="center" showAllSeries="false"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="false"/>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+</labelDetail>
+</AttrLabel>
+</pointLabel>
+</AttrMapLabel>
+</Attr>
+<Attr class="com.fr.plugin.chart.base.AttrBorderWithAlpha">
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-2171170" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AlphaAttr alpha="1.0"/>
+</Attr>
+<Attr class="com.fr.plugin.chart.base.AttrLabel">
+<AttrLabel>
+<labelAttr enable="false"/>
+<labelDetail class="com.fr.plugin.chart.base.AttrLabelDetail">
+<AttrBorderWithShape>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor autoColor="true" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+<shapeAttr isAutoColor="true" shapeType="RectangularMarker"/>
+</AttrBorderWithShape>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.8"/>
+</AttrAlpha>
+</GI>
+<Attr showLine="false" isHorizontal="true" autoAdjust="false" position="5" align="9" isCustom="false"/>
+<TextAttr>
+<Attr alignText="0" themed="true">
+<FRFont name="宋体" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AttrToolTipContent>
+<TextAttr>
+<Attr alignText="0" themed="true">
+<FRFont name="宋体" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<richText class="com.fr.plugin.chart.base.AttrTooltipRichText">
+<AttrTooltipRichText>
+<Attr content="" isAuto="true" initParamsContent=""/>
+</AttrTooltipRichText>
+</richText>
+<richTextValue class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="false"/>
+</AttrTooltipValueFormat>
+</richTextValue>
+<richTextPercent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</richTextPercent>
+<richTextCategory class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</richTextCategory>
+<richTextSeries class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</richTextSeries>
+<richTextChangedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</richTextChangedPercent>
+<richTextChangedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</richTextChangedValue>
+<TableFieldCollection/>
+<Attr isCommon="true" isCustom="false" isRichText="false" richTextAlign="center" showAllSeries="false"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="false"/>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+</labelDetail>
+</AttrLabel>
+</Attr>
+<Attr class="com.fr.plugin.chart.base.VanChartAttrMarker">
+<VanAttrMarker>
+<Attr isCommon="false" anchorSize="22.0" markerType="NullMarker" radius="3.5" width="18.0" height="56.0"/>
+<Background name="ImageBackground" layout="2">
+<FineImage fm="png" imageId="__ImageCache__7DDCB33C1D9474D58B67865B8DF04109">
+<IM>
+<![CDATA[!P&5#reXHH7h#eD$31&+%7s)Y;?-[s&c_n33!]A]Ag!!)NaW!<;&!J!a05u`*!m?FkN_a"Wbo,
+8#G$j\#m_?+0KKFhqJ-k*`k'+_q!L(Ig&6-:4A@UW_2Kbn-qq?D/1<3>?cU+LQ;QDANS?>`.
+)99q'JpRU\mm5Tb]A*ZnFM]AQOD1!;da="+Bs(3g0_0W\k'2XTW)edi\j)BaBdniR[^-aN0+@9
+^QC65*+9;+DD[aSUeLQf7g#.oc^.-+HO]A4`eFoBAb)/$8UOOK4?mCl#n;BZO,O5HJstaPE,b
+Y>crU3^6@VCiqM89JK@!\]AI2<jY0aGf1B(TM:)DE.udS&&$,K'%S]AOUm;U"C@rjKlZf^AL]AK
+(i>T]A`onPo8>u,O)oT[!mbdIh[A@5r36Hf8X9@.rk+.0u]AWedM-2*>(R5@*hpSE2"lW(7OH<
+Mt%,e3A^Tt-R=#[R]A3R5r4o_ha!O^7#f?jji'8OO\QTUn5n:)qpr1.rggUh3<Ma:;V5n<sNV
+.C=29W'rVM,X"tuVQ'IW"Q'Kn7dk<$[V8!cp>o*J@!!#SZ:.26O@"J~
+]]></IM>
+</FineImage>
+</Background>
+</VanAttrMarker>
+</Attr>
+</AttrList>
+</ConditionAttr>
+</DefaultAttr>
+</ConditionCollection>
+<Legend4VanChart>
+<Legend>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</color>
+</Background>
+<Attr gradientType="normal" shadow="true" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-3355444" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr position="4" visible="true" themed="false"/>
+<FRFont name="Microsoft YaHei UI" style="0" size="80">
+<foreground>
+<FineColor color="-10066330" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+</Legend>
+<Attr4VanChart floating="false" x="0.0" y="0.0" layout="aligned" customSize="true" maxHeight="100.0" isHighlight="false"/>
+<Attr4VanChartScatter>
+<Type rangeLegendType="1"/>
+<GradualLegend>
+<GradualIntervalConfig>
+<IntervalConfigAttr divStage="4.0">
+<subColor>
+<FineColor color="-14374913" hor="-1" ver="-1"/>
+</subColor>
+</IntervalConfigAttr>
+<ValueRange IsCustomMin="true" minValue="=3" IsCustomMax="true" maxValue="=7"/>
+<ColorDistList>
+<ColorDist dist="0.0">
+<color>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</color>
+</ColorDist>
+<ColorDist dist="0.25">
+<color>
+<FineColor color="-16776961" hor="-1" ver="-1"/>
+</color>
+</ColorDist>
+<ColorDist dist="0.55">
+<color>
+<FineColor color="-16711936" hor="-1" ver="-1"/>
+</color>
+</ColorDist>
+<ColorDist dist="0.85">
+<color>
+<FineColor color="-256" hor="-1" ver="-1"/>
+</color>
+</ColorDist>
+<ColorDist dist="1.0">
+<color>
+<FineColor color="-65536" hor="-1" ver="-1"/>
+</color>
+</ColorDist>
+</ColorDistList>
+</GradualIntervalConfig>
+<LegendLabelFormat>
+<IsCommon commonValueFormat="true"/>
+</LegendLabelFormat>
+</GradualLegend>
+</Attr4VanChartScatter>
+</Legend4VanChart>
+<DataSheet>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isVisible="false" themed="false"/>
+<FRFont name="SimSun" style="0" size="72"/>
+</DataSheet>
+<DataProcessor class="com.fr.base.chart.chartdata.model.NormalDataModel"/>
+<newPlotFillStyle>
+<AttrFillStyle>
+<AFStyle colorStyle="1"/>
+<FillStyleName fillStyleName="新特性"/>
+<isCustomFillStyle isCustomFillStyle="false"/>
+<PredefinedStyle themed="false"/>
+<ColorList>
+<OColor>
+<colvalue>
+<FineColor color="-10243346" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-8988015" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-472193" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-486008" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-8595761" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-7236949" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-8873759" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-1071514" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-1188474" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-6715442" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-10243346" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-8988015" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-472193" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-486008" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-8595761" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-7236949" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-8873759" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-1071514" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-1188474" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-6715442" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-10243346" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-8988015" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-472193" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-486008" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-8595761" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-7236949" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-8873759" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-1071514" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-1188474" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-6715442" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-10243346" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+<OColor>
+<colvalue>
+<FineColor color="-8988015" hor="-1" ver="-1"/>
+</colvalue>
+</OColor>
+</ColorList>
+</AttrFillStyle>
+</newPlotFillStyle>
+<VanChartPlotAttr isAxisRotation="false" categoryNum="1"/>
+<GradientStyle>
+<Attr gradientType="gradual">
+<startColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</startColor>
+<endColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</endColor>
+</Attr>
+</GradientStyle>
+<VanChartMapPlotAttr mapType="point" geourl="assets/map/geographic/world/中国.json" zoomlevel="4" mapmarkertype="0" markerTypeKey="default" autoNullValue="false"/>
+<lineMapDataProcessor>
+<DataProcessor class="com.fr.base.chart.chartdata.model.NormalDataModel"/>
+</lineMapDataProcessor>
+<GisLayer>
+<Attr gislayer="gao_de_api" layerName="标准" gaodetype="NORMAL" customtilelayer="" attribution=""/>
+</GisLayer>
+<ViewCenter auto="false" longitude="106.258754" latitude="38.471318"/>
+<pointConditionCollection>
+<ConditionCollection>
+<DefaultAttr class="com.fr.chart.chartglyph.ConditionAttr">
+<ConditionAttr name="">
+<AttrList>
+<Attr class="com.fr.chart.base.AttrAlpha">
+<AttrAlpha>
+<Attr alpha="0.75"/>
+</AttrAlpha>
+</Attr>
+<Attr class="com.fr.plugin.chart.map.attr.AttrMapTooltip">
+<AttrMapTooltip>
+<areaTooltip class="com.fr.plugin.chart.base.AttrTooltip">
+<AttrTooltip>
+<Attr enable="true" duration="4" followMouse="false" showMutiSeries="true" isCustom="false"/>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="SimSun" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AttrToolTipContent>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="SimSun" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<richText class="com.fr.plugin.chart.base.AttrTooltipRichText">
+<AttrTooltipRichText>
+<Attr content="" isAuto="true" initParamsContent=""/>
+</AttrTooltipRichText>
+</richText>
+<richTextValue class="com.fr.plugin.chart.base.format.AttrTooltipValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+</AttrTooltipValueFormat>
+</richTextValue>
+<richTextPercent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</richTextPercent>
+<richTextCategory class="com.fr.plugin.chart.base.format.AttrTooltipCategoryFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="false"/>
+</AttrToolTipCategoryFormat>
+</richTextCategory>
+<richTextSeries class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</richTextSeries>
+<richTextChangedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</richTextChangedPercent>
+<richTextChangedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</richTextChangedValue>
+<TableFieldCollection/>
+<Attr isCommon="true" isCustom="false" isRichText="false" richTextAlign="left" showAllSeries="false"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="true"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</color>
+</Background>
+<Attr gradientType="normal" shadow="true" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.5"/>
+</AttrAlpha>
+</GI>
+</AttrTooltip>
+</areaTooltip>
+<pointTooltip class="com.fr.plugin.chart.base.AttrTooltip">
+<AttrTooltip>
+<Attr enable="true" duration="4" followMouse="false" showMutiSeries="true" isCustom="false"/>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="SimSun" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AttrToolTipContent>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="SimSun" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<richText class="com.fr.plugin.chart.base.AttrTooltipRichText">
+<AttrTooltipRichText>
+<Attr content="" isAuto="true" initParamsContent=""/>
+</AttrTooltipRichText>
+</richText>
+<richTextValue class="com.fr.plugin.chart.base.format.AttrTooltipValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+</AttrTooltipValueFormat>
+</richTextValue>
+<richTextPercent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</richTextPercent>
+<richTextCategory class="com.fr.plugin.chart.base.format.AttrTooltipCategoryFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="false"/>
+</AttrToolTipCategoryFormat>
+</richTextCategory>
+<richTextSeries class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</richTextSeries>
+<richTextChangedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</richTextChangedPercent>
+<richTextChangedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</richTextChangedValue>
+<TableFieldCollection/>
+<Attr isCommon="true" isCustom="false" isRichText="false" richTextAlign="left" showAllSeries="false"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="true"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</color>
+</Background>
+<Attr gradientType="normal" shadow="true" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.5"/>
+</AttrAlpha>
+</GI>
+</AttrTooltip>
+</pointTooltip>
+<lineTooltip class="com.fr.plugin.chart.base.AttrTooltip">
+<AttrTooltip>
+<Attr enable="true" duration="4" followMouse="false" showMutiSeries="true" isCustom="false"/>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="SimSun" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AttrToolTipContent>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="SimSun" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<richText class="com.fr.plugin.chart.base.AttrTooltipRichText">
+<AttrTooltipRichText>
+<Attr content="" isAuto="true" initParamsContent=""/>
+</AttrTooltipRichText>
+</richText>
+<richTextValue class="com.fr.plugin.chart.base.format.AttrTooltipValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+</AttrTooltipValueFormat>
+</richTextValue>
+<richTextPercent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</richTextPercent>
+<richTextCategory class="com.fr.plugin.chart.base.format.AttrTooltipCategoryFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="false"/>
+</AttrToolTipCategoryFormat>
+</richTextCategory>
+<richTextSeries class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</richTextSeries>
+<richTextChangedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</richTextChangedPercent>
+<richTextChangedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</richTextChangedValue>
+<TableFieldCollection/>
+<Attr isCommon="true" isCustom="false" isRichText="false" richTextAlign="left" showAllSeries="false"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.base.format.AttrTooltipStartAndEndNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="true"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</color>
+</Background>
+<Attr gradientType="normal" shadow="true" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.5"/>
+</AttrAlpha>
+</GI>
+</AttrTooltip>
+</lineTooltip>
+</AttrMapTooltip>
+</Attr>
+<Attr class="com.fr.plugin.chart.map.attr.AttrMapLabel">
+<AttrMapLabel>
+<areaLabel class="com.fr.plugin.chart.base.AttrLabel">
+<AttrLabel>
+<labelAttr enable="false"/>
+<labelDetail class="com.fr.plugin.chart.base.AttrLabelDetail">
+<AttrBorderWithShape>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor autoColor="true" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+<shapeAttr isAutoColor="true" shapeType="RectangularMarker"/>
+</AttrBorderWithShape>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.8"/>
+</AttrAlpha>
+</GI>
+<Attr showLine="false" isHorizontal="true" autoAdjust="false" position="5" align="9" isCustom="false"/>
+<TextAttr>
+<Attr alignText="0" themed="false"/>
+</TextAttr>
+<AttrToolTipContent>
+<TextAttr>
+<Attr alignText="0" themed="false"/>
+</TextAttr>
+<richText class="com.fr.plugin.chart.base.AttrTooltipRichText">
+<AttrTooltipRichText>
+<Attr content="" isAuto="true" initParamsContent=""/>
+</AttrTooltipRichText>
+</richText>
+<richTextValue class="com.fr.plugin.chart.base.format.AttrTooltipValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+</AttrTooltipValueFormat>
+</richTextValue>
+<richTextPercent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</richTextPercent>
+<richTextCategory class="com.fr.plugin.chart.base.format.AttrTooltipCategoryFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="false"/>
+</AttrToolTipCategoryFormat>
+</richTextCategory>
+<richTextSeries class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</richTextSeries>
+<richTextChangedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</richTextChangedPercent>
+<richTextChangedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</richTextChangedValue>
+<TableFieldCollection/>
+<Attr isCommon="true" isCustom="false" isRichText="false" richTextAlign="left" showAllSeries="false"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="false"/>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+</labelDetail>
+</AttrLabel>
+</areaLabel>
+<pointLabel class="com.fr.plugin.chart.base.AttrLabel">
+<AttrLabel>
+<labelAttr enable="false"/>
+<labelDetail class="com.fr.plugin.chart.base.AttrLabelDetail">
+<AttrBorderWithShape>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor autoColor="true" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+<shapeAttr isAutoColor="true" shapeType="RectangularMarker"/>
+</AttrBorderWithShape>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.8"/>
+</AttrAlpha>
+</GI>
+<Attr showLine="false" isHorizontal="true" autoAdjust="false" position="5" align="9" isCustom="false"/>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="宋体" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AttrToolTipContent>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="宋体" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<richText class="com.fr.plugin.chart.base.AttrTooltipRichText">
+<AttrTooltipRichText>
+<Attr content="" isAuto="true" initParamsContent=""/>
+</AttrTooltipRichText>
+</richText>
+<richTextValue class="com.fr.plugin.chart.base.format.AttrTooltipValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+</AttrTooltipValueFormat>
+</richTextValue>
+<richTextPercent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</richTextPercent>
+<richTextCategory class="com.fr.plugin.chart.base.format.AttrTooltipCategoryFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="false"/>
+</AttrToolTipCategoryFormat>
+</richTextCategory>
+<richTextSeries class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</richTextSeries>
+<richTextChangedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</richTextChangedPercent>
+<richTextChangedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</richTextChangedValue>
+<TableFieldCollection/>
+<Attr isCommon="true" isCustom="false" isRichText="false" richTextAlign="left" showAllSeries="false"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="false"/>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+</labelDetail>
+</AttrLabel>
+</pointLabel>
+</AttrMapLabel>
+</Attr>
+<Attr class="com.fr.plugin.chart.base.AttrBorderWithAlpha">
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-2171170" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AlphaAttr alpha="1.0"/>
+</Attr>
+<Attr class="com.fr.plugin.chart.base.AttrLabel">
+<AttrLabel>
+<labelAttr enable="false"/>
+<labelDetail class="com.fr.plugin.chart.base.AttrLabelDetail">
+<AttrBorderWithShape>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor autoColor="true" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+<shapeAttr isAutoColor="true" shapeType="RectangularMarker"/>
+</AttrBorderWithShape>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-16777216" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.8"/>
+</AttrAlpha>
+</GI>
+<Attr showLine="false" isHorizontal="true" autoAdjust="false" position="5" align="9" isCustom="false"/>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="宋体" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AttrToolTipContent>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="宋体" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<richText class="com.fr.plugin.chart.base.AttrTooltipRichText">
+<AttrTooltipRichText>
+<Attr content="" isAuto="true" initParamsContent=""/>
+</AttrTooltipRichText>
+</richText>
+<richTextValue class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="false"/>
+</AttrTooltipValueFormat>
+</richTextValue>
+<richTextPercent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</richTextPercent>
+<richTextCategory class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</richTextCategory>
+<richTextSeries class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</richTextSeries>
+<richTextChangedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</richTextChangedPercent>
+<richTextChangedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</richTextChangedValue>
+<TableFieldCollection/>
+<Attr isCommon="true" isCustom="false" isRichText="false" richTextAlign="center" showAllSeries="false"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipMapValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="false"/>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="true"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+</labelDetail>
+</AttrLabel>
+</Attr>
+<Attr class="com.fr.plugin.chart.base.VanChartAttrMarker">
+<VanAttrMarker>
+<Attr isCommon="false" anchorSize="22.0" markerType="NullMarker" radius="4.5" width="18.0" height="56.0"/>
+<Background name="ImageBackground" layout="2">
+<FineImage fm="png" imageId="__ImageCache__7DDCB33C1D9474D58B67865B8DF04109">
+<IM>
+<![CDATA[!P&5#reXHH7h#eD$31&+%7s)Y;?-[s&c_n33!]A]Ag!!)NaW!<;&!J!a05u`*!m?FkN_a"Wbo,
+8#G$j\#m_?+0KKFhqJ-k*`k'+_q!L(Ig&6-:4A@UW_2Kbn-qq?D/1<3>?cU+LQ;QDANS?>`.
+)99q'JpRU\mm5Tb]A*ZnFM]AQOD1!;da="+Bs(3g0_0W\k'2XTW)edi\j)BaBdniR[^-aN0+@9
+^QC65*+9;+DD[aSUeLQf7g#.oc^.-+HO]A4`eFoBAb)/$8UOOK4?mCl#n;BZO,O5HJstaPE,b
+Y>crU3^6@VCiqM89JK@!\]AI2<jY0aGf1B(TM:)DE.udS&&$,K'%S]AOUm;U"C@rjKlZf^AL]AK
+(i>T]A`onPo8>u,O)oT[!mbdIh[A@5r36Hf8X9@.rk+.0u]AWedM-2*>(R5@*hpSE2"lW(7OH<
+Mt%,e3A^Tt-R=#[R]A3R5r4o_ha!O^7#f?jji'8OO\QTUn5n:)qpr1.rggUh3<Ma:;V5n<sNV
+.C=29W'rVM,X"tuVQ'IW"Q'Kn7dk<$[V8!cp>o*J@!!#SZ:.26O@"J~
+]]></IM>
+</FineImage>
+</Background>
+</VanAttrMarker>
+</Attr>
+</AttrList>
+</ConditionAttr>
+</DefaultAttr>
+</ConditionCollection>
+</pointConditionCollection>
+<lineConditionCollection>
+<ConditionCollection>
+<DefaultAttr class="com.fr.chart.chartglyph.ConditionAttr">
+<ConditionAttr name=""/>
+</DefaultAttr>
+</ConditionCollection>
+</lineConditionCollection>
+<matchResult/>
+<VanChartHeatMapPlotAttr radius="25.0" blur="50.0" maxopacity="100.0" minopacity="0.0"/>
+</Plot>
+<ChartDefinition>
+<VanMapDefinition>
+<Top topCate="-1" topValue="-1" isDiscardOtherCate="false" isDiscardOtherSeries="false" isDiscardNullCate="false" isDiscardNullSeries="false"/>
+<pointDefinition class="com.fr.plugin.chart.map.data.VanMapMoreNameCDDefinition">
+<MoreNameCDDefinition>
+<Top topCate="-1" topValue="-1" isDiscardOtherCate="false" isDiscardOtherSeries="false" isDiscardNullCate="false" isDiscardNullSeries="false"/>
+<TableData class="com.fr.data.impl.NameTableData">
+<Name>
+<![CDATA[File1]]></Name>
+</TableData>
+<CategoryName value="地震区域"/>
+<ChartSummaryColumn name="震级" function="com.fr.data.util.function.NoneFunction" customName="震级"/>
+</MoreNameCDDefinition>
+<attr longitude="经度" latitude="纬度" endLongitude="" endLatitude="" useAreaName="false" endAreaName=""/>
+<matchResult/>
+</pointDefinition>
+</VanMapDefinition>
+</ChartDefinition>
+</Chart>
+<UUID uuid="06ce931f-01ec-4eb8-87a3-5fa95c5012ed"/>
+<tools hidden="true" sort="false" export="false" fullScreen="false"/>
+<VanChartZoom>
+<zoomAttr zoomVisible="false" zoomGesture="true" zoomResize="true" zoomType="xy" controlType="zoom" categoryNum="8" scaling="0.3"/>
+<from>
+<![CDATA[]]></from>
+<to>
+<![CDATA[]]></to>
+</VanChartZoom>
+<refreshMoreLabel>
+<attr moreLabel="true" autoTooltip="true"/>
+<AttrTooltip>
+<Attr enable="true" duration="4" followMouse="false" showMutiSeries="true" isCustom="false"/>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="SimSun" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AttrToolTipContent>
+<TextAttr>
+<Attr alignText="0" themed="false">
+<FRFont name="SimSun" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<richText class="com.fr.plugin.chart.base.AttrTooltipRichText">
+<AttrTooltipRichText>
+<Attr content="" isAuto="true" initParamsContent=""/>
+</AttrTooltipRichText>
+</richText>
+<richTextValue class="com.fr.plugin.chart.base.format.AttrTooltipValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="true"/>
+</AttrTooltipValueFormat>
+</richTextValue>
+<richTextPercent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</richTextPercent>
+<richTextCategory class="com.fr.plugin.chart.base.format.AttrTooltipCategoryFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="false"/>
+</AttrToolTipCategoryFormat>
+</richTextCategory>
+<richTextSeries class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</richTextSeries>
+<richTextChangedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</richTextChangedPercent>
+<richTextChangedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="false"/>
+</AttrTooltipChangedValueFormat>
+</richTextChangedValue>
+<TableFieldCollection/>
+<Attr isCommon="true" isCustom="false" isRichText="false" richTextAlign="left" showAllSeries="false"/>
+<value class="com.fr.plugin.chart.base.format.AttrTooltipValueFormat">
+<AttrTooltipValueFormat>
+<Attr enable="false"/>
+</AttrTooltipValueFormat>
+</value>
+<percent class="com.fr.plugin.chart.base.format.AttrTooltipPercentFormat">
+<AttrTooltipPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipPercentFormat>
+</percent>
+<category class="com.fr.plugin.chart.base.format.AttrTooltipAreaNameFormat">
+<AttrToolTipCategoryFormat>
+<Attr enable="false"/>
+</AttrToolTipCategoryFormat>
+</category>
+<series class="com.fr.plugin.chart.base.format.AttrTooltipSeriesFormat">
+<AttrTooltipSeriesFormat>
+<Attr enable="false"/>
+</AttrTooltipSeriesFormat>
+</series>
+<changedPercent class="com.fr.plugin.chart.base.format.AttrTooltipChangedPercentFormat">
+<AttrTooltipChangedPercentFormat>
+<Attr enable="false"/>
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#.##%]]></Format>
+</AttrTooltipChangedPercentFormat>
+</changedPercent>
+<changedValue class="com.fr.plugin.chart.base.format.AttrTooltipChangedValueFormat">
+<AttrTooltipChangedValueFormat>
+<Attr enable="true"/>
+</AttrTooltipChangedValueFormat>
+</changedValue>
+<HtmlLabel customText="" useHtml="false" isCustomWidth="false" isCustomHeight="false" width="50" height="50"/>
+</AttrToolTipContent>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</color>
+</Background>
+<Attr gradientType="normal" shadow="false" autoBackground="false" themed="false">
+<gradientStartColor>
+<FineColor color="-12146441" hor="-1" ver="-1"/>
+</gradientStartColor>
+<gradientEndColor>
+<FineColor color="-9378161" hor="-1" ver="-1"/>
+</gradientEndColor>
+</Attr>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="4"/>
+<newColor autoColor="false" themed="false">
+<borderColor>
+<FineColor color="-15395563" hor="-1" ver="-1"/>
+</borderColor>
+</newColor>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.8"/>
+</AttrAlpha>
+</GI>
+</AttrTooltip>
+</refreshMoreLabel>
+<ThemeAttr>
+<Attr darkTheme="false"/>
+</ThemeAttr>
+</Chart>
+</O>
+<PrivilegeControl/>
+<Expand>
+<cellSortAttr/>
+</Expand>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting>
+<PaperSize width="40320000" height="28800000"/>
+<Margin top="986400" left="2743200" bottom="986400" right="2743200"/>
+</PaperSetting>
+<FollowingTheme background="false"/>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</color>
+</Background>
+</ReportSettings>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0" useParamsTemplate="false" currentIndex="0"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList/>
+<DesensitizationList/>
+<DesignerVersion DesignerVersion="LAA"/>
+<PreviewType PreviewType="0"/>
+<TemplateThemeAttrMark class="com.fr.base.iofile.attr.TemplateThemeAttrMark">
+<TemplateThemeAttrMark name="兼容主题" dark="false"/>
+</TemplateThemeAttrMark>
+<StrategyConfigsAttr class="com.fr.esd.core.strategy.persistence.StrategyConfigsAttr">
+<StrategyConfigs/>
+</StrategyConfigsAttr>
+<ForkIdAttrMark class="com.fr.base.iofile.attr.ForkIdAttrMark">
+<ForkIdAttrMark forkId="acd48c8d-bc29-4c5d-8e17-50360d2627c9"/>
+</ForkIdAttrMark>
+<TemplateIdAttMark class="com.fr.base.iofile.attr.TemplateIdAttrMark">
+<TemplateIdAttMark TemplateId="acd48c8d-bc29-4c5d-8e17-50360d2627c9"/>
+</TemplateIdAttMark>
+</WorkBook>

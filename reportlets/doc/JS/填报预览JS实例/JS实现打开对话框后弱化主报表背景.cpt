@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20170720" releaseVersion="10.0.0">
+<ReportWebAttr>
+<ServerPrinter/>
+<WebWriteContent>
+<Listener event="afterload">
+<JavaScript class="com.fr.js.JavaScriptImpl">
+<Parameters/>
+<Content>
+<![CDATA[setInterval(function(){
+	$(".fr-core-panel-tool-close").mousedown(function(){
+	$(".content-container").css("filter","none")
+	window.FR.closeDialog();
+	});
+},1000);
+]]></Content>
+</JavaScript>
+</Listener>
+<ToolBars>
+<ToolBarManager>
+<Location>
+<Embed position="1"/>
+</Location>
+<ToolBar>
+<Widget class="com.fr.report.web.button.write.Submit">
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[${i18n('Fine-Engine_Report_Utils_Submit')}]]></Text>
+<IconName>
+<![CDATA[submit]]></IconName>
+<Verify failVerifySubmit="false" value="true"/>
+<Sheet onlySubmitSelect="false"/>
+</Widget>
+<Widget class="com.fr.report.web.button.write.Verify">
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[${i18n('Fine-Engine_Report_Verify_Data')}]]></Text>
+<IconName>
+<![CDATA[verify]]></IconName>
+</Widget>
+<Widget class="com.fr.report.web.button.NewPrint">
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[${i18n('Fine-Engine_Print')}]]></Text>
+<IconName>
+<![CDATA[print]]></IconName>
+</Widget>
+<Widget class="com.fr.report.web.button.Export">
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[${i18n('Export')}]]></Text>
+<IconName>
+<![CDATA[export]]></IconName>
+<Buttons pdf="true" excelP="true" excelO="true" excelS="true" word="true" image="true" html="true"/>
+</Widget>
+<Widget class="com.fr.report.web.button.Email">
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[${i18n('Fine-Engine_Report_Email')}]]></Text>
+<IconName>
+<![CDATA[email]]></IconName>
+<EmailButton customConsignee="true" consigneeByDepartment="false" consigneeByRole="false"/>
+</Widget>
+<Widget class="com.fr.report.web.button.write.AppendColumnRow">
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[${i18n('Fine-Engine_Add_Record')}]]></Text>
+<IconName>
+<![CDATA[appendrow]]></IconName>
+</Widget>
+<Widget class="com.fr.report.web.button.write.ShowCellValue">
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue/>
+<LabelAttr verticalcenter="true" textalign="0" autoline="false"/>
+<FRFont name="SimSun" style="0" size="72"/>
+<border style="0" color="-723724"/>
+</Widget>
+</ToolBar>
+</ToolBarManager>
+</ToolBars>
+<EditRowColor setColor="false"/>
+<WebWrite SheetPosition="3"/>
+<RptLocation isShowAtLeft="true"/>
+<UnloadCheck/>
+<ShowWidgets/>
+<OtherAttr autoStash="false"/>
+</WebWriteContent>
+</ReportWebAttr>
+<ReportFitAttr fitStateInPC="2" fitFont="false"/>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR/>
+<FR/>
+<HC/>
+<FC/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0">
+<PrivilegeControl/>
+<Widget class="com.fr.form.ui.FreeButton">
+<Listener event="click">
+<JavaScript class="com.fr.js.JavaScriptImpl">
+<Parameters/>
+<Content>
+<![CDATA[$(".content-container").css("filter","blur(2px)")
+
+var $iframe = $("<iframe id='inp' name='inp' width='100%' height='100%' scrolling='no' frameborder='0'>");
+
+$iframe.attr("src", "${servletURL}?reportlet=/GettingStarted.cpt&op=write");
+
+var o = {
+
+title:"iframe子窗口" , 
+
+width : 400,height: 400};
+
+FR.showDialog(o.title, o.width, o.height, $iframe,o); ]]></Content>
+</JavaScript>
+</Listener>
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[打开]]></Text>
+</Widget>
+<Expand/>
+</C>
+<C c="7" r="18">
+<O>
+<![CDATA[ ]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting/>
+<Background name="TextureBackground">
+<TexturePaint>
+<Rectangle2D x="0.0" y="0.0" width="58.0" height="42.0"/>
+<IM>
+<![CDATA[!DNd(q2%pC7h#eD$31&+%7s)Y;?-[s3WK-[.L64Y!!)"q8@&9r"r'Ws5u`*!Kj$QYlnAjsBm
+hAd8U[U<YKOFIQ]A<`u:]A`o'ac+9P?<JHY&>\["]Agq_TpPA^ZpO8[BhfF7dl[(bGJq(CnqtcZ
+n`m_>E+!2RH^VA+*q`.1%f4j'.pZAm4^7V$inN$!mL+TkTq7U&<a##\=j3;8qFNb\Dh[]AauS
+B\=p#7Z^^n*bTu%"R->mIU2*fq(=Plh@eFDn%%!a\?!3#Yp!S!Wa]A5k="AtXB0%X62d>Blg'
+I2FjCjM+Ls,!M2nk>o6STLY=X'H%01+$W_>mH9[od\:JM/?oc,q\;X((PUgf!EZQbn%Q=!D0
+.%9`I5]A8V,1.oHOW$k(>@c1)]A>o\lmK/5q1OFS=)cbEuEN4),U^,shF6KN4q"`EY#!E"Pb)T
+d&;%k)LX7o1(G3Qens#O]AEcqX<=V9#lQ/Mq8OI1f24e[bOh^V+l:c(k!UBU2_\s)@&./OLD6
+nOH]A/Q)RpY0L]APgbV`7Q!_t[Gl?LebXG\h,o?5?8FTa8Qqd#sS^7"d:T".X*h(t=hZp\1n"X
+>T(4/h!OH3>6*@*\Gf>7n<!".)"[Sf%a7cauK\dnNJ$!Yg&(M/=giOoBeY8;94.?3\$j2OO-
+Yb%q>8.q,mcWN^Rh?h0`aWW\/U(O;qO>UR24s#Qc-<aK1?2RgIP!aunr;NA3>Xl^=O3KVOP[
+q!R3B="P6,'WeRN4p6URM_kl4b;lW)D!KA\W1t9>Ppij%fE`62/P^G$,WW!k1ips==pc+P.H
+bNWBHC7C8NVZe/ScsQrj"?-"&L$(9+\_^hbu=Ef0b+>TXA%cC9!=U1$7^m^9O)McDAqB\>*!
+6;_%"FFC"='IW%ZP!us`*J5^T26cDJ=Ylg..TSE?b<I$#'!fFRdV?g*:#<\O&8Pe#HjhPhA%
+&1_jpubuNQ8V)t.uZ/@NmT*G\$N`?OAJ[j`um@p?mg*g?JVecTiha@TkBa7g6;21o6UU!VN\
+LS$C.iZ;*'k-8k\H8_ER+d</-XrdK:ek:YRpdN<TES4#\0.P"e"E0)D5aMn5dmac8rb<ofil
+'d-">D'MV>1gf-4glZ'!-)*oO[C7+uaukds&=E<-j!D0l,$2ZtpD+II*W^)Ir\TRgFspj/M=
+<)2S25u"b<r`D*BOt8QY'O)Z(e<GY=#7;A<+f#,sl#/l4KsilCL#HX]A_f$A]A8?",s6Id6iJ,
+8NcoBP2;C58MKqSd6?-VuRd"!\Y.lD9jUn.V^M,;>FO>ilcI;dJZR1m):7*=OUPV`,YsK.(H
+)msN#2$N>CEl(M*c`>ViC&.ffWu;\^t9]AXUYupT(!W]A&X"Ie:dl]A;LA;Bi5^!fh'6o?`[>#c
+h!P)GmGbr(]Acg*4+3bW4!-2^^^U7n!Hn)s@(71!QPgetC_FA9300a+C`i:uF1G4iJi@U6HBM
+&9GfAW(&`\ELca/:8D-&e\S9scej`LkIESTfhb&\Z(V-@o2Gf`CbWqR%AV-tGT!hiLT&BcF/
+1[CR-([cbbL'[N8L7jn0W%Q+)20EhP8BDaFSuUShUgnRWF*fkQO:]AUDuHGfmKt7AV$7El>)A
+")L3l.q*q%ek9,PGH"ZDL2[3tqYJl/,Esq(AFIcMT)q[%OD!r&XbhH9,W0I'>+o7%K@h:Hs(
+dMVc^)YFFG&]AiAhe?T+C:-,Q0:9)Ygfl6\+4l#aN3Y;7)>1,4Z1COQ++iNs+nn$raCkg>9?/
+5]A[oV1;+O+blQ$.!.GekHkkC'NX2Y&UqONM?1kgi)QjBBf+Y+d.`=Y3\cTTrQ3"\/#;/T?23
+6@sc1D':(9DI+fm7Wn5=9W<eM:JK[\K-[(lA%rI8;Zo&@Qs8YY`!RO3PSF`s,@Go*NO@-2W[
+S&u(km@@M%2^`<OPX;Tbg""[$1`:glsqpSp!#OTL3EQ6jQ.j1$:T8]A[=^`jQijl;0knjVlV@
+3Qjt?21Lg-h&o1XLB.DeX?k2<@^Qb`hqYq:>A'\Z3pn;72\<9=&b^WEa#7n??R`GI/!!#SZ:
+.26O@"J~
+]]></IM>
+</TexturePaint>
+</Background>
+</ReportSettings>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0" useParamsTemplate="true" currentIndex="0"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList/>
+<DesignerVersion DesignerVersion="KAA"/>
+<PreviewType PreviewType="1"/>
+<TemplateIdAttMark class="com.fr.base.iofile.attr.TemplateIdAttrMark">
+<TemplateIdAttMark TemplateId="f3fcec34-2c3b-4b87-bb7d-62d6c230415f"/>
+</TemplateIdAttMark>
+</WorkBook>

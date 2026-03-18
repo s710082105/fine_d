@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20170720" releaseVersion="10.0.0">
+<ReportWebAttr>
+<ServerPrinter/>
+<CSSImport>
+<![CDATA[help/css/animate.css]]></CSSImport>
+<CSSImport>
+<![CDATA[help/css/noticejs.css]]></CSSImport>
+<JSImport>
+<![CDATA[help/css/notice.js]]></JSImport>
+</ReportWebAttr>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR/>
+<FR/>
+<HC/>
+<FC/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[419100,1257300,723900,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[609600,2880000,2880000,2880000,2880000,2880000,2880000,2880000,2743200,2743200,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="1">
+<PrivilegeControl/>
+<Widget class="com.fr.form.ui.FreeButton">
+<Listener event="click">
+<JavaScript class="com.fr.js.JavaScriptImpl">
+<Parameters/>
+<Content>
+<![CDATA[new NoticeJs({
+	title: '',
+	type: 'success',
+	text: '填报成功',
+	position: 'topCenter',
+	closeWith: ['button','click']A,
+	timeout: 30,
+	modal: false,
+	progressBar: true,
+	callbacks: {
+		beforeShow: []A,
+		onShow: []A,
+		afterShow: []A,
+		onClose: []A,
+		afterClose: []A,
+		onClick: []A,
+		onHover: [function() {
+			console.log("success");
+		}]A
+	},
+	animation: {
+		open: 'animated bounceInRight',
+		close: 'animated bounceOutLeft'
+	}
+}).show()]]></Content>
+</JavaScript>
+</Listener>
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[success]]></Text>
+</Widget>
+<Expand/>
+</C>
+<C c="3" r="1">
+<PrivilegeControl/>
+<Widget class="com.fr.form.ui.FreeButton">
+<Listener event="click">
+<JavaScript class="com.fr.js.JavaScriptImpl">
+<Parameters/>
+<Content>
+<![CDATA[new NoticeJs({
+	type: 'info',
+	text: '填报进行中，暂时不可操作',
+	position: 'topCenter',
+	timeout: 30,
+	modal: true,
+	animation: {
+		open: 'animated bounceInRight',
+		close: 'animated bounceOutLeft'
+	}
+}).show()]]></Content>
+</JavaScript>
+</Listener>
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[info]]></Text>
+</Widget>
+<Expand/>
+</C>
+<C c="5" r="1">
+<PrivilegeControl/>
+<Widget class="com.fr.form.ui.FreeButton">
+<Listener event="click">
+<JavaScript class="com.fr.js.JavaScriptImpl">
+<Parameters/>
+<Content>
+<![CDATA[new NoticeJs({
+	type: 'warning',
+	text: '重复提交',
+	timeout: 30,
+	animation: {
+		open: 'animated bounceIn',
+		close: 'animated bounceOut'
+	}
+}).show()]]></Content>
+</JavaScript>
+</Listener>
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[warning]]></Text>
+</Widget>
+<Expand/>
+</C>
+<C c="7" r="1">
+<PrivilegeControl/>
+<Widget class="com.fr.form.ui.FreeButton">
+<Listener event="click">
+<JavaScript class="com.fr.js.JavaScriptImpl">
+<Parameters/>
+<Content>
+<![CDATA[new NoticeJs({
+	type: 'error',
+	text: '填报失败',
+	position: 'topCenter',
+	timeout: 30,
+	animation: {
+		open: 'animated flipInX',
+		close: 'animated flipoutX'
+	}
+}).show()]]></Content>
+</JavaScript>
+</Listener>
+<WidgetAttr description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[error]]></Text>
+</Widget>
+<Expand/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting/>
+<Background name="ColorBackground" color="-1"/>
+</ReportSettings>
+<Header reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Footer>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0" useParamsTemplate="true"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList/>
+<DesignerVersion DesignerVersion="KAA"/>
+<PreviewType PreviewType="1"/>
+<TemplateIdAttMark class="com.fr.base.iofile.attr.TemplateIdAttrMark">
+<TemplateIdAttMark TemplateId="3ca4e15a-2653-48e7-a0f6-cc5159306dfa"/>
+</TemplateIdAttMark>
+</WorkBook>

@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20170720" releaseVersion="10.0.0">
+<TableDataMap>
+<TableData name="ds1" class="com.fr.data.impl.DBTableData">
+<Parameters/>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[SELECT * FROM 地图]]></Query>
+<PageQuery>
+<![CDATA[]]></PageQuery>
+</TableData>
+<TableData name="ds2" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="area"/>
+<O>
+<![CDATA[安徽省]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[SELECT * FROM 地图 where 省份='${area}']]></Query>
+<PageQuery>
+<![CDATA[]]></PageQuery>
+</TableData>
+</TableDataMap>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR/>
+<FR/>
+<HC/>
+<FC/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[2743200,2743200,2743200,2743200,2743200,2743200,2743200,914400,2743200,2743200,2743200]]></ColumnWidth>
+<FloatElementList>
+<com.fr.report.cell.FloatElement>
+<FloatElementName name="Float2"/>
+<PrivilegeControl/>
+<Location leftDistance="0" topDistance="0" width="20116800" height="11506200"/>
+<O t="CC">
+<LayoutAttr selectedIndex="0"/>
+<ChangeAttr enable="false" changeType="button" timeInterval="5" buttonColor="-8421505" carouselColor="-8421505" showArrow="true">
+<TextAttr>
+<Attr alignText="0"/>
+</TextAttr>
+</ChangeAttr>
+<Chart name="默认" chartClass="com.fr.plugin.chart.meter.MeterMainTypeChart">
+<SubChart class="com.fr.plugin.chart.meter.MeterChart" pluginID="com.fr.plugin.bigScreen.v10">
+<attr refreshEnabled="false" refreshTime="10.0"/>
+<DataSet class="com.fr.extended.chart.ExtendedTableDataSet">
+<TableData class="com.fr.data.impl.NameTableData">
+<Name>
+<![CDATA[ds1]]></Name>
+</TableData>
+<AbstractDataConfig class="com.fr.plugin.chart.meter.MeterDataConfig" pluginID="com.fr.plugin.bigScreen.v10">
+<attr display="省份" display_customName="" value="销售额" value_customName="" goal="自动" goal_customName="" customName="false"/>
+</AbstractDataConfig>
+</DataSet>
+<ETitle>
+<attr align="left" title=""/>
+<moreAttr isShow="true" useHtml="false" floating="false" x="0.0" y="0.0" limitSize="false" maxPro="15.0"/>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<FRFont name="Microsoft YaHei" style="0" size="128" foreground="-1"/>
+</ETitle>
+<ELegend>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<attr visible="true" type="gradual" layout="vertical" horizontalAlign="left" verticalAlign="bottom"/>
+<GradualIntervalConfig>
+<IntervalConfigAttr subColor="-14374913" divStage="2.0"/>
+<ValueRange IsCustomMin="false" IsCustomMax="false"/>
+<ColorDistList>
+<ColorDist color="-4791553" dist="0.0"/>
+<ColorDist color="-9583361" dist="0.5"/>
+<ColorDist color="-14374913" dist="1.0"/>
+</ColorDistList>
+</GradualIntervalConfig>
+<MapHotAreaColor>
+<MC_Attr minValue="0.0" maxValue="100.0" useType="0" areaNumber="5" mainColor="-14374913"/>
+</MapHotAreaColor>
+<FRFont name="Microsoft YaHei" style="0" size="88" foreground="-1"/>
+</ELegend>
+<ETooltip>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground" color="-16777216"/>
+<Attr shadow="true"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.5"/>
+</AttrAlpha>
+</GI>
+<attr show="true" fixed="true" follow="true" textStyleAuto="false"/>
+<FRFont name="Adelle Basic" style="0" size="72" foreground="-1"/>
+<itemList>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+</ETooltipItem>
+</item>
+</itemList>
+</ETooltip>
+<EGraphics>
+<Attr timeUnit="HH:mm:ss" themeColorFirst="-16712452" themeColorSecond="-16712452"/>
+</EGraphics>
+<Label>
+<attr useLabel="true" intervalAuto="true" intervalValue="1"/>
+<itemList/>
+<AutoCustomTextFont>
+<textFontAutoCustom auto="true"/>
+<FRFont name="Adelle Basic" style="0" size="72" foreground="-1"/>
+</AutoCustomTextFont>
+</Label>
+<EAutoLink>
+<attr intervaltime="6.0"/>
+<NameJavaScriptGroup>
+<NameJavaScript name="联动单元格1">
+<JavaScript class="com.fr.chart.web.ChartHyperRelateCellLink">
+<JavaScript class="com.fr.chart.web.ChartHyperRelateCellLink">
+<Parameters>
+<Parameter>
+<Attributes name="area"/>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=METER_NAME]]></Attributes>
+</O>
+</Parameter>
+</Parameters>
+<TargetFrame>
+<![CDATA[_blank]]></TargetFrame>
+<Features width="500" height="270"/>
+<realateName realateValue="A17" animateType="increment"/>
+</JavaScript>
+</JavaScript>
+</NameJavaScript>
+</NameJavaScriptGroup>
+</EAutoLink>
+<AttrBackground>
+<Background name="ColorBackground" color="-15329992"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+<MeterGraphic>
+<itemList>
+<item>
+<ETooltipItem>
+<Attr enable="false"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="false"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#00%]]></Format>
+</ETooltipItem>
+</item>
+</itemList>
+<gradualConfig auto="true">
+<GradualIntervalConfig>
+<IntervalConfigAttr subColor="-14374913" divStage="3.0"/>
+<ValueRange IsCustomMin="false" IsCustomMax="false"/>
+<ColorDistList>
+<ColorDist color="-16723474" dist="0.0"/>
+<ColorDist color="-10879142" dist="0.33"/>
+<ColorDist color="-196864" dist="0.66"/>
+<ColorDist color="-59136" dist="1.0"/>
+</ColorDistList>
+</GradualIntervalConfig>
+</gradualConfig>
+</MeterGraphic>
+</SubChart>
+</Chart>
+</O>
+<Style index="0"/>
+</com.fr.report.cell.FloatElement>
+</FloatElementList>
+<CellElementList>
+<C c="0" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="16" cs="8" rs="16">
+<O t="CC">
+<LayoutAttr selectedIndex="0"/>
+<ChangeAttr enable="false" changeType="button" timeInterval="5" buttonColor="-8421505" carouselColor="-8421505" showArrow="true">
+<TextAttr>
+<Attr alignText="0"/>
+</TextAttr>
+</ChangeAttr>
+<Chart name="默认" chartClass="com.fr.plugin.chart.kpi.KPIMainTypeChart">
+<SubChart class="com.fr.plugin.chart.kpi.KPIElectronChart" pluginID="com.fr.plugin.bigScreen.v10">
+<attr refreshEnabled="false" refreshTime="10.0"/>
+<DataSet class="com.fr.extended.chart.ExtendedTableDataSet">
+<TableData class="com.fr.data.impl.NameTableData">
+<Name>
+<![CDATA[ds2]]></Name>
+</TableData>
+<AbstractDataConfig class="com.fr.plugin.chart.kpi.KPIDataConfig" pluginID="com.fr.plugin.bigScreen.v10">
+<attr names="省份" names_customName="" title="销售额" values="销售额" values_function="com.fr.data.util.function.NoneFunction" values_customName="" customName="false"/>
+</AbstractDataConfig>
+</DataSet>
+<ETitle>
+<attr align="left" title=""/>
+<moreAttr isShow="true" useHtml="false" floating="false" x="0.0" y="0.0" limitSize="false" maxPro="15.0"/>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<FRFont name="Microsoft YaHei" style="0" size="128" foreground="-1"/>
+</ETitle>
+<ELegend>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<attr visible="true" type="gradual" layout="vertical" horizontalAlign="left" verticalAlign="bottom"/>
+<GradualIntervalConfig>
+<IntervalConfigAttr subColor="-14374913" divStage="2.0"/>
+<ValueRange IsCustomMin="false" IsCustomMax="false"/>
+<ColorDistList>
+<ColorDist color="-4791553" dist="0.0"/>
+<ColorDist color="-9583361" dist="0.5"/>
+<ColorDist color="-14374913" dist="1.0"/>
+</ColorDistList>
+</GradualIntervalConfig>
+<MapHotAreaColor>
+<MC_Attr minValue="0.0" maxValue="100.0" useType="0" areaNumber="5" mainColor="-14374913"/>
+</MapHotAreaColor>
+<FRFont name="Microsoft YaHei" style="0" size="88" foreground="-1"/>
+</ELegend>
+<ETooltip>
+<GI>
+<AttrBackground>
+<Background name="ColorBackground" color="-16777216"/>
+<Attr shadow="true"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="2"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="0.5"/>
+</AttrAlpha>
+</GI>
+<attr show="true" fixed="true" follow="true" textStyleAuto="false"/>
+<FRFont name="Adelle Basic" style="0" size="72" foreground="-1"/>
+<itemList>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+</ETooltipItem>
+</item>
+<item>
+<ETooltipItem>
+<Attr enable="true"/>
+</ETooltipItem>
+</item>
+</itemList>
+</ETooltip>
+<EGraphics>
+<Attr timeUnit="HH:mm:ss" themeColorFirst="-16712452" themeColorSecond="-16712452"/>
+</EGraphics>
+<Label>
+<attr useLabel="true" intervalAuto="true" intervalValue="1"/>
+<itemList/>
+<AutoCustomTextFont>
+<textFontAutoCustom auto="true"/>
+<FRFont name="Adelle Basic" style="0" size="72" foreground="-1"/>
+</AutoCustomTextFont>
+</Label>
+<EAutoLink>
+<attr intervaltime="6.0"/>
+</EAutoLink>
+<AttrBackground>
+<Background name="ColorBackground" color="-15329992"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+<KPIGraphic>
+<kpiGraphicAttr themeColor="-16712452"/>
+<MapHotAreaColor>
+<MC_Attr minValue="0.0" maxValue="100.0" useType="0" areaNumber="3" mainColor="-14374913"/>
+<ColorList>
+<AreaColor>
+<AC_Attr minValue="=80" maxValue="=120" color="-14374913"/>
+</AreaColor>
+<AreaColor>
+<AC_Attr minValue="=40" maxValue="=80" color="-9583361"/>
+</AreaColor>
+<AreaColor>
+<AC_Attr minValue="=0" maxValue="=40" color="-4791553"/>
+</AreaColor>
+</ColorList>
+</MapHotAreaColor>
+</KPIGraphic>
+</SubChart>
+</Chart>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting/>
+<Background name="ColorBackground" color="-1"/>
+</ReportSettings>
+<Header reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Footer>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0" useParamsTemplate="true"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList>
+<Style imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="ColorBackground" color="-1"/>
+<Border/>
+</Style>
+</StyleList>
+<DesignerVersion DesignerVersion="KAA"/>
+<PreviewType PreviewType="0"/>
+<TemplateIdAttMark class="com.fr.base.iofile.attr.TemplateIdAttrMark">
+<TemplateIdAttMark TemplateId="1f035ab0-8c27-4b96-9b17-f3a8d920113e"/>
+</TemplateIdAttMark>
+</WorkBook>

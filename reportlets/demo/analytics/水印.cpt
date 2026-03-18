@@ -1,0 +1,1541 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20170720" releaseVersion="11.0.0">
+<TableDataMap>
+<TableData name="团险渠道" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[null]]></DSName>
+<ColumnNames>
+<![CDATA[[团城县]A.[Xzxn Code]A.[Xzxn Code]A.[MEMBER_CAPTION]A,,.,,[Measures]A.[长期险首年保费]A,,.,,[Measures]A.[Prior长期险首年保费]A,,.,,[Measures]A.[长期险首年标保]A,,.,,[Measures]A.[Prior长期险首年标保]A,,.,,[Measures]A.[长期险首年期交]A,,.,,[Measures]A.[Prior长期险首年期交]A,,.,,[Measures]A.[长期险10年期以上首年期交]A,,.,,[Measures]A.[Prior长期险10年期以上首年期交]A,,.,,[Measures]A.[长期险5年期以下首年期交]A,,.,,[Measures]A.[Prior长期险5年期以下首年期交]A,,.,,[Measures]A.[长期险5-9年期首年期交]A,,.,,[Measures]A.[Prior长期险5-9年期首年期交]A,,.,,[Measures]A.[长期险趸交保费]A,,.,,[Measures]A.[Prior长期险趸交保费]A,,.,,[Measures]A.[短期意外险保费]A,,.,,[Measures]A.[Prior短期意外险保费]A,,.,,[Measures]A.[短期健康险保费]A,,.,,[Measures]A.[Prior短期健康险保费]A]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.fr.stable.Primitive,com.fr.stable.Primitive,java.lang.String,java.lang.String,com.fr.stable.Primitive,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.fr.stable.Primitive,com.fr.stable.Primitive,java.lang.String,java.lang.String,com.fr.stable.Primitive,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String">
+<![CDATA[FdcO?oI-n2T7,kM%M8@8r:?Q/=c'1EGh6$EdCgK/%(`64&f*inn]AGEJ[?nLlY^^hM43#]A%]A6
+glMpQK^</+l"$faM1*DL[GLI_TW8G8fo$Y>Xb*D-40k&2S[G6`@!6c]ADEe1hPi's3,[X0obW
+0j8Ve#i5rrbEVN>M.km@5W;`j4BDrluIO1gPLQlRV99bV-a:=E9pEQtQ,LuL36=j'Yf"MMUH
+VN,f.le_r9B.7)%T>m1gB]AfhA^5#r[Nh;>5=>+$(@Tm3ErEZGq*7F/2q)g6:=c$lGJO-ks6T
+L0IuRdFNk8G-0n2[IPq`F%<8Uu7EqOF5e3j$=N*/l4kc*_5H8bM4nS4oULYU'aD.$U'Vn+Dk
+dol_F848rnN.qt3@Re'16P"I4^WU)!-5t@L_YiF9oCu'?D'6&M'H%D$YgUFKCAXUT]A=ar[mu
+ZW]A)^iO(15:80hFm]A/N!2S`X`CAG,lC2d`G<632>BN*DMn[Bbe<XiItgaa'YILUM?W$RG<&G
+H,KD%1?CDF3O7aj?]A%A;VEsg%;B1$FoCCM#"6rH16<,M"*pC81olJ<M\A\YXmmjHh17U1J]AV
+1PFsdiF'XV!83V5A0s4S3I*"0FD%-+HS'M[aP'HpLq?9Z]A_f47dpps/n6HYB(O2Q3V@6T>LP
+(SWJ-3u'RaGXIBfXoc#t%DYuNb@S?Vgffe:eV"<)X"jQ<67B<q/K>7NbZ0_j4DiN7Lm3S`jV
+fX3t(J+;\=(6;g1+)E@=Sg@,GRuQnl[pC\k(cs5%2K72m(GMi\D7I!pfQ'b/[1d/69B6E3[^
+A)rheg9G?I/I_Nlg$88k.M\3a>H>!@2fs@7?]Ajn991r_8Q6sL2mFSrN(Yb?BQJIgeE@dmt2$
+(f5ml(`,[W:P[m0ZCbot<63&sCah\a%!3Lc#Y+PG[%J6X<aR;(9'OF9MTZZI.(>0r=FQX7rY
+T:UdL=<d/PUI566)MCH93bVS1tHFL0*#NI0c006MjbEP-IC\)&]AjQ=R$>SNncmU"-f0IuQ\U
+0+:-%\iOYAgH26PVlm=UO8a,R.S>nut^<i;SPg;(QL4^%$IDm@22&!4W?!:M"Jr+l340oFUS
+Itd((feIKI=n(7%E4Ub.1`^qV_h`FSos84<250HjeCEJc+gCri,Y]A>GqFOGN!$gW4[m@^h5N
+;j;U=C551M2_*_V3<p:]A[ZZRdflamj_]AcOnR'8abMI]A3l>/$H=dg3E-RaJ-sJM`ab6pK5%X?
+T`=t'ndaXU@F[]A]AN(a9anWN]A!1DPL4WL_kj1>W*Zsc-Tm>s(3XR,mk&8LB3;n_?X`[lIj9Vj
+gjglbb2F"Q!-Y[hJ<B`"]Aa)KPfMPaJ;uiI5iWdi><t_/C29d*=S_)lnW=D%8.%us@JFZXlI1
+dkOO@$TTH;g%)N,'3Xq5t)Q>@9ab'U+eo,QVs#%`Zc=t#,K9"s%'#p?L2>.n$^r;iP[JsW0@
+2K0e.%$J@mq#URa("L8AlZZS&9T6E6CAhW]A;>^ch5c_Vh.qVAT@Tdu@2e@n,'NRGUXJ`t;:,
+da:$udRS1"AL-``YThZB#$K_-;cmk,n6qRfH&A(p')NSs@9k0Q)7i@2@cj=d[Z'G_F91<`WZ
+**3?EAAWpS9\X'[k7n\mWLglc#fo!ElbH<f'FCAY!IthDgMq&RAKZqbX-]AAV%,8eV$bs-L_.
+S3jmd@!9qU3.[lS>a-C-==\QLk2u2(SLAI$![1`@N_Ks"&g,I;M7RP_-d%N%_1r:CTbdnR^G
+Wqq._>0Z5mP8/792<>0?au!S0=mC(Y-bU0'jhSFcmT!j3.UV(0NcO%l+NiMVh-a\H2O0[,fc
+Wdd;>NF3^'B,5<)d2L]A$.Fs0bZd1p@@0;DMNYB2=1;B?-J8#WD(u#U5m46/1);[01N"-Ubfi
+E*W0qko"C9#Cn0".pjL,4d7GJD^6XC;;o%sY<nS?_]AaO9DmJ]AFZD;Oc"UiU(l>]Anh4l]AB#`=
+#mmA*akR%+J,u6Ki7(8^@[=S4<c:D'Lql]AE*IVU<TDj+Z/F`(G4MZ]A5ZQ9>,V9/t1&>lMbNA
+B4L/,Y%G:cTc%l8&`W-2Q3@"fOSe=UWl\cCYrBQe1\r66(CF_D.Fs!.O0W6T^b$X\gj*EU:)
+`cgoQAOn=MbSQ:^.;2"3dGcUf"8YQHSb=FiqM)5\#PcM6QaAJ,P!j=&0jAaACnarM6'&I=b7
+21j',,B,Z;ESJn@F/XIPgTX-[['V3ir2-HtN]A_?'"ctL-LpN8b:gT':>m(+F%M:SJGL-p0]AD
+J(!r-7g"#sjFDT+XPj\'T$g=V:NY"n-0E@jI&'@GBaVaRBtdCF!E5kocc"M:'6\EXP/GDDK=
+F>*qkUmQELIh_HO"KVMniPubsICB<QAZ"<)8289J9!'3K&pHggYX-Q;ZV/2oHb^9Ea@mBcs*
+($a.PQf_c\H:H=Wr^k?i.1*):63-DJtkNq#Va1t^(sZi1#Z,c3Zc+O0g(&2,;63HLHoChn:b
+,dD*Nr`lRd2SDPG/%SDBp0A7oJ2P6_Gg_mZTq75*U0\LEG5/LpT&.geab4<c:1#ue<Rf!t(H
+=;&`$q!J4AJ:`u,[cQ@;ra$0BITKUuZ`t43ZKeL(4X'rci4uA0jFs6F_RbpNOC`1]A.:)BY\H
+T(i=+6b;!t1o-s%UgtWim-j#?6M%k9Do.Sh%;P$TBW8SmK=pW3hJY"<D,!%UW@]A'bLfgp98p
+GB2'YOCnU5(-Q#68e!;fBF)mBL#^:/tk.+*&UNu2Ik/tae]ABu;7IjDg'$QPTS_@!WA76AeQ@
+3;P=Cn3iEhLQ=*Z<'R0pBPK[>_om=Uke@"mL9b[B6[D2M6EXK82H`<ON?T`ZP@Up*!WcA3@u
+5<'/`ofc49Q!n581WLsZIU7'c2b^'ikm`Nf529V4sX=%ZMJ.8&Pq"`<7bq<12e=T,<J,:ug4
+$_oAs,`Uf?'&eJQ)ZEbuoQmLUR1]AhPBJ"(&Aikma0Q7PC@ORr<@ek\KTjg%O)UH9,MkYZsLr
+P1Ps2oeb'*CfnSWq?FM<Jjf7m0^Z\5N#LFO,Hnr)mUhj]A9<4'l\PgdUl?^,&"SfXOJ+odR/'
+C%S?+CbHZ8.dt)[+1`eC(9^e2cQ>Nm]AhZ;=J93'bu!L-P_o*_d4EuQ/#:*A<FSEF=dGshBQ!
+V)QLER-P@4_=.>4K7!,-hEmo']AaRm%s=1*\fJVFK^.^IEWXdOH^n,?dl%oGXAMOmb0l<]A:4Q
+/H.T->L5^Q4dMmF0-6'qiIkPsP>LrFF<A*SZqml/CjMl0Isj]A/f%0M4+]A)?O^bM(YAS4&9k5
+B:9-d4bPG5;3KDC3$&F,<h8I_Z\g/aKlC!e;.2F?XX5B#'a0$IS0Fm"ijJV(;-%ierhBh$nk
+(LeK8MWZf,n+o\I(jmh(C'$WSC?e4>K`9$OJ/P:F\R2V$4752K#_(e'f")o<!C\d(a7tkt,_
+(;n;2i4fLOc9]AC@=qct'thbcZF$nn(pcCuqGeU/TtS/AE`I#U!5(PhCO*S1^[n-A&8NYap?e
+!_tiiMWLl+fP4gk7/Ui\ThScBnU%4s(XMqiM9!l,YdK@W`l!.OkifAXiu6ra#-lPaI#sl>M0
+^46.KUWeG<KM[3`V5<Z-bp%jK:3pp)QH;H,$MPZasrh6CC%TX#gR]AJiM:30D-^<\)koY%V02
+R(:%P(6M$HW^dP8-:8d`ZrNZk=7aV]AYkShj%L"_I:5r*$G7cM2[/DFOnL/aT)`_u<i,r9H"q
+DNU<A:ND6bI@sYt=Z>#fTb6XM,l2O7]A563O8&*!,N?.kb5T=n6KL]AV>5$!Xb)3R0XKWqQ]AdK
+2WEJMecL'dCOX-RHn"<`rAfNK!l+^FjaJpYoS=**=Xl8X4&jt/VG&G'>U8fp#7/W3NG,(i9q
+qPbNR7!(eoWi4:'6VAr/i>2!pD:@jmtA"Hn%U]A?RI"T*?i8B+-eDTpl@%ck6jE8sQYGR7Rd)
+n;gbIP%PAl%PE2fk?'Nt?rDk_7(N5"6Yqt^Y6Vr`<s;\G5D]ANmu=`9,k8k@3h[9RhWX9jU6]A
+`qcb]Aq<QjE1Md8sHt;?&<IA;C6M$/hpiTmhH30qa22l+3)Uc:8![RE5T8,Ch-thP0_rjJ`?&
+L-R!J&rgT074f^8^jP8F9[Kl%@72b27t[3FpQ%MbZiEg5`%#S^CKk'7bVEZYT!/TZ.2XWoab
+@ZnOdH/Y5u6^*aNhF'>@sXkWSX#iu\,9A_dQ(W%?^kb.n5[jekFj/bVPPT=>rVK-NWF_tj"P
+W-;knVT#$'.qbf!W$#ARt!Cr^^Bqc5E\sqQ4o900]AR,K*ZH;+@?UiEZjp0$;XrBT/2^0HY\p
+o?)I9]Aof<6F$,dC)VWa&fKqaQhX)3(gYf;0^FV=\M:WKc(a=GAPAM:VUJ@U92.W2@c&OagK9
+.#6A"TBjO'SidrT,)%IU@_.r2]Aj2)4;6;>tK;NH1iD$_1>0m']A;1?f-Z_0-/Ja+h;E#tER4b
+Li@/ml2"euF"N#rA8.is#(7&E3G7Go']A6XPYM**9l"s_9I<gnj4n3rk5YfheUqNP9[cX#,.4
+tD>Rd/H7m82p2*j/OdVfa3L5%'67kj9kiD.8YX)Q5/)H#&($/>5mSYl'$>PG3p4S(]A?R?tYF
+H&q#s5$k.[LR*b(>n.-CRDF6#CH``NosS>427guWTmVTjq'Xd.2HRKY-N0,VGb):`/JG&%nN
+l29Lh!Uj%gOmQi)<?D(Va[;9m1Rb#'0i?A=f^Gi5!kC8UJ?\%;!c=ph+6SR9G#888/&Xk'P<
+AlC88H#W1s7nZpugdR)BYH-i.]AWIbjr&#/)rnrFl^OP]A^W"jJZ++P_.>BSd+M_ttj\YHVK*`
+PWEoiceIM4Aca8mE+5l(GVU_AQWJr)9SqME6%U'k@,$N@tqg*E0<%do:4)X+fFQ/Z*lILVd^
+%aBke^QEgXlFEM&Dqj07QVTEN%]A3f2YFY_^cK7V9"*dDD<<QSEBkBO)_H]AQR)AZ"35I%NBtd
+\\B7Z,cQ!2=0VYQmIAZ;N/?s27nad;#a+7!4)TZ+8mTqr9[+Tpa41PV;rl,ba(GDD:ec-crI
+\Sf@;7*,H>@@CRu\7D,fhm*G5!6B=r17Fg;>0A[4ZsJ8@j*-Sh]Afk"m$`:n70*GKa8u7;Kje
+'gH=o\&r/jKB.W&.HhQ>]AK)(C'mJID!#0/fEm9#=WPb@5T'Cp6WW#^dSokHA\JM?Sft=TPDW
+.H_2UIL!rq(h4R@UX9__QN"5&t5d\4Ps&W[?rq%46I%TD]AUr5s;u'T:\%IJ*fg-`cJ)@%If?
+_oGQ8>:!_q,6>iR@hb^63Z%T9#+bi5DS^qu)n`'-_A<R*/ip2U66C7D%4M7l6G5FBqY?RC#6
+M?c#bjWl)kR,)fXj&9BOOn\Z'RsqH_R9^5L3*WRg/3>FMUmJ@dJb3~
+]]></RowData>
+</TableData>
+<TableData name="当日" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[null]]></DSName>
+<ColumnNames>
+<![CDATA[[团城县]A.[Xzxn Code]A.[Xzxn Code]A.[MEMBER_CAPTION]A,,.,,[Measures]A.[长期险首年保费]A,,.,,[Measures]A.[长期险首年标保]A,,.,,[Measures]A.[长期险首年期交]A,,.,,[Measures]A.[长期险10年期以上首年期交]A,,.,,[Measures]A.[长期险5年期以下首年期交]A,,.,,[Measures]A.[长期险5-9年期首年期交]A,,.,,[Measures]A.[长期险趸交保费]A,,.,,[Measures]A.[趸交鑫年金保费]A,,.,,[Measures]A.[趸交鑫丰新A保费]A,,.,,[Measures]A.[短期意外险保费]A,,.,,[Measures]A.[短期健康险保费]A]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.fr.stable.Primitive,java.lang.String,com.fr.stable.Primitive,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.fr.stable.Primitive,java.lang.String,com.fr.stable.Primitive,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String">
+<![CDATA[SQK*^`$u8oB(g7*i!5VQh#2/*,a&^0p&%KYGBGbd?u/u3,IQ$)PPI`qfBSK5ifE&fPt55E2p
+&`DWA:WWVHQ$8X:4ocDumd""i#;DQ`F^KC9?8eN)V<na3=6.19Mu^Ximj-E7&**?<gKW%Z<C
+%2,r<&PeBjq)nAW+eZNJYV\j\m'Rt:e5+e",\pGK)hTJjDWbi\(j55>3r<$hPS6,P/UYQlL[
+U#'7/c.QQ9?j%PEcd-VcW#ODF,P!cL8nV3@[.^RUgsjoI=:r62t371<tHjO]A(X:1pS)fK]Ak\
+S/H7nV8l\tL?IWN.9b?A.SIiO2^8M6k"*(RMLF*r,T,1a$$(E?k>[-.8CCk]AbWDk2nr7$iJr
+U;Lc4K[WIP01$!uT;S60<-k]AQ7_+-jLg\E_XSZ2MYMBp9L<g)io\=0&pp=%,S)^T=JSC*\;p
+YCZ5tLn)2IbNnch7\Dp_g)4@(53IUDH`8DTA3%<I&t>GqEc/?t.%Y97^kJM&r/D)M/+$CLcA
+DM;cU(n<o^iZKD[TT:sYr%F*Et9ii6Um&A6P6!u%O[@SX*,N]AcnfD0DPM)c"9mEX[b8bsQ]AH
+Pt/OY@ZYe1?(uka[$hoQrhT"RU^gX?4/*`T3u(U!3gl!+A%\uXYj<>OcVSkUfAH<PbpK\*!*
+9ZN;CbpWC)R8bm^=^T7kCTTnjTh.+g?AQTh,g8"1g*aQ*@M3ulUb-E'McJaP;#m,3%12ce65
+!/T48k^ub1K2j4SPV7F#;>m_qPJ]A[#T9pIs3m8)0S:*P:)B!6hquMo;815IS8_fH31\)"C[,
+GB7X>sJ:&Pr5l.RX-c(eR&^A-4qDqusJ'@KVhscV:gJmSqb&&)G$J*L..3NWS^GHf.;ab<A7
+2)N=@<#S9BQBmr%o\UtpCbo_mEo^#c@AYR?P9-*XU-@6;=[bAahEDi$ZkqpE@";"1=8PN=nE
+.$j+JqSe9]Ae6<%!jiI)Ma(fFm%cZb]A>N&4X1BO0%>hi"3X(XYiN0;2VSNRW@DNL2*=,mc#/C
+LJ3<I3Xa"4@+-&#W",j,G;k(7qZ1)MHL`EFm@iQD-%!1Y&J7<GH7hc\1,056M=Agr?5,O2['
+m@g0S\?O-CYWhD35Z7cb^B>'KZo3)'+BZVrl]A<LO$3>t8cR<OD#5#"I"U'cTX$6Fp1eZcY>Z
+bY3:#.pJfGe4!7fCO4&9+ep+krZZj%%QTBT%c3R5ERN^ksOJm7ha,)Y#7PT_lZKb[WK\(N=V
+n"N!WVo*U^-n(EG=c-8H;#/kV>1cQKm/KT)n*d1u.amD&:AtXN?D"1Q;Ub=REAL"Ea)rtclj
+gl),Z./;n3=6?HjUcd<;1R/$6>A_9.6Ij:kS4lL>6?7!Jd*bLdh,e<H':sSU$a9D4%_/I=dr
+f2lYk/[:jfh9!.1-fd:M2TFFb!Tce=5R>+sdV_@s<a1(>4*]A_`%EKgs*97)^r=NN.(?.(#cC
+<,fjSiOKmMa]Afj=r4iOQ1E,nZGknW[i_.N#[RNgme(%ML5dQ#kV(X!<gEa9r9UPXf#Gsh!Cm
+[K*&p$t*aq@GU/D4oGUMYR&XM]A7>',h#aAJno7L,X%OnK>5+B'EM,VDoFZ.KJc:.R=OtW'Vr
+e,fs=:Up-IG8ZbeN#+Wr9W!@rpo.FsQ68+W)"-8ud+hMAID7.(6_2==9cu,EZfY!k$0&nQM[
+?"!!_Tq,a3KP'r"!E3#P3\#_2E(^fXfYt2Th+H2Ref?6.t&_qY7&KHKBR_M$g/pH)mY^HrR;
+"rg%i#STug&4gR*blRe`GO:E\rCfYS+(;g0g^Mn([0>ZLu6&(Ld*HJcn\,J%-8I<?rmkZVj7
+3tNrf(S5H$G2P:>ItoZm7GM+bEB9b]A\p`/r1KF:#j48$;=M)cCkliWW&fMJ[ePRbf9Gse;MC
+__&!TUP"UlogLRp]AmD$5gaR''S`0-LN-Qr4Q4mP%a,JG%R$jj%cp('_G+7/-T0=A[uuZ\O'.
+$e_1#b]A#)TR`E(SeB">$[Juqsfaa8ruL;M!9[knoJnigd!<f[j6c`*]A=lK"=Rh\I0Rln]An-d
+2aJ:0ZTqH5dJ0h*<5<#$"K[U&^$^V3WAp%eU"QU_Tl`dg,L7dEj^YSRgO<fU,J>`f<D"<9a=
+=Voeq-R-.\^;IQJlAopg2nV?W'^j-@<.;dmY#aEk-]A08iqr\mkE='eBnu2;;ml@=1h^MX4sa
+cQ^!sK>&1o"&6H<gO,3Y$T*'&$UhAG&G45rM7"FrPjbHAEftfbf-e&3R%4-FPdMp'HQ5m6!6
+nAYn`nIEI-61JTrUE-b1u2'o'OC(B%0DFT8&5/SEa6+iUQPQis'?)[R4m4f)Uq0Gm^7Vk[Uj
+\JWlnDKQq?.`6h=3D>+&D:M4`74lD*$8BZ((ji\RXCUDucAmG78b'eV1Yakqt<.C>V[`;p+V
+;g+/\5@jk'a+Q_b%L,kI)1GCJUbW+fk_mY&7u9ana#t-gUSSe4bQi9a0-\]A`mF7i&/a#n,ef
+nb!=RNYf8W#8\09#o5`oB%A'<aVPHB&'1T)WHZ21?OT4Icta):p>AGJ">[]A@_L&KEHAS#1`?
+_CTBPS#+hgh"MVMn-.>YW*j0fOs'+Qc0-6kjZ;-\goPC1ZDI)f^]A^s-%=X!j;ltC$@ID4>.f
+!tYSjO2K?fIW.Aqp*AH"H"u^;Fc5#(4tX[mOsEOW[;'ep^a3,1,n/S\[8(6FY/Ko8a3*/I('
+^JG:T6PW(ks'q0c<_GMtiS3ZWj7Kqp[#G2>-=`o5>HSV'#jI1PTe%dC(qq*&u@RP/D,%FW7q
+Hj~
+]]></RowData>
+</TableData>
+<TableData name="当月" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[null]]></DSName>
+<ColumnNames>
+<![CDATA[[团城县]A.[Xzxn Code]A.[Xzxn Code]A.[MEMBER_CAPTION]A,,.,,[Measures]A.[长期险首年保费]A,,.,,[Measures]A.[长期险首年标保]A,,.,,[Measures]A.[长期险首年期交]A,,.,,[Measures]A.[长期险10年期以上首年期交]A,,.,,[Measures]A.[长期险5年期以下首年期交]A,,.,,[Measures]A.[长期险5-9年期首年期交]A,,.,,[Measures]A.[长期险趸交保费]A,,.,,[Measures]A.[趸交鑫年金保费]A,,.,,[Measures]A.[趸交鑫丰新A保费]A,,.,,[Measures]A.[短期意外险保费]A,,.,,[Measures]A.[短期健康险保费]A]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.fr.stable.Primitive,java.lang.String,com.fr.stable.Primitive,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.fr.stable.Primitive,java.lang.String,com.fr.stable.Primitive,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String">
+<![CDATA[SQK*^`$u8oB(g7*i!5VQh#2/*,a&^0p&%KYGBGbd?u/u3,IQ$)PPI`qfBSK5ifE&fPt55E2p
+&`DWA:WWVHQ$8X:4ocDumd""i#;DQ`F^KC9?8eN)V<na3=6.19Mu^Ximj-E7&**?<gKW%Z<C
+%2,r<&PeBjq)nAW+eZNJYV\j\m'Rt:e5+e",\pGK)hTJjDWbi\(j55>3r<$hPS6,P/UYQlL[
+U#'7/c.QQ9?j%PEcd-VcW#ODF,P!cL8nV3@[.^RUgsjoI=:r62t371<tHjO]A(X:1pS)fK]Ak\
+S/H7nV8l\tL?IWN.9b?A.SIiO2^8M6k"*(RMLF*r,T,1a$$(E?k>[-.8CCk]AbWDk2nr7$iJr
+U;Lc4K[WIP01$!uT;S60<-k]AQ7_+-jLg\E_XSZ2MYMBp9L<g)io\=0&pp=%,S)^T=JSC*\;p
+YCZ5tLn)2IbNnch7\Dp_g)4@(53IUDH`8DTA3%<I&t>GqEc/?t.%Y97^kJM&r/D)M/+$CLcA
+DM;cU(n<o^iZKD[TT:sYr%F*Et9ii6Um&A6P6!u%O[@SX*,N]AcnfD0DPM)c"9mEX[b8bsQ]AH
+Pt/OY@ZYe1?(uka[$hoQrhT"RU^gX?4/*`T3u(U!3gl!+A%\uXYj<>OcVSkUfAH<PbpK\*!*
+9ZN;CbpWC)R8bm^=^T7kCTTnjTh.+g?AQTh,g8"1g*aQ*@M3ulUb-E'McJaP;#m,3%12ce65
+!/T48k^ub1K2j4SPV7F#;>m_qPJ]A[#T9pIs3m8)0S:*P:)B!6hquMo;815IS8_fH31\)"C[,
+GB7X>sJ:&Pr5l.RX-c(eR&^A-4qDqusJ'@KVhscV:gJmSqb&&)G$J*L..3NWS^GHf.;ab<A7
+2)N=@<#S9BQBmr%o\UtpCbo_mEo^#c@AYR?P9-*XU-@6;=[bAahEDi$ZkqpE@";"1=8PN=nE
+.$j+JqSe9]Ae6<%!jiI)Ma(fFm%cZb]A>N&4X1BO0%>hi"3X(XYiN0;2VSNRW@DNL2*=,mc#/C
+LJ3<I3Xa"4@+-&#W",j,G;k(7qZ1)MHL`EFm@iQD-%!1Y&J7<GH7hc\1,056M=Agr?5,O2['
+m@g0S\?O-CYWhD35Z7cb^B>'KZo3)'+BZVrl]A<LO$3>t8cR<OD#5#"I"U'cTX$6Fp1eZcY>Z
+bY3:#.pJfGe4!7fCO4&9+ep+krZZj%%QTBT%c3R5ERN^ksOJm7ha,)Y#7PT_lZKb[WK\(N=V
+n"N!WVo*U^-n(EG=c-8H;#/kV>1cQKm/KT)n*d1u.amD&:AtXN?D"1Q;Ub=REAL"Ea)rtclj
+gl),Z./;n3=6?HjUcd<;1R/$6>A_9.6Ij:kS4lL>6?7!Jd*bLdh,e<H':sSU$a9D4%_/I=dr
+f2lYk/[:jfh9!.1-fd:M2TFFb!Tce=5R>+sdV_@s<a1(>4*]A_`%EKgs*97)^r=NN.(?.(#cC
+<,fjSiOKmMa]Afj=r4iOQ1E,nZGknW[i_.N#[RNgme(%ML5dQ#kV(X!<gEa9r9UPXf#Gsh!Cm
+[K*&p$t*aq@GU/D4oGUMYR&XM]A7>',h#aAJno7L,X%OnK>5+B'EM,VDoFZ.KJc:.R=OtW'Vr
+e,fs=:Up-IG8ZbeN#+Wr9W!@rpo.FsQ68+W)"-8ud+hMAID7.(6_2==9cu,EZfY!k$0&nQM[
+?"!!_Tq,a3KP'r"!E3#P3\#_2E(^fXfYt2Th+H2Ref?6.t&_qY7&KHKBR_M$g/pH)mY^HrR;
+"rg%i#STug&4gR*blRe`GO:E\rCfYS+(;g0g^Mn([0>ZLu6&(Ld*HJcn\,J%-8I<?rmkZVj7
+3tNrf(S5H$G2P:>ItoZm7GM+bEB9b]A\p`/r1KF:#j48$;=M)cCkliWW&fMJ[ePRbf9Gse;MC
+__&!TUP"UlogLRp]AmD$5gaR''S`0-LN-Qr4Q4mP%a,JG%R$jj%cp('_G+7/-T0=A[uuZ\O'.
+$e_1#b]A#)TR`E(SeB">$[Juqsfaa8ruL;M!9[knoJnigd!<f[j6c`*]A=lK"=Rh\I0Rln]An-d
+2aJ:0ZTqH5dJ0h*<5<#$"K[U&^$^V3WAp%eU"QU_Tl`dg,L7dEj^YSRgO<fU,J>`f<D"<9a=
+=Voeq-R-.\^;IQJlAopg2nV?W'^j-@<.;dmY#aEk-]A08iqr\mkE='eBnu2;;ml@=1h^MX4sa
+cQ^!sK>&1o"&6H<gO,3Y$T*'&$UhAG&G45rM7"FrPjbHAEftfbf-e&3R%4-FPdMp'HQ5m6!6
+nAYn`nIEI-61JTrUE-b1u2'o'OC(B%0DFT8&5/SEa6+iUQPQis'?)[R4m4f)Uq0Gm^7Vk[Uj
+\JWlnDKQq?.`6h=3D>+&D:M4`74lD*$8BZ((ji\RXCUDucAmG78b'eV1Yakqt<.C>V[`;p+V
+;g+/\5@jk'a+Q_b%L,kI)1GCJUbW+fk_mY&7u9ana#t-gUSSe4bQi9a0-\]A`mF7i&/a#n,ef
+nb!=RNYf8W#8\09#o5`oB%A'<aVPHB&'1T)WHZ21?OT4Icta):p>AGJ">[]A@_L&KEHAS#1`?
+_CTBPS#+hgh"MVMn-.>YW*j0fOs'+Qc0-6kjZ;-\goPC1ZDI)f^]A^s-%=X!j;ltC$@ID4>.f
+!tYSjO2K?fIW.Aqp*AH"H"u^;Fc5#(4tX[mOsEOW[;'ep^a3,1,n/S\[8(6FY/Ko8a3*/I('
+^JG:T6PW(ks'q0c<_GMtiS3ZWj7Kqp[#G2>-=`o5>HSV'#jI1PTe%dC(qq*&u@RP/D,%FW7q
+Hj~
+]]></RowData>
+</TableData>
+<TableData name="本季度" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[null]]></DSName>
+<ColumnNames>
+<![CDATA[[团城县]A.[Xzxn Code]A.[Xzxn Code]A.[MEMBER_CAPTION]A,,.,,[Measures]A.[长期险首年保费]A,,.,,[Measures]A.[Prior长期险首年保费]A,,.,,[Measures]A.[长期险首年标保]A,,.,,[Measures]A.[Prior长期险首年标保]A,,.,,[Measures]A.[长期险首年期交]A,,.,,[Measures]A.[Prior长期险首年期交]A,,.,,[Measures]A.[长期险10年期以上首年期交]A,,.,,[Measures]A.[Prior长期险10年期以上首年期交]A,,.,,[Measures]A.[长期险5年期以下首年期交]A,,.,,[Measures]A.[Prior长期险5年期以下首年期交]A,,.,,[Measures]A.[长期险5-9年期首年期交]A,,.,,[Measures]A.[长期险趸交保费]A,,.,,[Measures]A.[趸交鑫年金保费]A,,.,,[Measures]A.[趸交鑫丰新A保费]A,,.,,[Measures]A.[短期意外险保费]A,,.,,[Measures]A.[短期健康险保费]A]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.fr.stable.Primitive,com.fr.stable.Primitive,java.lang.String,java.lang.String,com.fr.stable.Primitive,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.fr.stable.Primitive,com.fr.stable.Primitive,java.lang.String,java.lang.String,com.fr.stable.Primitive,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String">
+<![CDATA[Fdd$5j0fFdJ*ZKuol0u0"_@X;HKS1l"O\nMl)rAI`<!IN==JtAj'cL=[?n4dn:&dtc592=db
+.i>p3r3dGiX=BmnMi9k4[VIN+&D%,oibYZaGp))V6>X0f5=MN:al\fd'%DB8FG9'9>Cg/u&p
+Nq;(XTj7Oi]AT,+`_n.$%5-*OHFN5d`7I&rrLJaH$SI.fktA?js:*;/olH9H"Z`(?H;r_0`WD
+/NDJhnSfqlX-cLeT&#3>-q(@48Lp,m\/E/l>=fj`M8]A=0&'3_e->(O/_B0IgR4]A6S"HBg)6K
+UNB:hXVrio<Yf$BIfVe7P\;\&DS5PjoAYT?@dQ*"C;/epIkqIBp&/4]A.9_B/U1eVL'.p0R=G
+'[*n'7]ADqK7LsT[1FWI6p!VH+Ube'phhAAbKL@h0CAUsE>/XjLLH6]AtRf/:!l3nSh+89d*EE
+G:i.60Oq)m@p,=%k+\:1C`XV6Q"bIA?boo1.j=Uqj6hP+H)a8k`k'NI>*LS*aEEZ/d\eCFl>
+rgI=eZWqEMb1'&-_eTS*+7I.&q8qk[kG7(*a-8N?$"ZoJe(S7pTGJfiX`i]A?ZqM@Gkpr<Soo
+(aeWGd4(W53LXf?p./j<h;=;CKVO&,/OQ;r9i`=rG9#D(H\Jp/S6(PCc<;5U-k`(!c#9XWL4
+qp2':t7_tKX7Z3W5]A?C<D$ed:E-"PdDc:YcXrHo4>#liZ0?=?L;0S/C9!Wo;gulZbMD9h(-1
+^jn/\\^O$,,JBm,376T2pdO:.4.Gk@AI.ds'->J0@&)AMY=QR)nO@YZDGuhg=\"m^m$JBeIl
+34/fZ7\VQ7Y>*fU-<S,sU?Fl,@B^iJTTLQ+hu.mkk9=:38$Qpt$1/[=>JZN5;*S4XWkQ$@u@
+tpMjH%'''&:bA3.C+c!i=G>"N\SGUHF9c;$deG"d:$EFue&ZcnQ3WOnh@;B9Gk7aY$$0&'I[
+A1Yl*bjmjhTqUBb@#.geK-b4^r962)t%ua/\6H[]A`U=+5H!DX'-n.U*W0Z.U=@s$X7CcD$IN
+FC/ON819Zk#6<_66$im`3GM[P7@.tG4p?p2cI[gZXdJ?MGjo#(N1$HH%//AtlX!nN%pYY)H,
+/BJH#=bJr6(2=4+^GLTr.5!dM(j^0C%lH3i<7rsVQjTY!]AgL&.Z`kYZGn]AH7*#Er2f=#6r?q
+V<,n%oGFgLAW6FC(0,<SQQO&;^C!.!Ji%jq*':VZ&U73&@3?$oZ82"sU<JJ<$?+mr8(@d4jp
+c5aU5`9i(u3(rn\[4+.C%`.Hj/&#^RGP21DG7WI^s@ko2uOZ@!9\NJR&1iU^Mjm:*t68?`XM
+H1GKV?j6Q!?NCU,br/+42-##!/^MsCe\H=.=u'"8b-4o_*GBm9B]Ap&#lu@!I%^4#39D<]A3sO
+\\5!5Y1ltDt!9!i^AFu2*==^#9g7DO`pG$kaplc;_T<8e8e-Vc57Z6"N9@G9Z']Ae#pb'FH>?
+V&O/3M./An3i[EKE>1ikP6cjjH0A?e%X&7[`A;;3Vt"R(H5[0pr@oKEO)o(3kg6%KQ&ChO))
+qo(k*eFO&Pj<\\5TD?pLDIa.OXco_COlk8fi`nK&hFQe0*^kNYK0WLs,#ea^Ll"kAd.doM[(
+>\imY+-Yd/]A$N2"/g(*ZNGPDi2-6gI9V<kph.BIbBV>"I&%%HWYd!FEVk%@Ib=/qKBN#o1Sa
+4ApmV$l#Tg9ij*Z\Ej,T]AJfJU!.:H;Y6(!n9^3TP/Hi!5`B;"p<o+&ZmJ5;]AGgen$GXLqa^e
+b\M!U>\[2P[%TdA4p*,Y4Z#:b:,5\oPlF0f0<5_V+t3EK<04h;l/YKkm1P%XjN:2Ed%rIn6C
+K!XoVpZ"j=)Hn7?%53r4ATpt>o`]Af=Qq.U/'XroDI;VZBJj[Iq\3S!^/c!3kBVp^3>dWb.P@
+MFXe20ZLO%!b2/7*h.0Whcd4j]A1c7BaLXA#iZRXsH>;.,I(l%kNrh:YEVqdf[SB]A8Q'Xj(V<
+Wp1r%U+,C?T=sfC@XD6COqS!L0W!&`5]A"#kLUn+)LD@R+9cI6\38\2`/X-LO)X/P!-or,/bp
+pXX*Eq9F&@p>N2$mlnn\K$kj*UM>T*YJu)+J+]ARGC%2CH/K@q8&!GEHE/N`W6#B_SuM+Bi>o
+90<_)^e=#P(/OCpR%?Ot<I(Vb\:dIb/+17a2W?k@Z46sJ7ON"O/7!u37XHl/ef*]A#:%`&@+j
+IL"ZXBjH+@d)%<UTQE2PQonK1j=3]A%gt!NMpN%Y228JKVP[%p[cn3A:m3/'e;3O<T(YEm_a-
+!8/K*D"J6W=nqLFS(>j6JdG\`a<NY'E;?N:Mr@^oY1)+f7R#&>P$YN/M]A?d)F$_NS(mtm;o5
+k'VGTCW,$AYauK!.0@SF]A?;4j,["j'2hPdtIMC7J\25`VqR4u+:>3]A%LP;^4#k#Ws*q_;%l"
+%_ETDJ4hV!4k_JKW`(4N6s3a-!_m\q^@[?ZER:ge4-C*pESM.T)<<QNnUA'!Ged\;Ni@k%Bl
++Te&I0'j;=K3'jVI#2:hLmJS;n<\+AU64>"RLjJ#gGW::=9`Z?C=5h\D#s6(>I@;D$'>WR;-
+^<LOs8SeQ2<=Z_M)@(V2P&cH7FT$_HB?"a:MmuhC@=uY#GgcJSZ4;J6GZe]A9.nGcK/<O6<(N
+1seK?[\HEeiT^9`P9H)OqV)2_:p,G7f8s/%4/TmcTk7]A'rV;(3(#jVhHt4o;gAX&l*RqlYj0
+pl\t]A/OOn6(8:"VdlQIMM?t#[kQ`%j2B<T5s7rnDFo(0Q&[!CN/et(u&[VCe?OAbhS_ISg2A
+rcdd<9ree6%,[c?ZdC7lG<8Ar7J28fGSn&&0Vua8ge&MfP4,pfEgS:(@Z,=nJPITM&!4Fe.&
+?XnXtVjng@qM=ZE[eWS4U,:ng=BB@Wbd6'$^`4o-C'9n"`\M"OUcil%eLHVnXLm-IKU_!hu1
+*]AHhb3k4:jC!)?BMHlQ<ao<^!?B!*0gt>T&0F4U.abA^=-l-0KlsG'/&--c@G9j,L=nBa+:h
+>5N)L.MShSeU65fGa1MHaKrnYl"?J>oT4pFFT5MIq15mOI3I&c:8ZmDLFa(#s=Q^cB!"'J?;
+F\SdZ^h^:gUX4CpWfK=lDQA#3<SQ2o+M8tDUhQID-OZp]ACo*XH?M2-0q61WaLM(D4>D,t5oN
+Om<9YPWhLnm"FTbItj1^J/E$#@a!-f([k`p`/k+H?GXua8"3\H4cb*ljIM?C1qS[c:s(!_UQ
+'Wc"3+`BJ'F;%bB4bd@J??^PUdeqQ.bHH^7UW-Y!d^Y.)bDeciSl9^/+qq-%0lC<4VHGd.R;
+\!V"uYl^]A(="QDYVS`;;&*mV)NHgIa^;'"IeQJ(cRWd5rOX,edP'"/=\e`Fa)L[,t-&uhsNN
+Yo?$OVKOmqP^$Q4GO[K;qS=jQoJJdkidYns^,FnG`>bQaGdaK0`Fa0bAD%0fdig&cK0(o*9J
+=Ln290;e;D]APf-RY&0pJ7&ttWK`C-Cs994t#n-MfbqVURrZ<%M-D8BqROE999[Amk]A:De>+d
+j?C@n2.BtH.,8cA,f2r'OCP9[0Su.Q,LUHA&8"/6:71Wr_%1_\m,V7e!LV?Vu";^7kesa4^"
+1j0+Qfu\!h\TL1sN-fT<1cJR4>$]AnDP]A<CZh3jL)44P!$E0)OfT_hj;-Ir!%F2C<"W-FW&>F
+<rhDP:fcBl09MehPuEB<k=$Di]AD-08?CKgGq#g=6cnslt#[PsmNUU#TcY0n=Of>L"#Xg<H.'
+c`jSHlb[ZH@os^S@qg#5UdFFV3VIHrWAM2&#U50"(j=Dpl`djmh2KN,(b[R!k=1<5qXRA)9H
+qlK:TW/]A1qFrHMRYe)b9YdGh@$WLT:]A?%;BqNTPUc"8,6-r8H_o-e9W!b5O1Q=#g$nmjbuVV
+\1$)cYaS)/:ljDoXe=(U&,i^r-i?OqTX]A!`3->ir)WGcUe$I.b2o%`WkkKS.ctOh$VUW/MCj
+KMApqKo;!bH(F+m;s!^-H1C[_2/n#So1:&QI4OcTI!+hq<FbV]Af\/r)_*p>TL!<Ht8iWn"'u
+9K+=4OIT;6_HgHqVIanGGg=^;4;B+m'ZV2F>q\7Y]AU:Aj.k\8=m<.64a+t.>8)NuuIU@nFcB
+R"j6fn3M2liZ436h:d]Ac<3X6?d+^G-)gCal2Qp88uAE]AIrc,c;Qj"Cn8#NWs"jFlFT]A8,RK7
+6/Vm\K'9>B8hh5rV_d3snLgEQ!h;YN=(52>aO5T5q(d,k:rKDEEZ&'o[5ZKkl0%CcRP`Dc1Y
+]A!tMQ'Iq)?fpa"2s-I<e=EF!?p*oPGANXk`h!t]A]Ac+70iOu&`56~
+]]></RowData>
+</TableData>
+<TableData name="一年期退保" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[null]]></DSName>
+<ColumnNames>
+<![CDATA[[团城县]A.[Xzxn Code]A.[Xzxn Code]A.[MEMBER_CAPTION]A,,.,,[Measures]A.[长期险首年保费]A,,.,,[Measures]A.[长期险首年标保]A,,.,,[Measures]A.[长期险首年期交]A,,.,,[Measures]A.[长期险10年期以上首年期交]A,,.,,[Measures]A.[长期险5-9年期首年期交]A,,.,,[Measures]A.[长期险5年期以下首年期交]A,,.,,[Measures]A.[长期险趸交保费]A,,.,,[Measures]A.[短期险保费]A,,.,,[Measures]A.[短期意外险保费]A,,.,,[Measures]A.[短期健康险保费]A,,.,,[Measures]A.[趸交鑫年金保费]A,,.,,[Measures]A.[趸交鑫丰新A保费]A]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive,com.fr.stable.Primitive">
+<![CDATA[/WW11J1q62n%PY%>4MV7'=49R84#r`.j?To&4fWPn:W/Ofh8tGbk>$!#5qsDfrQ9m_ntAtHN
+asO@':.]AZ%%mWRr]A\.I/H>_7g@_P2m>f;TLt$9&ET)[LlL%^;KM>'NmMrWZ%s*Vl?E=~
+]]></RowData>
+</TableData>
+<TableData name="ds1" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[null]]></DSName>
+<ColumnNames>
+<![CDATA[xzxn_code,,.,,branch_code,,.,,xzxn_name,,.,,cheng_xian]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.lang.String">
+<![CDATA[NKuk.__;KffA[Ja+d1[2]AcBf1+u?IHY.t3%lq>YlHObWR3OWC0@.S%#PPis<gEl1t&W#QJI_
+C6Fr*5i/5K&$`Lrda3os+@k]AE8c52!Tr'&RN#=:9m4!4/Lc:e)h^iSk)$#NaLO'H_SL.Y_f\
+`8k+m)XnIeB]A>adDa$8d?G(4jVJ.=s[36/>TR1!8d'i`To3j=ZqH2FiVqgK&"#u:$d5(H24m
+o4#-j4SX@m:in*P!C:62q6[VgpSljSm/E$OeqY10SMZGUi68oYCuAVB]AMs0]AU#!%&;V#(c.)
+HX"-IVZYtfWWaltgr7f0uM_TL3S^`A4FrR]A(eGn2*qqk:mtPnXd(mmaI20<0QB\rE$?"+Okl
+bF-&&2HV736uoSZ&n;)gEQT[u7IB*aMB.M;H]A64,kW_[G;+Xf6!g1p[eCoI,AOO/J.U0ju7*
+6*r.SfmZOnjqS2m(T6,;P9q_?r@98Ztk]Aj<gH-OY?Lld7"E/B":.:@%FUo"<uq3[?HOH9&T9
+;0Q$D]AQp@IS1,Z^+*nH`fkA4_#B6/7)X_2^PfnC<JF^WVgLu+*C\r13_5U?;#BY9o"GlSqj@
++T+Erri~
+]]></RowData>
+</TableData>
+<TableData name="团险鑫" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[null]]></DSName>
+<ColumnNames>
+<![CDATA[[团城县]A.[Xzxn Code]A.[Xzxn Code]A.[MEMBER_CAPTION]A,,.,,[Measures]A.[趸交鑫年金保费]A,,.,,[Measures]A.[Prior趸交鑫年金保费]A,,.,,[Measures]A.[趸交鑫丰新A保费]A,,.,,[Measures]A.[Prior趸交鑫丰新A保费]A]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String">
+<![CDATA[D,o>QgFs'67X>AqG`r<,s-Br504Tj!`]AdN>?Fs=t</-3jO%D'aD*9Kk%Ee36gIBN6cHZ)XKf
+#=[l*Nu*Jj&$C*$dnBdr^VB99-($/2Be'3^/mnPYbJfUjlk9nN"^6-T<:u&mr_RK5E_(3>P)
+qMK?ECKGLbk:N4hIK.IF"5B>$i@g_)<GBb*eqEhk&a<rGLq&FSecT4#S.E,)mUKL2C0<EK55
+oK&'!9r_rU"C_J\-1Jo7!i%f0ide0G6\p>:46]AToXbCt\mLI<16K7aY45LL32&l-<^tnV@>!
+[723dLKhao1ipD]AY,2ailga+^:Wh?#(9\DBeoBa^s@^:6CF9&p+(S0t[mcj]AlI)hPU(nLjrg
+T$;C%Me`q0j$/qY>Z)/*K%I=>eU7RJ3EAUR4JN.78e=b6bWIPlnW@`2@P6/<(J!3iP8Vai&C
+M>mr_n(`'9!>j[LljjopoplP\MG[2b&i9-IU'j>RLTG7toC!7TZId<5tg*#i%cq!sm!<?$[R
+>(GJmY2nN9uo,c3.$PB%_TE3H3,O>QdBmY[N[,X:.p?\nkja6>-!]A#*t@=q8["Fr[)*4OcVF
+d7PY,E/nt7i/QU*`uUbHQ^[#a@!f$]Al(&=!G(`*C1n!ujDFMO\+Z>n@tL,"N6Z?sBXY,m"GJ
+5.blWQ^Z1<l\TrFGA)*ANU)s8&!G-708!G+r*;_>#B]AgZN$:$Frqq`3lO9OQQHg#+GGS>3c_
+ln91^S,F+FOSQRJW5mo1hpIYsBp),uQQs%Cn!aM@(GEDTlR58=DflL1mj4GoGj0#D2h9D)e?
+CA<E7hSeYhAL<KuHm7m37#\~
+]]></RowData>
+</TableData>
+<TableData name="本季度2" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[null]]></DSName>
+<ColumnNames>
+<![CDATA[[团城县]A.[Xzxn Code]A.[Xzxn Code]A.[MEMBER_CAPTION]A,,.,,[Measures]A.[Prior长期险5-9年期首年期交]A,,.,,[Measures]A.[Prior长期险趸交保费]A,,.,,[Measures]A.[Prior短期意外险保费]A,,.,,[Measures]A.[Prior短期健康险保费]A,,.,,[Measures]A.[Prior趸交鑫年金保费]A,,.,,[Measures]A.[Prior趸交鑫丰新A保费]A]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String">
+<![CDATA[D3n,*oH4KpT:NZS-&@?bR/Lr;5*AZMErS7D<@<ZC3#kbkM+Ecg2JZ[S'?*:QCYjjH?>5O6[<
+:_,Y@V:`T8h_,UM3e&.:`!"=QnJ!LU3H@VM3=hHZcLZXS*r_Y%D:\Dl\[dPq`.5Xo9n2Q<TE
+Mm(C'?;5Vi,U:X_!kcnBh[%\dKjksh(ai1WiJWE:-<P<Su:E76<C'0OIWqUAfBi@[*A%eK_6
+,Y?E]A,rOIZ\FG,H68)W]AQ'9Rj"+KK/q*FN/SqEW`3P]A$-RVsSXa82'E>oW12>S6W3dmOA'.]A
+3DVTlBGZRV>*Ag<Xb0IkdkDu1cheVS=fMOOf612`"3n,M*dg?ceY^-:I?^b"f__,aZ@8YaDR
+$9jA[n4O)[I!Q[?^?0h:NREC4`Wjg.9Lu`?T3)63l@PD0j0&rZqbq2$,h_R$k'_^L$RMHB(O
+9?KC$)`I"MgaLn3Y!->N5Wb#,`qRSN,e-p&O*-i>b:O%!@*q3MdEkF26)7,I<SGa"lNm>#6`
+<h*m2AWko!#g(QEqD35fB@'Y?kk%U?Ur_4'?;&!1>O-gq3r]AX'A#&T/5nfo7<\<>pbNBp:HO
+#H'5T#Ff_=(e6n\Pf_dVDl8!<V%s<MJ;c>ai2H>;23h>Y*WJX[gZia.$$Og_kB\,=M8RMY3J
+JngCn]AS[U*"`g40+=`L[PMhFTKGPr]Aiar8aOP3iZ^L\0VRKmnO=4H"?4Cs2;DB(]ALE1h(Rn1
+//nab-@<_Y/Th!Aq8Nau5#a]AV7\V\""2L;QIjh=lQ)V@^JJG;?iTDiS7r2`,-9R'gj$FG$J=
+\Bc;]Ajq;mn`L,&'uYFq-BsF@;9ZCGjfkD)s*"e=l7:2*5j2pO4XLaW:hCM]A4"?tc-4XO,#Z;
+abNbmb`oWt^JWd1L:aUjWdr*K8M*>;%;C/aL'a#E%YNbAN?QHXY"M3nk?VH83lmN(J($>U*Q
+n41'MiWm0iI8BCj@I5%H_+,p*T[=Mro)%/:9rT4FD[b[*$D3I@IXshMRn.=I?OXDCm<qsoJ&
+rZK]AG>5qKW]AilA/htM_63*Ap;Ws[$/LO5C<>(]A.n0*PWb>[)oddX-m=Nq),Ie?S&5g$.q8sP
+apPVhpUZP/.n(BUVWNX$?]A3@&BV:0u;g-S=J@gl?V.Tn.NFWjYSF.5\r1;!7%h0CDqg?&pG]A
+UE@9m-s4e8o!jS3IH"C7sF%8H!5;Wm?WdM,NZJ'eBDirEWL(aRM\Z(%7ci9[6d3+eaL^N2IF
+g#8<)a>=#TaamK93F>Xr(UQE/'9XF9+Vcs9O3XJ$:goP#LUI<0*Zf_%oRZj8Tco@ai&:%uu_
+aYGV*iaO-C]AI[tAQLpul/HcW1HPV6GM;EggNd`nAs>RE@r@OQR"0f)FpSU%3#dJ41%)J:pZW
+)LCE)C_K,C%3a1FR!mXm\/i+Ma+Sb*V]AFf1ElKCra'7%2+;!ju$(bJt11^U=tpPNW+CCVS]AN
+q;0q;)nEb,]A^>[d^F;tE1tW1'bBu0mcNSWN1Vl[+KJaU)*o9?5F#PIIT8`<ZTZV60h=dFt.W
+bAJG'%bnQ\fs-.Od#2/ttmq4j2`1+\8I4[+F<f%iL&qNQ>G&>Zifo6)7R+m(`q(C8Vf$P1ng
+#du:VcR!-.r1E_uYcKpEmlJR<B^"U!p<d8_&/B:R?kP-'CjB@hL!a5<o6BfGq%n(1sEG'jED
+_$:L#H`UbLdBn)p/sSI^f]AlY!84!nbTEEumKf4bC@l0\=LN^=d;sadO==08H5RajkB)_-:kO
+eq(T<Y5lau]A.;NC&O1:/;!m9?5GT=ZBc1hK+>8"NB<b]AZAt4r5@tp"`//5>P_jpPLV)EHL[J
+Q-k]AB$^3ZYad8^BDJXB$g7oPM&I?pTf.3>L"1Hn*]AINSI[1CcEU=*arS*@tNdm2b>5I4bC(V
+[U>d_VoQY!?;E.t;pm6g_)q`sC&kbkGu:'`ZlPCS)4Md7./T?cg@3(FC)Gdbgh60]AL?*k`l)
+L~
+]]></RowData>
+</TableData>
+<TableData name="预算" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[null]]></DSName>
+<ColumnNames>
+<![CDATA[虚拟机构号,,.,,机构名称,,.,,城区县域标志,,.,,短期险年度预算,,.,,意外险年度预算]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.math.BigDecimal,java.math.BigDecimal]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.math.BigDecimal,java.math.BigDecimal">
+<![CDATA[I?j1t)DMq\IrDNbQ`urRZIui'44MhZO:dTj/&P>jo`Gf5/;rH2E5HW34kV+E#)-KQr-7?e?g
+g":^^l%4PG9esei<P-K>G<`Y<F$#K^X8Pd18X-`/r1'D#NC6(E$C3XicF">pM;'C_!/%b/PH
+dDkNE/$'X9NQG^9Y)`$:Y@\HA_C:9K_P?XAAbolR7BiC;W'1e1.C"cN0S\T@F^1N1HY0Xl#r
+B8Yb0_c"*k5re_^lf*E>'+iqUVDh&i"NgjKiOD!'BiD$PbM.$,)&o9H1LIf\spj<%+UB-!5k
+fJe#9K!%UcNnJMPdTZQ#<=6*bDM0=5/m%@SStQ/1K^XQ7M2N`-CS6931@P::eb%PG3UU.>p:
+2&R;F^G<?@aG;9>Th/uV#P1q?H#p!2oZ5(U2Yo*fLP#plefb>gOrKQ$E]ApJ`'R#V4eZ>:D:C
+c5*R3AOQQd_['>YTdsZ_JSkI]AqI"jPAP?QKU%0N35a^\6O0rZJ-lJKlcBrhl'Gr54(Y<NZ2)
+:IOI<F1l?KDUY/s&>>3k=ic,76:*A2bqY:[lm\19,=d3#?9']A/20A/:FU8,ZH;)(,S+S2;>m
+;El->;YhL<K"EEI]A,*Z<3`AEk*fh8KW!l'aYSlnMn'0p(!TV"eY($uGnb</)0S:nJ@TE*<P!
+g#_b#AKg^@Vd89N?]Am?[=Y`MIs,g,]AtK!HFc0@Slu&#NL5s-sI^YYSu;H\MXCM'qWLa'/b:[
+<!1L.6;c6&",'@STjb:ao.h2p>nn@X.Q"[Bhl8qgiLYN]AA;oZ1,/V@GL7b.:=BI)#<4Nd`;4
+%d>Wn!-a;]A]ADR\S.AfWF'sLk#!Oaq[k<5RO+8jV;"M27Kbjs1eB:Pgk/2U+^'b`MW:3@S+r8
+t<UYuA;Pl"Da\?k>53\1KSOOZWEfqpHeZZ<s5)e3r=g.=eAfE%DNKP(lX25_g4fqPT;=R6na
+q'3lX&OqePQ$%~
+]]></RowData>
+</TableData>
+</TableDataMap>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR F="0" T="2"/>
+<FR/>
+<HC F="0" T="0"/>
+<FC/>
+<UPFCR COLUMN="true" ROW="true"/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[2476500,1295400,1828800,1008000,1008000,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[5791200,3314700,2743200,2743200,2743200,2743200,2743200,2743200,2743200,3657600,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,3619500,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,3810000,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0" cs="35" s="0">
+<O>
+<![CDATA[公司业务分析表—团险渠道分县域(单位：元)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="1" rs="2" s="1">
+<O>
+<![CDATA[机构]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="1" rs="2" s="1">
+<O>
+<![CDATA[机构代码]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="1" cs="11" s="1">
+<O>
+<![CDATA[短期险保费（含一年期定期寿险）]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="13" r="1" cs="11" s="1">
+<O>
+<![CDATA[短期意外险保费（含一年期定期寿险）]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="24" r="1" cs="11" s="1">
+<O>
+<![CDATA[短期健康险保费]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="2" s="1">
+<O>
+<![CDATA[当日达成]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="2" s="1">
+<O>
+<![CDATA[当月达成]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="2" s="1">
+<O>
+<![CDATA[本季度达成]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="2" s="1">
+<O>
+<![CDATA[本季度同期]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="2" s="1">
+<O>
+<![CDATA[本季度同比]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="2" s="1">
+<O>
+<![CDATA[预算]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="2" s="1">
+<O>
+<![CDATA[实际完成]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="2" s="1">
+<O>
+<![CDATA[预算完成率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="10" r="2" s="1">
+<O>
+<![CDATA[排序]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="11" r="2" s="1">
+<O>
+<![CDATA[同期]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="12" r="2" s="1">
+<O>
+<![CDATA[同比]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="13" r="2" s="1">
+<O>
+<![CDATA[当日达成]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="14" r="2" s="1">
+<O>
+<![CDATA[当月达成]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="15" r="2" s="1">
+<O>
+<![CDATA[本季度达成]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="16" r="2" s="1">
+<O>
+<![CDATA[本季度同期]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="17" r="2" s="1">
+<O>
+<![CDATA[本季度同比]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="18" r="2" s="1">
+<O>
+<![CDATA[预算]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="19" r="2" s="1">
+<O>
+<![CDATA[实际完成]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="20" r="2" s="1">
+<O>
+<![CDATA[预算完成率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="21" r="2" s="1">
+<O>
+<![CDATA[排序]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="22" r="2" s="1">
+<O>
+<![CDATA[同期]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="23" r="2" s="1">
+<O>
+<![CDATA[同比]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="24" r="2" s="1">
+<O>
+<![CDATA[当日达成]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="25" r="2" s="1">
+<O>
+<![CDATA[当月达成]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="26" r="2" s="1">
+<O>
+<![CDATA[本季度达成]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="27" r="2" s="1">
+<O>
+<![CDATA[本季度同期]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="28" r="2" s="1">
+<O>
+<![CDATA[本季度同比]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="29" r="2" s="1">
+<O>
+<![CDATA[预算]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="30" r="2" s="1">
+<O>
+<![CDATA[实际完成]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="31" r="2" s="1">
+<O>
+<![CDATA[预算完成率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="32" r="2" s="1">
+<O>
+<![CDATA[排序]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="33" r="2" s="1">
+<O>
+<![CDATA[同期]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="34" r="2" s="1">
+<O>
+<![CDATA[同比]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="3" s="2">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="xzxn_name"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false"/>
+</C>
+<C c="1" r="3" s="3">
+<O t="DSColumn">
+<Attributes dsName="ds1" columnName="xzxn_code"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="2" r="3" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=N4 + Y4]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="3" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=O4 + Z4]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="3" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=P4 + AA4]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="3" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=Q4 + AB4]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="3" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E4 - F4) / F4]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="3" s="3">
+<O t="DSColumn">
+<Attributes dsName="预算" columnName="短期险年度预算"/>
+<Condition class="com.fr.data.condition.CommonCondition">
+<CNUMBER>
+<![CDATA[0]]></CNUMBER>
+<CNAME>
+<![CDATA[虚拟机构号]]></CNAME>
+<Compare op="0">
+<SimpleDSColumn dsName="ds1" columnName="xzxn_code"/>
+</Compare>
+</Condition>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Widget class="com.fr.form.ui.TextEditor">
+<WidgetAttr aspectRatioLocked="false" aspectRatioBackup="0.0" description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<TextAttr/>
+<Reg class="com.fr.form.ui.reg.NoneReg"/>
+<widgetValue/>
+<MobileScanCodeAttr scanCode="true" textInputMode="0"/>
+</Widget>
+<Expand dir="0"/>
+</C>
+<C c="8" r="3" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=T4 + AE4]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="3" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=I4 / H4]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="10" r="3" s="3">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=COUNT(J4[!0;!0]A{J4 > $J4}) + 1]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="11" r="3" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=W4 + AH4]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="12" r="3" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(I4 - L4) / L4]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="13" r="3" s="4">
+<O t="DSColumn">
+<Attributes dsName="当日" columnName="[Measures].[短期意外险保费]"/>
+<Condition class="com.fr.data.condition.CommonCondition">
+<CNUMBER>
+<![CDATA[0]]></CNUMBER>
+<CNAME>
+<![CDATA[[团城县]A.[Xzxn Code]A.[Xzxn Code]A.[MEMBER_CAPTION]A]]></CNAME>
+<Compare op="0">
+<SimpleDSColumn dsName="ds1" columnName="xzxn_code"/>
+</Compare>
+</Condition>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="14" r="3" s="4">
+<O t="DSColumn">
+<Attributes dsName="当月" columnName="[Measures].[短期意外险保费]"/>
+<Condition class="com.fr.data.condition.CommonCondition">
+<CNUMBER>
+<![CDATA[0]]></CNUMBER>
+<CNAME>
+<![CDATA[[团城县]A.[Xzxn Code]A.[Xzxn Code]A.[MEMBER_CAPTION]A]]></CNAME>
+<Compare op="0">
+<SimpleDSColumn dsName="ds1" columnName="xzxn_code"/>
+</Compare>
+</Condition>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="15" r="3" s="4">
+<O t="DSColumn">
+<Attributes dsName="本季度" columnName="[Measures].[短期意外险保费]"/>
+<Condition class="com.fr.data.condition.CommonCondition">
+<CNUMBER>
+<![CDATA[0]]></CNUMBER>
+<CNAME>
+<![CDATA[[团城县]A.[Xzxn Code]A.[Xzxn Code]A.[MEMBER_CAPTION]A]]></CNAME>
+<Compare op="0">
+<SimpleDSColumn dsName="ds1" columnName="xzxn_code"/>
+</Compare>
+</Condition>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="16" r="3" s="4">
+<O t="DSColumn">
+<Attributes dsName="本季度2" columnName="[Measures].[Prior短期意外险保费]"/>
+<Condition class="com.fr.data.condition.CommonCondition">
+<CNUMBER>
+<![CDATA[0]]></CNUMBER>
+<CNAME>
+<![CDATA[[团城县]A.[Xzxn Code]A.[Xzxn Code]A.[MEMBER_CAPTION]A]]></CNAME>
+<Compare op="0">
+<SimpleDSColumn dsName="ds1" columnName="xzxn_code"/>
+</Compare>
+</Condition>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="17" r="3" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(P4 - Q4) / Q4]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="18" r="3" s="3">
+<O t="DSColumn">
+<Attributes dsName="预算" columnName="意外险年度预算"/>
+<Condition class="com.fr.data.condition.CommonCondition">
+<CNUMBER>
+<![CDATA[0]]></CNUMBER>
+<CNAME>
+<![CDATA[虚拟机构号]]></CNAME>
+<Compare op="0">
+<SimpleDSColumn dsName="ds1" columnName="xzxn_code"/>
+</Compare>
+</Condition>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Widget class="com.fr.form.ui.TextEditor">
+<WidgetAttr aspectRatioLocked="false" aspectRatioBackup="0.0" description="">
+<MobileBookMark useBookMark="false" bookMarkName="" frozen="false"/>
+<PrivilegeControl/>
+</WidgetAttr>
+<TextAttr/>
+<Reg class="com.fr.form.ui.reg.NoneReg"/>
+<widgetValue/>
+<MobileScanCodeAttr scanCode="true" textInputMode="0"/>
+</Widget>
+<Expand dir="0"/>
+</C>
+<C c="19" r="3" s="4">
+<O t="DSColumn">
+<Attributes dsName="团险渠道" columnName="[Measures].[短期意外险保费]"/>
+<Condition class="com.fr.data.condition.CommonCondition">
+<CNUMBER>
+<![CDATA[0]]></CNUMBER>
+<CNAME>
+<![CDATA[[团城县]A.[Xzxn Code]A.[Xzxn Code]A.[MEMBER_CAPTION]A]]></CNAME>
+<Compare op="0">
+<SimpleDSColumn dsName="ds1" columnName="xzxn_code"/>
+</Compare>
+</Condition>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="20" r="3" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=if(len(S4) = 0, 0, T4 / S4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="21" r="3" s="3">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=COUNT(U4[!0;!0]A{U4 > $U4}) + 1]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="22" r="3" s="4">
+<O t="DSColumn">
+<Attributes dsName="团险渠道" columnName="[Measures].[Prior短期意外险保费]"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="23" r="3" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=if(W4 = 0, 0, (T4 - W4) / W4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="24" r="3" s="4">
+<O t="DSColumn">
+<Attributes dsName="当日" columnName="[Measures].[短期健康险保费]"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="25" r="3" s="4">
+<O t="DSColumn">
+<Attributes dsName="当月" columnName="[Measures].[短期健康险保费]"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="26" r="3" s="4">
+<O t="DSColumn">
+<Attributes dsName="本季度" columnName="[Measures].[短期健康险保费]"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="27" r="3" s="4">
+<O t="DSColumn">
+<Attributes dsName="本季度2" columnName="[Measures].[Prior短期健康险保费]"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="28" r="3" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(AA4 - AB4) / AB4]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="29" r="3" s="3">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="30" r="3" s="6">
+<O t="DSColumn">
+<Attributes dsName="团险渠道" columnName="[Measures].[短期健康险保费]"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="31" r="3" s="3">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="32" r="3" s="3">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=COUNT(AF4[!0;!0]A{AF4 > $AF4}) + 1]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="33" r="3" s="6">
+<O t="DSColumn">
+<Attributes dsName="团险渠道" columnName="[Measures].[Prior短期健康险保费]"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="34" r="3" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(AE4 - AH4) / AH4]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="4" s="3">
+<O>
+<![CDATA[合计]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="4" s="3">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=N5 + Y5]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=O5 + Z5]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=P5 + AA5]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(F4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="4" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E5 - F5) / F5]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(H4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=T5 + AE5]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="4" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=I5 / H5]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="10" r="4" s="3">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="11" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(L4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="12" r="4" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(I5 - L5) / L5]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="13" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(N4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="14" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(O4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="15" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(P4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="16" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(Q4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="17" r="4" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(P5 - Q5) / Q5]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="18" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(S4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="19" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(T4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="20" r="4" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=if(S5 = 0, 0, T5 / S5)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="21" r="4" s="3">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="22" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(W4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="23" r="4" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(T5 - W5) / W5]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="24" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(Y4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="25" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(Z4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="26" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(AA4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="27" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(AB4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="28" r="4" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(AA5 - AB5) / AB5]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="29" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(AD4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="30" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(AE4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="31" r="4" s="5">
+<O>
+<![CDATA[]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="32" r="4" s="3">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="33" r="4" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=SUM(AH4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="34" r="4" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(AE5 - AH5) / AH5]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings shrinkToFitMode="0" headerHeight="0" footerHeight="0">
+<PaperSetting>
+<PaperSize width="432000000" height="25920000"/>
+<Margin top="986400" left="2743200" bottom="986400" right="2743200"/>
+</PaperSetting>
+<FollowingTheme background="false"/>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</color>
+</Background>
+</ReportSettings>
+<Header reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Footer>
+</ReportAttrSet>
+<ReportWriteAttr>
+<SubmitVisitor class="com.fr.report.write.BuiltInSQLSubmiter">
+<Name>
+<![CDATA[内置SQL1]]></Name>
+<Attributes dsName="yusuan"/>
+<DMLConfig class="com.fr.write.config.IntelliDMLConfig">
+<Table schema="" name="团险渠道预算分县区"/>
+<ColumnConfig name="虚拟机构号" isKey="true" skipUnmodified="false">
+<ColumnRow column="1" row="3"/>
+</ColumnConfig>
+<ColumnConfig name="短期险年度预算" isKey="false" skipUnmodified="false">
+<ColumnRow column="7" row="3"/>
+</ColumnConfig>
+<ColumnConfig name="意外险年度预算" isKey="false" skipUnmodified="false">
+<ColumnRow column="18" row="3"/>
+</ColumnConfig>
+<Condition class="com.fr.data.condition.ListCondition"/>
+</DMLConfig>
+</SubmitVisitor>
+</ReportWriteAttr>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="false" windowPosition="1" align="0" useParamsTemplate="false" currentIndex="0"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList>
+<Style horizontal_alignment="2" imageLayout="1">
+<FRFont name="微软雅黑" style="0" size="160">
+<foreground>
+<FineColor color="-12747300" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style horizontal_alignment="2" imageLayout="1">
+<FRFont name="Microsoft YaHei" style="0" size="80">
+<foreground>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</foreground>
+</FRFont>
+<Background name="ColorBackground">
+<color>
+<FineColor color="-11561760" hor="-1" ver="-1"/>
+</color>
+</Background>
+<Border>
+<Top style="1">
+<color>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</color>
+</Top>
+<Bottom style="1">
+<color>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</color>
+</Bottom>
+<Left style="1">
+<color>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</color>
+</Left>
+<Right style="1">
+<color>
+<FineColor color="-1" hor="-1" ver="-1"/>
+</color>
+</Right>
+</Border>
+</Style>
+<Style horizontal_alignment="2" imageLayout="1">
+<FRFont name="微软雅黑" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Top>
+<Bottom style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Bottom>
+<Left style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Left>
+<Right style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Right>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="微软雅黑" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Top>
+<Bottom style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Bottom>
+<Left style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Left>
+<Right style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Right>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#0.00]]></Format>
+<FRFont name="微软雅黑" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Top>
+<Bottom style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Bottom>
+<Left style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Left>
+<Right style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Right>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#0.00%]]></Format>
+<FRFont name="微软雅黑" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Top>
+<Bottom style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Bottom>
+<Left style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Left>
+<Right style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Right>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#0]]></Format>
+<FRFont name="微软雅黑" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Top>
+<Bottom style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Bottom>
+<Left style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Left>
+<Right style="1">
+<color>
+<FineColor color="-4144960" hor="-1" ver="-1"/>
+</color>
+</Right>
+</Border>
+</Style>
+</StyleList>
+<DesignerVersion DesignerVersion="LAA"/>
+<PreviewType PreviewType="2"/>
+<TemplateThemeAttrMark class="com.fr.base.iofile.attr.TemplateThemeAttrMark">
+<TemplateThemeAttrMark name="经典深灰" dark="false"/>
+</TemplateThemeAttrMark>
+<WatermarkAttr class="com.fr.base.iofile.attr.WatermarkAttr">
+<WatermarkAttr fontSize="20" horizontalGap="200" verticalGap="100" valid="true">
+<color>
+<FineColor color="-14277082" hor="-1" ver="-1"/>
+</color>
+<Text>
+<![CDATA[="demo"]]></Text>
+</WatermarkAttr>
+</WatermarkAttr>
+<TemplateIdAttMark class="com.fr.base.iofile.attr.TemplateIdAttrMark">
+<TemplateIdAttMark TemplateId="f54746e7-0f37-4c63-b423-0d6052d47a19"/>
+</TemplateIdAttMark>
+<TemplateCloudInfoAttrMark class="com.fr.plugin.cloud.analytics.attr.TemplateInfoAttrMark" pluginID="com.fr.plugin.cloud.analytics.v11" plugin-version="2.3.0.20210831">
+<TemplateCloudInfoAttrMark createTime="1632451242262"/>
+</TemplateCloudInfoAttrMark>
+</WorkBook>

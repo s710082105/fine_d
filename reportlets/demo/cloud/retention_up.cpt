@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20170720" releaseVersion="10.0.0">
+<TableDataMap>
+<TableData name="留存上升" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[yearMonth,,.,,tName,,.,,tPV,,.,,tUV,,.,,lPV,,.,,lUV,,.,,retention]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.sql.Timestamp,java.lang.String,java.lang.Integer,java.lang.Integer,java.lang.Long,java.lang.Long,java.math.BigDecimal]]></ColumnTypes>
+<RowData ColumnTypes="java.sql.Timestamp,java.lang.String,java.lang.Integer,java.lang.Integer,java.lang.Long,java.lang.Long,java.math.BigDecimal">
+<![CDATA[NKhU]A_E\rlfAfg)!]ADj`cEq`WUF>Co'B;FR)PTYs.e0g-i$BLP0ueH(%55V`neV5R!Ngp@;A
+s`9q9PT29IZi`#(&.n9Og2S]AVs^Im=)c=='PXXIBhC]AcL.giq?Cs[6jTNC+G)0RcP4WSj2WP
+;I?MCq7D:%0B0`MadFW8>+@1jF]AO\**fi/,8aA(f:4X:BHU(E9V^71)l_?l.VpOd^o-'#E4B
+D"8oM.&n-d*"Y0E_3po76?Gi6*FG>8]ADRk7$ZG5b5km`Z,pj6JCphK!o/ti^rQ]A`Xfk1")'s
+spI*r>K4'C%sU^StB>A%B-LkZj]ALmurW-WY:*KI-4:(1eDl-)1Mf12^]Ai=B:0N_BH\s\T1DL
+Qi?I1L+]AGu?te'cYm;l>i[u^\Gc;,X;.n5lq>Edi)sNc*+G7R)n(;Z'hK'nL[H5Z<E<\=EH(
+<&m;@4A]A(?aHnbPn3;7[2e-/Y^U*,&;i@(ZYEFWcfL&dB9IRS'&"K%;%GGC%d0UU6VJDMR+J
+rn_=N;Wb9)IS5[ZN$oQB^k+Ycac%8.r1oSI78%"d<H2?P(#o!,c!`h70F+ghZP.r15!r~
+]]></RowData>
+</TableData>
+</TableDataMap>
+<ReportWebAttr>
+<ServerPrinter/>
+<WebViewContent>
+<ToolBars/>
+<SortFuncCheck check="true"/>
+<ConditionFuncCheck check="true"/>
+<ListFuncCheck check="true"/>
+</WebViewContent>
+<JSImport>
+<![CDATA[help/gtag_source.js]]></JSImport>
+<JSImport>
+<![CDATA[help/gtag_collect_template_access_times.js]]></JSImport>
+<JSImport>
+<![CDATA[help/createFunctionWithTimeout.js]]></JSImport>
+</ReportWebAttr>
+<ReportFitAttr fitStateInPC="1" fitFont="false"/>
+<ElementCaseMobileAttr>
+<ElementCaseMobileAttrProvider horizontal="1" vertical="1" zoom="true" refresh="false" isUseHTML="false" isMobileCanvasSize="false" appearRefresh="false" allowFullScreen="false" allowDoubleClickOrZoom="true" functionalWhenUnactivated="false"/>
+</ElementCaseMobileAttr>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR F="0" T="0"/>
+<FR/>
+<HC/>
+<FC/>
+<UPFCR COLUMN="false" ROW="true"/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[1599840,1370880,723900,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[2286000,10287000,4191000,4191000,4191000,4191000,4572000,2743200,2743200,2743200,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0" s="0">
+<O>
+<![CDATA[序号]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="1" r="0" s="1">
+<O>
+<![CDATA[模板名称]]></O>
+<PrivilegeControl/>
+<CellPageAttr/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="0" s="0">
+<O>
+<![CDATA[当月访问次数（次）]]></O>
+<PrivilegeControl/>
+<CellPageAttr/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="3" r="0" s="0">
+<O>
+<![CDATA[上月访问次数（次）]]></O>
+<PrivilegeControl/>
+<CellPageAttr/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="4" r="0" s="0">
+<O>
+<![CDATA[当月访问人数（人）]]></O>
+<PrivilegeControl/>
+<CellPageAttr/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="0" s="0">
+<O>
+<![CDATA[上月访问人数（人）]]></O>
+<PrivilegeControl/>
+<CellPageAttr/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="6" r="0" s="0">
+<O>
+<![CDATA[模板月留存]]></O>
+<PrivilegeControl/>
+<CellPageAttr/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="0" r="1" s="2">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=seq(1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" left="B2"/>
+</C>
+<C c="1" r="1" s="3">
+<O t="DSColumn">
+<Attributes dsName="留存上升" columnName="tName"/>
+<Condition class="com.fr.data.condition.ListCondition"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="1"/>
+<CellPageAttr/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[row() % 2 = 1]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Scope val="1"/>
+<Background name="ColorBackground" color="-262657"/>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="2" r="1" s="2">
+<O t="DSColumn">
+<Attributes dsName="留存上升" columnName="tPV"/>
+<Condition class="com.fr.data.condition.ListCondition"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.ObjectCondition">
+<Compare op="2">
+<ColumnRow column="3" row="1"/>
+</Compare>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.ForegroundHighlightAction">
+<Foreground color="-65536"/>
+</HighlightAction>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.ValueHighlightAction">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$$$ + "↑"]]></Attributes>
+</O>
+</HighlightAction>
+</Highlight>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性2]]></Name>
+<Condition class="com.fr.data.condition.ObjectCondition">
+<Compare op="4">
+<ColumnRow column="3" row="1"/>
+</Compare>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.ForegroundHighlightAction">
+<Foreground color="-13395610"/>
+</HighlightAction>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.ValueHighlightAction">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$$$ + "↓"]]></Attributes>
+</O>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="3" r="1" s="2">
+<O t="DSColumn">
+<Attributes dsName="留存上升" columnName="lPV"/>
+<Condition class="com.fr.data.condition.ListCondition"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[isnull(D2)]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.ValueHighlightAction">
+<O>
+<![CDATA[暂无数据]]></O>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="4" r="1" s="2">
+<O t="DSColumn">
+<Attributes dsName="留存上升" columnName="tUV"/>
+<Condition class="com.fr.data.condition.ListCondition"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="1" s="2">
+<O t="DSColumn">
+<Attributes dsName="留存上升" columnName="lUV"/>
+<Condition class="com.fr.data.condition.ListCondition"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.ListCondition"/>
+</Highlight>
+</HighlightList>
+<Expand dir="0"/>
+</C>
+<C c="6" r="1" s="4">
+<O t="DSColumn">
+<Attributes dsName="留存上升" columnName="retention"/>
+<Condition class="com.fr.data.condition.ListCondition"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<FrozenColumnRow columnrow="A2"/>
+<PaperSetting>
+<PaperSize width="72000000" height="244800000"/>
+<Margin top="986400" left="2743200" bottom="986400" right="2743200"/>
+</PaperSetting>
+<Background name="ColorBackground" color="-1"/>
+</ReportSettings>
+<Header reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Footer>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0" useParamsTemplate="true"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="微软雅黑" style="1" size="80" foreground="-12759706"/>
+<Background name="ColorBackground" color="-1379845"/>
+<Border>
+<Top style="1" color="-262657"/>
+<Bottom style="1" color="-262657"/>
+<Left style="1" color="-262657"/>
+<Right style="1" color="-262657"/>
+</Border>
+</Style>
+<Style horizontal_alignment="2" imageLayout="1">
+<FRFont name="微软雅黑" style="1" size="80" foreground="-12759706"/>
+<Background name="ColorBackground" color="-1379845"/>
+<Border>
+<Top style="1" color="-262657"/>
+<Bottom style="1" color="-262657"/>
+<Left style="1" color="-262657"/>
+<Right style="1" color="-262657"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="微软雅黑" style="0" size="80" foreground="-12759706"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1" color="-262657"/>
+<Bottom style="1" color="-262657"/>
+<Left style="1" color="-262657"/>
+<Right style="1" color="-262657"/>
+</Border>
+</Style>
+<Style horizontal_alignment="2" imageLayout="1">
+<FRFont name="微软雅黑" style="0" size="80" foreground="-12759706"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1" color="-262657"/>
+<Bottom style="1" color="-262657"/>
+<Left style="1" color="-262657"/>
+<Right style="1" color="-262657"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#0.00%]]></Format>
+<FRFont name="微软雅黑" style="0" size="80" foreground="-12759706"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1" color="-262657"/>
+<Bottom style="1" color="-262657"/>
+<Left style="1" color="-262657"/>
+<Right style="1" color="-262657"/>
+</Border>
+</Style>
+</StyleList>
+<DesignerVersion DesignerVersion="KAA"/>
+<PreviewType PreviewType="2"/>
+<TemplateIdAttMark class="com.fr.base.iofile.attr.TemplateIdAttrMark">
+<TemplateIdAttMark TemplateId="77f662c8-cba4-4f9b-855a-67d3d2cc1fb5"/>
+</TemplateIdAttMark>
+</WorkBook>

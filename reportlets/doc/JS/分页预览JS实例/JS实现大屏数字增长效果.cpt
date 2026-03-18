@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20170720" releaseVersion="10.0.0">
+<ReportWebAttr>
+<ServerPrinter/>
+<WebPageContent>
+<Listener event="afterload">
+<JavaScript class="com.fr.js.JavaScriptImpl">
+<Parameters/>
+<Content>
+<![CDATA[setTimeout(function() {
+var totalNum = $(".x-table").find("td[id^=A2-]A").text();
+//var totalNum = 889962321;
+var nums = 0;
+// 调用计时函数
+setTimeout(timedCount(nums),10);
+// 循环计时函数, 多次调用自身函数, nums为被传递的参数
+function timedCount(nums){
+var count = Math.round(totalNum/30);//设置叠加次数
+nums = nums+count;
+//document.getElementById('A2-0-3313').value =nums
+ $(".x-table").find("td[id^=A2-]A").text(nums);
+ 			   var n = String(nums).split('');
+                  if(n.length==9){
+
+                           $(".x-table").find("td[id^=C2-]A").text(n[0]A)
+                           $(".x-table").find("td[id^=E2-]A").text(n[1]A)
+        					$(".x-table").find("td[id^=G2-]A").text(n[2]A)
+        					$(".x-table").find("td[id^=I2-]A").text(n[3]A)
+        					$(".x-table").find("td[id^=K2-]A").text(n[4]A)
+        					$(".x-table").find("td[id^=M2-]A").text(n[5]A)
+        					$(".x-table").find("td[id^=O2-]A").text(n[6]A)
+        					$(".x-table").find("td[id^=Q2-]A").text(n[7]A) 
+        					$(".x-table").find("td[id^=S2-]A").text(n[8]A)  
+
+                       }
+                   else if(n.length==8){
+                   	$(".x-table").find("td[id^=C2-]A").text(0)
+                   			$(".x-table").find("td[id^=E2-]A").text(n[0]A)
+        					$(".x-table").find("td[id^=G2-]A").text(n[1]A)
+        					$(".x-table").find("td[id^=I2-]A").text(n[2]A)
+        					$(".x-table").find("td[id^=K2-]A").text(n[3]A)
+        					$(".x-table").find("td[id^=M2-]A").text(n[4]A)
+        					$(".x-table").find("td[id^=O2-]A").text(n[5]A)
+        					$(".x-table").find("td[id^=Q2-]A").text(n[6]A) 
+        					$(".x-table").find("td[id^=S2-]A").text(n[7]A)     
+                        }
+                    else if(n.length==7){
+                    		$(".x-table").find("td[id^=C2-]A").text(0)
+                   			$(".x-table").find("td[id^=E2-]A").text(0)
+                   			$(".x-table").find("td[id^=G2-]A").text(n[0]A)
+        					$(".x-table").find("td[id^=I2-]A").text(n[1]A)
+        					$(".x-table").find("td[id^=K2-]A").text(n[2]A)
+        					$(".x-table").find("td[id^=M2-]A").text(n[3]A)
+        					$(".x-table").find("td[id^=O2-]A").text(n[4]A)
+        					$(".x-table").find("td[id^=Q2-]A").text(n[5]A) 
+        					$(".x-table").find("td[id^=S2-]A").text(n[6]A) }
+      					
+        					  
+// 设置条件使停止计时
+if (nums<totalNum) {
+setTimeout(function(){timedCount(nums)},50);
+}else{
+$(".x-table").find("td[id^=A2-]A").text(totalNum);
+var n = String(totalNum).split('');
+                  if(n.length==9){
+
+                           $(".x-table").find("td[id^=C2-]A").text(n[0]A)
+                           $(".x-table").find("td[id^=E2-]A").text(n[1]A)
+        					$(".x-table").find("td[id^=G2-]A").text(n[2]A)
+        					$(".x-table").find("td[id^=I2-]A").text(n[3]A)
+        					$(".x-table").find("td[id^=K2-]A").text(n[4]A)
+        					$(".x-table").find("td[id^=M2-]A").text(n[5]A)
+        					$(".x-table").find("td[id^=O2-]A").text(n[6]A)
+        					$(".x-table").find("td[id^=Q2-]A").text(n[7]A) 
+        					$(".x-table").find("td[id^=S2-]A").text(n[8]A)  
+
+                       }
+                   else if(n.length==8){
+                   	$(".x-table").find("td[id^=C2-]A").text(0)
+                   			$(".x-table").find("td[id^=E2-]A").text(n[0]A)
+        					$(".x-table").find("td[id^=G2-]A").text(n[1]A)
+        					$(".x-table").find("td[id^=I2-]A").text(n[2]A)
+        					$(".x-table").find("td[id^=K2-]A").text(n[3]A)
+        					$(".x-table").find("td[id^=M2-]A").text(n[4]A)
+        					$(".x-table").find("td[id^=O2-]A").text(n[5]A)
+        					$(".x-table").find("td[id^=Q2-]A").text(n[6]A) 
+        					$(".x-table").find("td[id^=S2-]A").text(n[7]A)     
+                        }
+                    else if(n.length==7){
+                    		$(".x-table").find("td[id^=C2-]A").text(0)
+                   			$(".x-table").find("td[id^=E2-]A").text(0)
+                   			$(".x-table").find("td[id^=G2-]A").text(n[0]A)
+        					$(".x-table").find("td[id^=I2-]A").text(n[1]A)
+        					$(".x-table").find("td[id^=K2-]A").text(n[2]A)
+        					$(".x-table").find("td[id^=M2-]A").text(n[3]A)
+        					$(".x-table").find("td[id^=O2-]A").text(n[4]A)
+        					$(".x-table").find("td[id^=Q2-]A").text(n[5]A) 
+        					$(".x-table").find("td[id^=S2-]A").text(n[6]A) } 
+
+}
+}
+},200);//延时,让页面加载完读取数据]]></Content>
+</JavaScript>
+</Listener>
+<ToolBars/>
+<WebPage isPage="true" showAsImage="false" autoScale="false" tdHeavy="false"/>
+</WebPageContent>
+<Background name="ColorBackground" color="-14205865"/>
+</ReportWebAttr>
+<ElementCaseMobileAttr>
+<ElementCaseMobileAttrProvider horizontal="1" vertical="1" zoom="true" refresh="false" isUseHTML="false" isMobileCanvasSize="false" appearRefresh="false" allowFullScreen="false" allowDoubleClickOrZoom="true" functionalWhenUnactivated="false"/>
+</ElementCaseMobileAttr>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR/>
+<FR/>
+<HC/>
+<FC/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[1905000,1905000,723900,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[2324100,2247900,2362200,457200,1889760,2743200,2743200,2743200,2743200,2743200,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="0" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="0" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="0" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="0" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="0" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="0" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="0" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="0" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="0" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="1" s="1">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=RANDBETWEEN(112234567,512456899)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.ListCondition"/>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.ColWidthHighlightAction"/>
+</Highlight>
+</HighlightList>
+<Expand/>
+</C>
+<C c="1" r="1" s="2">
+<O>
+<![CDATA[￥]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="1" s="3">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=split(A2,"")]]></Attributes>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.ListCondition"/>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.BackgroundHighlightAction">
+<Background name="ImageBackground" layout="2">
+<FineImage fm="png">
+<IM>
+<![CDATA[lO<9(kN.ld@UNU%p%320!n&M_XMDXV,bJc-eH8]A*4C&po.d"CW[?7f36%JXfB"l^u>NAh'>n
+Iug:s,Eo53G3]AgMsu]A:U^K1qfPtAWT;kAP4/F`AC!;jX8W("Rh&&o4QG2g^LWW-@dR)1%k5T
+(2&^N-3%",K,n!7oA<//Vi"ISP.qEF@TZ7KUlW_Qgp\3:C]Af"F@LNZ;QgJ6b_&3@#))!FEn:
+KKcIF\W6;!!~
+]]></IM>
+</FineImage>
+</Background>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="1" leftParentDefault="false"/>
+</C>
+<C c="3" r="1" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="1" s="2">
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="5" r="1" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="1" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="1" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="1" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="1" s="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting/>
+<Background name="ColorBackground" color="-14205865"/>
+</ReportSettings>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0" useParamsTemplate="true"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList>
+<Style imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="ColorBackground" color="-14205865"/>
+<Border/>
+</Style>
+<Style imageLayout="1">
+<FRFont name="SimSun" style="0" size="72" foreground="-16711681"/>
+<Background name="ColorBackground" color="-14205865"/>
+<Border/>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="等线" style="1" size="240" foreground="-11264"/>
+<Background name="ColorBackground" color="-14205865"/>
+<Border/>
+</Style>
+<Style horizontal_alignment="0" textStyle="1" imageLayout="1" paddingLeft="0" paddingRight="0">
+<Format class="com.fr.base.CoreDecimalFormat" roundingMode="6">
+<![CDATA[#,##0]]></Format>
+<FRFont name="UniDreamLED" style="1" size="280" foreground="-11264"/>
+<Background name="ColorBackground" color="-14205865"/>
+<Border/>
+</Style>
+</StyleList>
+<DesignerVersion DesignerVersion="KAA"/>
+<PreviewType PreviewType="0"/>
+<TemplateIdAttMark class="com.fr.base.iofile.attr.TemplateIdAttrMark">
+<TemplateIdAttMark TemplateId="a3741d43-72f0-4365-955c-ce4c5d6d969d"/>
+</TemplateIdAttMark>
+</WorkBook>

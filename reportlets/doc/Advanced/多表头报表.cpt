@@ -1,0 +1,1890 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20170720" releaseVersion="10.0.0">
+<TableDataMap>
+<TableData name="流转单" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[序列号,,.,,产品等级,,.,,产品族,,.,,subname,,.,,组件规格,,.,,当前站点,,.,,工单号,,.,,组件颜色,,.,,电池额定功率,,.,,组件额定功率,,.,,电池片厂商,,.,,电池片档位]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String">
+<![CDATA[7F!n'KJ3f<d/%et,Y*)N!bDXa8V?1)(E%j;OUF,Jq3t5X`_(+&Z7))3/t/"UJiaZY0GGGD+O
+Pe@k?kb3N*gbQkKVLib>\p%.&IPgT)Z%UCe]An`rn>X$nYBK*RVD!EKqku$ikt+c'h`<.s(&S
+\(_5gem?uB0FX@]ADpP!k$V;S6Y[eL%~
+]]></RowData>
+</TableData>
+<TableData name="分选" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[序列号,,.,,操作时间,,.,,操作人员]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String">
+<![CDATA[1ZUAJ0XT=e0[qs:jF"OO_35n1>XhOE@pMH3c=_4qT$EqPAIMXQAA\/TYPZGE.9n2r0dBs+F3
+YS+[m"Y7$NL~
+]]></RowData>
+</TableData>
+<TableData name="焊接" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[序列号,,.,,焊机时间,,.,,操作人员,,.,,焊机破片数,,.,,机台编号,,.,,单焊时间,,.,,操作人员2,,.,,单焊破片数,,.,,单焊验收,,.,,串焊时间,,.,,操作人员3,,.,,串焊破片数,,.,,互联条厂商,,.,,助焊剂厂商,,.,,互联条规格,,.,,助焊剂批号,,.,,互联条批号]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String">
+<![CDATA[<KKpj;c+*\f5LZ3^c?J]AbrKigRSE%LLuL<<#[U=5h.TmG1aGp:(UbggJM&d1JqZ$,(A_riDf
+5SDkG/J#Ahid/o=Qjp2C:?(>1D_bR`PUPE^3+87X>\je0W:OhLD_Hk$Z\G:7K]AeX<_;=M5\1
+<W%WV8@C&/#VQ8uu=H?L-!/Y5m&\fS'QtO?CE[;_4/@ubQiaU;E(eMrn(T9eFlYd0<&b_#*F
+[RHbl?83B:W$f;HRGH9=)TiBA=%&ACbC3Pk0<SRJ*#gSluP%Jks>l:99Ln:"u%$&jPV>k*3;
+dcW'>4RT)@%0EM#YtHT?/E3?@D..kOk>V\?0@I*AR3X?)ptr\*`5N20538GZ/b/ZC,IAa%5e
+YJ"mgH.X;YQ2CL*c2'p0p[g13TR@i-Pc<d*P^]A3<.Fg@qh^pV1bbiHkgMtNO=c`U*+!TQKgF
+(I&3QSnVh$ZXE5r]AWDg]A7~
+]]></RowData>
+</TableData>
+<TableData name="摆串" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[序列号,,.,,操作时间,,.,,时间设置,,.,,时间设备人员]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.lang.String">
+<![CDATA[4j,PeKJ462iHfO2^crJuc06e1DUI$)n-CqHTZ>^g]AS3YIn@FZNaB3ea<rhQb&8CoV:$U?[cV
+BN;Sq>eDBSJWmWL[=>:gO8>mm;kQ9R6EEi]AU;YW]Aq-ZrlN?0!<~
+]]></RowData>
+</TableData>
+<TableData name="叠层" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[序列号,,.,,操作时间,,.,,人员/机台时间,,.,,人员/机台,,.,,隔离长条时间,,.,,隔离长条,,.,,普通EVA批号时间,,.,,普通EVA批号,,.,,钢化玻璃批号时间,,.,,钢化玻璃批号,,.,,高反EVA批号时间,,.,,高反EVA批号,,.,,镀膜玻璃批号时间,,.,,镀膜玻璃批号,,.,,高透EVA批号时间,,.,,高透EVA批号,,.,,POE EVA批号时间,,.,,POE EVA批号,,.,,汇流条厂商,,.,,TPT批号时间,,.,,TPT批号,,.,,汇流条规格,,.,,隔离方块时间,,.,,隔离方块]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String">
+<![CDATA[7?c&8dm+Jac]A`PjBkM&0qrd)YUF&ikC'ofDM[B`Ag5Dd7o`_"Dk.hRcLO`;FW3+u0R+W>L@X
+2U1B7Ab4f`^XiUEa:NQO@eAJVX-Wa1Hu+`>,"1pW+'s`<Ecn8.J.:!r9]A<Jqm%`7cZ`''i7i
+AZ_B'rHAjOb!6#RknI\M44_Bj&*[k/a:=*n`FQ-414/XqVfah^d15E:Ad^_D0Vjnqa:tE^/(
+m$]A1Jr?Cu]Ap^:nGgaH"r65.Zs7PpML[h\b@D/DeW&QCrH=>gYU\1o3)<<$>)]AYtt$<<$E8@n
+_Xko)cS"8C@f[f'+E.6*f3'9cjIrhe6l!sM\;*P7mtT5UCiWb'k>F-!WBD8`it99af<'5^C2
+4Hnr9_?B<6Spha[*,_II<4ppRVFA-9"AVleVIdt0jetUPlk5%'r"9IdE$F?TjV,AWqP>(44P
+[_u=K:=MmM_$PGZFD_+1VTN"snN[=.!3CY,t9b6qAp#'"80C4M4-DBdWlgfuKMQ["nm\]ALN)
+'IfK*5qcce(Y!o>mqE=)dhQW9/fj(m[7jGN/g$d>UC+qrkeI@?'Z+7k6U;*cub5o1_V;lSe'
+jMF%@*[mdAr\%38RP*99k*7MfOk."e#J[+G_'1ng/]AfVT0Sk;%f~
+]]></RowData>
+</TableData>
+<TableData name="电池接线盒" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[序列号,,.,,电池条码,,.,,电池片颜色,,.,,换片数量,,.,,换片时间,,.,,操作时间,,.,,测试结果,,.,,机台编号,,.,,测试人员,,.,,清洗操作时间,,.,,清洗操作人员,,.,,耐压操作时间,,.,,耐压测试结果,,.,,耐压机台编号,,.,,耐压参数]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String">
+<![CDATA[:!^Rh!^RA%nG;`^(2ddYE+e&t[*^+4[Q*UN&M4\IM'53iZUn'U8;olA`]ANYG,.e(,JLQmnp,
+ClBN(#Ii_]A@B_o$HG+3RTl-+!?MWZ`(>,d.V4!NFk>QM@\pR8%G-jcUZ>QM,uf;2L\Bl%\YP
+5E'AZ%$qN_>\:biC.u%C+p/nHji>'>C.-fP7Yl,;h-$^3F!b.^E(k*=@Y:WWV;\7V.`f\7)F
++24sBK#2IAHn\n2e4P=4*8C4hpB.gSZ,pk8KTL72AjB:nU)@?M7o\oG!11@)V4='kF2VfC":
+c5]AR5Kss!hY2(R;8r^/]AX_~
+]]></RowData>
+</TableData>
+</TableDataMap>
+<ReportFitAttr fitStateInPC="3" fitFont="false"/>
+<Report class="com.fr.report.poly.PolyWorkSheet" name="sheet1">
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting>
+<PaperSize width="57600000" height="43200000"/>
+<Margin top="986400" left="2743200" bottom="986400" right="2743200"/>
+</PaperSetting>
+<Background name="ColorBackground" color="-1"/>
+</ReportSettings>
+</ReportAttrSet>
+<Block class="com.fr.report.poly.PolyECBlock">
+<ReportPageAttr>
+<HR/>
+<FR/>
+<HC/>
+<FC/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[723900,548640,0,30480,876300,800100,800100,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[1524000,3390900,6819900,3314700,6286500,2057400,3200400,6362700,3200400,6187440,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0" cs="10" rs="4" s="0">
+<O>
+<![CDATA[组件生产流转单]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="4" cs="2" s="1">
+<O>
+<![CDATA[组件序列号]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="流转单" columnName="序列号"/>
+<Condition class="com.fr.data.condition.CommonCondition">
+<CNAME>
+<![CDATA[序列号]]></CNAME>
+<Compare op="0">
+<Parameter>
+<Attributes name="tab"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Compare>
+</Condition>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="3" r="4" s="1">
+<O>
+<![CDATA[组件最终等级]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="流转单" columnName="产品等级"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C5"/>
+</C>
+<C c="5" r="4" cs="2" s="1">
+<O>
+<![CDATA[产品族]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="流转单" columnName="产品族"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C5"/>
+</C>
+<C c="8" r="4" s="1">
+<O>
+<![CDATA[subname]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="流转单" columnName="subname"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C5"/>
+</C>
+<C c="0" r="5" cs="2" s="1">
+<O>
+<![CDATA[组件规格]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="5" s="2">
+<O t="DSColumn">
+<Attributes dsName="流转单" columnName="组件规格"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="C5"/>
+</C>
+<C c="3" r="5" s="1">
+<O>
+<![CDATA[当前站点]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="5" s="2">
+<O t="DSColumn">
+<Attributes dsName="流转单" columnName="当前站点"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C6"/>
+</C>
+<C c="5" r="5" cs="2" s="1">
+<O>
+<![CDATA[工单号]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="5" s="2">
+<O t="DSColumn">
+<Attributes dsName="流转单" columnName="工单号"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C6"/>
+</C>
+<C c="8" r="5" s="1">
+<O>
+<![CDATA[组件颜色]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="5" s="2">
+<O t="DSColumn">
+<Attributes dsName="流转单" columnName="组件颜色"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C6"/>
+</C>
+<C c="0" r="6" cs="2" s="1">
+<O>
+<![CDATA[电池额定功率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="流转单" columnName="电池额定功率"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="C5"/>
+</C>
+<C c="3" r="6" s="1">
+<O>
+<![CDATA[组件额定功率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="流转单" columnName="组件额定功率"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C7"/>
+</C>
+<C c="5" r="6" cs="2" s="1">
+<O>
+<![CDATA[电池片厂商]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="流转单" columnName="电池片厂商"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C7"/>
+</C>
+<C c="8" r="6" s="1">
+<O>
+<![CDATA[电池片档位]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="流转单" columnName="电池片档位"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C7"/>
+</C>
+</CellElementList>
+<PECBAttr blockName="block1" x="818147" y="1588168" width="42344340" height="3779520"/>
+</Block>
+<Block class="com.fr.report.poly.PolyECBlock">
+<ReportPageAttr>
+<HR/>
+<FR/>
+<HC/>
+<FC/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[1158240,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[1562100,3390900,2621280,4145280,3314700,2590800,3688080,2057400,3200400,6362700,3200400,3009900,3200400,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0" cs="13" s="0">
+<O>
+<![CDATA[流转单具体信息]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="0" r="1" s="3">
+<O>
+<![CDATA[分选]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="1" r="1" s="3">
+<O>
+<![CDATA[操作时间]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="1" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="分选" columnName="操作时间"/>
+<Condition class="com.fr.data.condition.CommonCondition">
+<CNAME>
+<![CDATA[序列号]]></CNAME>
+<Compare op="0">
+<Parameter>
+<Attributes name="tab"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Compare>
+</Condition>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="4" r="1" s="3">
+<O>
+<![CDATA[操作人员]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="1" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="分选" columnName="操作人员"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[len(C2) = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.ValueHighlightAction">
+<O>
+<![CDATA[]]></O>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0" leftParentDefault="false" left="C2"/>
+</C>
+<C c="7" r="1" rs="2" s="3">
+<O>
+<![CDATA[电池]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="8" r="1" s="3">
+<O>
+<![CDATA[电池条码]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="1" s="2">
+<O t="DSColumn">
+<Attributes dsName="电池接线盒" columnName="电池条码"/>
+<Condition class="com.fr.data.condition.CommonCondition">
+<CNAME>
+<![CDATA[序列号]]></CNAME>
+<Compare op="0">
+<Parameter>
+<Attributes name="tab"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Compare>
+</Condition>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="10" r="1" s="3">
+<O>
+<![CDATA[电池片颜色]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="1" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="电池接线盒" columnName="电池片颜色"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="J2"/>
+</C>
+<C c="0" r="2" rs="8" s="3">
+<O>
+<![CDATA[焊接]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="1" r="2" s="3">
+<O>
+<![CDATA[焊机时间]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="2" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="焊机时间"/>
+<Condition class="com.fr.data.condition.CommonCondition">
+<CNAME>
+<![CDATA[序列号]]></CNAME>
+<Compare op="0">
+<Parameter>
+<Attributes name="tab"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Compare>
+</Condition>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="4" r="2" s="3">
+<O>
+<![CDATA[操作人员]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="2" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="操作人员"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[len(C3) = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.ValueHighlightAction">
+<O>
+<![CDATA[]]></O>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0" leftParentDefault="false" left="C3"/>
+</C>
+<C c="8" r="2" s="3">
+<O>
+<![CDATA[换片数量]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="2" s="4">
+<O t="DSColumn">
+<Attributes dsName="电池接线盒" columnName="换片数量"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="J2"/>
+</C>
+<C c="10" r="2" s="3">
+<O>
+<![CDATA[换片时间]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="2" cs="2" s="4">
+<O t="DSColumn">
+<Attributes dsName="电池接线盒" columnName="换片时间"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="J2"/>
+</C>
+<C c="1" r="3" s="3">
+<O>
+<![CDATA[焊机破片数]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="3" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="焊机破片数"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="C3"/>
+</C>
+<C c="4" r="3" s="3">
+<O>
+<![CDATA[机台编号]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="3" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="机台编号"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="F3"/>
+</C>
+<C c="7" r="3" rs="2" s="3">
+<O>
+<![CDATA[接线盒]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="8" r="3" s="3">
+<O>
+<![CDATA[操作时间]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="3" s="2">
+<O t="DSColumn">
+<Attributes dsName="电池接线盒" columnName="操作时间"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="J2"/>
+</C>
+<C c="10" r="3" s="3">
+<O>
+<![CDATA[测试结果]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="3" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="电池接线盒" columnName="测试结果"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="J2"/>
+</C>
+<C c="1" r="4" s="3">
+<O>
+<![CDATA[单焊时间]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="4" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="单焊时间"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="C3"/>
+</C>
+<C c="4" r="4" s="3">
+<O>
+<![CDATA[操作人员]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="4" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="操作人员2"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[len(C5) = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.ValueHighlightAction">
+<O>
+<![CDATA[]]></O>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0" upParentDefault="false" up="F3"/>
+</C>
+<C c="8" r="4" s="3">
+<O>
+<![CDATA[机台编号]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="电池接线盒" columnName="机台编号"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="J2"/>
+</C>
+<C c="10" r="4" s="3">
+<O>
+<![CDATA[测试人员]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="4" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="电池接线盒" columnName="测试人员"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="J2"/>
+</C>
+<C c="1" r="5" s="3">
+<O>
+<![CDATA[单焊破片数]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="5" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="单焊破片数"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="C3"/>
+</C>
+<C c="4" r="5" s="3">
+<O>
+<![CDATA[单焊验收]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="5" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="单焊验收"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="F3"/>
+</C>
+<C c="7" r="5" s="3">
+<O>
+<![CDATA[清洗]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="8" r="5" s="3">
+<O>
+<![CDATA[操作时间]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="5" s="2">
+<O t="DSColumn">
+<Attributes dsName="电池接线盒" columnName="清洗操作时间"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="J2"/>
+</C>
+<C c="10" r="5" s="3">
+<O>
+<![CDATA[操作人员]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="5" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="电池接线盒" columnName="清洗操作人员"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[len(J6) = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.ValueHighlightAction">
+<O>
+<![CDATA[]]></O>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0" upParentDefault="false" up="J2"/>
+</C>
+<C c="1" r="6" s="3">
+<O>
+<![CDATA[串焊时间]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="6" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="串焊时间"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="C3"/>
+</C>
+<C c="4" r="6" s="3">
+<O>
+<![CDATA[操作人员]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="6" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="操作人员3"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[len(C7) = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.ValueHighlightAction">
+<O>
+<![CDATA[]]></O>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0" upParentDefault="false" up="F3"/>
+</C>
+<C c="7" r="6" rs="2" s="3">
+<O>
+<![CDATA[耐压]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="8" r="6" s="3">
+<O>
+<![CDATA[操作时间]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="6" s="2">
+<O t="DSColumn">
+<Attributes dsName="电池接线盒" columnName="耐压操作时间"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="J2"/>
+</C>
+<C c="10" r="6" s="3">
+<O>
+<![CDATA[测试结果]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="6" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="电池接线盒" columnName="耐压测试结果"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="J2"/>
+</C>
+<C c="1" r="7" s="3">
+<O>
+<![CDATA[串焊破片数]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="7" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="串焊破片数"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="C3"/>
+</C>
+<C c="4" r="7" s="3">
+<O>
+<![CDATA[互联条厂商]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="7" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="互联条厂商"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="F3"/>
+</C>
+<C c="8" r="7" s="3">
+<O>
+<![CDATA[机台编号]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="7" s="2">
+<O t="DSColumn">
+<Attributes dsName="电池接线盒" columnName="耐压机台编号"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="J2"/>
+</C>
+<C c="10" r="7" s="3">
+<O>
+<![CDATA[耐压参数]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="7" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="电池接线盒" columnName="耐压参数"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="J2"/>
+</C>
+<C c="1" r="8" s="3">
+<O>
+<![CDATA[助焊剂厂商]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="8" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="助焊剂厂商"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="C3"/>
+</C>
+<C c="4" r="8" s="3">
+<O>
+<![CDATA[互联条规格]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="8" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="互联条规格"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="F3"/>
+</C>
+<C c="7" r="8" rs="3" s="3">
+<O>
+<![CDATA[功率测试]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="8" r="8" s="3">
+<O>
+<![CDATA[操作时间]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="8" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="10" r="8" s="3">
+<O>
+<![CDATA[机台编号]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="8" cs="2" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="1" r="9" s="3">
+<O>
+<![CDATA[助焊剂批号]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="9" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="助焊剂批号"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="C3"/>
+</C>
+<C c="4" r="9" s="3">
+<O>
+<![CDATA[互联调批号]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="9" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="焊接" columnName="互联条批号"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" upParentDefault="false" up="F3"/>
+</C>
+<C c="8" r="9" s="3">
+<O>
+<![CDATA[Pmax]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="9" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="10" r="9" s="3">
+<O>
+<![CDATA[FF]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="9" cs="2" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="0" r="10" s="3">
+<O>
+<![CDATA[摆串]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="1" r="10" s="3">
+<O>
+<![CDATA[操作时间]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="10" cs="2" s="5">
+<O t="DSColumn">
+<Attributes dsName="摆串" columnName="操作时间"/>
+<Condition class="com.fr.data.condition.CommonCondition">
+<CNAME>
+<![CDATA[序列号]]></CNAME>
+<Compare op="0">
+<Parameter>
+<Attributes name="tab"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Compare>
+</Condition>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="4" r="10" s="3">
+<O>
+<![CDATA[人员/机台]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="10" s="2">
+<O t="DSColumn">
+<Attributes dsName="摆串" columnName="时间设置"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[len(C11) = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.ValueHighlightAction">
+<O>
+<![CDATA[]]></O>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0" leftParentDefault="false" left="C11"/>
+</C>
+<C c="6" r="10" s="6">
+<O t="DSColumn">
+<Attributes dsName="摆串" columnName="时间设备人员"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C11"/>
+</C>
+<C c="8" r="10" s="3">
+<O>
+<![CDATA[Voc]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="10" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="10" r="10" s="3">
+<O>
+<![CDATA[Isc]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="10" cs="2" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="0" r="11" rs="7" s="3">
+<O>
+<![CDATA[叠层]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="1" r="11" s="3">
+<O>
+<![CDATA[操作时间]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="11" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="操作时间"/>
+<Condition class="com.fr.data.condition.CommonCondition">
+<CNAME>
+<![CDATA[序列号]]></CNAME>
+<Compare op="0">
+<Parameter>
+<Attributes name="tab"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Compare>
+</Condition>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Result>
+<![CDATA[$$$]]></Result>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="4" r="11" s="3">
+<O>
+<![CDATA[人员/机台]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="11" s="2">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="人员/机台时间"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[len(C12) = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.ValueHighlightAction">
+<O>
+<![CDATA[]]></O>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="6" r="11" s="4">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="人员/机台"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="7" r="11" rs="2" s="3">
+<O>
+<![CDATA[EL测试]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="8" r="11" s="3">
+<O>
+<![CDATA[操作时间]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="11" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="10" r="11" s="3">
+<O>
+<![CDATA[测试结果]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="11" cs="2" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="1" r="12" rs="2" s="3">
+<O>
+<![CDATA[钢化玻璃批号]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="12" rs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="钢化玻璃批号时间"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="3" r="12" rs="2" s="5">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="钢化玻璃批号"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="4" r="12" s="3">
+<O>
+<![CDATA[普通EVA批号]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="12" s="2">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="普通EVA批号时间"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="6" r="12" s="5">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="普通EVA批号"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="8" r="12" s="3">
+<O>
+<![CDATA[机台编号]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="12" s="5">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="10" r="12" s="3">
+<O>
+<![CDATA[评审时间]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="12" cs="2" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="4" r="13" s="3">
+<O>
+<![CDATA[高反EVA批号]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="13" s="2">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="高反EVA批号时间"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<CellPageAttr/>
+<CellInsertPolicy/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="6" r="13" s="5">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="高反EVA批号"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="7" r="13" rs="5" s="3">
+<O>
+<![CDATA[全检]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="8" r="13" s="3">
+<O>
+<![CDATA[操作时间]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="13" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="10" r="13" s="3">
+<O>
+<![CDATA[操作人员]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="13" cs="2" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[len(J17) = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.ValueHighlightAction">
+<O>
+<![CDATA[]]></O>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Present class="com.fr.base.present.DictPresent">
+<Dictionary class="com.fr.data.impl.DatabaseDictionary">
+<FormulaDictAttr kiName="USERNO" viName="USERNAME"/>
+<DBDictAttr tableName="TBLUSRUSERBASIS" schemaName="" ki="-1" vi="-1" kiName="USERNO" viName="USERNAME"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[mesdb_HQModule]]></DatabaseName>
+</Connection>
+</Dictionary>
+</Present>
+<Expand/>
+</C>
+<C c="1" r="14" rs="2" s="3">
+<O>
+<![CDATA[镀膜玻璃批号]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="14" rs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="镀膜玻璃批号时间"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="3" r="14" rs="2" s="5">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="镀膜玻璃批号"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="4" r="14" s="3">
+<O>
+<![CDATA[高透EVA批号]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="14" s="2">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="高透EVA批号时间"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="6" r="14" s="5">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="高透EVA批号"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="8" r="14" s="3">
+<O>
+<![CDATA[不良项目]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="14" s="5">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="10" r="14" s="3">
+<O>
+<![CDATA[不良描述]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="14" cs="2" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="4" r="15" s="3">
+<O>
+<![CDATA[POE EVA批号]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="15" s="2">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="POE EVA批号时间"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="6" r="15" s="5">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="POE EVA批号"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="8" r="15" s="3">
+<O>
+<![CDATA[不良位置]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="15" s="5">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="10" r="15" s="3">
+<O>
+<![CDATA[机台编号]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="15" cs="2" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="1" r="16" s="3">
+<O>
+<![CDATA[汇流条厂商]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="16" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="汇流条厂商"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="4" r="16" s="3">
+<O>
+<![CDATA[TPT批号]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="16" s="2">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="TPT批号时间"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="6" r="16" s="5">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="TPT批号"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="8" r="16" s="3">
+<O>
+<![CDATA[操作时间]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="16" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="10" r="16" s="3">
+<O>
+<![CDATA[操作人员]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="16" cs="2" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<HighlightList>
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+<Name>
+<![CDATA[条件属性1]]></Name>
+<Condition class="com.fr.data.condition.FormulaCondition">
+<Formula>
+<![CDATA[len(J17) = 0]]></Formula>
+</Condition>
+<HighlightAction class="com.fr.report.cell.cellattr.highlight.ValueHighlightAction">
+<O>
+<![CDATA[]]></O>
+</HighlightAction>
+</Highlight>
+</HighlightList>
+<Present class="com.fr.base.present.DictPresent">
+<Dictionary class="com.fr.data.impl.DatabaseDictionary">
+<FormulaDictAttr kiName="USERNO" viName="USERNAME"/>
+<DBDictAttr tableName="TBLUSRUSERBASIS" schemaName="" ki="-1" vi="-1" kiName="USERNO" viName="USERNAME"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[mesdb_HQModule]]></DatabaseName>
+</Connection>
+</Dictionary>
+</Present>
+<Expand/>
+</C>
+<C c="1" r="17" s="3">
+<O>
+<![CDATA[汇流条规格]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="2" r="17" cs="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="汇流条规格"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="4" r="17" s="3">
+<O>
+<![CDATA[隔离方块]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="5" r="17" s="2">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="隔离方块时间"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="6" r="17" s="4">
+<O t="DSColumn">
+<Attributes dsName="叠层" columnName="隔离方块"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" left="C12"/>
+</C>
+<C c="8" r="17" s="3">
+<O>
+<![CDATA[判定人员]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="9" r="17" s="5">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="10" r="17" s="3">
+<O>
+<![CDATA[评审人员]]></O>
+<PrivilegeControl/>
+<Expand leftParentDefault="false" upParentDefault="false"/>
+</C>
+<C c="11" r="17" cs="2" s="2">
+<O>
+<![CDATA[-]]></O>
+<PrivilegeControl/>
+<Expand dir="0" leftParentDefault="false" upParentDefault="false"/>
+</C>
+</CellElementList>
+<PECBAttr blockName="block2" x="822960" y="5364480" width="42344340" height="13464540"/>
+</Block>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0" useParamsTemplate="false"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+<ParameterUI class="com.fr.form.main.parameter.FormParameterUI">
+<Parameters/>
+<Layout class="com.fr.form.ui.container.WParameterLayout">
+<WidgetName name="para"/>
+<WidgetAttr description="">
+<PrivilegeControl/>
+</WidgetAttr>
+<Margin top="0" left="0" bottom="0" right="0"/>
+<Border>
+<border style="0" color="-723724" borderRadius="0" type="0" borderStyle="0"/>
+<WidgetTitle>
+<O>
+<![CDATA[新建标题]]></O>
+<FRFont name="SimSun" style="0" size="72"/>
+<Position pos="0"/>
+</WidgetTitle>
+<Alpha alpha="1.0"/>
+</Border>
+<Background name="ColorBackground" color="-526086"/>
+<LCAttr vgap="0" hgap="0" compInterval="0"/>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.parameter.FormSubmitButton">
+<WidgetName name="formSubmit0"/>
+<WidgetAttr description="">
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[查询]]></Text>
+<Hotkeys>
+<![CDATA[enter]]></Hotkeys>
+</InnerWidget>
+<BoundsAttr x="420" y="23" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.Label">
+<WidgetName name="ta&apos;b"/>
+<WidgetAttr description="">
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue>
+<O>
+<![CDATA[序列号]]></O>
+</widgetValue>
+<LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
+<FRFont name="微软雅黑" style="1" size="80" foreground="-12759706"/>
+<border style="0" color="-723724"/>
+</InnerWidget>
+<BoundsAttr x="127" y="23" width="117" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.ComboBox">
+<WidgetName name="tab"/>
+<LabelName name="序列号"/>
+<WidgetAttr description="">
+<PrivilegeControl/>
+</WidgetAttr>
+<Dictionary class="com.fr.data.impl.TableDataDictionary">
+<FormulaDictAttr kiName="序列号" viName="序列号"/>
+<TableDataDictAttr>
+<TableData class="com.fr.data.impl.NameTableData">
+<Name>
+<![CDATA[流转单]]></Name>
+</TableData>
+</TableDataDictAttr>
+</Dictionary>
+<widgetValue>
+<O>
+<![CDATA[]]></O>
+</widgetValue>
+</InnerWidget>
+<BoundsAttr x="244" y="23" width="111" height="21"/>
+</Widget>
+<Sorted sorted="false"/>
+<MobileWidgetList>
+<Widget widgetName="tab"/>
+<Widget widgetName="formSubmit0"/>
+</MobileWidgetList>
+<Display display="true"/>
+<DelayDisplayContent delay="true"/>
+<UseParamsTemplate use="false"/>
+<Position position="0"/>
+<Design_Width design_width="960"/>
+<NameTagModified>
+<TagModified tag="comboBox0" modified="true"/>
+</NameTagModified>
+<WidgetNameTagMap>
+<NameTag name="comboBox0" tag="序列号"/>
+</WidgetNameTagMap>
+<ParamAttr class="com.fr.report.mobile.DefaultMobileParamStyle"/>
+</Layout>
+<DesignAttr width="960" height="80"/>
+</ParameterUI>
+</ReportParameterAttr>
+<StyleList>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="微软雅黑" style="1" size="128" foreground="-1"/>
+<Background name="ColorBackground" color="-8078337"/>
+<Border>
+<Top style="1" color="-7355649"/>
+<Bottom style="1" color="-7355649"/>
+<Left style="1" color="-7355649"/>
+<Right style="1" color="-7355649"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="微软雅黑" style="1" size="72" foreground="-12759706"/>
+<Background name="ColorBackground" color="-1641987"/>
+<Border>
+<Top style="1" color="-7355649"/>
+<Bottom style="1" color="-7355649"/>
+<Left style="1" color="-7355649"/>
+<Right style="1" color="-7355649"/>
+</Border>
+</Style>
+<Style horizontal_alignment="2" imageLayout="1">
+<FRFont name="微软雅黑" style="0" size="80" foreground="-12759706"/>
+<Background name="ColorBackground" color="-1"/>
+<Border>
+<Top style="1" color="-7355649"/>
+<Bottom style="1" color="-7355649"/>
+<Left style="1" color="-7355649"/>
+<Right style="1" color="-7355649"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="微软雅黑" style="0" size="72" foreground="-12759706"/>
+<Background name="ColorBackground" color="-1641987"/>
+<Border>
+<Top style="1" color="-7355649"/>
+<Bottom style="1" color="-7355649"/>
+<Left style="1" color="-7355649"/>
+<Right style="1" color="-7355649"/>
+</Border>
+</Style>
+<Style horizontal_alignment="2" imageLayout="1">
+<FRFont name="微软雅黑" style="0" size="80" foreground="-12759706"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1" color="-7355649"/>
+<Bottom style="1" color="-7355649"/>
+<Left style="1" color="-7355649"/>
+<Right style="1" color="-7355649"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<FRFont name="微软雅黑" style="0" size="80" foreground="-12759706"/>
+<Background name="ColorBackground" color="-1"/>
+<Border>
+<Top style="1" color="-7355649"/>
+<Bottom style="1" color="-7355649"/>
+<Left style="1" color="-7355649"/>
+<Right style="1" color="-7355649"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<FRFont name="微软雅黑" style="0" size="80" foreground="-12759706"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1" color="-7355649"/>
+<Bottom style="1" color="-7355649"/>
+<Left style="1" color="-7355649"/>
+<Right style="1" color="-7355649"/>
+</Border>
+</Style>
+</StyleList>
+<DesignerVersion DesignerVersion="KAA"/>
+<PreviewType PreviewType="0"/>
+<TemplateIdAttMark class="com.fr.base.iofile.attr.TemplateIdAttrMark">
+<TemplateIdAttMark TemplateId="63825047-8509-49ba-8d6b-7eac9c89d9e5"/>
+</TemplateIdAttMark>
+</WorkBook>

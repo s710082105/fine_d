@@ -1,0 +1,6527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20170720" releaseVersion="10.0.0">
+<TableDataMap>
+<TableData name="1医院基本情况表" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[kjnd,,.,,module,,.,,xm,,.,,new_num,,.,,old_num]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.math.BigDecimal,java.math.BigDecimal]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.math.BigDecimal,java.math.BigDecimal">
+<![CDATA[Kp#Y\g+X4qT9[sjif!`gSb/U+kQ[Op*!cWMAfP%g-]Ae`n[&'Rh:`9b9S$=79.9l$+-&mj>'9
+?tUkks<kks(o0)!KfQNusIp*JifVT)D'3"654:YJ^r%&[f#-JYCU_B.Ma)9:[<1<Rkt8>3e/
+*Z4^U$a?M`"\JLT,&^HU#%Lhl?<f.d(D"qsU&[,a?*Q4@_Np+cQ@&AkZ/^a#$X,FgW;FqbY&
+t>B%1:Mjf."<f(D12i@7Ll3D[>V_u0AG!!j5$AMjO?R;g\!@JgVc78s'DRtYGDpX>g!>gN?>
+dR0kp@4?$<CCpSE[#_@\$2Wb8WM8k7a-ioI8EL-`8;`H@:^1JEZ<W%;CZ1@`rc_iL_OGoFo'
+3s/<Sa>8OLJLctn%7h+T,(j$Y5]AaGFAZ3i^>Xu@=jj0t5iImU%rW[MH8i"X>*Si"/+b^oZ17
+85)@d;T'i;'MeC,1YP2BAm2Wp=3t=#cSgq_RK?`Pki#,DLbSlk.,n4NOaHrb.N)^WFraBV'_
+kH7_njF>U,o3d(0P*:)bP]AV,B[%s=&:2@"Q4("7p&T-V/jEHE_C@kmq)W4D4[F'^oVlH=,iH
+L5/s>K*'HPNl'[O[D$Um$48XCbb_mq[W~
+]]></RowData>
+</TableData>
+<TableData name="2预算批复情况表" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[kjnd,,.,,module,,.,,xm,,.,,new_num,,.,,old_num]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String,java.lang.String,java.math.BigDecimal,java.math.BigDecimal]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String,java.lang.String,java.math.BigDecimal,java.math.BigDecimal">
+<![CDATA[D33";K0U-)f@Qq2o>_9ciQAW<+YisAL'1_g-DjM;28Qk<RMHfi).j(R^4K19$Dm([h37:KMM
+/md3LCpFnQL]AhTRntW5SXl1SPba>E1Lo2Is9680!h<mbAne_"R7GnpC;#ER[NrKR*PBLLB@i
+4ADg,#L5kmY.t\u%75hb2<a/ruE?J0$")?^<oC,^S[s#'!Ka?=Hb!rKG@P*Z@nc#pLI?dj:$
+)tSRCTj^_8Qpd?ah<!'NdU&ZDm"5M1nsE4CXO^#",2V4do6\q/RrZ7-M]A9,QZbAQ[7is\["J
+u!=;T-/<(E!eZ=.!B`X<T,'q=ccW1X4.X*4@B~
+]]></RowData>
+</TableData>
+<TableData name="3医院现金流量情况表" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[项目,,.,,本期业务活动产生的现金流量净额,,.,,上期业务活动产生的现金流量净额]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.math.BigDecimal,java.math.BigDecimal]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.math.BigDecimal,java.math.BigDecimal">
+<![CDATA[NR#?IJj9men[#o%_sWPsl.ZpY$URHb&7UH$l;3_,O@=*Jm,hNZ=`gdhn6Q#X`oMK1([WND\2
+<@f`OkiT[>Vn6O\JTASsaoQl'1hMgT3O[3Kp,#LSum,.0la=9tYl'dI2N40GH]AAh^p"g&TIX
+Rp<`^bE##YYcj<rr7)87%Q*uOHFQEWd2Xf3?FK]A@AIC0J#ld$4~
+]]></RowData>
+</TableData>
+<TableData name="4现金流量报告数据" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[项目,,.,,当前年金额]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.math.BigDecimal]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.math.BigDecimal">
+<![CDATA[NKj<\RQqS,s-@;3GF!sEnod!f6Xm+I$!u"]A*?C>Xialkp#VeM:3=EJg(BH0[e,0OLI37YMc<
+9)MJ5m8s]A7-g*qGjJQf\2&%"1'n)Zh/Sj^U=Qq7Y+B);@0's#hEKtm:#4_rY)UR?ol,;$C/Z
+56_V)G'V+C)_0tfNMCcau*,U+Nr[$GK.PaFl&j3Yc3T'a;K/L8t+]ADOrS]A'3$OQTAIdQ4EGl
+U[.kUE%DqcY[s22=IqsC9rBtjkhGL7Pl!>RLh]AhQQhZlYcJ*$;1Y[/-t5TL!;2(b%6_a_7`T
+`=_0X9bG]A)[Y6T(sG8.g.=ce`g_<#9LTb_e5['GVmj,,kM#WGM'V[CXt81*m4,K"'M3f#*!"
+?Fj-.6b8Y008X^/j_7ak1^.Sm355A+3MK*>KSY)3c?)s+'#n$CROjsVGg;7,Hq`IYd&_k6K]A
+>?aQ:+E/U2\[8G]A0o\1MYIopi_AI)VL[t#iigqmJB<I%h23)rb`4S"7mS#nI#747FqGE]A5d`
+cLE'Sk2(DL<hF\dEoBChlI$g></*R\'8AScY2`C'j;O"PQSNnCES\W()90`7/\bRKF?b(g1L
+rp&&jHa*>>5moK.2tYJoR?Hti&bm\iK7Vr"N>enn"fXc21jph`"1egOVJ[6=%^l%,j.K:3f_
+OX\"A9q.Z"7D4.>BUoP5f'45@j]A(H\A=lrJ(,N>tf<IfT~
+]]></RowData>
+</TableData>
+<TableData name="5账务基础表" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[项目,,.,,今年,,.,,去年]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.math.BigDecimal,java.math.BigDecimal]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.math.BigDecimal,java.math.BigDecimal">
+<![CDATA[I9,*#gc,jnQG4V.0Ig@4dbg0:=L+,:5\4sZOI\'?!kV+`Kd>Tuj_%'Vb[9GPQEcu)qZ<qbUK
+1_sT2rA->^tI6Q01hTl\"@d1*sRWc_W-54c4GBn]ABOc7s-_;RG\7XWi/*ENmimp0P&;qTU8_
+c!N:;l6Wdu42@pIeZ<6"Sa4nWgDfuYZotkb:R'p1<l\kQ.2=/PLG2-23[0`@Lf@c[DAkiKRP
+pg*%X(J!a?d&<-X6T7;PMSsOKk6F;,9C[ii)aFnTIS$L>>rK#11%Z9d7[-`)K(@&WGTG;ls5
+U$SXE'CN'kTnj=*9^a/uPEWi-k\n7MiDkLp]APgZS7r@X[o4^>HnD@n<MDH"@SL2#$a(E1N7S
+K+m%-@e8SLFY^.t05r)@Jd^!*/`Ol@>aFp'=afh)BdM/,UR4>^P*7CobARqsade\qnfX;1+V
+=BW7#Mi0R@5sli_"Era?E.-+/E*_W;(+aY'ik&-B]A"V#%gHb1p5^e[RUc]AJ8g5;a9ZalLc_5
+1bEo>pVI<X3</lHm-=tf+*Ok0JhaNa=-IJ^)]A63"%kIfgVrK1DH$-r4'lqs<*V.[4!.\up:!
+-c^*Qn0\^U+8S4Zr(4()gDQ0WF/YH8de:H9+SI\=PZa(2iDGE@srY=VuL;31tl+#do?OSUl5
+*IY^1;r3PDJSY;/WfbH5=/q\1^aot/n0VRB1O7):?j">^8;'i_9Km;J"#?'*,.Z&?D.0VhC2
+T?XEpp%:-DN4(K\7@;2i!tWI]AmlEX^gr1k@!7M%T+Ad"ECsci2k@JdV=j=,0DV8WZ/up<fSS
+F2oRp%.#;\l2FBuH:a+b0oaCUq$)';qbYP63dS$=bMZ$:`-fi;n"XqWbFOpg\_nLM:/E#q_W
+<G>:u0+Lr-02,`JA2,#L'H#Pdl[_uH1)IUq=TAUko:*dXnpS*4Pjc\b.V7H*7W\!2hl[$+&5
+Sud:EK#u5<%\VKh#":Hc)\;Ye]AX]Al!C@AG>X4Ybm^o2?Rh#^n7[.4-KI]A+3XD\&s4.#=L3<n
+LGG7*181o/3hRXKpu?9V_E4$m3f8rWk@kb^A?B4qg=JW_i,2Be%jO"'sHL(UAmcF\Fn'l[Xq
+Kn(;)_9d`K6#,g-,LegbBlccd!f2j/1/Tr$R4j<]A#AF)'1.*G?2cZ3+"g7g&l6DsD8Q-s6,B
+$i]AIA]A,rAd527/t7,^8q;1.RN"DO(0^tN%$p[;]A4'"eo3Uh/lf0F0;jf&!;Rq#A!3h18?R)*
+6r*uom>.)KtSM>an7[VI*/dlDZ8c88mL67'Y+mk<`prK%$D5Kl9bP1\KZ\C`>Oj#(s??[7q!
+NcNhXguEf.A%sLbfdAD0c=;b,\d@KV@jbM#:!2\A&1Jf3-AFURuN"rJ56Z<YGcLr7'm_!&8d
+s<Qb_\=2L,gJp06Rln`q&`ZmtgtNsC^D^O>b@aNk;p"9N8KP^g;3F%M.F[+h3H6UcD9dD#&C
+l`Su_8I.]A3gd,;f9<VKAbXs9>?;e[[3eC3UQnVtddkC#AY=03P`);tbi/OPc]A/DtG(r8V=_'
+4eq^Z4tBB(;1d&0S0$"@>d)Ij!lm#PGS5de)ddK_EQN<qI4\1t2T*$&79GT)~
+]]></RowData>
+</TableData>
+<TableData name="6特殊情况表" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[项目,,.,,上两年]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.math.BigDecimal]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.math.BigDecimal">
+<![CDATA[Ha9F4ac7ZCGA_]A[ZhsR*l-H5CHeQ&qe&]AnWeC[I@dZWo&9`FkYM9cu3J]AXCNkS]Aa2,_<hYVQ
+>9]AHh*B61HE\g/bFuR!!~
+]]></RowData>
+</TableData>
+<TableData name="后期文字" class="com.fr.data.impl.EmbeddedTableData">
+<Parameters/>
+<DSName>
+<![CDATA[]]></DSName>
+<ColumnNames>
+<![CDATA[项目]]></ColumnNames>
+<ColumnTypes>
+<![CDATA[java.lang.String,java.lang.String]]></ColumnTypes>
+<RowData ColumnTypes="java.lang.String,java.lang.String">
+<![CDATA[HePh'q6]AD4VJLV5]A(G6]AGqZ)`J)8f&BkX;TBq`]AB@`tKY;t`GH^['RC2:&/$J(hX&`PSHI]A2
+h,_?1>4D`QRBYaASPJQ?n;*5Y\rXT2'9WR&L$!a`pQj$U"kb4:35)F6X\-)&oLU!!~
+]]></RowData>
+</TableData>
+</TableDataMap>
+<ReportWebAttr>
+<ServerPrinter/>
+<WebWriteContent>
+<ToolBars/>
+<EditRowColor setColor="false"/>
+<WebWrite SheetPosition="3"/>
+<RptLocation isShowAtLeft="false"/>
+<UnloadCheck/>
+<ShowWidgets/>
+<OtherAttr autoStash="false"/>
+</WebWriteContent>
+</ReportWebAttr>
+<ReportExportAttr>
+<ExcelExportAttr hideColumn="false" hideRow="false"/>
+<PDFExportAttr/>
+<HTMLExportAttr/>
+<WordExportAttr/>
+<ImageExportAttr imageResolution="96" imageType="false"/>
+</ReportExportAttr>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR/>
+<FR/>
+<HC/>
+<FC/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,5040000,1008000,4320000,723900,2209288,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,11520000,1296000,2016000,1296000,722880,722880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,2592000,2592000,2304000,2304000,2304000,2304000,2016000,2304000,722880,2700241,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,722880,722880,722880,722880,722880,7200000,722880,722880,722880,722880,722880,722880,722880,722880,722880,723900,723900,723900,723900,723900,723900,7200000,723900,723900,723900,723900,723900,723900,723900,722880,723900,723900,723900,723900,723900,723900,723900,7200000,1008000,723900,723900,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,2016000,7732510,723900,723900,723900,722880,723900,722880,722880,722880,722880,722880,722880,722880,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,6529675,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,722880,723900,723900,723900,723900,4835887,723900,723900,723900,723900,723900,723900,1008000,723900,723900,723900,723900,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,1440000,722880,722880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,2016000,4032000,3600000,8198915,1008000,722880,722880,722880,722880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,1154880,6912000,4032000,2016000,2016000,1008000,3024000,3024000,1008000,4032000,3024000,2016000,1008000,4032000,3024000,3024000,1008000,4032000,4032000,3024000,4032000,4032000,1008000,7920000,7056000,4032000,4032000,1008000,1008000,1008000,1008000,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,722880,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[2311200,3175200,2743200,3162300,3751200,3751200,2743200,2743200,2743200,2743200,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0" cs="9" rs="19" s="0">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="XXXXXXXX医院"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="19" cs="9" rs="9" s="1">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$year + "年"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="28" cs="9" rs="15" s="2">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="公立医院年度财务分析报告"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="43" cs="9" rs="3" s="3">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="财务中心预算办公室编制"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="46" cs="9" rs="3" s="4">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$year + "年12月"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="49" cs="9" rs="3" s="5">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="公立医院年度财务分析报告"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="52" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　为进一步提升公立医院经济管理水平，客观反映医院的财务状况及营运成果，为医院管理者和主管部门提供决策支持，根据《公立医院财务报告制度暂行办法》、《医院会计制度》及《医院财务制度》等相关规定，我们对" + $year + "年1月1日至" + $year + "年12月31日医院会计报表及相关财务会计资料在核对无误后，进行了财务分析，出具如下财务分析报告："]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="53" cs="9" s="6">
+<O>
+<![CDATA[　　一、医院基本情况]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="54" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　XXXXXXX（以下简称医院）是国家卫生和计划生育委员会直属医院，是大型现代化三级甲综合医院，始建于1949年，注册地址：***，注册资本：***，现任法定代表人：***。医院现有四个院区，编制床位***张，总建筑面积***平方米。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0" showAsDefault="true"/>
+<CellPageAttr/>
+<CellInsertPolicy/>
+<Expand/>
+</C>
+<C c="0" r="55" cs="9" rs="2" s="7">
+<O>
+<![CDATA[表 1  医院基本情况表]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="57" cs="4" rs="2" s="8">
+<O>
+<![CDATA[项目名称]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="57" rs="2" s="8">
+<O>
+<![CDATA[本期数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="57" rs="2" s="8">
+<O>
+<![CDATA[上期数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="57" cs="3" rs="2" s="8">
+<O>
+<![CDATA[增减变动比率%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="59" cs="4" s="9">
+<O>
+<![CDATA[    科室数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="59" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="59">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="59" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E60 - F60) / F60]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="60" cs="4" s="9">
+<O>
+<![CDATA[         临床科室数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="60" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="60" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="60" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E61 - F61) / F61]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="61" cs="4" s="9">
+<O>
+<![CDATA[         医技科室数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="61" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 3)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="61" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 3)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="61" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E62 - F62) / F62]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="62" cs="4" s="9">
+<O>
+<![CDATA[    编制人数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="62" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="62" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="62" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E63 - F63) / F63]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="63" cs="4" s="9">
+<O>
+<![CDATA[    平均在职职工人数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="63" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 5)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="63" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 5)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="63" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E64 - F64) / F64]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="64" cs="4" s="9">
+<O>
+<![CDATA[    年末在编在职人数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="64" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 6)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="64" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 6)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="64" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E65 - F65) / F65]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="65" cs="4" s="9">
+<O>
+<![CDATA[    合同制人员人数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="65" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 7)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="65">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 7)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="65" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E66 - F66) / F66]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="66" cs="4" s="9">
+<O>
+<![CDATA[    年平均离退休人数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="66" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 9)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="66" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 9)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="66" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E67 - F67) / F67]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="67" cs="4" s="9">
+<O>
+<![CDATA[    编制床位]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="67" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 11)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="67" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 11)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="67" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E68 - F68) / F68]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="68" cs="4" s="9">
+<O>
+<![CDATA[    平均开放床位]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="68" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 12)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="68" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 12)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="68" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E69 - F69) / F69]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="69" cs="4" s="9">
+<O>
+<![CDATA[    年末实际开放床位]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="69" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 13)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="69" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 13)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="69" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E70 - F70) / F70]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="70" cs="4" s="9">
+<O>
+<![CDATA[    诊疗人次数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="70" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 14)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="70" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 14)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="70" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E71 - F71) / F71]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="71" cs="4" s="9">
+<O>
+<![CDATA[     其中：门急诊人次数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="71" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 15)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="71" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 15)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="71" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E72 - F72) / F72]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="72" cs="4" s="9">
+<O>
+<![CDATA[    实际开放总床日数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="72" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 16)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="72" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 16)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="72" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E73 - F73) / F73]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="73" cs="4" s="9">
+<O>
+<![CDATA[    实际占用总床日数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="73" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 17)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="73" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 17)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="73" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E74 - F74) / F74]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="74" cs="4" s="9">
+<O>
+<![CDATA[    出院者占用总床日]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="74" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 18)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="74" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 18)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="74" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E75 - F75) / F75]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="75" cs="4" s="9">
+<O>
+<![CDATA[    出院人数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="75" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 19)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="75" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 19)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="75" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E76 - F76) / F76]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="76" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="    截至" + $year + "年12月31日，医院设有临床和医技科室" + E60 + "个，与上期比较，增加（或减少）" + (E60 - F60) + "个科室，主要原因是：\n    截至" + $year + "年12月31日，医院平均在职职工" + E64 + "人，与上期比较，增加（或减少）" + (E64 - F64) + "人，在编人员" + E65 + "人，增（减）" + (E65 - F65) + "人；合同制人员" + E66 + "人，增（减）" + (E66 - F66) + "人；离退休人员" + E67 + "人，增（减）" + (E67 - F67) + "人；临时工" + E63 + "人，增（减）" + (E63 - F63) + "人。\n    截至" + $year + "年12月31日，医院编制床位" + E68 + "张，与上期比较，增加（或减少）" + (E68 - F68) + "张，原因：平均开放床位" + E69 + "张，增（减）" + (E69 - F69) + "张；年末实际开放床位" + E70 + "张，增（减）" + (E70 - F70) + "张。诊疗人次" + E71 + "人次，增（减）" + (E71 - F71) + "人；实际开放总床日数" + E73 + "，增（减）" + (E73 - F73) + "；实际占用总床日数" + E74 + "，增（减）" + (E74 - F74) + "；出院人数" + E76 + "人，增（减）" + (E76 - F76) + "人。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="77" cs="9" s="12">
+<O>
+<![CDATA[    二、财务状况]]></O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="78" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　截至" + $year + "年12月31日，医院编报了会计报表。医院主要财务状况如下："]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0" showAsDefault="true"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="79" cs="9" s="12">
+<O>
+<![CDATA[    (一)预算批复情况]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="80" cs="9" rs="2" s="13">
+<O>
+<![CDATA[表 2  预算批复情况表]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="82" cs="4" rs="2" s="14">
+<O>
+<![CDATA[项目名称]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="82" rs="2" s="14">
+<O>
+<![CDATA[本期金额(万元)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="82" rs="2" s="14">
+<O>
+<![CDATA[上期金额(万元)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="82" cs="3" rs="2" s="14">
+<O>
+<![CDATA[增减变动比率%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="84" cs="4" s="9">
+<O>
+<![CDATA[       总收入]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="84" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 4, 1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="84" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 5, 1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="84" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E85 - F85) / F85]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="85" cs="4" s="9">
+<O>
+<![CDATA[       总支出]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="85" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 4, 7)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="85" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 5, 7)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="85" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E86 - F86) / F86]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="86" cs="4" s="9">
+<O>
+<![CDATA[          基本支出]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="86" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 4, 8)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="86" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 5, 8)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="86" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E87 - F87) / F87]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="87" cs="4" s="9">
+<O>
+<![CDATA[          项目支出]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="87" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 4, 10)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="87" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 5, 10)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="87" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E88 - F88) / F88]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="88" cs="4" s="9">
+<O>
+<![CDATA[       财政拨款预算]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="88" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 4, 11)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="88" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 5, 11)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="88" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E89 - F89) / F89]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="89" cs="4" s="9">
+<O>
+<![CDATA[       财政基本支出]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="89" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 4, 12)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="89" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 5, 12)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="89" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E90 - F90) / F90]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="90" cs="4" s="9">
+<O>
+<![CDATA[           人员经费]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="90" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 4, 13)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="90" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 5, 13)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="90" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E91 - F91) / F91]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="91" cs="4" s="9">
+<O>
+<![CDATA[           公用经费]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="91" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 4, 14)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="91" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 5, 14)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="91" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E92 - F92) / F92]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="92" cs="4" s="9">
+<O>
+<![CDATA[       财政项目支出]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="92" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 4, 15)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="92" s="15">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("2预算批复情况表", 5, 15)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="92" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E93 - F93) / F93]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="93" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　根据**卫生计生委《关于批复" + $year + "年预算的通知》（文件**号），" + $year + "年医院预算批复情况如下："]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="94" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　1.总体收支预算。医院预算收入" + value("2预算批复情况表", 4, 1) + "万元，预算支出" + value("2预算批复情况表", 4, 7) + "万元，其中：基本支出" + value("2预算批复情况表", 4, 8) + "万元、项目支出" + value("2预算批复情况表", 4, 10) + "万元。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="95" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　2.财政拨款预算。 医院财政拨款支出预算" + value("2预算批复情况表", 4, 11) + "万元，其中：财政基本支出预算" + value("2预算批复情况表", 4, 12) + "万元（人员经费" + value("2预算批复情况表", 4, 13) + "万元、公用经费" + value("2预算批复情况表", 4, 14) + "万元）、财政项目支出" + value("2预算批复情况表", 4, 15) + "万元。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="96" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　3.新增资产配置预算。医院新增资产配置预算（？）万元， 其中：车辆购置（？）辆（？）万元、200 万元以上大型设备购置（？）台套（？）万元。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="97" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　4.政府采购预算。医院政府采购预算（？）万元，其中：基本支出政府采购预算（？）万元，项目支出政府采购预算（？）万元（包含进口货物预算（？）万元）。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="98" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="5.绩效评价试点项目。本年******项目被财政部门确定为绩效评价试点项目。绩效考核目标主要为：****。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="99" cs="9" s="12">
+<O>
+<![CDATA[　　（二）资产负债情况。]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="100" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　截至" + $year + "年12月31日，根据医院会计报表中资产负债表（表3）反映，医院资产负债情况如下："]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="101" cs="9" rs="2" s="7">
+<O>
+<![CDATA[表 3  医院资产负债情况表]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="103" cs="4" rs="2" s="14">
+<O>
+<![CDATA[项目名称]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="103" rs="2" s="14">
+<O>
+<![CDATA[本期金额(万元)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="103" rs="2" s="14">
+<O>
+<![CDATA[上期金额(万元)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="103" cs="3" rs="2" s="14">
+<O>
+<![CDATA[增减变动比率%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="105" cs="4" s="9">
+<O>
+<![CDATA[资产总额]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="105" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="105" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="105" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E106 - F106) / F106]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="106" cs="4" s="9">
+<O>
+<![CDATA[         其中：货币资金]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="106" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 5)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="106" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 5)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="106" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E107 - F107) / F107]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="107" cs="4" s="9">
+<O>
+<![CDATA[         应收医疗款]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="107" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 8)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="107" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 8)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="107" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E108 - F108) / F108]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="108" cs="4" s="9">
+<O>
+<![CDATA[         存货]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="108" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 6)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="108" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 6)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="108" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E109 - F109) / F109]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="109" cs="4" s="9">
+<O>
+<![CDATA[         长期投资]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="109" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 15)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="109" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 15)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="109" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E110 - F110) / F110]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="110" cs="4" s="9">
+<O>
+<![CDATA[         固定资产]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="110" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 10)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="110" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 10)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="110" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E111 - F111) / F111]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="111" cs="4" s="9">
+<O>
+<![CDATA[         在建工程]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="111" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 16)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="111" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 16)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="111" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E112 - F112) / F112]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="112" cs="4" s="9">
+<O>
+<![CDATA[负债总额]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="112" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 17)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="112" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 17)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="112" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E113 - F113) / F113]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="113" cs="4" s="9">
+<O>
+<![CDATA[   其中：应付账款]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="113" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 20)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="113" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 20)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="113" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E114 - F114) / F114]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="114" cs="4" s="9">
+<O>
+<![CDATA[         预收医疗款]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="114" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 21)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="114" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 21)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="114" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E115 - F115) / F115]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="115" cs="4" s="9">
+<O>
+<![CDATA[         其他应付款]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="115" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 22)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="115" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 22)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="115" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E116 - F116) / F116]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="116" cs="4" s="9">
+<O>
+<![CDATA[         长期借款]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="116" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 23)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="116" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 23)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="116" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E117 - F117) / F117]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="117" cs="4" s="9">
+<O>
+<![CDATA[净资产总额]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="117" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 24)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="117" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 24)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="117" cs="3" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E118 - F118) / F118]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="118" cs="9" rs="5">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="123" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　1.资产情况。医院资产总额" + value("5账务基础表", 2, 1) + "万元，比期初增(减)" + (value("5账务基础表", 2, 1) - value("5账务基础表", 2, 2)) + "万元，其中：货币资金" + value("5账务基础表", 2, 5) + "万元，比期初增(减)" + (value("5账务基础表", 2, 5) - value("5账务基础表", 2, 71)) + "万元；应收医疗款" + value("5账务基础表", 2, 8) + "万元，比期初增(减)" + (value("5账务基础表", 2, 8) - value("5账务基础表", 2, 9)) + "万元;待摊费用" + value("5账务基础表", 2, 53) + "万元，比期初增(减)" + (value("5账务基础表", 2, 53) - value("5账务基础表", 2, 54)) + "万元；固定资产" + value("5账务基础表", 2, 10) + "万元，比期初增(减)" + (value("5账务基础表", 2, 10) - value("5账务基础表", 2, 11)) + "万元；长期投资" + value("5账务基础表", 2, 15) + "万元，比期初增(减)" + (value("5账务基础表", 2, 15) - value("5账务基础表", 2, 76)) + "万元；在建工程" + value("5账务基础表", 2, 16) + "万元，比期初增(减)" + (value("5账务基础表", 2, 16) - value("5账务基础表", 2, 73)) + "万元；待处理财产损溢" + value("5账务基础表", 2, 55) + "万元，比期初增(减)" + (value("5账务基础表", 2, 55) - value("5账务基础表", 2, 56)) + "万元。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="124" cs="9" rs="15">
+<O t="CC">
+<LayoutAttr selectedIndex="0"/>
+<ChangeAttr enable="false" changeType="button" timeInterval="5" buttonColor="-8421505" carouselColor="-8421505" showArrow="true">
+<TextAttr>
+<Attr alignText="0"/>
+</TextAttr>
+</ChangeAttr>
+<Chart name="默认" chartClass="com.fr.chart.chartattr.Chart">
+<Chart class="com.fr.chart.chartattr.Chart">
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<ChartAttr isJSDraw="true" isStyleGlobal="false"/>
+<Title>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<O>
+<![CDATA[资产情况]]></O>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="微软雅黑" style="0" size="88"/>
+</Attr>
+</TextAttr>
+<TitleVisible value="true" position="0"/>
+</Title>
+<Plot class="com.fr.chart.chartattr.Bar2DPlot">
+<CategoryPlot>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isNullValueBreak="true" autoRefreshPerSecond="0" seriesDragEnable="true" plotStyle="0" combinedSize="50.0"/>
+<newHotTooltipStyle>
+<AttrContents>
+<Attr showLine="false" position="1" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${VALUE}"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##]]></Format>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.##%]]></Format>
+</PercentFormat>
+</AttrContents>
+</newHotTooltipStyle>
+<ConditionCollection>
+<DefaultAttr class="com.fr.chart.chartglyph.ConditionAttr">
+<ConditionAttr name="">
+<AttrList>
+<Attr class="com.fr.chart.base.AttrContents">
+<AttrContents>
+<Attr showLine="false" position="6" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${VALUE}"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="宋体" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##%]]></Format>
+</PercentFormat>
+</AttrContents>
+</Attr>
+</AttrList>
+</ConditionAttr>
+</DefaultAttr>
+</ConditionCollection>
+<Legend>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr position="4" visible="true"/>
+<FRFont name="Microsoft YaHei" style="0" size="72"/>
+</Legend>
+<DataSheet>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isVisible="false"/>
+</DataSheet>
+<DataProcessor class="com.fr.base.chart.chartdata.model.NormalDataModel"/>
+<newPlotFillStyle>
+<AttrFillStyle>
+<AFStyle colorStyle="0"/>
+<FillStyleName fillStyleName=""/>
+<isCustomFillStyle isCustomFillStyle="false"/>
+</AttrFillStyle>
+</newPlotFillStyle>
+<RectanglePlotAttr interactiveAxisTooltip="false"/>
+<xAxis>
+<CategoryAxis class="com.fr.chart.chartattr.CategoryAxis">
+<newAxisAttr isShowAxisLabel="true"/>
+<AxisLineStyle AxisStyle="1" MainGridStyle="0"/>
+<newLineColor mainGridColor="-4144960" lineColor="-5197648"/>
+<AxisPosition value="3"/>
+<TickLine201106 type="2" secType="0"/>
+<ArrowShow arrowShow="false"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Microsoft YaHei" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AxisLabelCount value="=0"/>
+<AxisRange/>
+<AxisUnit201106 isCustomMainUnit="false" isCustomSecUnit="false" mainUnit="=0" secUnit="=0"/>
+<ZoomAxisAttr isZoom="false"/>
+<axisReversed axisReversed="false"/>
+</CategoryAxis>
+</xAxis>
+<yAxis>
+<ValueAxis class="com.fr.chart.chartattr.ValueAxis">
+<ValueAxisAttr201108 alignZeroValue="false"/>
+<newAxisAttr isShowAxisLabel="true"/>
+<AxisLineStyle AxisStyle="1" MainGridStyle="1"/>
+<newLineColor mainGridColor="-4144960" lineColor="-5197648"/>
+<AxisPosition value="2"/>
+<TickLine201106 type="2" secType="0"/>
+<ArrowShow arrowShow="false"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Century Gothic" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AxisLabelCount value="=0"/>
+<AxisRange/>
+<AxisUnit201106 isCustomMainUnit="false" isCustomSecUnit="false" mainUnit="=0" secUnit="=0"/>
+<ZoomAxisAttr isZoom="false"/>
+<axisReversed axisReversed="false"/>
+</ValueAxis>
+</yAxis>
+<secondAxis>
+<ValueAxis class="com.fr.chart.chartattr.ValueAxis">
+<ValueAxisAttr201108 alignZeroValue="false"/>
+<newAxisAttr isShowAxisLabel="true"/>
+<AxisLineStyle AxisStyle="1" MainGridStyle="1"/>
+<newLineColor mainGridColor="-4144960" lineColor="-5197648"/>
+<AxisPosition value="4"/>
+<TickLine201106 type="2" secType="0"/>
+<ArrowShow arrowShow="false"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Century Gothic" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AxisLabelCount value="=0"/>
+<AxisRange/>
+<AxisUnit201106 isCustomMainUnit="false" isCustomSecUnit="false" mainUnit="=0" secUnit="=0"/>
+<ZoomAxisAttr isZoom="false"/>
+<axisReversed axisReversed="false"/>
+</ValueAxis>
+</secondAxis>
+<CateAttr isStacked="false"/>
+<BarAttr isHorizontal="false" overlap="-0.25" interval="1.0"/>
+<Bar2DAttr isSimulation3D="false"/>
+</CategoryPlot>
+</Plot>
+<ChartDefinition>
+<NormalReportDataDefinition>
+<Series>
+<SeriesDefinition>
+<SeriesName>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$year]]></Attributes>
+</O>
+</SeriesName>
+<SeriesValue>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[E107,E108,E109,E110,E111,E112]A]]></Attributes>
+</O>
+</SeriesValue>
+</SeriesDefinition>
+<SeriesDefinition>
+<SeriesName>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$year - 1]]></Attributes>
+</O>
+</SeriesName>
+<SeriesValue>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[F107,F108,F109,F110,F111,F112]A]]></Attributes>
+</O>
+</SeriesValue>
+</SeriesDefinition>
+</Series>
+<Category>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=["货币资金","应收医疗款","存货","长期投资","固定资产","在建工程"]A]]></Attributes>
+</O>
+</Category>
+<Top topCate="-1" topValue="-1" isDiscardOtherCate="false" isDiscardOtherSeries="false" isDiscardNullCate="false" isDiscardNullSeries="false"/>
+</NormalReportDataDefinition>
+</ChartDefinition>
+</Chart>
+</Chart>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="139" cs="9" s="17">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　2.负债情况。医院负债总额" + value("5账务基础表", 2, 17) + "万元，比期初增（减）" + (value("5账务基础表", 2, 17) - value("5账务基础表", 2, 18)) + "万元，其中：短期借款" + value("5账务基础表", 2, 57) + "万元，比期初增（减）" + (value("5账务基础表", 2, 57) - value("5账务基础表", 2, 58)) + "万元；预收医疗款" + value("5账务基础表", 2, 21) + "万元，比期初增（减）" + (value("5账务基础表", 2, 21) - value("5账务基础表", 2, 75)) + "万元；应付账款" + value("5账务基础表", 2, 20) + "万元，比期初增（减）" + (value("5账务基础表", 2, 20) - value("5账务基础表", 2, 74)) + "万元；其他应付款" + value("5账务基础表", 2, 22) + "万元，比期初增（减）" + (value("5账务基础表", 2, 22) - value("5账务基础表", 2, 77)) + "万元；预提费用" + value("5账务基础表", 2, 59) + "万元，比期初增（减）" + (value("5账务基础表", 2, 59) - value("5账务基础表", 2, 60)) + "万元；应交税费" + value("5账务基础表", 2, 61) + "万元，比期初增（减）" + (value("5账务基础表", 2, 61) - value("5账务基础表", 2, 62)) + "万元；长期借款" + value("5账务基础表", 2, 23) + "万元，比期初增（减）" + (value("5账务基础表", 2, 23) - value("5账务基础表", 2, 76)) + "万元（新增贷款**万元，贷款利率**，贷款期间**，贷款用途等）。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0" showAsDefault="true"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="140" cs="9" rs="13" s="18">
+<O t="CC">
+<LayoutAttr selectedIndex="0"/>
+<ChangeAttr enable="false" changeType="button" timeInterval="5" buttonColor="-8421505" carouselColor="-8421505" showArrow="true">
+<TextAttr>
+<Attr alignText="0"/>
+</TextAttr>
+</ChangeAttr>
+<Chart name="默认" chartClass="com.fr.chart.chartattr.Chart">
+<Chart class="com.fr.chart.chartattr.Chart">
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<ChartAttr isJSDraw="true" isStyleGlobal="false"/>
+<Title>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<O>
+<![CDATA[负债情况]]></O>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="微软雅黑" style="0" size="88"/>
+</Attr>
+</TextAttr>
+<TitleVisible value="true" position="0"/>
+</Title>
+<Plot class="com.fr.chart.chartattr.Bar2DPlot">
+<CategoryPlot>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isNullValueBreak="true" autoRefreshPerSecond="0" seriesDragEnable="true" plotStyle="0" combinedSize="50.0"/>
+<newHotTooltipStyle>
+<AttrContents>
+<Attr showLine="false" position="1" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${VALUE}"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##]]></Format>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.##%]]></Format>
+</PercentFormat>
+</AttrContents>
+</newHotTooltipStyle>
+<ConditionCollection>
+<DefaultAttr class="com.fr.chart.chartglyph.ConditionAttr">
+<ConditionAttr name=""/>
+</DefaultAttr>
+</ConditionCollection>
+<Legend>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr position="4" visible="true"/>
+<FRFont name="Microsoft YaHei" style="0" size="72"/>
+</Legend>
+<DataSheet>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isVisible="false"/>
+</DataSheet>
+<DataProcessor class="com.fr.base.chart.chartdata.model.NormalDataModel"/>
+<newPlotFillStyle>
+<AttrFillStyle>
+<AFStyle colorStyle="0"/>
+<FillStyleName fillStyleName=""/>
+<isCustomFillStyle isCustomFillStyle="false"/>
+</AttrFillStyle>
+</newPlotFillStyle>
+<RectanglePlotAttr interactiveAxisTooltip="false"/>
+<xAxis>
+<CategoryAxis class="com.fr.chart.chartattr.CategoryAxis">
+<newAxisAttr isShowAxisLabel="true"/>
+<AxisLineStyle AxisStyle="1" MainGridStyle="0"/>
+<newLineColor mainGridColor="-4144960" lineColor="-5197648"/>
+<AxisPosition value="3"/>
+<TickLine201106 type="2" secType="0"/>
+<ArrowShow arrowShow="false"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Microsoft YaHei" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AxisLabelCount value="=0"/>
+<AxisRange/>
+<AxisUnit201106 isCustomMainUnit="false" isCustomSecUnit="false" mainUnit="=0" secUnit="=0"/>
+<ZoomAxisAttr isZoom="false"/>
+<axisReversed axisReversed="false"/>
+</CategoryAxis>
+</xAxis>
+<yAxis>
+<ValueAxis class="com.fr.chart.chartattr.ValueAxis">
+<ValueAxisAttr201108 alignZeroValue="false"/>
+<newAxisAttr isShowAxisLabel="true"/>
+<AxisLineStyle AxisStyle="1" MainGridStyle="1"/>
+<newLineColor mainGridColor="-4144960" lineColor="-5197648"/>
+<AxisPosition value="2"/>
+<TickLine201106 type="2" secType="0"/>
+<ArrowShow arrowShow="false"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Century Gothic" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AxisLabelCount value="=0"/>
+<AxisRange/>
+<AxisUnit201106 isCustomMainUnit="false" isCustomSecUnit="false" mainUnit="=0" secUnit="=0"/>
+<ZoomAxisAttr isZoom="false"/>
+<axisReversed axisReversed="false"/>
+</ValueAxis>
+</yAxis>
+<secondAxis>
+<ValueAxis class="com.fr.chart.chartattr.ValueAxis">
+<ValueAxisAttr201108 alignZeroValue="false"/>
+<newAxisAttr isShowAxisLabel="true"/>
+<AxisLineStyle AxisStyle="1" MainGridStyle="1"/>
+<newLineColor mainGridColor="-4144960" lineColor="-5197648"/>
+<AxisPosition value="4"/>
+<TickLine201106 type="2" secType="0"/>
+<ArrowShow arrowShow="false"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Century Gothic" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AxisLabelCount value="=0"/>
+<AxisRange/>
+<AxisUnit201106 isCustomMainUnit="false" isCustomSecUnit="false" mainUnit="=0" secUnit="=0"/>
+<ZoomAxisAttr isZoom="false"/>
+<axisReversed axisReversed="false"/>
+</ValueAxis>
+</secondAxis>
+<CateAttr isStacked="false"/>
+<BarAttr isHorizontal="false" overlap="-0.25" interval="1.0"/>
+<Bar2DAttr isSimulation3D="false"/>
+</CategoryPlot>
+</Plot>
+<ChartDefinition>
+<NormalReportDataDefinition>
+<Series>
+<SeriesDefinition>
+<SeriesName>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$year]]></Attributes>
+</O>
+</SeriesName>
+<SeriesValue>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[E114,E115,E116,E117]A]]></Attributes>
+</O>
+</SeriesValue>
+</SeriesDefinition>
+<SeriesDefinition>
+<SeriesName>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$year - 1]]></Attributes>
+</O>
+</SeriesName>
+<SeriesValue>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[F114,F115,F116,F117]A]]></Attributes>
+</O>
+</SeriesValue>
+</SeriesDefinition>
+</Series>
+<Category>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=["应付账款","预收医疗款","其他应付款","长期借款"]A]]></Attributes>
+</O>
+</Category>
+<Top topCate="-1" topValue="-1" isDiscardOtherCate="false" isDiscardOtherSeries="false" isDiscardNullCate="false" isDiscardNullSeries="false"/>
+</NormalReportDataDefinition>
+</ChartDefinition>
+</Chart>
+</Chart>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="153" cs="9" rs="2">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="155" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　3.净资产情况。医院净资产总额" + value("5账务基础表", 2, 24) + "万元，其中：事业基金" + value("5账务基础表", 2, 63) + "万元，比期初增（减）" + (value("5账务基础表", 2, 63) - value("5账务基础表", 2, 64)) + "万元；专用基金" + value("5账务基础表", 2, 65) + "万元，比期初增（减）" + (value("5账务基础表", 2, 65) - value("5账务基础表", 2, 66)) + "万元；本期结余" + value("5账务基础表", 2, 67) + "万元，比期初增（减）" + (value("5账务基础表", 2, 67) - value("5账务基础表", 2, 68)) + "万元；未弥补亏损" + value("5账务基础表", 2, 69) + "万元，比期初增（减）" + (value("5账务基础表", 2, 69) - value("5账务基础表", 2, 70)) + "万元。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0" showAsDefault="true"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="156" cs="9" s="6">
+<O>
+<![CDATA[　　（三）收入支出及结余情况。]]></O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="157" cs="9" rs="2" s="19">
+<O>
+<![CDATA[表4   医院收入支出及结余情况表]]></O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="159" cs="4" rs="2" s="14">
+<O>
+<![CDATA[项目名称]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="159" rs="2" s="14">
+<O>
+<![CDATA[本期金额(万元)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="159" rs="2" s="14">
+<O>
+<![CDATA[上期金额(万元)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="159" cs="3" rs="2" s="14">
+<O>
+<![CDATA[增减变动比率%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="161" cs="4" s="9">
+<O>
+<![CDATA[总收入]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="161" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 26)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="161" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 26)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="161" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E162 - F162) / F162]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="162" cs="4" s="9">
+<O>
+<![CDATA[      医疗收入]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="162" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 27)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="162" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 27)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="162" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E163 - F163) / F163]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="163" cs="4" s="9">
+<O>
+<![CDATA[      财政补助收入]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="163" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 28)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="163" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 28)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="163" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E164 - F164) / F164]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="164" cs="4" s="9">
+<O>
+<![CDATA[      科教收入]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="164" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 29)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="164" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 29)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="164" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E165 - F165) / F165]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="165" cs="4" s="9">
+<O>
+<![CDATA[      其他收入]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="165" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 31)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="165" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 31)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="165" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E166 - F166) / F166]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="166" cs="4" s="9">
+<O>
+<![CDATA[总支出]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="166" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 36)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="166" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 36)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="166" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E167 - F167) / F167]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="167" cs="4" s="9">
+<O>
+<![CDATA[      医疗业务成本]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="167" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 37)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="167" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 37)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="167" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E168 - F168) / F168]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="168" cs="4" s="9">
+<O>
+<![CDATA[      管理费用]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="168" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 38)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="168" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 38)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="168" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E169 - F169) / F169]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="169" cs="4" s="9">
+<O>
+<![CDATA[      财政项目支出]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="169" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 40)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="169" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 40)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="169" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E170 - F170) / F170]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="170" cs="4" s="9">
+<O>
+<![CDATA[      科教项目支出]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="170" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 41)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="170" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 41)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="170" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E171 - F171) / F171]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="171" cs="4" s="9">
+<O>
+<![CDATA[      其他支出]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="171" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 39)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="171" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 39)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="171" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E172 - F172) / F172]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="172" cs="4" s="9">
+<O>
+<![CDATA[总收支结余]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="172" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 49)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="172" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 49)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="172" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E173 - F173) / F173]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="173" cs="4" s="9">
+<O>
+<![CDATA[      医疗结余]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="173" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 50)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="173" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 50)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="173" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E174 - F174) / F174]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="174" cs="4" s="9">
+<O>
+<![CDATA[      财政补助结转结余]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="174" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 51)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="174" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 51)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="174" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E175 - F175) / F175]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="175" cs="4" s="9">
+<O>
+<![CDATA[      科教结转结余]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="175" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 52)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="175" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 52)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="175" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E176 - F176) / F176]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="176" cs="9" s="17">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="    " + $year + "年1月1日至" + $year + "年12月31日期间，根据医院会计报表收入费用总表（表4）反映，医院收入支出情况如下："]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0" showAsDefault="true"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="177" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　1.收入情况。医院总收入" + value("5账务基础表", 2, 26) + "万元，其中：医疗收入" + value("5账务基础表", 2, 27) + "万元（门诊收入" + value("5账务基础表", 2, 33) + "万元、住院收入" + value("5账务基础表", 2, 32) + "万元）、财政基本补助收入" + value("5账务基础表", 2, 35) + "万元、财政项目补助收入" + value("5账务基础表", 2, 78) + "万元、科教项目收入" + value("5账务基础表", 2, 29) + "万元、其他收入" + value("5账务基础表", 2, 31) + "万元。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="178" cs="9" rs="12">
+<O t="CC">
+<LayoutAttr selectedIndex="0"/>
+<ChangeAttr enable="false" changeType="button" timeInterval="5" buttonColor="-8421505" carouselColor="-8421505" showArrow="true">
+<TextAttr>
+<Attr alignText="0"/>
+</TextAttr>
+</ChangeAttr>
+<Chart name="默认" chartClass="com.fr.chart.chartattr.Chart">
+<Chart class="com.fr.chart.chartattr.Chart">
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<ChartAttr isJSDraw="true" isStyleGlobal="false"/>
+<Title>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<O>
+<![CDATA[收入情况]]></O>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="微软雅黑" style="0" size="88"/>
+</Attr>
+</TextAttr>
+<TitleVisible value="true" position="0"/>
+</Title>
+<Plot class="com.fr.chart.chartattr.Bar2DPlot">
+<CategoryPlot>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isNullValueBreak="true" autoRefreshPerSecond="0" seriesDragEnable="true" plotStyle="0" combinedSize="50.0"/>
+<newHotTooltipStyle>
+<AttrContents>
+<Attr showLine="false" position="1" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${VALUE}"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##]]></Format>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.##%]]></Format>
+</PercentFormat>
+</AttrContents>
+</newHotTooltipStyle>
+<ConditionCollection>
+<DefaultAttr class="com.fr.chart.chartglyph.ConditionAttr">
+<ConditionAttr name="">
+<AttrList>
+<Attr class="com.fr.chart.base.AttrContents">
+<AttrContents>
+<Attr showLine="false" position="6" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${VALUE}"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="宋体" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##%]]></Format>
+</PercentFormat>
+</AttrContents>
+</Attr>
+</AttrList>
+</ConditionAttr>
+</DefaultAttr>
+</ConditionCollection>
+<Legend>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr position="4" visible="true"/>
+<FRFont name="Microsoft YaHei" style="0" size="72"/>
+</Legend>
+<DataSheet>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isVisible="false"/>
+</DataSheet>
+<DataProcessor class="com.fr.base.chart.chartdata.model.NormalDataModel"/>
+<newPlotFillStyle>
+<AttrFillStyle>
+<AFStyle colorStyle="0"/>
+<FillStyleName fillStyleName=""/>
+<isCustomFillStyle isCustomFillStyle="false"/>
+</AttrFillStyle>
+</newPlotFillStyle>
+<RectanglePlotAttr interactiveAxisTooltip="false"/>
+<xAxis>
+<CategoryAxis class="com.fr.chart.chartattr.CategoryAxis">
+<newAxisAttr isShowAxisLabel="true"/>
+<AxisLineStyle AxisStyle="1" MainGridStyle="0"/>
+<newLineColor mainGridColor="-4144960" lineColor="-5197648"/>
+<AxisPosition value="3"/>
+<TickLine201106 type="2" secType="0"/>
+<ArrowShow arrowShow="false"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Microsoft YaHei" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AxisLabelCount value="=0"/>
+<AxisRange/>
+<AxisUnit201106 isCustomMainUnit="false" isCustomSecUnit="false" mainUnit="=0" secUnit="=0"/>
+<ZoomAxisAttr isZoom="false"/>
+<axisReversed axisReversed="false"/>
+</CategoryAxis>
+</xAxis>
+<yAxis>
+<ValueAxis class="com.fr.chart.chartattr.ValueAxis">
+<ValueAxisAttr201108 alignZeroValue="false"/>
+<newAxisAttr isShowAxisLabel="true"/>
+<AxisLineStyle AxisStyle="1" MainGridStyle="1"/>
+<newLineColor mainGridColor="-4144960" lineColor="-5197648"/>
+<AxisPosition value="2"/>
+<TickLine201106 type="2" secType="0"/>
+<ArrowShow arrowShow="false"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Century Gothic" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AxisLabelCount value="=0"/>
+<AxisRange/>
+<AxisUnit201106 isCustomMainUnit="false" isCustomSecUnit="false" mainUnit="=0" secUnit="=0"/>
+<ZoomAxisAttr isZoom="false"/>
+<axisReversed axisReversed="false"/>
+</ValueAxis>
+</yAxis>
+<secondAxis>
+<ValueAxis class="com.fr.chart.chartattr.ValueAxis">
+<ValueAxisAttr201108 alignZeroValue="false"/>
+<newAxisAttr isShowAxisLabel="true"/>
+<AxisLineStyle AxisStyle="1" MainGridStyle="1"/>
+<newLineColor mainGridColor="-4144960" lineColor="-5197648"/>
+<AxisPosition value="4"/>
+<TickLine201106 type="2" secType="0"/>
+<ArrowShow arrowShow="false"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Century Gothic" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AxisLabelCount value="=0"/>
+<AxisRange/>
+<AxisUnit201106 isCustomMainUnit="false" isCustomSecUnit="false" mainUnit="=0" secUnit="=0"/>
+<ZoomAxisAttr isZoom="false"/>
+<axisReversed axisReversed="false"/>
+</ValueAxis>
+</secondAxis>
+<CateAttr isStacked="false"/>
+<BarAttr isHorizontal="false" overlap="-0.25" interval="1.0"/>
+<Bar2DAttr isSimulation3D="false"/>
+</CategoryPlot>
+</Plot>
+<ChartDefinition>
+<NormalReportDataDefinition>
+<Series>
+<SeriesDefinition>
+<SeriesName>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$year]]></Attributes>
+</O>
+</SeriesName>
+<SeriesValue>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[E163,E164,E165,E166]A]]></Attributes>
+</O>
+</SeriesValue>
+</SeriesDefinition>
+<SeriesDefinition>
+<SeriesName>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$year - 1]]></Attributes>
+</O>
+</SeriesName>
+<SeriesValue>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[F163,F164,F165,F166]A]]></Attributes>
+</O>
+</SeriesValue>
+</SeriesDefinition>
+</Series>
+<Category>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=["医疗收入","财政补助收入","科教收入","其他收入"]A]]></Attributes>
+</O>
+</Category>
+<Top topCate="-1" topValue="-1" isDiscardOtherCate="false" isDiscardOtherSeries="false" isDiscardNullCate="false" isDiscardNullSeries="false"/>
+</NormalReportDataDefinition>
+</ChartDefinition>
+</Chart>
+</Chart>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="190" cs="9" rs="13">
+<O t="CC">
+<LayoutAttr selectedIndex="0"/>
+<ChangeAttr enable="false" changeType="button" timeInterval="5" buttonColor="-8421505" carouselColor="-8421505" showArrow="true">
+<TextAttr>
+<Attr alignText="0"/>
+</TextAttr>
+</ChangeAttr>
+<Chart name="默认" chartClass="com.fr.chart.chartattr.Chart">
+<Chart class="com.fr.chart.chartattr.Chart">
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<ChartAttr isJSDraw="true" isStyleGlobal="false"/>
+<Title>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<O>
+<![CDATA[收入情况]]></O>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="微软雅黑" style="0" size="88"/>
+</Attr>
+</TextAttr>
+<TitleVisible value="true" position="0"/>
+</Title>
+<Plot class="com.fr.chart.chartattr.PiePlot">
+<Plot>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isNullValueBreak="true" autoRefreshPerSecond="0" seriesDragEnable="true" plotStyle="0" combinedSize="50.0"/>
+<newHotTooltipStyle>
+<AttrContents>
+<Attr showLine="false" position="1" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${VALUE}${PERCENT}"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##]]></Format>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##%]]></Format>
+</PercentFormat>
+</AttrContents>
+</newHotTooltipStyle>
+<ConditionCollection>
+<DefaultAttr class="com.fr.chart.chartglyph.ConditionAttr">
+<ConditionAttr name="">
+<AttrList>
+<Attr class="com.fr.chart.base.AttrBorder">
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-1"/>
+</AttrBorder>
+</Attr>
+<Attr class="com.fr.chart.base.AttrContents">
+<AttrContents>
+<Attr showLine="true" position="6" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${PERCENT}"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="宋体" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.00%]]></Format>
+</PercentFormat>
+</AttrContents>
+</Attr>
+</AttrList>
+</ConditionAttr>
+</DefaultAttr>
+</ConditionCollection>
+<Legend>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr position="3" visible="true"/>
+<FRFont name="微软雅黑" style="0" size="72"/>
+</Legend>
+<DataSheet>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isVisible="false"/>
+</DataSheet>
+<DataProcessor class="com.fr.base.chart.chartdata.model.NormalDataModel"/>
+<newPlotFillStyle>
+<AttrFillStyle>
+<AFStyle colorStyle="0"/>
+<FillStyleName fillStyleName=""/>
+<isCustomFillStyle isCustomFillStyle="false"/>
+</AttrFillStyle>
+</newPlotFillStyle>
+<PieAttr subType="1" smallPercent="0.05"/>
+</Plot>
+</Plot>
+<ChartDefinition>
+<NormalReportDataDefinition>
+<Series>
+<SeriesDefinition>
+<SeriesName>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[A163,A164,A165,A166]A]]></Attributes>
+</O>
+</SeriesName>
+<SeriesValue>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[E163,E164,E165,E166]A]]></Attributes>
+</O>
+</SeriesValue>
+</SeriesDefinition>
+</Series>
+<Category>
+<O>
+<![CDATA[]]></O>
+</Category>
+<Top topCate="-1" topValue="-1" isDiscardOtherCate="false" isDiscardOtherSeries="false" isDiscardNullCate="false" isDiscardNullSeries="false"/>
+</NormalReportDataDefinition>
+</ChartDefinition>
+</Chart>
+</Chart>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="203" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　2.支出情况。医院总支出" + value("5账务基础表", 2, 36) + "万元，其中：医疗成本" + (value("5账务基础表", 2, 37) + value("5账务基础表", 2, 38)) + "万元（医疗业务成本" + value("5账务基础表", 2, 37) + "万元、管理费用" + value("5账务基础表", 2, 38) + "万元）、财政项目支出" + value("5账务基础表", 2, 40) + "万元、科教项目支出" + value("5账务基础表", 2, 41) + "万元、其他支出" + value("5账务基础表", 2, 39) + "万元。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0" showAsDefault="true"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="204" cs="9" rs="12">
+<O t="CC">
+<LayoutAttr selectedIndex="0"/>
+<ChangeAttr enable="false" changeType="button" timeInterval="5" buttonColor="-8421505" carouselColor="-8421505" showArrow="true">
+<TextAttr>
+<Attr alignText="0"/>
+</TextAttr>
+</ChangeAttr>
+<Chart name="默认" chartClass="com.fr.chart.chartattr.Chart">
+<Chart class="com.fr.chart.chartattr.Chart">
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<ChartAttr isJSDraw="true" isStyleGlobal="false"/>
+<Title>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<O>
+<![CDATA[支出情况]]></O>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="微软雅黑" style="0" size="88"/>
+</Attr>
+</TextAttr>
+<TitleVisible value="true" position="0"/>
+</Title>
+<Plot class="com.fr.chart.chartattr.Bar2DPlot">
+<CategoryPlot>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isNullValueBreak="true" autoRefreshPerSecond="0" seriesDragEnable="true" plotStyle="0" combinedSize="50.0"/>
+<newHotTooltipStyle>
+<AttrContents>
+<Attr showLine="false" position="1" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${VALUE}"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##]]></Format>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.##%]]></Format>
+</PercentFormat>
+</AttrContents>
+</newHotTooltipStyle>
+<ConditionCollection>
+<DefaultAttr class="com.fr.chart.chartglyph.ConditionAttr">
+<ConditionAttr name="">
+<AttrList>
+<Attr class="com.fr.chart.base.AttrContents">
+<AttrContents>
+<Attr showLine="false" position="6" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${VALUE}"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="宋体" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##%]]></Format>
+</PercentFormat>
+</AttrContents>
+</Attr>
+</AttrList>
+</ConditionAttr>
+</DefaultAttr>
+</ConditionCollection>
+<Legend>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr position="4" visible="true"/>
+<FRFont name="Microsoft YaHei" style="0" size="72"/>
+</Legend>
+<DataSheet>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isVisible="false"/>
+</DataSheet>
+<DataProcessor class="com.fr.base.chart.chartdata.model.NormalDataModel"/>
+<newPlotFillStyle>
+<AttrFillStyle>
+<AFStyle colorStyle="0"/>
+<FillStyleName fillStyleName=""/>
+<isCustomFillStyle isCustomFillStyle="false"/>
+</AttrFillStyle>
+</newPlotFillStyle>
+<RectanglePlotAttr interactiveAxisTooltip="false"/>
+<xAxis>
+<CategoryAxis class="com.fr.chart.chartattr.CategoryAxis">
+<newAxisAttr isShowAxisLabel="true"/>
+<AxisLineStyle AxisStyle="1" MainGridStyle="0"/>
+<newLineColor mainGridColor="-4144960" lineColor="-5197648"/>
+<AxisPosition value="3"/>
+<TickLine201106 type="2" secType="0"/>
+<ArrowShow arrowShow="false"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Microsoft YaHei" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AxisLabelCount value="=0"/>
+<AxisRange/>
+<AxisUnit201106 isCustomMainUnit="false" isCustomSecUnit="false" mainUnit="=0" secUnit="=0"/>
+<ZoomAxisAttr isZoom="false"/>
+<axisReversed axisReversed="false"/>
+</CategoryAxis>
+</xAxis>
+<yAxis>
+<ValueAxis class="com.fr.chart.chartattr.ValueAxis">
+<ValueAxisAttr201108 alignZeroValue="false"/>
+<newAxisAttr isShowAxisLabel="true"/>
+<AxisLineStyle AxisStyle="1" MainGridStyle="1"/>
+<newLineColor mainGridColor="-4144960" lineColor="-5197648"/>
+<AxisPosition value="2"/>
+<TickLine201106 type="2" secType="0"/>
+<ArrowShow arrowShow="false"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Century Gothic" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AxisLabelCount value="=0"/>
+<AxisRange/>
+<AxisUnit201106 isCustomMainUnit="false" isCustomSecUnit="false" mainUnit="=0" secUnit="=0"/>
+<ZoomAxisAttr isZoom="false"/>
+<axisReversed axisReversed="false"/>
+</ValueAxis>
+</yAxis>
+<secondAxis>
+<ValueAxis class="com.fr.chart.chartattr.ValueAxis">
+<ValueAxisAttr201108 alignZeroValue="false"/>
+<newAxisAttr isShowAxisLabel="true"/>
+<AxisLineStyle AxisStyle="1" MainGridStyle="1"/>
+<newLineColor mainGridColor="-4144960" lineColor="-5197648"/>
+<AxisPosition value="4"/>
+<TickLine201106 type="2" secType="0"/>
+<ArrowShow arrowShow="false"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Century Gothic" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AxisLabelCount value="=0"/>
+<AxisRange/>
+<AxisUnit201106 isCustomMainUnit="false" isCustomSecUnit="false" mainUnit="=0" secUnit="=0"/>
+<ZoomAxisAttr isZoom="false"/>
+<axisReversed axisReversed="false"/>
+</ValueAxis>
+</secondAxis>
+<CateAttr isStacked="false"/>
+<BarAttr isHorizontal="false" overlap="-0.25" interval="1.0"/>
+<Bar2DAttr isSimulation3D="false"/>
+</CategoryPlot>
+</Plot>
+<ChartDefinition>
+<NormalReportDataDefinition>
+<Series>
+<SeriesDefinition>
+<SeriesName>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$year]]></Attributes>
+</O>
+</SeriesName>
+<SeriesValue>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[E168,E169,E170,E171,E172]A]]></Attributes>
+</O>
+</SeriesValue>
+</SeriesDefinition>
+<SeriesDefinition>
+<SeriesName>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$year - 1]]></Attributes>
+</O>
+</SeriesName>
+<SeriesValue>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[F168,F169,F170,F171,F172]A]]></Attributes>
+</O>
+</SeriesValue>
+</SeriesDefinition>
+</Series>
+<Category>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=["医疗业务成本","管理费用","财务项目支出","科教项目支出","其他支出"]A]]></Attributes>
+</O>
+</Category>
+<Top topCate="-1" topValue="-1" isDiscardOtherCate="false" isDiscardOtherSeries="false" isDiscardNullCate="false" isDiscardNullSeries="false"/>
+</NormalReportDataDefinition>
+</ChartDefinition>
+</Chart>
+</Chart>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="216">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="216">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="216">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="216">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="216">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="216">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="216">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="216">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="216">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="217" cs="9" rs="13">
+<O t="CC">
+<LayoutAttr selectedIndex="0"/>
+<ChangeAttr enable="false" changeType="button" timeInterval="5" buttonColor="-8421505" carouselColor="-8421505" showArrow="true">
+<TextAttr>
+<Attr alignText="0"/>
+</TextAttr>
+</ChangeAttr>
+<Chart name="默认" chartClass="com.fr.chart.chartattr.Chart">
+<Chart class="com.fr.chart.chartattr.Chart">
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<ChartAttr isJSDraw="true" isStyleGlobal="false"/>
+<Title>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<O>
+<![CDATA[支出情况]]></O>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="微软雅黑" style="0" size="88"/>
+</Attr>
+</TextAttr>
+<TitleVisible value="true" position="0"/>
+</Title>
+<Plot class="com.fr.chart.chartattr.PiePlot">
+<Plot>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isNullValueBreak="true" autoRefreshPerSecond="0" seriesDragEnable="true" plotStyle="0" combinedSize="50.0"/>
+<newHotTooltipStyle>
+<AttrContents>
+<Attr showLine="false" position="1" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${VALUE}${PERCENT}"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##]]></Format>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##%]]></Format>
+</PercentFormat>
+</AttrContents>
+</newHotTooltipStyle>
+<ConditionCollection>
+<DefaultAttr class="com.fr.chart.chartglyph.ConditionAttr">
+<ConditionAttr name="">
+<AttrList>
+<Attr class="com.fr.chart.base.AttrBorder">
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-1"/>
+</AttrBorder>
+</Attr>
+<Attr class="com.fr.chart.base.AttrContents">
+<AttrContents>
+<Attr showLine="true" position="6" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${PERCENT}"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="宋体" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.00%]]></Format>
+</PercentFormat>
+</AttrContents>
+</Attr>
+</AttrList>
+</ConditionAttr>
+</DefaultAttr>
+</ConditionCollection>
+<Legend>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr position="3" visible="true"/>
+<FRFont name="微软雅黑" style="0" size="72"/>
+</Legend>
+<DataSheet>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isVisible="false"/>
+</DataSheet>
+<DataProcessor class="com.fr.base.chart.chartdata.model.NormalDataModel"/>
+<newPlotFillStyle>
+<AttrFillStyle>
+<AFStyle colorStyle="0"/>
+<FillStyleName fillStyleName=""/>
+<isCustomFillStyle isCustomFillStyle="false"/>
+</AttrFillStyle>
+</newPlotFillStyle>
+<PieAttr subType="1" smallPercent="0.05"/>
+</Plot>
+</Plot>
+<ChartDefinition>
+<NormalReportDataDefinition>
+<Series>
+<SeriesDefinition>
+<SeriesName>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[A168,A169,A170,A171,A172]A]]></Attributes>
+</O>
+</SeriesName>
+<SeriesValue>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[E168,E169,E170,E171,E172]A]]></Attributes>
+</O>
+</SeriesValue>
+</SeriesDefinition>
+</Series>
+<Category>
+<O>
+<![CDATA[]]></O>
+</Category>
+<Top topCate="-1" topValue="-1" isDiscardOtherCate="false" isDiscardOtherSeries="false" isDiscardNullCate="false" isDiscardNullSeries="false"/>
+</NormalReportDataDefinition>
+</ChartDefinition>
+</Chart>
+</Chart>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="230" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　3.结余情况。医院总体收支结余" + value("5账务基础表", 2, 49) + "万元，其中：医疗结余" + value("5账务基础表", 2, 50) + "万元、财政补助结转（结余）" + value("5账务基础表", 2, 51) + "万元、科教项目结转（结余）" + value("5账务基础表", 2, 52) + "万元。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr showAsDefault="true"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="231" cs="9" rs="12">
+<O t="CC">
+<LayoutAttr selectedIndex="0"/>
+<ChangeAttr enable="false" changeType="button" timeInterval="5" buttonColor="-8421505" carouselColor="-8421505" showArrow="true">
+<TextAttr>
+<Attr alignText="0"/>
+</TextAttr>
+</ChangeAttr>
+<Chart name="默认" chartClass="com.fr.chart.chartattr.Chart">
+<Chart class="com.fr.chart.chartattr.Chart">
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<ChartAttr isJSDraw="true" isStyleGlobal="false"/>
+<Title>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<O>
+<![CDATA[结余情况]]></O>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="微软雅黑" style="0" size="88"/>
+</Attr>
+</TextAttr>
+<TitleVisible value="true" position="0"/>
+</Title>
+<Plot class="com.fr.chart.chartattr.Bar2DPlot">
+<CategoryPlot>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isNullValueBreak="true" autoRefreshPerSecond="0" seriesDragEnable="true" plotStyle="0" combinedSize="50.0"/>
+<newHotTooltipStyle>
+<AttrContents>
+<Attr showLine="false" position="1" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${VALUE}"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##]]></Format>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.##%]]></Format>
+</PercentFormat>
+</AttrContents>
+</newHotTooltipStyle>
+<ConditionCollection>
+<DefaultAttr class="com.fr.chart.chartglyph.ConditionAttr">
+<ConditionAttr name="">
+<AttrList>
+<Attr class="com.fr.chart.base.AttrContents">
+<AttrContents>
+<Attr showLine="false" position="6" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${VALUE}"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="宋体" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##%]]></Format>
+</PercentFormat>
+</AttrContents>
+</Attr>
+</AttrList>
+</ConditionAttr>
+</DefaultAttr>
+</ConditionCollection>
+<Legend>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr position="4" visible="true"/>
+<FRFont name="Microsoft YaHei" style="0" size="72"/>
+</Legend>
+<DataSheet>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isVisible="false"/>
+</DataSheet>
+<DataProcessor class="com.fr.base.chart.chartdata.model.NormalDataModel"/>
+<newPlotFillStyle>
+<AttrFillStyle>
+<AFStyle colorStyle="0"/>
+<FillStyleName fillStyleName=""/>
+<isCustomFillStyle isCustomFillStyle="false"/>
+</AttrFillStyle>
+</newPlotFillStyle>
+<RectanglePlotAttr interactiveAxisTooltip="false"/>
+<xAxis>
+<CategoryAxis class="com.fr.chart.chartattr.CategoryAxis">
+<newAxisAttr isShowAxisLabel="true"/>
+<AxisLineStyle AxisStyle="1" MainGridStyle="0"/>
+<newLineColor mainGridColor="-4144960" lineColor="-5197648"/>
+<AxisPosition value="3"/>
+<TickLine201106 type="2" secType="0"/>
+<ArrowShow arrowShow="false"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Microsoft YaHei" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AxisLabelCount value="=0"/>
+<AxisRange/>
+<AxisUnit201106 isCustomMainUnit="false" isCustomSecUnit="false" mainUnit="=0" secUnit="=0"/>
+<ZoomAxisAttr isZoom="false"/>
+<axisReversed axisReversed="false"/>
+</CategoryAxis>
+</xAxis>
+<yAxis>
+<ValueAxis class="com.fr.chart.chartattr.ValueAxis">
+<ValueAxisAttr201108 alignZeroValue="false"/>
+<newAxisAttr isShowAxisLabel="true"/>
+<AxisLineStyle AxisStyle="1" MainGridStyle="1"/>
+<newLineColor mainGridColor="-4144960" lineColor="-5197648"/>
+<AxisPosition value="2"/>
+<TickLine201106 type="2" secType="0"/>
+<ArrowShow arrowShow="false"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Century Gothic" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AxisLabelCount value="=0"/>
+<AxisRange/>
+<AxisUnit201106 isCustomMainUnit="false" isCustomSecUnit="false" mainUnit="=0" secUnit="=0"/>
+<ZoomAxisAttr isZoom="false"/>
+<axisReversed axisReversed="false"/>
+</ValueAxis>
+</yAxis>
+<secondAxis>
+<ValueAxis class="com.fr.chart.chartattr.ValueAxis">
+<ValueAxisAttr201108 alignZeroValue="false"/>
+<newAxisAttr isShowAxisLabel="true"/>
+<AxisLineStyle AxisStyle="1" MainGridStyle="1"/>
+<newLineColor mainGridColor="-4144960" lineColor="-5197648"/>
+<AxisPosition value="4"/>
+<TickLine201106 type="2" secType="0"/>
+<ArrowShow arrowShow="false"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="Century Gothic" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<AxisLabelCount value="=0"/>
+<AxisRange/>
+<AxisUnit201106 isCustomMainUnit="false" isCustomSecUnit="false" mainUnit="=0" secUnit="=0"/>
+<ZoomAxisAttr isZoom="false"/>
+<axisReversed axisReversed="false"/>
+</ValueAxis>
+</secondAxis>
+<CateAttr isStacked="false"/>
+<BarAttr isHorizontal="false" overlap="-0.25" interval="1.0"/>
+<Bar2DAttr isSimulation3D="false"/>
+</CategoryPlot>
+</Plot>
+<ChartDefinition>
+<NormalReportDataDefinition>
+<Series>
+<SeriesDefinition>
+<SeriesName>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$year]]></Attributes>
+</O>
+</SeriesName>
+<SeriesValue>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[E174,E175,E176]A]]></Attributes>
+</O>
+</SeriesValue>
+</SeriesDefinition>
+<SeriesDefinition>
+<SeriesName>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$year - 1]]></Attributes>
+</O>
+</SeriesName>
+<SeriesValue>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[F174,F175,F176]A]]></Attributes>
+</O>
+</SeriesValue>
+</SeriesDefinition>
+</Series>
+<Category>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=["医疗结余","财政补助结转结余","科教结转结余"]A]]></Attributes>
+</O>
+</Category>
+<Top topCate="-1" topValue="-1" isDiscardOtherCate="false" isDiscardOtherSeries="false" isDiscardNullCate="false" isDiscardNullSeries="false"/>
+</NormalReportDataDefinition>
+</ChartDefinition>
+</Chart>
+</Chart>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="243" cs="9" rs="13">
+<O t="CC">
+<LayoutAttr selectedIndex="0"/>
+<ChangeAttr enable="false" changeType="button" timeInterval="5" buttonColor="-8421505" carouselColor="-8421505" showArrow="true">
+<TextAttr>
+<Attr alignText="0"/>
+</TextAttr>
+</ChangeAttr>
+<Chart name="默认" chartClass="com.fr.chart.chartattr.Chart">
+<Chart class="com.fr.chart.chartattr.Chart">
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<ChartAttr isJSDraw="true" isStyleGlobal="false"/>
+<Title>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<O>
+<![CDATA[结余情况]]></O>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="微软雅黑" style="0" size="88"/>
+</Attr>
+</TextAttr>
+<TitleVisible value="true" position="0"/>
+</Title>
+<Plot class="com.fr.chart.chartattr.PiePlot">
+<Plot>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isNullValueBreak="true" autoRefreshPerSecond="0" seriesDragEnable="true" plotStyle="0" combinedSize="50.0"/>
+<newHotTooltipStyle>
+<AttrContents>
+<Attr showLine="false" position="1" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${VALUE}${PERCENT}"/>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##]]></Format>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#.##%]]></Format>
+</PercentFormat>
+</AttrContents>
+</newHotTooltipStyle>
+<ConditionCollection>
+<DefaultAttr class="com.fr.chart.chartglyph.ConditionAttr">
+<ConditionAttr name="">
+<AttrList>
+<Attr class="com.fr.chart.base.AttrBorder">
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-1"/>
+</AttrBorder>
+</Attr>
+<Attr class="com.fr.chart.base.AttrContents">
+<AttrContents>
+<Attr showLine="true" position="6" isWhiteBackground="true" isShowMutiSeries="false" seriesLabel="${PERCENT}"/>
+<TextAttr>
+<Attr alignText="0">
+<FRFont name="宋体" style="0" size="72"/>
+</Attr>
+</TextAttr>
+<PercentFormat>
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.00%]]></Format>
+</PercentFormat>
+</AttrContents>
+</Attr>
+</AttrList>
+</ConditionAttr>
+</DefaultAttr>
+</ConditionCollection>
+<Legend>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="0" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-6908266"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr position="3" visible="true"/>
+<FRFont name="微软雅黑" style="0" size="72"/>
+</Legend>
+<DataSheet>
+<GI>
+<AttrBackground>
+<Background name="NullBackground"/>
+<Attr shadow="false"/>
+</AttrBackground>
+<AttrBorder>
+<Attr lineStyle="1" isRoundBorder="false" roundRadius="0"/>
+<newColor borderColor="-16777216"/>
+</AttrBorder>
+<AttrAlpha>
+<Attr alpha="1.0"/>
+</AttrAlpha>
+</GI>
+<Attr isVisible="false"/>
+</DataSheet>
+<DataProcessor class="com.fr.base.chart.chartdata.model.NormalDataModel"/>
+<newPlotFillStyle>
+<AttrFillStyle>
+<AFStyle colorStyle="0"/>
+<FillStyleName fillStyleName=""/>
+<isCustomFillStyle isCustomFillStyle="false"/>
+</AttrFillStyle>
+</newPlotFillStyle>
+<PieAttr subType="1" smallPercent="0.05"/>
+</Plot>
+</Plot>
+<ChartDefinition>
+<NormalReportDataDefinition>
+<Series>
+<SeriesDefinition>
+<SeriesName>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[A174,A175,A176]A]]></Attributes>
+</O>
+</SeriesName>
+<SeriesValue>
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=[E174,E175,E176]A]]></Attributes>
+</O>
+</SeriesValue>
+</SeriesDefinition>
+</Series>
+<Category>
+<O>
+<![CDATA[]]></O>
+</Category>
+<Top topCate="-1" topValue="-1" isDiscardOtherCate="false" isDiscardOtherSeries="false" isDiscardNullCate="false" isDiscardNullSeries="false"/>
+</NormalReportDataDefinition>
+</ChartDefinition>
+</Chart>
+</Chart>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="256" cs="9" s="20">
+<O>
+<![CDATA[    （四）现金流量情况。]]></O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0" showAsDefault="true"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="257" cs="9" rs="2" s="7">
+<O>
+<![CDATA[表5  医院现金流量情况表]]></O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="259" cs="4" rs="2" s="14">
+<O>
+<![CDATA[项目名称]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="259" rs="2" s="14">
+<O>
+<![CDATA[本期金额(万元)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="259" rs="2" s="14">
+<O>
+<![CDATA[上期金额(万元)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="259" cs="3" rs="2" s="14">
+<O>
+<![CDATA[增减变动比率%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="261" cs="4" s="21">
+<O>
+<![CDATA[业务活动产生的现金流量净额]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="261" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("3医院现金流量情况表", 2, 1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="261" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("3医院现金流量情况表", 3, 1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="261" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E262 - F262) / F262]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="262" cs="4" s="9">
+<O>
+<![CDATA[投资活动产生的现金流量净额]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="262" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("3医院现金流量情况表", 2, 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="262" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("3医院现金流量情况表", 3, 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="262" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E263 - F263) / F263]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="263" cs="4" s="9">
+<O>
+<![CDATA[筹资活动产生的现金流量净额]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="263" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("3医院现金流量情况表", 2, 3)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="263" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("3医院现金流量情况表", 3, 3)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="263" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E264 - F264) / F264]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="264" cs="4" s="9">
+<O>
+<![CDATA[汇率变动对现金的影响额]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="264" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("3医院现金流量情况表", 2, 4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="264" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("3医院现金流量情况表", 3, 4)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="264" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E265 - F265) / F265]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="265" cs="4" s="9">
+<O>
+<![CDATA[现金净增加额]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="265" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=E245 + E246 + E247 + E248]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="265" s="10">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=F245 + F246 + F247 + F248]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="265" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E266 - F266) / F266]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="266" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="    " + $year + "年1月1日至" + $year + "年12月31日期间，根据医院会计报表中现金流量表（表5）反映，医院现金流量情况如下："]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="267" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　1.业务活动现金流量。医院业务活动现金流量金额" + value("3医院现金流量情况表", 2, 1) + "万元，其中：现金流入" + value("4现金流量报告数据", 2, 6) + "万元（含医疗服务收到现金" + value("4现金流量报告数据", 2, 1) + "万元、科教项目收到现金" + value("4现金流量报告数据", 2, 4) + "万元）、现金支出" + value("4现金流量报告数据", 2, 13) + "万元（含购买药品支付现金" + value("4现金流量报告数据", 2, 8) + "万元、购买卫生材料支付现金" + value("4现金流量报告数据", 2, 9) + "万元、科教项目支出现金" + value("4现金流量报告数据", 2, 11) + "万元）。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="268" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　2.投资活动现金流量。医院投资活动现金流量金额" + value("3医院现金流量情况表", 2, 2) + "万元，其中：现金流入" + value("4现金流量报告数据", 2, 18) + "万元（含收回投资收到现金" + value("4现金流量报告数据", 2, 16) + "万元、投资收益收到现金" + value("4现金流量报告数据", 2, 15) + "万元、资产处置收到现金" + value("4现金流量报告数据", 2, 17) + "万元）、现金支出" + value("4现金流量报告数据", 2, 22) + "万元（含购建固定资产支付现金" + value("4现金流量报告数据", 2, 19) + "万元、对外投资支付现金" + value("4现金流量报告数据", 2, 20) + "万元）。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="269" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　3.筹资活动现金流量。医院筹资活动现金流量金额" + value("3医院现金流量情况表", 2, 3) + "万元，其中：现金流入" + value("4现金流量报告数据", 2, 26) + "万元（含取得财政资本性项目补助收到现金" + value("4现金流量报告数据", 2, 24) + "万元、借款收到现金" + value("4现金流量报告数据", 2, 25) + "万元）、现金支出" + value("4现金流量报告数据", 2, 29) + "万元（含偿还借款支付现金" + value("4现金流量报告数据", 2, 27) + "万元、偿付利息支付现金" + value("4现金流量报告数据", 2, 28) + "万元）。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="270" cs="9" s="6">
+<O>
+<![CDATA[　　三、财务分析]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="271" cs="9" rs="2" s="7">
+<O>
+<![CDATA[表6  财务指标分析]]></O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="273" cs="4" rs="2" s="14">
+<O>
+<![CDATA[项目名称]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="273" rs="2" s="14">
+<O>
+<![CDATA[本期数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="273" rs="2" s="14">
+<O>
+<![CDATA[上期数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="273" cs="3" rs="2" s="14">
+<O>
+<![CDATA[增减变动比率%]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="275" cs="4" s="22">
+<O>
+<![CDATA[一、预算执行分析]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="275" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="275" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="275" cs="3" s="16">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="276" cs="4" s="9">
+<O>
+<![CDATA[1.总收入预算执行率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="276" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 26) / value("2预算批复情况表", 4, 1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="276" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 26) / value("2预算批复情况表", 5, 1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="276" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E277 - F277) / F277]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="277" cs="4" s="9">
+<O>
+<![CDATA[2.医疗收入预算执行率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="277" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 27) / value("2预算批复情况表", 4, 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="277" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 27) / value("2预算批复情况表", 5, 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="277" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E278 - F278) / F278]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="278" cs="4" s="9">
+<O>
+<![CDATA[3.总支出预算执行率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="278" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 36) / value("2预算批复情况表", 4, 7)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="278" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 36) / value("2预算批复情况表", 5, 7)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="278" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E279 - F279) / F279]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="279" cs="4" s="21">
+<O>
+<![CDATA[4.三公经费预算执行率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="279" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 45) / value("2预算批复情况表", 4, 9)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="279" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 45) / value("2预算批复情况表", 5, 9)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="279" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E280 - F280) / F280]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="280" cs="4" s="22">
+<O>
+<![CDATA[二、财政保障水平分析]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="280" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="280" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="280" cs="3" s="16">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="281" cs="4" s="9">
+<O>
+<![CDATA[1.财政补助收入占总收入比例]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="281" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 28) / value("5账务基础表", 2, 26)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="281" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 28) / value("5账务基础表", 3, 26)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="281" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E282 - F282) / F282]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="282" cs="4" s="9">
+<O>
+<![CDATA[2.财政基本支出补助占总支出比例]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="282" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 35) / value("5账务基础表", 2, 36)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="282" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 35) / value("5账务基础表", 3, 36)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="282" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E283 - F283) / F283]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="283" cs="4" s="9">
+<O>
+<![CDATA[3.离退休人员人均财政基本支出补助水平]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="283" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 35) / (value("1医院基本情况表", 4, 9) - value("1医院基本情况表", 4, 10))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="283" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 35) / (value("1医院基本情况表", 5, 9) - value("1医院基本情况表", 5, 10))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="283" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E284 - F284) / F284]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="284" cs="4" s="23">
+<O>
+<![CDATA[三、医疗费用控制水平]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="284" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="284" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="284" cs="3" s="16">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="285" cs="4" s="9">
+<O>
+<![CDATA[1.药品收入占医疗收入比例]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="285" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 34) / value("5账务基础表", 2, 27)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="285" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 34) / value("5账务基础表", 3, 27)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="285" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E286 - F286) / F286]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="286" cs="4" s="9">
+<O>
+<![CDATA[2.每门急诊人次收费水平]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="286" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 33) / value("1医院基本情况表", 4, 15)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="286" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 33) / value("1医院基本情况表", 5, 15)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="286" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E287 - F287) / F287]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="287" cs="4" s="9">
+<O>
+<![CDATA[3.出院者平均医药费]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="287" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 2, 32) / value("1医院基本情况表", 4, 17)) * (value("1医院基本情况表", 4, 18) / value("1医院基本情况表", 4, 19))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="287" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 3, 32) / value("1医院基本情况表", 5, 17)) * (value("1医院基本情况表", 5, 18) / value("1医院基本情况表", 5, 19))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="287" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E288 - F288) / F288]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="288" cs="4" s="9">
+<O>
+<![CDATA[4.每床日平均收费水平]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="288" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 32) / value("1医院基本情况表", 4, 17)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="288" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 32) / value("1医院基本情况表", 5, 17)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="288" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E289 - F289) / F289]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="289" cs="4" s="23">
+<O>
+<![CDATA[四、运行效率分析]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="289" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="289" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="289" cs="3" s="16">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="290" cs="4" s="9">
+<O>
+<![CDATA[1.百元医疗收入占用人员费用比例]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="290" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 42) / value("5账务基础表", 2, 27)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="290" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 42) / value("5账务基础表", 3, 27)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="290" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E291 - F291) / F291]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="291" cs="4" s="9">
+<O>
+<![CDATA[2.百元医疗收入占用卫生材料比例]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="291" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 43) / value("5账务基础表", 2, 27)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="291" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 43) / value("5账务基础表", 3, 27)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="291" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E292 - F292) / F292]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="292" cs="4" s="9">
+<O>
+<![CDATA[3.净资产结余率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="292" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 2, 27) + value("5账务基础表", 2, 31) - value("5账务基础表", 2, 37) - value("5账务基础表", 2, 38) - value("5账务基础表", 2, 39)) / ((value("5账务基础表", 2, 24) + value("5账务基础表", 2, 25)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="292" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 3, 27) + value("5账务基础表", 3, 31) - value("5账务基础表", 3, 37) - value("5账务基础表", 3, 38) - value("5账务基础表", 3, 39)) / ((value("5账务基础表", 3, 24) + value("5账务基础表", 3, 25)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="292" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E293 - F293) / F293]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="293" cs="4" s="9">
+<O>
+<![CDATA[4.医疗设备收益率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="293" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 2, 27) - value("5账务基础表", 2, 37) - value("5账务基础表", 2, 38)) / ((value("5账务基础表", 2, 13) + value("5账务基础表", 2, 14)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="293" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 3, 27) - value("5账务基础表", 3, 37) - value("5账务基础表", 3, 38)) / ((value("5账务基础表", 3, 13) + value("5账务基础表", 3, 14)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="293" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E294 - F294) / F294]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="294" cs="4" s="21">
+<O>
+<![CDATA[5.病人欠费占医疗收入的比例]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="294" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 20) / value("5账务基础表", 2, 27)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="294" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 20) / value("5账务基础表", 3, 27)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="294" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E295 - F295) / F295]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="295" cs="4" s="9">
+<O>
+<![CDATA[6.在职职工人均业务收入水平]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="295" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 2, 27) + value("5账务基础表", 2, 31)) / (value("1医院基本情况表", 4, 5) + value("1医院基本情况表", 4, 7))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="295" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 3, 27) + value("5账务基础表", 3, 31)) / (value("1医院基本情况表", 5, 5) + value("1医院基本情况表", 5, 7))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="295" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E296 - F296) / F296]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="296" cs="4" s="22">
+<O>
+<![CDATA[五、偿债能力分析]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="296" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="296" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="296" cs="3" s="16">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="297" cs="4" s="9">
+<O>
+<![CDATA[1.资产负债率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="297" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 17) / value("5账务基础表", 2, 1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="297" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 17) / value("5账务基础表", 3, 1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="297" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E298 - F298) / F298]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="298" cs="4" s="9">
+<O>
+<![CDATA[2.流动比率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="298" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 3) / value("5账务基础表", 2, 19)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="298" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 3) / value("5账务基础表", 3, 19)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="298" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E299 - F299) / F299]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="299" cs="4" s="21">
+<O>
+<![CDATA[3.现金比率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="299" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 5) / value("5账务基础表", 2, 19)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="299" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 5) / value("5账务基础表", 3, 19)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="299" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E300 - F300) / F300]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="300" cs="4" s="22">
+<O>
+<![CDATA[六、资产运营能力分析]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="300" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="300" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="300" cs="3" s="16">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="301" cs="4" s="9">
+<O>
+<![CDATA[1.总资产周转率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="301" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 2, 27) + value("5账务基础表", 2, 31)) / ((value("5账务基础表", 2, 1) + value("5账务基础表", 2, 2)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="301" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 3, 27) + value("5账务基础表", 3, 31)) / ((value("5账务基础表", 3, 1) + value("5账务基础表", 3, 2)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="301" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E302 - F302) / F302]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="302" cs="4" s="9">
+<O>
+<![CDATA[2.流动资产周转率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="302" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 2, 27) + value("5账务基础表", 2, 31)) / ((value("5账务基础表", 2, 3) + value("5账务基础表", 2, 4)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="302" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 3, 27) + value("5账务基础表", 3, 31)) / ((value("5账务基础表", 3, 3) + value("5账务基础表", 3, 4)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="302" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E303 - F303) / F303]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="303" cs="4" s="9">
+<O>
+<![CDATA[3.存货周转率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="303" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 37) / ((value("5账务基础表", 2, 6) + value("5账务基础表", 2, 7)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="303" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 37) / ((value("5账务基础表", 3, 6) + value("5账务基础表", 3, 7)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="303" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E304 - F304) / F304]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="304" cs="4" s="21">
+<O>
+<![CDATA[4.固定资产周转率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="304" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 2, 27) + value("5账务基础表", 2, 31)) / ((value("5账务基础表", 2, 10) + value("5账务基础表", 2, 11)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="304" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 3, 27) + value("5账务基础表", 3, 31)) / ((value("5账务基础表", 3, 10) + value("5账务基础表", 3, 11)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="304" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E305 - F305) / F305]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="305" cs="4" s="9">
+<O>
+<![CDATA[5.应收医疗款周转率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="305" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 27) / ((value("5账务基础表", 2, 8) + value("5账务基础表", 2, 9)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="305" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 27) / ((value("5账务基础表", 3, 8) + value("5账务基础表", 3, 9)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="305" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E306 - F306) / F306]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="306" cs="4" s="9">
+<O>
+<![CDATA[6.百元固定资产的医疗收入水平]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="306" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 27) / ((value("5账务基础表", 2, 10) + value("5账务基础表", 2, 11)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="306" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 27) / ((value("5账务基础表", 3, 10) + value("5账务基础表", 3, 11)) / 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="306" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E307 - F307) / F307]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="307" cs="4" s="9">
+<O>
+<![CDATA[7.不良资产余额及占比]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="307" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("1医院基础情况表", 4, 21) + value("1医院基础情况表", 4, 22) + value("1医院基础情况表", 4, 23)) / value("5账务基础表", 2, 1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="307" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("1医院基础情况表", 5, 21) + value("1医院基础情况表", 5, 22) + value("1医院基础情况表", 5, 23)) / value("5账务基础表", 3, 1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="307" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E308 - F308) / F308]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="308" cs="4" s="22">
+<O>
+<![CDATA[七、成本管理能力分析]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="308" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="308" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="308" cs="3" s="16">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="309" cs="4" s="24">
+<O>
+<![CDATA[1.每门诊人次成本及门诊收入成本率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="309" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 24)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="309" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 24)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="309" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E310 - F310) / F310]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="310" cs="4" s="25">
+<O>
+<![CDATA[2.每住院人次成本及住院收入成本率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="310" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 25)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="310" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 25)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="310" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E311 - F311) / F311]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="311" cs="4" s="9">
+<O>
+<![CDATA[3.医疗收入成本率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="311" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 37) / value("5账务基础表", 2, 27)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="311" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 37) / value("5账务基础表", 3, 27)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="311" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E312 - F312) / F312]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="312" cs="4" s="22">
+<O>
+<![CDATA[八、收支结构分析]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="312" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="312" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="312" cs="3" s="16">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="313" cs="4" s="9">
+<O>
+<![CDATA[1.人员经费支出比率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="313" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 42) / (value("5账务基础表", 2, 37) + value("5账务基础表", 2, 38) + value("5账务基础表", 2, 39))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="313" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 42) / (value("5账务基础表", 3, 37) + value("5账务基础表", 3, 38) + value("5账务基础表", 3, 39))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="313" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E314 - F314) / F314]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="314" cs="4" s="21">
+<O>
+<![CDATA[2.公用经费支出比率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="314" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 2, 37) + value("5账务基础表", 2, 38) + value("5账务基础表", 2, 39) - value("5账务基础表", 2, 42)) / (value("5账务基础表", 2, 37) + value("5账务基础表", 2, 38) + value("5账务基础表", 2, 39))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="314" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(value("5账务基础表", 3, 37) + value("5账务基础表", 3, 38) + value("5账务基础表", 3, 39) - value("5账务基础表", 3, 42)) / (value("5账务基础表", 3, 37) + value("5账务基础表", 3, 38) + value("5账务基础表", 3, 39))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="314" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E315 - F315) / F315]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="315" cs="4" s="9">
+<O>
+<![CDATA[3.在职职工人均工资收入水平]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="315" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 48) / value("1医院基本情况表", 4, 5)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="315" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 48) / value("1医院基本情况表", 5, 5)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="315" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E316 - F316) / F316]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="316" cs="4" s="9">
+<O>
+<![CDATA[4.管理费用率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="316" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 38) / (value("5账务基础表", 2, 37) + value("5账务基础表", 2, 38) + value("5账务基础表", 2, 39))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="316" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 38) / (value("5账务基础表", 2, 37) + value("5账务基础表", 2, 38) + value("5账务基础表", 2, 39))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="316" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E317 - F317) / F317]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="317" cs="4" s="9">
+<O>
+<![CDATA[5.药品支出率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="317" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 44) / (value("5账务基础表", 2, 37) + value("5账务基础表", 2, 38) + value("5账务基础表", 2, 39))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="317" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 44) / (value("5账务基础表", 2, 37) + value("5账务基础表", 2, 38) + value("5账务基础表", 2, 39))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="317" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E318 - F318) / F318]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="318" cs="4" s="9">
+<O>
+<![CDATA[6.卫生材料支出率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="318" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 43) / (value("5账务基础表", 2, 37) + value("5账务基础表", 2, 38) + value("5账务基础表", 2, 39))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="318" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 43) / (value("5账务基础表", 2, 37) + value("5账务基础表", 2, 38) + value("5账务基础表", 2, 39))]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="318" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E319 - F319) / F319]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="319" cs="4" s="23">
+<O>
+<![CDATA[九、发展能力分析]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="319" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="319" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="319" cs="3" s="16">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="320" cs="4" s="9">
+<O>
+<![CDATA[1.总资产增长率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="320" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=((value("5账务基础表", 2, 1) + value("5账务基础表", 2, 2)) / 2) / value("5账务基础表", 2, 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="320" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=((value("5账务基础表", 3, 1) + value("5账务基础表", 3, 2)) / 2) / value("5账务基础表", 3, 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="320" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E321 - F321) / F321]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="321" cs="4" s="9">
+<O>
+<![CDATA[2.净资产增长率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="321" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=((value("5账务基础表", 2, 24) + value("5账务基础表", 2, 25)) / 2) / value("5账务基础表", 2, 25)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="321" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=((value("5账务基础表", 3, 24) + value("5账务基础表", 3, 25)) / 2) / value("5账务基础表", 3, 25)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="321" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E322 - F322) / F322]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="322" cs="4" s="9">
+<O>
+<![CDATA[3.固定资产增长率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="322" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=((value("5账务基础表", 2, 10) + value("5账务基础表", 2, 11)) / 2) / value("5账务基础表", 2, 11)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="322" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=((value("5账务基础表", 3, 10) + value("5账务基础表", 3, 11)) / 2) / value("5账务基础表", 3, 11)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="322" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E323 - F323) / F323]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="323" cs="4" s="9">
+<O>
+<![CDATA[4.固定资产净值率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="323" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 10) / value("5账务基础表", 2, 12)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="323" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 10) / value("5账务基础表", 3, 12)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="323" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E324 - F324) / F324]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="324" cs="4" s="21">
+<O>
+<![CDATA[5.医疗收入增长率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="324" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 79) / value("5账务基础表", 3, 27)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="324" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 79) / value("6特殊情况表", 2, 1)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="324" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E325 - F325) / F325]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="325" cs="4" s="9">
+<O>
+<![CDATA[6.科研收入增长率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="325" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 80) / value("5账务基础表", 3, 30)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="325" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 80) / value("6特殊情况表", 2, 2)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="325" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E326 - F326) / F326]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="326" cs="4" s="9">
+<O>
+<![CDATA[7.收支结余增长率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="326" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 81) / value("5账务基础表", 3, 49)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="326" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 81) / value("6特殊情况表", 2, 3)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="326" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E327 - F327) / F327]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="327" cs="4" s="22">
+<O>
+<![CDATA[十、工作效率分析]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="327" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="327" s="11">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="327" cs="3" s="16">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="328" cs="4" s="9">
+<O>
+<![CDATA[1.病床使用率]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="328" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 17) / value("1医院基本情况表", 4, 16)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="328" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 17) / value("1医院基本情况表", 5, 16)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="328" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E329 - F329) / F329]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="329" cs="4" s="21">
+<O>
+<![CDATA[2.病床周转次数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="329" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 19) / value("1医院基本情况表", 4, 12)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="329" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 19) / value("1医院基本情况表", 5, 12)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="329" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E330 - F330) / F330]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="330" cs="4" s="9">
+<O>
+<![CDATA[3.出院病人平均住院天数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="330" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 18) / value("1医院基本情况表", 4, 19)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="330" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 18) / value("1医院基本情况表", 5, 19)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="330" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E331 - F331) / F331]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="331" cs="4" s="9">
+<O>
+<![CDATA[4.平均每医生门诊人次]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="331" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 15) / value("1医院基本情况表", 4, 8)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="331" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 15) / value("1医院基本情况表", 5, 8)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="331" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E332 - F332) / F332]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="332" cs="4" s="9">
+<O>
+<![CDATA[5.平均每医生当期出院人次]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="332" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 4, 19) / value("1医院基本情况表", 4, 8)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="332" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("1医院基本情况表", 5, 19) / value("1医院基本情况表", 5, 8)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="332" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E333 - F333) / F333]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="333" cs="4" s="9">
+<O>
+<![CDATA[6.平均每床日占用固定资产金额]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="333" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 10) / value("1医院基本情况表", 4, 17)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="333" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 10) / value("1医院基本情况表", 5, 17)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="333" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E334 - F334) / F334]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="334" cs="4" s="9">
+<O>
+<![CDATA[7.平均每床日占用医疗设备金额]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="334" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 2, 13) / value("1医院基本情况表", 4, 17)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="334" s="11">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=value("5账务基础表", 3, 13) / value("1医院基本情况表", 5, 17)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="334" cs="3" s="16">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=(E335 - F335) / F335]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="335" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　根据医院财务会计报表和经济活动开展情况，我们采用趋势分析、比较分析、比率分析、因素分析等多种分析方法，对" + $year + "年1月1日至" + $year + "年12月31日期间医院的预算执行、财政保障水平、医疗费用控制、经济效益、偿债能力、资产运营能力、成本管理能力、收支结构、发展能力、工作效率、等进行了财务指标分析。通过财务指标分析结果，能够较明显的反映出医院，同时也发现医院目前在营运过程中还存在一些问题，需要进一步整改完善，具体分析情况如下："]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="336" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　（一）预算执行分析。（举例）反映医院当期收支预算执行进度，并对预算执行差异原因进行分析。主要包括：总收入预算执行率、医疗收入预算执行率；总支出预算执行率、财政基本支出预算执行率、三公经费预算执行率等。对财政补助的重点项目支出应当单独说明预算执行情况。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="337" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　1.医疗收入稳步增长。截至" + $year + "年12月末，医院实现医疗收入" + value("5账务基础表", 2, 27) + "万元，同比增长" + value("后期文字", 2, 1) + "，预算完成率100%。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="338" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　2.新增资产配置预算执行进度慢。本期新增资产配置预算**万元，截至" + $year + "年12月末预算完成率为**，主要原因是*****。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="339" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　3.重点项目预算执行分析情况。 ****"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="340" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　（二）财政保障水平分析。（举例）反映医院当期收到的财政补助情况，并与上期比较分析增减变动原因。主要包括：财政补助收入占总收入比例、财政基本支出补助占总支出比例、离退休人员人均财政基本支出补助水平等。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="341" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　1.基本支出财政保障水平不足。截至" + $year + "年12月末，财政基本支出补助占全部基本支出比例为" + value("后期文字", 2, 2) + "，在职职工人均财政基本支出补助水平为**万元，离退休人员人均财政基本支出补助水平为**万元。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="342" cs="9" s="6">
+<O>
+<![CDATA[　　2.……..]]></O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="343" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　（三）医疗费用控制分析。（举例）反映医院当期开展医疗服务收费情况，并与上期比较分析增减变动原因。主要包括：药品收入占医疗收入比例、每门急诊人次收费水平、出院者平均医药费、平均每床日收费水平等指标分析。 "]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="344" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　1.医疗费用控制力度不断加强。本期药品收入占医疗收入比例为" + value("后期文字", 2, 3) + "，同比减少" + value("后期文字", 2, 3) + "，下降幅度较大。每出院人次费用**万元，同比减少*%。主要是医院非常重视医疗费用控制，采取了***措施，取得了效果。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="345" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　2.每床日收费水平较低。本期平均每床日收费水平为" + round(E289, 2) + "万元，同比减少" + round((E289 - F289), 2) + "万元，主要原因是****。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="346" cs="9" s="6">
+<O>
+<![CDATA[　　3.……..]]></O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="347" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　（四）运行效率分析。（举例）反映医院在运行中各种耗费与成果的对比，并与上期比较分析。主要包括：百元医疗收入占用人员费用比例、百元医疗收入占用卫生材料比例；净资产结余率、医疗设备收益率；在职职工人均业务收入水平、病人欠费占医疗收入的比例。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="348" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　1.百元医疗收入的耗费水平呈现下降趋势。本期百元医疗收入占用人员费用比例为" + round(E291 * 100, 2) + "%" + "，同比减少" + round(G291 * 100, 2) + "%" + "；百元医疗收入占用卫生材料比例为" + round(E292 * 100, 2) + "%" + "，同比减少" + round(G292 * 100, 2) + "%" + "，主要原因是医院采取了*****措施。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="349" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　2.病人欠费问题仍较突出。截至" + $year + "年12月末，医院应收医疗款"+round(value("5账务基础表",2,8),2)+"万元，比上年同期增加"+round(G108*100,2)+'%'+";病人欠费占医疗收入比例**%，同比增加*%，主要原因是****。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="350" cs="9" s="6">
+<O>
+<![CDATA[　　3.……..]]></O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="351" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　（六）资产运营能力分析。反映医院当期期末资产规模、结构、收益及质量情况，并与上期比较分析。主要包括：总资产周转率、流动资产周转率、存货周转率、固定资产周转率、应收医疗款周转率；百元固定资产的医疗收入水平；不良资产余额及占比。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="352" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　（七）成本管理能力分析。反映医院每门诊收入和住院收入耗费的成本水平，并与上期比较分析。主要包括：每门诊人次收入、每门诊人次成本及门诊收入成本率；每住院人次收入、每住院人次成本及住院收入成本率；医疗收入成本率。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="353" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　（八）收支结构分析。反映医院收入支出结构的合理性，并与上期比较分析。主要包括：人员经费支出比率、公用经费支出比率、在职职工人均工资收入水平、管理费用率、药品支出率、卫生材料支出率。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<CellGUIAttr adjustmode="0"/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="354" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　（九）发展能力分析。反映医院通过各种经济活动不断扩大积累而形成的发展潜能情况，并与上期比较分析。主要包括：总资产增长率、净资产增长率、固定资产增长率、固定资产净值率、医疗收入增长率、科研收入增长率、收支结余增长率等。 "]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="355" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　（十）工作效率分析。反映医院的病床、医疗设备利用率及出诊医生的工作效率情况，并与上期比较分析。主要包括：病床使用率、病床周转次数、出院病人平均住院日；平均每医生门诊人次、平均每医生当期出院人次；平均每床日占用固定资产金额、平均每床日占用医疗设备金额。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="356" cs="9" s="6">
+<O>
+<![CDATA[　　四、其他情况说明]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="357" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　（一）会计核算分析。反映医院会计核算的规范性和准确性。主要包括：医院所有资产和收支（包含医院举办的非独立法人分支机构）是否纳入财务部门统一管理、统一核算，核算科目设置是否准确、是否符合相关财务制度规定，是否按照《医院会计制度》对经济业务事项进行正确的会计核算，是否设置部门辅助核算和项目辅助核算，成本费用分摊依据是否充分，会计数据记录是否准确，基本建设投资项目是否单独建账、单独核算，是否执行国家基本建设投资方面的会计制度，是否按照《医院会计制度》编制财务会计报告，会计数据反映是否真实，会计档案管理是否规范等。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="358" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　（二）内部控制分析。反映医院的单位层面和业务层面的内部控制建设及实施情况。主要包括：单位层面内部控制情况（组织领导情况、机制建设情况、制度完善情况、关键岗位人员管理情况、财务信息编报情况），业务层面内部控制情况（预算管理情况、收支管理情况、）政府采购管理情况、资产管理情况、建设项目管理情况、合同管理情况），分析是否实施了不相容岗位相互分离、内部授权审批控制、归口管理、预算控制、财产保护控制、会计控制、单据控制和信息内部公开等控制方法。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="359" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　（三）绩效考核分析。反映医院绩效考核制度建立及执行情况，当期绩效目标完成情况。主要包括：是否建立绩效考核制度，绩效考核指标及目标设置是否合理有效，绩效目标完成情况，绩效考核方法是否规范有效，考核结果使用及奖惩兑现情况，人均绩效奖励支出水平。"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="360" cs="9" s="6">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[="　　（四）其他分析。是指对医院本期或下期财务状况发生重大影响的事项进行分析，以及其他需要分析的事项。五、下一步打算为进一步完善医院经营管理，根据上述财务报告分析发现的运营过程中存在的薄弱环节和主要问题，医院拟采取如下措施： "]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="361" cs="9" s="6">
+<O>
+<![CDATA[　　（一）….. ]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="362" cs="9" s="6">
+<O>
+<![CDATA[　　（一）….. ]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="363" cs="4" s="26">
+<O>
+<![CDATA[XXXXXXX ]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="364" cs="4" s="26">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$year + "年12月31日"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="2160000" footerHeight="2520000">
+<PaperSetting>
+<Margin top="986400" left="1447200" bottom="986400" right="1447200"/>
+</PaperSetting>
+<Background name="ColorBackground" color="-1"/>
+</ReportSettings>
+<Header reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Footer>
+</ReportAttrSet>
+<ReportWriteAttr>
+<SubmitVisitor class="com.fr.report.write.BuiltInSQLSubmiter">
+<Name>
+<![CDATA[内置SQL1]]></Name>
+<Attributes dsName="JDBC2"/>
+<DMLConfig class="com.fr.write.config.IntelliDMLConfig">
+<Table schema="dbo" name="FineReport_amount"/>
+<ColumnConfig name="kjnd" isKey="true" skipUnmodified="false">
+<O t="XMLable" class="com.fr.base.Formula">
+<Attributes>
+<![CDATA[=$year]]></Attributes>
+</O>
+</ColumnConfig>
+<ColumnConfig name="xm" isKey="true" skipUnmodified="false">
+<ColumnRowGroup>
+<ColumnRow column="1" row="69"/>
+<ColumnRow column="1" row="70"/>
+<ColumnRow column="1" row="71"/>
+<ColumnRow column="1" row="72"/>
+<ColumnRow column="1" row="73"/>
+<ColumnRow column="1" row="74"/>
+<ColumnRow column="1" row="75"/>
+<ColumnRow column="1" row="76"/>
+<ColumnRow column="1" row="77"/>
+<ColumnRow column="1" row="78"/>
+<ColumnRow column="1" row="79"/>
+<ColumnRow column="1" row="79"/>
+<ColumnRow column="1" row="80"/>
+<ColumnRow column="1" row="81"/>
+<ColumnRow column="1" row="82"/>
+<ColumnRow column="1" row="83"/>
+<ColumnRow column="1" row="84"/>
+<ColumnRow column="1" row="85"/>
+<ColumnRow column="1" row="96"/>
+<ColumnRow column="1" row="97"/>
+<ColumnRow column="1" row="98"/>
+<ColumnRow column="1" row="99"/>
+<ColumnRow column="1" row="100"/>
+<ColumnRow column="1" row="101"/>
+<ColumnRow column="1" row="102"/>
+<ColumnRow column="1" row="103"/>
+<ColumnRow column="1" row="104"/>
+</ColumnRowGroup>
+</ColumnConfig>
+<ColumnConfig name="new_num" isKey="false" skipUnmodified="false">
+<ColumnRowGroup>
+<ColumnRow column="4" row="69"/>
+<ColumnRow column="4" row="70"/>
+<ColumnRow column="4" row="71"/>
+<ColumnRow column="4" row="72"/>
+<ColumnRow column="4" row="73"/>
+<ColumnRow column="4" row="74"/>
+<ColumnRow column="4" row="75"/>
+<ColumnRow column="4" row="76"/>
+<ColumnRow column="4" row="77"/>
+<ColumnRow column="4" row="78"/>
+<ColumnRow column="4" row="79"/>
+<ColumnRow column="4" row="79"/>
+<ColumnRow column="4" row="80"/>
+<ColumnRow column="4" row="81"/>
+<ColumnRow column="4" row="82"/>
+<ColumnRow column="4" row="83"/>
+<ColumnRow column="4" row="84"/>
+<ColumnRow column="4" row="85"/>
+<ColumnRow column="4" row="96"/>
+<ColumnRow column="4" row="97"/>
+<ColumnRow column="4" row="98"/>
+<ColumnRow column="4" row="99"/>
+<ColumnRow column="4" row="100"/>
+<ColumnRow column="4" row="101"/>
+<ColumnRow column="4" row="102"/>
+<ColumnRow column="4" row="103"/>
+<ColumnRow column="4" row="104"/>
+</ColumnRowGroup>
+</ColumnConfig>
+<ColumnConfig name="old_num" isKey="false" skipUnmodified="false">
+<ColumnRowGroup>
+<ColumnRow column="5" row="69"/>
+<ColumnRow column="5" row="70"/>
+<ColumnRow column="5" row="71"/>
+<ColumnRow column="5" row="72"/>
+<ColumnRow column="5" row="73"/>
+<ColumnRow column="5" row="74"/>
+<ColumnRow column="5" row="75"/>
+<ColumnRow column="5" row="76"/>
+<ColumnRow column="5" row="77"/>
+<ColumnRow column="5" row="78"/>
+<ColumnRow column="5" row="79"/>
+<ColumnRow column="5" row="79"/>
+<ColumnRow column="5" row="80"/>
+<ColumnRow column="5" row="81"/>
+<ColumnRow column="5" row="82"/>
+<ColumnRow column="5" row="83"/>
+<ColumnRow column="5" row="84"/>
+<ColumnRow column="5" row="85"/>
+<ColumnRow column="4" row="96"/>
+<ColumnRow column="4" row="97"/>
+<ColumnRow column="4" row="98"/>
+<ColumnRow column="4" row="99"/>
+<ColumnRow column="4" row="100"/>
+<ColumnRow column="4" row="101"/>
+<ColumnRow column="4" row="102"/>
+<ColumnRow column="4" row="103"/>
+<ColumnRow column="4" row="104"/>
+</ColumnRowGroup>
+</ColumnConfig>
+<Condition class="com.fr.data.condition.ListCondition"/>
+</DMLConfig>
+</SubmitVisitor>
+</ReportWriteAttr>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="false" windowPosition="1" align="0" useParamsTemplate="false"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="仿宋_GB2312" style="1" size="296"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style horizontal_alignment="0" vertical_alignment="3" imageLayout="1">
+<FRFont name="仿宋_GB2312" style="1" size="272"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style horizontal_alignment="0" vertical_alignment="1" imageLayout="1">
+<FRFont name="仿宋_GB2312" style="1" size="272"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style horizontal_alignment="0" vertical_alignment="3" imageLayout="1">
+<FRFont name="仿宋_GB2312" style="1" size="128"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="仿宋_GB2312" style="1" size="128"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="仿宋_GB2312" style="1" size="160"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style imageLayout="1">
+<FRFont name="仿宋_GB2312" style="0" size="128"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="仿宋_GB2312" style="1" size="144"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="仿宋_GB2312" style="1" size="128"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<FRFont name="仿宋_GB2312" style="0" size="112"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.00%]]></Format>
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<FRFont name="仿宋_GB2312" style="1" size="128"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="仿宋" style="1" size="144"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="仿宋_GB2312" style="1" size="112"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.00]]></Format>
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style horizontal_alignment="4" imageLayout="1">
+<Format class="com.fr.base.CoreDecimalFormat">
+<![CDATA[#0.00%]]></Format>
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style vertical_alignment="1" imageLayout="1">
+<FRFont name="仿宋_GB2312" style="0" size="128"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style vertical_alignment="1" imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style horizontal_alignment="0" vertical_alignment="1" imageLayout="1">
+<FRFont name="仿宋_GB2312" style="1" size="144"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style imageLayout="1">
+<FRFont name="仿宋" style="1" size="128"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style horizontal_alignment="2" imageLayout="1">
+<FRFont name="仿宋_GB2312" style="0" size="112"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<FRFont name="仿宋_GB2312" style="1" size="112"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style horizontal_alignment="2" imageLayout="1">
+<FRFont name="仿宋_GB2312" style="1" size="112"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style horizontal_alignment="2" imageLayout="1">
+<FRFont name="仿宋_GB2312" style="0" size="104"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<FRFont name="仿宋_GB2312" style="0" size="104"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="仿宋_GB2312" style="0" size="128"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+</StyleList>
+<DesignerVersion DesignerVersion="KAA"/>
+<PreviewType PreviewType="1"/>
+<TemplateIdAttMark class="com.fr.base.iofile.attr.TemplateIdAttrMark">
+<TemplateIdAttMark TemplateId="f042237a-ea7b-48e4-a425-e9ec9e201fef"/>
+</TemplateIdAttMark>
+</WorkBook>
