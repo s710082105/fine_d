@@ -22,11 +22,18 @@ pub struct WorkspaceProfile {
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SyncProfile {
-  pub protocol: String,
+  pub protocol: SyncProtocol,
   pub local_source_dir: String,
   pub remote_runtime_dir: String,
   pub delete_propagation: bool,
   pub auto_sync_on_change: bool,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "lowercase")]
+pub enum SyncProtocol {
+  Sftp,
+  Ftp,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
