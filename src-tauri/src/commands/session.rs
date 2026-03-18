@@ -9,6 +9,7 @@ use crate::domain::session_store::{SessionBootstrapInput, bootstrap_session};
 use serde::{Deserialize, Serialize};
 use std::fs::OpenOptions;
 use std::io::Write;
+use std::path::Component;
 use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
 use tauri::{AppHandle, Manager, State};
@@ -69,10 +70,12 @@ pub fn start_session(
     manager: &state.process_manager,
     bridge: &bridge,
   };
+  let launch_config = validate_external_launch_config(&request.codex)?;
   start_session_in_project(
     project_dir.as_path(),
     &request,
     runtime,
+    launch_config,
   )
 }
 
@@ -80,6 +83,7 @@ pub fn start_session_in_project(
   project_dir: &Path,
   request: &StartSessionRequest,
   runtime: SessionRuntime<'_>,
+  launch_config: ProcessLaunchConfig,
 ) -> Result<StartSessionResponse, String> {
   let session_id = generate_session_id()?;
   runtime
@@ -105,11 +109,7 @@ pub fn start_session_in_project(
     .emit_status(session_id.as_str(), "starting codex process")?;
   let process = runtime.manager.start_process(
     session_id.as_str(),
-    &ProcessLaunchConfig {
-      command: request.codex.command.clone(),
-      args: request.codex.args.clone(),
-      working_dir: PathBuf::from(&request.codex.working_dir),
-    },
+    &launch_config,
     runtime.bridge,
   )?;
   runtime
@@ -127,7 +127,44 @@ fn resolve_project_dir(app: &AppHandle, project_id: &str) -> Result<PathBuf, Str
     .path()
     .app_data_dir()
     .map_err(|error| format!("failed to resolve app data directory: {error}"))?;
-  Ok(app_data_dir.join("projects").join(project_id))
+  resolve_project_dir_from_root(app_data_dir.join("projects"), project_id)
+}
+
+fn resolve_project_dir_from_root(root: PathBuf, project_id: &str) -> Result<PathBuf, String> {
+  validate_project_id(project_id)?;
+  Ok(root.join(project_id))
+}
+
+fn validate_project_id(project_id: &str) -> Result<(), String> {
+  if project_id.trim().is_empty() {
+    return Err("project_id is required".into());
+  }
+  let path = Path::new(project_id);
+  if path.is_absolute() {
+    return Err("project_id must not be absolute".into());
+  }
+  if path
+    .components()
+    .any(|component| !matches!(component, Component::Normal(_)))
+  {
+    return Err("project_id contains invalid path components".into());
+  }
+  Ok(())
+}
+
+fn validate_external_launch_config(config: &CodexLaunchConfig) -> Result<ProcessLaunchConfig, String> {
+  if config.command.trim() != "codex" {
+    return Err("codex.command must be exactly 'codex'".into());
+  }
+  let working_dir = PathBuf::from(&config.working_dir);
+  if !working_dir.is_absolute() {
+    return Err("codex.working_dir must be an absolute path".into());
+  }
+  Ok(ProcessLaunchConfig {
+    command: config.command.clone(),
+    args: config.args.clone(),
+    working_dir,
+  })
 }
 
 fn append_transcript(path: &Path, content: &str, config_version: &str) -> Result<(), String> {
@@ -159,4 +196,39 @@ fn unix_timestamp() -> Result<String, String> {
     .duration_since(UNIX_EPOCH)
     .map_err(|error| format!("failed to get unix timestamp: {error}"))?;
   Ok(now.as_secs().to_string())
+}
+
+#[cfg(test)]
+mod tests {
+  use super::*;
+
+  #[test]
+  fn resolve_project_dir_rejects_path_traversal() {
+    let root = PathBuf::from("/tmp/finereport-projects");
+    let error = resolve_project_dir_from_root(root, "../escape")
+      .expect_err("path traversal project id must be rejected");
+    assert!(error.contains("invalid path components"));
+  }
+
+  #[test]
+  fn validate_external_launch_config_rejects_non_codex_command() {
+    let error = validate_external_launch_config(&CodexLaunchConfig {
+      command: "sh".into(),
+      args: vec!["-c".into(), "echo hi".into()],
+      working_dir: "/tmp".into(),
+    })
+    .expect_err("non-codex command must be rejected");
+    assert!(error.contains("must be exactly 'codex'"));
+  }
+
+  #[test]
+  fn validate_external_launch_config_rejects_relative_working_dir() {
+    let error = validate_external_launch_config(&CodexLaunchConfig {
+      command: "codex".into(),
+      args: Vec::new(),
+      working_dir: ".".into(),
+    })
+    .expect_err("relative working dir must be rejected");
+    assert!(error.contains("absolute path"));
+  }
 }

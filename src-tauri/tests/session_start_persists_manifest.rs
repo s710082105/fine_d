@@ -4,7 +4,10 @@ use finereport_tauri_shell_lib::commands::session::{
   StartSessionRequest,
   start_session_in_project,
 };
-use finereport_tauri_shell_lib::domain::codex_process_manager::CodexProcessManager;
+use finereport_tauri_shell_lib::domain::codex_process_manager::{
+  CodexProcessManager,
+  ProcessLaunchConfig,
+};
 use finereport_tauri_shell_lib::domain::event_bridge::{EventBridge, NullEventEmitter};
 use finereport_tauri_shell_lib::domain::project_config::{
   AiProfile,
@@ -74,6 +77,11 @@ fn session_start_persists_manifest() {
     SessionRuntime {
       manager: &process_manager,
       bridge: &bridge,
+    },
+    ProcessLaunchConfig {
+      command: "sh".into(),
+      args: vec!["-c".into(), "printf 'started\\n'".into()],
+      working_dir: project_dir.clone(),
     },
   )
   .expect("start session");
