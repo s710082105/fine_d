@@ -24,8 +24,8 @@
 说明：右侧聊天面板布局、事件类型和前端状态模型。
 
 5. [05-agent-skill-loading.md](/Users/wj/data/mcp/finereport/docs/superpowers/specs/2026-03-18-codex-embedded-chat-panel/05-agent-skill-loading.md)
-说明：软件内置 `AGENTS.md` 与 `skills` 的装载、版本和运行时实例化机制。
+说明：软件内置 `AGENTS.md` 与 `skills` 的装载、版本和运行时实例化机制，以及自动同步规则如何进入会话上下文。
 
 ## 结论
 
-推荐方案保持不变：采用 `Rust/Tauri + 本机 Codex CLI + 运行时工作区注入`。软件集中管理规则模板，会话创建时按项目配置生成运行时上下文，真实项目目录保持干净。
+推荐方案保持不变：采用 `Rust/Tauri + 本机 Codex CLI + 运行时工作区注入`。软件集中管理规则模板，会话创建时按项目配置生成运行时上下文，并在文件增加、修改、删除完成后通过 `SFTP` 或 `FTP` 自动同步到真实运行目录，真实项目目录保持干净。

@@ -34,6 +34,8 @@
 - `project_root`
 - `template_source_dir`
 - `generated_output_dir`
+- `working_output_dir`
+- `runtime_target_dir`
 - `runtime_dir`
 - `temp_dir`
 - `publish_dir`
@@ -49,11 +51,22 @@
 - `host`
 - `port`
 - `username`
+- `local_source_dir`
+- `remote_runtime_dir`
 - `remote_path`
 - `direction`
 - `overwrite_policy`
+- `auto_sync_on_change`
+- `delete_propagation`
+- `path_mapping_rules`
 
 密码或密钥不进入普通配置文件，应通过系统安全存储管理。
+
+约束：
+
+- `protocol` 当前仅支持 `sftp`、`ftp`。
+- `auto_sync_on_change` 默认为开启。
+- `direction` 首版仅支持本地到真实运行目录的单向同步。
 
 ### 4. AI Profile
 
@@ -73,6 +86,7 @@
 - `template_inputs`
 - `template_outputs`
 - `resource_dirs`
+- `sync_source_targets`
 - `validation_targets`
 - `sync_targets`
 
@@ -90,6 +104,8 @@
 - `mappings.json`
 
 前者适合喂给 Codex，后者适合 Rust、校验器和同步器消费。
+
+同时需要生成可执行的同步映射，使 `sync_dispatcher` 能把本地新增、修改、删除准确映射到真实运行目录。
 
 ## 配置版本
 

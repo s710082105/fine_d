@@ -36,6 +36,7 @@
 - 启动会话
 - 执行命令
 - 写入文件
+- 自动同步到真实运行目录
 - 校验成功或失败
 
 ### 4. Composer
@@ -67,6 +68,7 @@ type TimelineItem =
   | { type: 'user'; id: string; content: string }
   | { type: 'assistant'; id: string; content: string; streaming: boolean }
   | { type: 'tool'; id: string; name: string; status: string; summary?: string }
+  | { type: 'sync'; id: string; action: 'create' | 'update' | 'delete'; protocol: 'sftp' | 'ftp'; status: string; path: string }
   | { type: 'status'; id: string; message: string }
   | { type: 'error'; id: string; message: string }
 ```
@@ -75,6 +77,7 @@ type TimelineItem =
 
 - assistant 回复支持流式更新。
 - 工具事件独立展示，不混入普通回复卡片。
+- 文件同步事件独立展示，并显示协议、动作、目标路径和结果。
 - 错误事件真实暴露，不做弱化处理。
 - 旧会话只读展示，不自动套新配置。
 - 左侧配置变化后，右侧必须显式提示“需要新建会话或手动刷新上下文”。

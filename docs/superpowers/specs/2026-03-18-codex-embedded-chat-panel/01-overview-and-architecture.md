@@ -2,7 +2,7 @@
 
 ## 目标
 
-`finereport-ai` 不是“把 Codex 临时接入某个项目”，而是把 FineReport 开发所需的样式、目录、同步和 AI 上下文统一收敛到桌面软件内管理。
+`finereport-ai` 不是“把 Codex 临时接入某个项目”，而是把 FineReport 开发所需的样式、目录、同步和 AI 上下文统一收敛到桌面软件内管理，并在本地产物变更完成后自动同步到真实运行目录。
 
 ## 方案对比
 
@@ -50,6 +50,8 @@ Rust 业务层负责：
 - 会话创建、恢复、终止。
 - 运行时上下文生成。
 - 启动和监控 `Codex CLI` 子进程。
+- 监听产物目录内的增加、修改、删除，并触发自动同步。
+- 通过 `SFTP` 或 `FTP` 将本地变更同步到真实运行目录。
 - 转换 stdout/stderr 为前端事件流。
 - 归档 transcript、日志和元数据。
 
@@ -58,6 +60,7 @@ Rust 业务层负责：
 - `project_config_service`
 - `context_builder`
 - `codex_process_manager`
+- `sync_dispatcher`
 - `session_store`
 - `event_bridge`
 
@@ -98,6 +101,9 @@ embedded/
 │       │       │   ├── mappings.json
 │       │       │   └── skills/
 │       │       └── logs/
+│       ├── sync/
+│       │   ├── queue.jsonl
+│       │   └── logs/
 │       └── cache/
 └── global/
     ├── app-settings.json
@@ -109,3 +115,5 @@ embedded/
 - 真实项目目录只保存业务文件。
 - 软件内置目录只保存规则模板。
 - 会话目录保存实例化后的上下文和审计数据。
+- 自动同步只把已确认完成的本地文件增加、修改、删除推送到真实运行目录。
+- 同步失败必须暴露，不做静默重试或降级写入。
