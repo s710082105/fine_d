@@ -1,13 +1,25 @@
 import { FormEvent, useEffect, useState } from 'react'
-import { ProjectConfig, SyncProfile } from '../../lib/types/project-config'
+import { ProjectConfig, SyncProfile, WorkspaceProfile } from '../../lib/types/project-config'
 
 type InvokeFn = <T>(command: string, args?: Record<string, unknown>) => Promise<T>
-type ProjectConfigServices = {
+export type ProjectConfigServices = {
   loadConfig: () => Promise<ProjectConfig>
   saveConfig: (config: ProjectConfig) => Promise<void>
 }
 
+export interface ProjectConfigSnapshot {
+  config: ProjectConfig
+  configVersion: string
+  isDirty: boolean
+}
+
+interface ProjectConfigFormProps {
+  services?: ProjectConfigServices
+  onSnapshotChange?: (snapshot: ProjectConfigSnapshot) => void
+}
+
 const ALLOWED_PROTOCOLS = new Set(['sftp', 'ftp'])
+const INITIAL_CONFIG_REVISION = 1
 
 export function createDefaultProjectConfig(): ProjectConfig {
   return {
@@ -39,6 +51,12 @@ function getErrorMessage(error: unknown): string {
 
 function validateSync(config: ProjectConfig): string[] {
   const errors: string[] = []
+  if (config.workspace.name.trim().length === 0) {
+    errors.push('workspace.name is required')
+  }
+  if (config.workspace.root_dir.trim().length === 0) {
+    errors.push('workspace.root_dir is required')
+  }
   if (!ALLOWED_PROTOCOLS.has(config.sync.protocol)) {
     errors.push('protocol must be SFTP or FTP')
   }
@@ -66,14 +84,30 @@ const tauriServices: ProjectConfigServices = {
   saveConfig
 }
 
+function createConfigVersion(revision: number, isDirty: boolean): string {
+  return isDirty ? `v${revision + 1}-draft` : `v${revision}`
+}
+
 function applySyncPatch(config: ProjectConfig, patch: Partial<SyncProfile>): ProjectConfig {
   return { ...config, sync: { ...config.sync, ...patch } }
 }
 
-function useProjectConfigState(services: ProjectConfigServices) {
+function applyWorkspacePatch(
+  config: ProjectConfig,
+  patch: Partial<WorkspaceProfile>
+): ProjectConfig {
+  return { ...config, workspace: { ...config.workspace, ...patch } }
+}
+
+function useProjectConfigState(
+  services: ProjectConfigServices,
+  onSnapshotChange?: (snapshot: ProjectConfigSnapshot) => void
+) {
   const [config, setConfig] = useState<ProjectConfig>(createDefaultProjectConfig())
   const [error, setError] = useState('')
   const [status, setStatus] = useState('')
+  const [isDirty, setIsDirty] = useState(false)
+  const [revision, setRevision] = useState(INITIAL_CONFIG_REVISION)
 
   useEffect(() => {
     let active = true
@@ -82,6 +116,7 @@ function useProjectConfigState(services: ProjectConfigServices) {
       .then((saved) => {
         if (!active) return
         setConfig(saved)
+        setIsDirty(false)
       })
       .catch((loadError) => {
         if (!active) return
@@ -92,8 +127,33 @@ function useProjectConfigState(services: ProjectConfigServices) {
     }
   }, [services])
 
+  useEffect(() => {
+    onSnapshotChange?.({
+      config,
+      configVersion: createConfigVersion(revision, isDirty),
+      isDirty
+    })
+  }, [config, isDirty, onSnapshotChange, revision])
+
+  const updateConfig = (next: ProjectConfig) => {
+    setConfig(next)
+    setIsDirty(true)
+    setError('')
+    setStatus('')
+  }
+
   const updateSync = (patch: Partial<SyncProfile>) => {
     setConfig((current) => applySyncPatch(current, patch))
+    setIsDirty(true)
+    setError('')
+    setStatus('')
+  }
+
+  const updateWorkspace = (patch: Partial<WorkspaceProfile>) => {
+    setConfig((current) => applyWorkspacePatch(current, patch))
+    setIsDirty(true)
+    setError('')
+    setStatus('')
   }
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -107,13 +167,45 @@ function useProjectConfigState(services: ProjectConfigServices) {
     }
     void services
       .saveConfig(config)
-      .then(() => setStatus('Saved project config'))
+      .then(() => {
+        setRevision((current) => current + 1)
+        setIsDirty(false)
+        setStatus('Saved project config')
+      })
       .catch((saveError) =>
         setError(`Failed to save project config: ${getErrorMessage(saveError)}`)
       )
   }
 
-  return { config, error, status, updateSync, onSubmit }
+  return { config, error, status, updateConfig, updateSync, updateWorkspace, onSubmit }
+}
+
+interface WorkspaceFieldProps {
+  config: ProjectConfig
+  updateWorkspace: (patch: Partial<WorkspaceProfile>) => void
+}
+
+function WorkspaceFields({ config, updateWorkspace }: WorkspaceFieldProps) {
+  return (
+    <>
+      <label>
+        Workspace Name
+        <input
+          type="text"
+          value={config.workspace.name}
+          onChange={(event) => updateWorkspace({ name: event.target.value })}
+        />
+      </label>
+      <label>
+        Workspace Root Dir
+        <input
+          type="text"
+          value={config.workspace.root_dir}
+          onChange={(event) => updateWorkspace({ root_dir: event.target.value })}
+        />
+      </label>
+    </>
+  )
 }
 
 interface SyncFieldProps {
@@ -172,15 +264,16 @@ function SyncFields({ config, updateSync }: SyncFieldProps) {
   )
 }
 
-interface ProjectConfigFormProps {
-  services?: ProjectConfigServices
-}
-
-export function ProjectConfigForm({ services = tauriServices }: ProjectConfigFormProps) {
-  const { config, error, status, updateSync, onSubmit } = useProjectConfigState(services)
+export function ProjectConfigForm({
+  services = tauriServices,
+  onSnapshotChange
+}: ProjectConfigFormProps) {
+  const { config, error, status, updateSync, updateWorkspace, onSubmit } =
+    useProjectConfigState(services, onSnapshotChange)
 
   return (
     <form className="project-config-form" onSubmit={onSubmit}>
+      <WorkspaceFields config={config} updateWorkspace={updateWorkspace} />
       <SyncFields config={config} updateSync={updateSync} />
       <button type="submit">Save Config</button>
       {error && <p className="form-error">{error}</p>}

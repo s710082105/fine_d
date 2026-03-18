@@ -16,6 +16,8 @@ it('renders required sync fields', async () => {
       />
     )
   })
+  expect(screen.getByLabelText('Workspace Name')).toBeInTheDocument()
+  expect(screen.getByLabelText('Workspace Root Dir')).toBeInTheDocument()
   expect(screen.getByLabelText('Protocol')).toBeInTheDocument()
   expect(screen.getByLabelText('Local Source Dir')).toBeInTheDocument()
   expect(screen.getByLabelText('Remote Runtime Dir')).toBeInTheDocument()
