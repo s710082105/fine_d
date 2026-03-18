@@ -47,3 +47,59 @@ pub struct ProjectMapping {
   pub local: String,
   pub remote: String,
 }
+
+impl Default for ProjectConfig {
+  fn default() -> Self {
+    Self {
+      style: StyleProfile::default(),
+      workspace: WorkspaceProfile::default(),
+      sync: SyncProfile::default(),
+      ai: AiProfile::default(),
+      mappings: Vec::new(),
+    }
+  }
+}
+
+impl Default for StyleProfile {
+  fn default() -> Self {
+    Self {
+      theme: "light".into(),
+    }
+  }
+}
+
+impl Default for WorkspaceProfile {
+  fn default() -> Self {
+    Self {
+      name: "default".into(),
+      root_dir: String::new(),
+    }
+  }
+}
+
+impl Default for SyncProfile {
+  fn default() -> Self {
+    Self {
+      protocol: SyncProtocol::default(),
+      local_source_dir: String::new(),
+      remote_runtime_dir: String::new(),
+      delete_propagation: false,
+      auto_sync_on_change: true,
+    }
+  }
+}
+
+impl Default for SyncProtocol {
+  fn default() -> Self {
+    Self::Sftp
+  }
+}
+
+impl Default for AiProfile {
+  fn default() -> Self {
+    Self {
+      provider: "openai".into(),
+      model: "gpt-5".into(),
+    }
+  }
+}

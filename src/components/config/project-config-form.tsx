@@ -2,21 +2,27 @@ import { FormEvent, useEffect, useState } from 'react'
 import { ProjectConfig, SyncProfile } from '../../lib/types/project-config'
 
 type InvokeFn = <T>(command: string, args?: Record<string, unknown>) => Promise<T>
+type ProjectConfigServices = {
+  loadConfig: () => Promise<ProjectConfig>
+  saveConfig: (config: ProjectConfig) => Promise<void>
+}
 
 const ALLOWED_PROTOCOLS = new Set(['sftp', 'ftp'])
 
-const DEFAULT_CONFIG: ProjectConfig = {
-  style: { theme: 'light' },
-  workspace: { name: 'default', root_dir: '' },
-  sync: {
-    protocol: 'sftp',
-    local_source_dir: '',
-    remote_runtime_dir: '',
-    delete_propagation: false,
-    auto_sync_on_change: true
-  },
-  ai: { provider: 'openai', model: 'gpt-5' },
-  mappings: []
+export function createDefaultProjectConfig(): ProjectConfig {
+  return {
+    style: { theme: 'light' },
+    workspace: { name: 'default', root_dir: '' },
+    sync: {
+      protocol: 'sftp',
+      local_source_dir: '',
+      remote_runtime_dir: '',
+      delete_propagation: false,
+      auto_sync_on_change: true
+    },
+    ai: { provider: 'openai', model: 'gpt-5' },
+    mappings: []
+  }
 }
 
 function resolveInvoke(): InvokeFn {
@@ -55,18 +61,24 @@ async function saveConfig(config: ProjectConfig): Promise<void> {
   await invoke<void>('save_project_config', { config })
 }
 
+const tauriServices: ProjectConfigServices = {
+  loadConfig,
+  saveConfig
+}
+
 function applySyncPatch(config: ProjectConfig, patch: Partial<SyncProfile>): ProjectConfig {
   return { ...config, sync: { ...config.sync, ...patch } }
 }
 
-function useProjectConfigState() {
-  const [config, setConfig] = useState<ProjectConfig>(DEFAULT_CONFIG)
+function useProjectConfigState(services: ProjectConfigServices) {
+  const [config, setConfig] = useState<ProjectConfig>(createDefaultProjectConfig())
   const [error, setError] = useState('')
   const [status, setStatus] = useState('')
 
   useEffect(() => {
     let active = true
-    void loadConfig()
+    void services
+      .loadConfig()
       .then((saved) => {
         if (!active) return
         setConfig(saved)
@@ -93,7 +105,8 @@ function useProjectConfigState() {
       setError(errors.join('; '))
       return
     }
-    void saveConfig(config)
+    void services
+      .saveConfig(config)
       .then(() => setStatus('Saved project config'))
       .catch((saveError) =>
         setError(`Failed to save project config: ${getErrorMessage(saveError)}`)
@@ -159,8 +172,12 @@ function SyncFields({ config, updateSync }: SyncFieldProps) {
   )
 }
 
-export function ProjectConfigForm() {
-  const { config, error, status, updateSync, onSubmit } = useProjectConfigState()
+interface ProjectConfigFormProps {
+  services?: ProjectConfigServices
+}
+
+export function ProjectConfigForm({ services = tauriServices }: ProjectConfigFormProps) {
+  const { config, error, status, updateSync, onSubmit } = useProjectConfigState(services)
 
   return (
     <form className="project-config-form" onSubmit={onSubmit}>
