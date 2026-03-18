@@ -19,23 +19,23 @@ export interface StartSessionRequest {
 }
 
 export interface SessionProcessMetadata {
-  session_id: string
+  sessionId: string
   pid: number
   command: string
   args: string[]
-  working_dir: string
-  started_at: string
+  workingDir: string
+  startedAt: string
 }
 
 export interface StartSessionResponse {
-  session_id: string
-  session_dir: string
+  sessionId: string
+  sessionDir: string
   process: SessionProcessMetadata
 }
 
 export interface SessionStreamEvent {
-  session_id: string
-  event_type: SessionEventType
+  sessionId: string
+  eventType: SessionEventType
   message: string
   timestamp: string
 }
