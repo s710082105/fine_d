@@ -1,5 +1,6 @@
 import type { ProjectConfig } from '../../lib/types/project-config'
 import type {
+  RefreshSessionContextRequest,
   SessionActivityItem,
   SessionMeta,
   SessionStatus,
@@ -31,7 +32,7 @@ export function buildActivities(): SessionActivityItem[] {
     { id: 'launch', label: '启动会话', status: 'pending', detail: '等待调用 Rust 命令' },
     { id: 'command', label: '执行命令', status: 'pending', detail: '等待 Codex 输出' },
     { id: 'write_file', label: '写入文件', status: 'pending', detail: '等待工具写入事件' },
-    { id: 'sync', label: '自动同步到真实运行目录', status: 'pending', detail: '等待 Task 6 接入' },
+    { id: 'sync', label: '自动同步到真实运行目录', status: 'pending', detail: '等待同步事件' },
     { id: 'verify', label: '校验结果', status: 'pending', detail: '等待会话结束' }
   ]
 }
@@ -67,6 +68,22 @@ export function createUserItem(message: string): TimelineItem {
     type: 'user',
     content: message,
     timestamp: nowTimestamp()
+  }
+}
+
+export function buildRefreshRequest(
+  projectId: string,
+  sessionId: string,
+  configVersion: string,
+  enabledSkills: string[],
+  config: ProjectConfig
+): RefreshSessionContextRequest {
+  return {
+    project_id: projectId,
+    session_id: sessionId,
+    config_version: configVersion,
+    enabled_skills: enabledSkills,
+    config
   }
 }
 

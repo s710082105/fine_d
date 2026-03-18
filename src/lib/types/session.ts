@@ -54,6 +54,18 @@ export interface StartSessionRequest {
   codex: CodexLaunchConfig
 }
 
+export interface RefreshSessionContextRequest {
+  project_id: string
+  session_id: string
+  config_version: string
+  enabled_skills: string[]
+  config: ProjectConfig
+}
+
+export interface InterruptSessionRequest {
+  session_id: string
+}
+
 export interface SessionProcessMetadata {
   sessionId: string
   pid: number

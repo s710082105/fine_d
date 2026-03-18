@@ -10,6 +10,7 @@ import {
 import {
   buildActivities,
   buildMeta,
+  buildRefreshRequest,
   buildStartRequest,
   createUserItem,
   applyStreamEvent,
@@ -126,7 +127,11 @@ export function ChatPanel({
       pushError('当前还没有可刷新的会话')
       return
     }
-    void services.refreshContext(meta.sessionId).catch((error) => pushError(getErrorMessage(error)))
+    void services
+      .refreshContext(
+        buildRefreshRequest(projectId, meta.sessionId, configVersion, enabledSkills, config)
+      )
+      .catch((error) => pushError(getErrorMessage(error)))
   }
 
   const handleInterruptSession = () => {

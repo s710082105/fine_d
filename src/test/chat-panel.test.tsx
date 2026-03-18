@@ -143,3 +143,63 @@ it('renders tool and sync events as separate timeline items', async () => {
   ).toHaveLength(2)
   expect(screen.getByText('写入文件')).toBeInTheDocument()
 })
+
+it('refreshes context and interrupts the active session explicitly', async () => {
+  const refreshContext = vi.fn(async () => undefined)
+  const interruptSession = vi.fn(async () => undefined)
+  const services: ChatPanelServices = {
+    startSession: async () => ({
+      sessionId: 'session-3',
+      sessionDir: '/tmp/session-3',
+      process: {
+        sessionId: 'session-3',
+        pid: 44,
+        command: 'codex',
+        args: [],
+        workingDir: '/tmp/demo',
+        startedAt: '1710806400'
+      }
+    }),
+    subscribe: () => () => undefined,
+    refreshContext,
+    interruptSession
+  }
+  const config = createDefaultProjectConfig()
+  config.workspace.name = 'demo'
+  config.workspace.root_dir = '/tmp/demo'
+  config.sync.host = 'files.example.com'
+  config.sync.username = 'deploy'
+  config.sync.local_source_dir = '/tmp/demo/reportlets'
+  config.sync.remote_runtime_dir = '/srv/runtime'
+
+  render(
+    <ChatPanel
+      projectId="default"
+      projectName="demo"
+      config={config}
+      configVersion="v3-draft"
+      enabledSkills={['sync-publish']}
+      isConfigStale={true}
+      services={services}
+    />
+  )
+
+  fireEvent.change(screen.getByLabelText('Message Composer'), {
+    target: { value: '继续执行同步' }
+  })
+  fireEvent.click(screen.getByRole('button', { name: 'Send' }))
+
+  await waitFor(() => expect(screen.getByText('状态：running')).toBeInTheDocument())
+
+  fireEvent.click(screen.getByRole('button', { name: 'Refresh Context' }))
+  fireEvent.click(screen.getByRole('button', { name: 'Interrupt Session' }))
+
+  expect(refreshContext).toHaveBeenCalledWith({
+    project_id: 'default',
+    session_id: 'session-3',
+    config_version: 'v3-draft',
+    enabled_skills: ['sync-publish'],
+    config
+  })
+  expect(interruptSession).toHaveBeenCalledWith('session-3')
+})

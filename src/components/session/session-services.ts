@@ -1,4 +1,5 @@
 import type {
+  RefreshSessionContextRequest,
   SessionStreamEvent,
   StartSessionRequest,
   StartSessionResponse
@@ -15,7 +16,7 @@ export type ChatPanelServices = {
   subscribe: (
     callback: (event: SessionStreamEvent) => void
   ) => Promise<() => void> | (() => void)
-  refreshContext: (sessionId: string) => Promise<void>
+  refreshContext: (request: RefreshSessionContextRequest) => Promise<void>
   interruptSession: (sessionId: string) => Promise<void>
 }
 
@@ -37,11 +38,9 @@ export function resolveTauriServices(): ChatPanelServices {
     subscribe: async (callback) => {
       return listen<SessionStreamEvent>(SESSION_EVENT_TOPIC, (event) => callback(event.payload))
     },
-    refreshContext: async () => {
-      throw new Error('refresh_session_context command is not implemented')
-    },
-    interruptSession: async () => {
-      throw new Error('interrupt_session command is not implemented')
-    }
+    refreshContext: async (request) =>
+      invoke<void>('refresh_session_context_command', { request }),
+    interruptSession: async (sessionId) =>
+      invoke<void>('interrupt_session_command', { request: { session_id: sessionId } })
   }
 }

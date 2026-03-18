@@ -1,6 +1,6 @@
 use super::context_builder::build_runtime_context;
 use super::project_config::ProjectConfig;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -27,7 +27,7 @@ pub struct SessionBootstrapResult {
   pub manifest_path: PathBuf,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SessionManifest {
   pub session_id: String,
@@ -65,6 +65,29 @@ pub fn bootstrap_session(
   })
 }
 
+pub fn refresh_session_context(
+  project_dir: &Path,
+  input: &SessionBootstrapInput,
+) -> Result<(), String> {
+  let session_dir = project_dir.join("sessions").join(&input.session_id);
+  if !session_dir.exists() {
+    return Err(format!(
+      "session directory does not exist: {}",
+      session_dir.display()
+    ));
+  }
+
+  let context_dir = session_dir.join("context");
+  fs::create_dir_all(&context_dir)
+    .map_err(|error| format!("failed to create context directory: {error}"))?;
+  build_runtime_context(&context_dir, &input.config, &input.enabled_skills)
+    .map_err(|error| format!("failed to refresh session context: {error}"))?;
+
+  let manifest_path = session_dir.join(MANIFEST_FILE);
+  let manifest = refresh_manifest(&manifest_path, input)?;
+  write_manifest(&manifest_path, &manifest)
+}
+
 fn build_manifest(input: &SessionBootstrapInput) -> Result<SessionManifest, String> {
   Ok(SessionManifest {
     session_id: input.session_id.clone(),
@@ -74,6 +97,27 @@ fn build_manifest(input: &SessionBootstrapInput) -> Result<SessionManifest, Stri
     enabled_skills: input.enabled_skills.clone(),
     created_at: unix_timestamp()?,
   })
+}
+
+fn refresh_manifest(
+  path: &Path,
+  input: &SessionBootstrapInput,
+) -> Result<SessionManifest, String> {
+  let existing = read_manifest(path)?;
+  Ok(SessionManifest {
+    session_id: input.session_id.clone(),
+    project_id: input.project_id.clone(),
+    config_version: input.config_version.clone(),
+    embedded_agent_version: existing.embedded_agent_version,
+    enabled_skills: input.enabled_skills.clone(),
+    created_at: existing.created_at,
+  })
+}
+
+fn read_manifest(path: &Path) -> Result<SessionManifest, String> {
+  let payload =
+    fs::read_to_string(path).map_err(|error| format!("failed to read session manifest: {error}"))?;
+  serde_json::from_str(&payload).map_err(|error| format!("failed to parse session manifest: {error}"))
 }
 
 fn write_manifest(path: &Path, manifest: &SessionManifest) -> Result<(), String> {

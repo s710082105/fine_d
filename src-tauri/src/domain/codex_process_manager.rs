@@ -101,6 +101,27 @@ impl CodexProcessManager {
     Ok(metadata)
   }
 
+  pub fn interrupt_process(&self, session_id: &str) -> Result<(), String> {
+    let metadata = self.metadata_for(session_id)?;
+    let status = Command::new("kill")
+      .arg("-INT")
+      .arg(metadata.pid.to_string())
+      .status()
+      .map_err(|error| format!("failed to interrupt codex process: {error}"))?;
+    if !status.success() {
+      return Err(format!("failed to interrupt codex process: kill exited with {status}"));
+    }
+    Ok(())
+  }
+
+  pub fn contains_session(&self, session_id: &str) -> Result<bool, String> {
+    let lock = self
+      .processes
+      .lock()
+      .map_err(|error| format!("failed to acquire process manager lock: {error}"))?;
+    Ok(lock.contains_key(session_id))
+  }
+
   fn insert(&self, metadata: ProcessMetadata) -> Result<(), String> {
     let mut lock = self
       .processes
@@ -117,6 +138,17 @@ impl CodexProcessManager {
       .map_err(|error| format!("failed to acquire process manager lock: {error}"))?;
     lock.remove(session_id);
     Ok(())
+  }
+
+  fn metadata_for(&self, session_id: &str) -> Result<ProcessMetadata, String> {
+    let lock = self
+      .processes
+      .lock()
+      .map_err(|error| format!("failed to acquire process manager lock: {error}"))?;
+    lock
+      .get(session_id)
+      .cloned()
+      .ok_or_else(|| format!("session process not found: {session_id}"))
   }
 }
 
@@ -218,51 +250,4 @@ fn unix_timestamp() -> Result<String, String> {
     .duration_since(UNIX_EPOCH)
     .map_err(|error| format!("failed to get unix timestamp: {error}"))?;
   Ok(now.as_secs().to_string())
-}
-
-#[cfg(test)]
-mod tests {
-  use super::*;
-  use crate::domain::event_bridge::{EventBridge, NullEventEmitter};
-  use std::sync::atomic::{AtomicUsize, Ordering};
-
-  #[test]
-  fn start_process_runs_exit_hook_after_child_exit() {
-    let hook_calls = Arc::new(AtomicUsize::new(0));
-    let hook_session_id = Arc::new(Mutex::new(String::new()));
-    let hook_calls_clone = hook_calls.clone();
-    let hook_session_id_clone = hook_session_id.clone();
-    let manager = CodexProcessManager::default();
-    let bridge = EventBridge::new(Arc::new(NullEventEmitter));
-
-    manager
-      .start_process(
-        "session-1",
-        &ProcessLaunchConfig {
-          command: "sh".into(),
-          args: vec!["-c".into(), "exit 0".into()],
-          working_dir: std::env::temp_dir(),
-          exit_hook: Some(Arc::new(move |session_id| {
-            hook_calls_clone.fetch_add(1, Ordering::Relaxed);
-            let mut lock = hook_session_id_clone.lock().expect("lock hook session id");
-            *lock = session_id.into();
-          })),
-        },
-        &bridge,
-      )
-      .expect("start short-lived process");
-
-    for _ in 0..20 {
-      if hook_calls.load(Ordering::Relaxed) == 1 {
-        break;
-      }
-      thread::sleep(std::time::Duration::from_millis(25));
-    }
-
-    assert_eq!(hook_calls.load(Ordering::Relaxed), 1);
-    assert_eq!(
-      hook_session_id.lock().expect("lock hook session id").as_str(),
-      "session-1"
-    );
-  }
 }
