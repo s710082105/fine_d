@@ -90,7 +90,7 @@ function useProjectConfigState(services: ProjectConfigServices) {
     return () => {
       active = false
     }
-  }, [])
+  }, [services])
 
   const updateSync = (patch: Partial<SyncProfile>) => {
     setConfig((current) => applySyncPatch(current, patch))

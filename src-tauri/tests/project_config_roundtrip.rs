@@ -70,3 +70,25 @@ fn load_project_config_from_missing_path_returns_default() {
 
   assert_eq!(loaded, ProjectConfig::default());
 }
+
+#[test]
+fn load_project_config_from_partial_payload_applies_defaults() {
+  let path = test_config_path();
+  std::fs::write(
+    &path,
+    r#"{
+      "sync": {
+        "local_source_dir": "/tmp/project/reportlets",
+        "remote_runtime_dir": "/srv/tomcat/webapps/webroot/WEB-INF"
+      }
+    }"#,
+  )
+  .expect("write partial project config");
+
+  let loaded = load_project_config_from_path(path.as_path()).expect("load partial project config");
+
+  assert_eq!(loaded.style.theme, "light");
+  assert_eq!(loaded.workspace.name, "default");
+  assert_eq!(loaded.sync.protocol, SyncProtocol::Sftp);
+  assert!(loaded.sync.auto_sync_on_change);
+}

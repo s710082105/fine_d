@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(default)]
 pub struct ProjectConfig {
   pub style: StyleProfile,
   pub workspace: WorkspaceProfile,
@@ -10,17 +11,20 @@ pub struct ProjectConfig {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(default)]
 pub struct StyleProfile {
   pub theme: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(default)]
 pub struct WorkspaceProfile {
   pub name: String,
   pub root_dir: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(default)]
 pub struct SyncProfile {
   pub protocol: SyncProtocol,
   pub local_source_dir: String,
@@ -37,6 +41,7 @@ pub enum SyncProtocol {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(default)]
 pub struct AiProfile {
   pub provider: String,
   pub model: String,
@@ -46,6 +51,24 @@ pub struct AiProfile {
 pub struct ProjectMapping {
   pub local: String,
   pub remote: String,
+}
+
+impl ProjectConfig {
+  pub fn validate(&self) -> Result<(), String> {
+    self.sync.validate()
+  }
+}
+
+impl SyncProfile {
+  pub fn validate(&self) -> Result<(), String> {
+    if self.local_source_dir.trim().is_empty() {
+      return Err("local_source_dir is required".into());
+    }
+    if self.remote_runtime_dir.trim().is_empty() {
+      return Err("remote_runtime_dir is required".into());
+    }
+    Ok(())
+  }
 }
 
 impl Default for ProjectConfig {
