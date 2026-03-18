@@ -1,0 +1,19 @@
+[package]
+name = "finereport_tauri_shell"
+version = "0.1.0"
+description = "FineReport embedded Codex panel desktop shell"
+authors = ["Codex Agent"]
+edition = "2021"
+build = "build.rs"
+
+[lib]
+name = "finereport_tauri_shell_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.0.1", features = [] }
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri = { version = "2.0.2", features = [] }
