@@ -1,4 +1,4 @@
-export type SyncProtocol = 'SFTP' | 'FTP'
+export type SyncProtocol = 'sftp' | 'ftp'
 
 export interface StyleProfile {
   theme: string

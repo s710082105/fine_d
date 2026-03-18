@@ -27,7 +27,7 @@ fn project_config_roundtrip_preserves_sync_fields() {
       root_dir: "/tmp/project".into(),
     },
     sync: SyncProfile {
-      protocol: "SFTP".into(),
+      protocol: "sftp".into(),
       local_source_dir: "/tmp/project/reportlets".into(),
       remote_runtime_dir: "/srv/tomcat/webapps/webroot/WEB-INF".into(),
       delete_propagation: true,
@@ -47,7 +47,7 @@ fn project_config_roundtrip_preserves_sync_fields() {
   save_project_config_to_path(path.as_path(), &config).expect("save project config");
   let loaded = load_project_config_from_path(path.as_path()).expect("load project config");
 
-  assert_eq!(loaded.sync.protocol, "SFTP");
+  assert_eq!(loaded.sync.protocol, "sftp");
   assert_eq!(loaded.sync.local_source_dir, "/tmp/project/reportlets");
   assert_eq!(
     loaded.sync.remote_runtime_dir,

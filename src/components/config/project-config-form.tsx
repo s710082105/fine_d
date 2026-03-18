@@ -3,17 +3,17 @@ import { ProjectConfig, SyncProfile } from '../../lib/types/project-config'
 
 type InvokeFn = <T>(command: string, args?: Record<string, unknown>) => Promise<T>
 
-const ALLOWED_PROTOCOLS = new Set(['SFTP', 'FTP'])
+const ALLOWED_PROTOCOLS = new Set(['sftp', 'ftp'])
 
 const DEFAULT_CONFIG: ProjectConfig = {
   style: { theme: 'light' },
   workspace: { name: 'default', root_dir: '' },
   sync: {
-    protocol: 'SFTP',
+    protocol: 'sftp',
     local_source_dir: '',
     remote_runtime_dir: '',
     delete_propagation: false,
-    auto_sync_on_change: false
+    auto_sync_on_change: true
   },
   ai: { provider: 'openai', model: 'gpt-5' },
   mappings: []
@@ -116,11 +116,11 @@ function SyncFields({ config, updateSync }: SyncFieldProps) {
         <select
           value={config.sync.protocol}
           onChange={(event) =>
-            updateSync({ protocol: event.target.value as 'SFTP' | 'FTP' })
+            updateSync({ protocol: event.target.value as 'sftp' | 'ftp' })
           }
         >
-          <option value="SFTP">SFTP</option>
-          <option value="FTP">FTP</option>
+          <option value="sftp">SFTP</option>
+          <option value="ftp">FTP</option>
         </select>
       </label>
       <label>
