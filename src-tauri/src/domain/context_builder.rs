@@ -66,6 +66,9 @@ fn render_project_context(config: &ProjectConfig, enabled_skills: &[String]) -> 
       ("workspace_name", config.workspace.name.clone()),
       ("workspace_root_dir", config.workspace.root_dir.clone()),
       ("protocol", protocol_text(&config.sync.protocol).to_string()),
+      ("host", config.sync.host.clone()),
+      ("port", config.sync.port.to_string()),
+      ("username", config.sync.username.clone()),
       ("local_source_dir", config.sync.local_source_dir.clone()),
       ("remote_runtime_dir", config.sync.remote_runtime_dir.clone()),
       ("enabled_skills", markdown_skill_list(enabled_skills)),
@@ -79,6 +82,9 @@ fn render_project_rules(config: &ProjectConfig) -> String {
     TEMPLATE_PROJECT_RULES,
     &[
       ("protocol", protocol_text(&config.sync.protocol).to_string()),
+      ("host", config.sync.host.clone()),
+      ("port", config.sync.port.to_string()),
+      ("username", config.sync.username.clone()),
       ("local_source_dir", config.sync.local_source_dir.clone()),
       ("remote_runtime_dir", config.sync.remote_runtime_dir.clone()),
       (
@@ -110,6 +116,9 @@ fn render_json_template(template: &str, config: &ProjectConfig) -> io::Result<St
         "local_source_dir_json",
         json_string(&config.sync.local_source_dir)?,
       ),
+      ("host_json", json_string(&config.sync.host)?),
+      ("port", config.sync.port.to_string()),
+      ("username_json", json_string(&config.sync.username)?),
       (
         "remote_runtime_dir_json",
         json_string(&config.sync.remote_runtime_dir)?,

@@ -5,13 +5,14 @@ use tauri::{AppHandle, Emitter};
 
 const SESSION_EVENT_TOPIC: &str = "session://event";
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "snake_case")]
 pub enum SessionEventType {
   Status,
   Stdout,
   Stderr,
   ProcessExit,
+  Sync,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -21,6 +22,13 @@ pub struct SessionEvent {
   pub event_type: SessionEventType,
   pub message: String,
   pub timestamp: String,
+  pub tool_name: Option<String>,
+  pub tool_status: Option<String>,
+  pub tool_summary: Option<String>,
+  pub sync_action: Option<String>,
+  pub sync_protocol: Option<String>,
+  pub sync_status: Option<String>,
+  pub sync_path: Option<String>,
 }
 
 pub trait SessionEventEmitter: Send + Sync {
@@ -57,13 +65,47 @@ impl EventBridge {
     self.emit(session_id, SessionEventType::ProcessExit, message)
   }
 
+  pub fn emit_sync(
+    &self,
+    session_id: &str,
+    action: &str,
+    protocol: &str,
+    status: &str,
+    path: &str,
+    message: &str,
+  ) -> Result<(), String> {
+    self.emit_event(SessionEvent {
+      session_id: session_id.into(),
+      event_type: SessionEventType::Sync,
+      message: message.into(),
+      timestamp: unix_timestamp()?,
+      tool_name: None,
+      tool_status: None,
+      tool_summary: None,
+      sync_action: Some(action.into()),
+      sync_protocol: Some(protocol.into()),
+      sync_status: Some(status.into()),
+      sync_path: Some(path.into()),
+    })
+  }
+
   fn emit(&self, session_id: &str, event_type: SessionEventType, message: &str) -> Result<(), String> {
-    let event = SessionEvent {
+    self.emit_event(SessionEvent {
       session_id: session_id.into(),
       event_type,
       message: message.into(),
       timestamp: unix_timestamp()?,
-    };
+      tool_name: None,
+      tool_status: None,
+      tool_summary: None,
+      sync_action: None,
+      sync_protocol: None,
+      sync_status: None,
+      sync_path: None,
+    })
+  }
+
+  fn emit_event(&self, event: SessionEvent) -> Result<(), String> {
     self.emitter.emit(&event)
   }
 }

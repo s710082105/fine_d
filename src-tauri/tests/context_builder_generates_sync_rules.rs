@@ -32,6 +32,9 @@ fn context_builder_generates_sync_rules() {
     },
     sync: SyncProfile {
       protocol: SyncProtocol::Sftp,
+      host: "files.example.com".into(),
+      port: 22,
+      username: "deploy".into(),
       local_source_dir: "/tmp/demo/reportlets".into(),
       remote_runtime_dir: "/srv/tomcat/webapps/webroot/WEB-INF".into(),
       delete_propagation: true,
@@ -71,11 +74,16 @@ fn context_builder_generates_sync_rules() {
 
   assert!(agents.contains("FineReport"));
   assert!(project_context.contains("protocol"));
+  assert!(project_context.contains("files.example.com"));
+  assert!(project_context.contains("deploy"));
   assert!(project_context.contains("local_source_dir"));
   assert!(project_context.contains("remote_runtime_dir"));
   assert!(project_rules.contains("delete_propagation"));
+  assert!(project_rules.contains("port"));
   assert!(project_rules.contains("auto_sync_on_change"));
   assert!(mappings.contains("protocol"));
+  assert!(mappings.contains("host"));
+  assert!(mappings.contains("username"));
   assert!(mappings.contains("source_target_mappings"));
   assert!(mappings.contains("delete_propagation"));
   assert!(mappings.contains("auto_sync_on_change"));

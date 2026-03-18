@@ -34,6 +34,9 @@ fn project_config_roundtrip_preserves_sync_fields() {
     },
     sync: SyncProfile {
       protocol: SyncProtocol::Sftp,
+      host: "127.0.0.1".into(),
+      port: 22,
+      username: "deploy".into(),
       local_source_dir: "/tmp/project/reportlets".into(),
       remote_runtime_dir: "/srv/tomcat/webapps/webroot/WEB-INF".into(),
       delete_propagation: true,
@@ -54,6 +57,9 @@ fn project_config_roundtrip_preserves_sync_fields() {
   let loaded = load_project_config_from_path(path.as_path()).expect("load project config");
 
   assert_eq!(loaded.sync.protocol, SyncProtocol::Sftp);
+  assert_eq!(loaded.sync.host, "127.0.0.1");
+  assert_eq!(loaded.sync.port, 22);
+  assert_eq!(loaded.sync.username, "deploy");
   assert_eq!(loaded.sync.local_source_dir, "/tmp/project/reportlets");
   assert_eq!(
     loaded.sync.remote_runtime_dir,
@@ -78,6 +84,9 @@ fn load_project_config_from_partial_payload_applies_defaults() {
     &path,
     r#"{
       "sync": {
+        "host": "127.0.0.1",
+        "port": 21,
+        "username": "ftp-user",
         "local_source_dir": "/tmp/project/reportlets",
         "remote_runtime_dir": "/srv/tomcat/webapps/webroot/WEB-INF"
       }
@@ -90,5 +99,8 @@ fn load_project_config_from_partial_payload_applies_defaults() {
   assert_eq!(loaded.style.theme, "light");
   assert_eq!(loaded.workspace.name, "default");
   assert_eq!(loaded.sync.protocol, SyncProtocol::Sftp);
+  assert_eq!(loaded.sync.host, "127.0.0.1");
+  assert_eq!(loaded.sync.port, 21);
+  assert_eq!(loaded.sync.username, "ftp-user");
   assert!(loaded.sync.auto_sync_on_change);
 }

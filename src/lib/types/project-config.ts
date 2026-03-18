@@ -11,6 +11,9 @@ export interface WorkspaceProfile {
 
 export interface SyncProfile {
   protocol: SyncProtocol
+  host: string
+  port: number
+  username: string
   local_source_dir: string
   remote_runtime_dir: string
   delete_propagation: boolean

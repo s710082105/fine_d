@@ -27,6 +27,9 @@ pub struct WorkspaceProfile {
 #[serde(default)]
 pub struct SyncProfile {
   pub protocol: SyncProtocol,
+  pub host: String,
+  pub port: u16,
+  pub username: String,
   pub local_source_dir: String,
   pub remote_runtime_dir: String,
   pub delete_propagation: bool,
@@ -61,6 +64,15 @@ impl ProjectConfig {
 
 impl SyncProfile {
   pub fn validate(&self) -> Result<(), String> {
+    if self.host.trim().is_empty() {
+      return Err("host is required".into());
+    }
+    if self.port == 0 {
+      return Err("port must be greater than zero".into());
+    }
+    if self.username.trim().is_empty() {
+      return Err("username is required".into());
+    }
     if self.local_source_dir.trim().is_empty() {
       return Err("local_source_dir is required".into());
     }
@@ -104,6 +116,9 @@ impl Default for SyncProfile {
   fn default() -> Self {
     Self {
       protocol: SyncProtocol::default(),
+      host: String::new(),
+      port: 22,
+      username: String::new(),
       local_source_dir: String::new(),
       remote_runtime_dir: String::new(),
       delete_propagation: false,

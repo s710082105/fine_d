@@ -19,11 +19,26 @@ pub struct ProcessMetadata {
   pub started_at: String,
 }
 
-#[derive(Debug, Clone)]
+pub type ProcessExitHook = Arc<dyn Fn(&str) + Send + Sync>;
+
+#[derive(Clone)]
 pub struct ProcessLaunchConfig {
   pub command: String,
   pub args: Vec<String>,
   pub working_dir: PathBuf,
+  pub exit_hook: Option<ProcessExitHook>,
+}
+
+impl std::fmt::Debug for ProcessLaunchConfig {
+  fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    formatter
+      .debug_struct("ProcessLaunchConfig")
+      .field("command", &self.command)
+      .field("args", &self.args)
+      .field("working_dir", &self.working_dir)
+      .field("exit_hook", &self.exit_hook.as_ref().map(|_| "<hook>"))
+      .finish()
+  }
 }
 
 #[derive(Clone, Default)]
@@ -49,6 +64,7 @@ impl CodexProcessManager {
     let bridge_for_stderr = bridge.clone();
     let bridge_for_exit = bridge.clone();
     let manager_for_exit = self.clone();
+    let exit_hook = config.exit_hook.clone();
     let session_id_for_stdout = session_id.to_string();
     let session_id_for_stderr = session_id.to_string();
     let session_id_for_exit = session_id.to_string();
@@ -73,7 +89,15 @@ impl CodexProcessManager {
         },
       )
     });
-    thread::spawn(move || watch_exit(child, manager_for_exit, bridge_for_exit, session_id_for_exit));
+    thread::spawn(move || {
+      watch_exit(
+        child,
+        manager_for_exit,
+        bridge_for_exit,
+        session_id_for_exit,
+        exit_hook,
+      )
+    });
     Ok(metadata)
   }
 
@@ -159,11 +183,13 @@ fn watch_exit(
   manager: CodexProcessManager,
   bridge: EventBridge,
   session_id: String,
+  exit_hook: Option<ProcessExitHook>,
 ) {
   let result = child.wait();
   if let Err(error) = manager.remove(session_id.as_str()) {
     eprintln!("{error}");
   }
+  run_exit_hook(&exit_hook, session_id.as_str());
   match result {
     Ok(status) => {
       let message = format!("codex process exited: {status}");
@@ -180,9 +206,63 @@ fn watch_exit(
   }
 }
 
+fn run_exit_hook(exit_hook: &Option<ProcessExitHook>, session_id: &str) {
+  let Some(exit_hook) = exit_hook else {
+    return;
+  };
+  exit_hook(session_id);
+}
+
 fn unix_timestamp() -> Result<String, String> {
   let now = SystemTime::now()
     .duration_since(UNIX_EPOCH)
     .map_err(|error| format!("failed to get unix timestamp: {error}"))?;
   Ok(now.as_secs().to_string())
+}
+
+#[cfg(test)]
+mod tests {
+  use super::*;
+  use crate::domain::event_bridge::{EventBridge, NullEventEmitter};
+  use std::sync::atomic::{AtomicUsize, Ordering};
+
+  #[test]
+  fn start_process_runs_exit_hook_after_child_exit() {
+    let hook_calls = Arc::new(AtomicUsize::new(0));
+    let hook_session_id = Arc::new(Mutex::new(String::new()));
+    let hook_calls_clone = hook_calls.clone();
+    let hook_session_id_clone = hook_session_id.clone();
+    let manager = CodexProcessManager::default();
+    let bridge = EventBridge::new(Arc::new(NullEventEmitter));
+
+    manager
+      .start_process(
+        "session-1",
+        &ProcessLaunchConfig {
+          command: "sh".into(),
+          args: vec!["-c".into(), "exit 0".into()],
+          working_dir: std::env::temp_dir(),
+          exit_hook: Some(Arc::new(move |session_id| {
+            hook_calls_clone.fetch_add(1, Ordering::Relaxed);
+            let mut lock = hook_session_id_clone.lock().expect("lock hook session id");
+            *lock = session_id.into();
+          })),
+        },
+        &bridge,
+      )
+      .expect("start short-lived process");
+
+    for _ in 0..20 {
+      if hook_calls.load(Ordering::Relaxed) == 1 {
+        break;
+      }
+      thread::sleep(std::time::Duration::from_millis(25));
+    }
+
+    assert_eq!(hook_calls.load(Ordering::Relaxed), 1);
+    assert_eq!(
+      hook_session_id.lock().expect("lock hook session id").as_str(),
+      "session-1"
+    );
+  }
 }

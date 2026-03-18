@@ -6,22 +6,34 @@ use crate::domain::codex_process_manager::{
 use crate::domain::event_bridge::EventBridge;
 use crate::domain::project_config::ProjectConfig;
 use crate::domain::session_store::{SessionBootstrapInput, bootstrap_session};
+use crate::domain::sync_dispatcher::SyncManager;
 use serde::{Deserialize, Serialize};
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::path::Component;
 use std::path::{Path, PathBuf};
+use std::sync::Arc;
 use std::time::{SystemTime, UNIX_EPOCH};
 use tauri::{AppHandle, Manager, State};
 
-#[derive(Default)]
 pub struct SessionCommandState {
   pub process_manager: CodexProcessManager,
+  pub sync_manager: SyncManager,
+}
+
+impl Default for SessionCommandState {
+  fn default() -> Self {
+    Self {
+      process_manager: CodexProcessManager::default(),
+      sync_manager: SyncManager::default(),
+    }
+  }
 }
 
 pub struct SessionRuntime<'a> {
   pub manager: &'a CodexProcessManager,
   pub bridge: &'a EventBridge,
+  pub sync_manager: Option<&'a SyncManager>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -69,6 +81,7 @@ pub fn start_session(
   let runtime = SessionRuntime {
     manager: &state.process_manager,
     bridge: &bridge,
+    sync_manager: Some(&state.sync_manager),
   };
   let launch_config = validate_external_launch_config(&request.codex)?;
   start_session_in_project(
@@ -104,6 +117,13 @@ pub fn start_session_in_project(
     request.first_message.as_str(),
     request.config_version.as_str(),
   )?;
+  let launch_config = configure_process_hooks(launch_config, runtime.sync_manager);
+  if let Some(sync_manager) = runtime.sync_manager {
+    runtime
+      .bridge
+      .emit_status(session_id.as_str(), "starting sync watcher")?;
+    sync_manager.watch_session(session_id.as_str(), &request.config, runtime.bridge)?;
+  }
   runtime
     .bridge
     .emit_status(session_id.as_str(), "starting codex process")?;
@@ -111,7 +131,11 @@ pub fn start_session_in_project(
     session_id.as_str(),
     &launch_config,
     runtime.bridge,
-  )?;
+  );
+  if process.is_err() {
+    stop_sync_watcher(runtime.sync_manager, session_id.as_str());
+  }
+  let process = process?;
   runtime
     .bridge
     .emit_status(session_id.as_str(), "session started")?;
@@ -120,6 +144,26 @@ pub fn start_session_in_project(
     session_dir: bootstrap.session_dir.display().to_string(),
     process,
   })
+}
+
+fn configure_process_hooks(
+  mut launch_config: ProcessLaunchConfig,
+  sync_manager: Option<&SyncManager>,
+) -> ProcessLaunchConfig {
+  let Some(sync_manager) = sync_manager.cloned() else {
+    return launch_config;
+  };
+  launch_config.exit_hook = Some(Arc::new(move |session_id| {
+    sync_manager.stop_session(session_id);
+  }));
+  launch_config
+}
+
+fn stop_sync_watcher(sync_manager: Option<&SyncManager>, session_id: &str) {
+  let Some(sync_manager) = sync_manager else {
+    return;
+  };
+  sync_manager.stop_session(session_id);
 }
 
 fn resolve_project_dir(app: &AppHandle, project_id: &str) -> Result<PathBuf, String> {
@@ -164,6 +208,7 @@ fn validate_external_launch_config(config: &CodexLaunchConfig) -> Result<Process
     command: config.command.clone(),
     args: config.args.clone(),
     working_dir,
+    exit_hook: None,
   })
 }
 

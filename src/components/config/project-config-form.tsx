@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { ProjectConfig, SyncProfile, WorkspaceProfile } from '../../lib/types/project-config'
+import { SyncFields, WorkspaceFields } from './project-config-fields'
 
 type InvokeFn = <T>(command: string, args?: Record<string, unknown>) => Promise<T>
 export type ProjectConfigServices = {
@@ -27,6 +28,9 @@ export function createDefaultProjectConfig(): ProjectConfig {
     workspace: { name: 'default', root_dir: '' },
     sync: {
       protocol: 'sftp',
+      host: '',
+      port: 22,
+      username: '',
       local_source_dir: '',
       remote_runtime_dir: '',
       delete_propagation: false,
@@ -59,6 +63,15 @@ function validateSync(config: ProjectConfig): string[] {
   }
   if (!ALLOWED_PROTOCOLS.has(config.sync.protocol)) {
     errors.push('protocol must be SFTP or FTP')
+  }
+  if (config.sync.host.trim().length === 0) {
+    errors.push('sync.host is required')
+  }
+  if (config.sync.port <= 0) {
+    errors.push('sync.port must be greater than zero')
+  }
+  if (config.sync.username.trim().length === 0) {
+    errors.push('sync.username is required')
   }
   if (config.sync.local_source_dir.trim().length === 0) {
     errors.push('local_source_dir is required')
@@ -178,90 +191,6 @@ function useProjectConfigState(
   }
 
   return { config, error, status, updateConfig, updateSync, updateWorkspace, onSubmit }
-}
-
-interface WorkspaceFieldProps {
-  config: ProjectConfig
-  updateWorkspace: (patch: Partial<WorkspaceProfile>) => void
-}
-
-function WorkspaceFields({ config, updateWorkspace }: WorkspaceFieldProps) {
-  return (
-    <>
-      <label>
-        Workspace Name
-        <input
-          type="text"
-          value={config.workspace.name}
-          onChange={(event) => updateWorkspace({ name: event.target.value })}
-        />
-      </label>
-      <label>
-        Workspace Root Dir
-        <input
-          type="text"
-          value={config.workspace.root_dir}
-          onChange={(event) => updateWorkspace({ root_dir: event.target.value })}
-        />
-      </label>
-    </>
-  )
-}
-
-interface SyncFieldProps {
-  config: ProjectConfig
-  updateSync: (patch: Partial<SyncProfile>) => void
-}
-
-function SyncFields({ config, updateSync }: SyncFieldProps) {
-  return (
-    <>
-      <label>
-        Protocol
-        <select
-          value={config.sync.protocol}
-          onChange={(event) =>
-            updateSync({ protocol: event.target.value as 'sftp' | 'ftp' })
-          }
-        >
-          <option value="sftp">SFTP</option>
-          <option value="ftp">FTP</option>
-        </select>
-      </label>
-      <label>
-        Local Source Dir
-        <input
-          type="text"
-          value={config.sync.local_source_dir}
-          onChange={(event) => updateSync({ local_source_dir: event.target.value })}
-        />
-      </label>
-      <label>
-        Remote Runtime Dir
-        <input
-          type="text"
-          value={config.sync.remote_runtime_dir}
-          onChange={(event) => updateSync({ remote_runtime_dir: event.target.value })}
-        />
-      </label>
-      <label className="checkbox-field">
-        <input
-          type="checkbox"
-          checked={config.sync.delete_propagation}
-          onChange={(event) => updateSync({ delete_propagation: event.target.checked })}
-        />
-        Delete Propagation
-      </label>
-      <label className="checkbox-field">
-        <input
-          type="checkbox"
-          checked={config.sync.auto_sync_on_change}
-          onChange={(event) => updateSync({ auto_sync_on_change: event.target.checked })}
-        />
-        Auto Sync On Change
-      </label>
-    </>
-  )
 }
 
 export function ProjectConfigForm({
