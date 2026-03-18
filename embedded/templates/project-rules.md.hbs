@@ -1,0 +1,15 @@
+# Project Rules
+
+- protocol: {{protocol}}
+- local_source_dir: {{local_source_dir}}
+- remote_runtime_dir: {{remote_runtime_dir}}
+- delete_propagation: {{delete_propagation}}
+- auto_sync_on_change: {{auto_sync_on_change}}
+
+## source_target_mappings
+{{source_target_mappings}}
+
+## constraints
+
+- Sync failures must be exposed.
+- Do not add silent fallback sync behaviors.
