@@ -1,0 +1,188 @@
+use super::event_bridge::EventBridge;
+use serde::Serialize;
+use std::collections::HashMap;
+use std::io::{BufRead, BufReader, Read};
+use std::path::PathBuf;
+use std::process::{Command, Stdio};
+use std::sync::{Arc, Mutex};
+use std::thread;
+use std::time::{SystemTime, UNIX_EPOCH};
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ProcessMetadata {
+  pub session_id: String,
+  pub pid: u32,
+  pub command: String,
+  pub args: Vec<String>,
+  pub working_dir: String,
+  pub started_at: String,
+}
+
+#[derive(Debug, Clone)]
+pub struct ProcessLaunchConfig {
+  pub command: String,
+  pub args: Vec<String>,
+  pub working_dir: PathBuf,
+}
+
+#[derive(Clone, Default)]
+pub struct CodexProcessManager {
+  processes: Arc<Mutex<HashMap<String, ProcessMetadata>>>,
+}
+
+impl CodexProcessManager {
+  pub fn start_process(
+    &self,
+    session_id: &str,
+    config: &ProcessLaunchConfig,
+    bridge: &EventBridge,
+  ) -> Result<ProcessMetadata, String> {
+    let mut child = spawn_process(config)?;
+    let pid = child.id();
+    let metadata = build_metadata(session_id, pid, config)?;
+    self.insert(metadata.clone())?;
+
+    let stdout = child.stdout.take().ok_or("failed to capture codex stdout")?;
+    let stderr = child.stderr.take().ok_or("failed to capture codex stderr")?;
+    let bridge_for_stdout = bridge.clone();
+    let bridge_for_stderr = bridge.clone();
+    let bridge_for_exit = bridge.clone();
+    let manager_for_exit = self.clone();
+    let session_id_for_stdout = session_id.to_string();
+    let session_id_for_stderr = session_id.to_string();
+    let session_id_for_exit = session_id.to_string();
+
+    thread::spawn(move || {
+      stream_output(
+        stdout,
+        &bridge_for_stdout,
+        StreamOutputConfig {
+          session_id: session_id_for_stdout,
+          is_stdout: true,
+        },
+      )
+    });
+    thread::spawn(move || {
+      stream_output(
+        stderr,
+        &bridge_for_stderr,
+        StreamOutputConfig {
+          session_id: session_id_for_stderr,
+          is_stdout: false,
+        },
+      )
+    });
+    thread::spawn(move || watch_exit(child, manager_for_exit, bridge_for_exit, session_id_for_exit));
+    Ok(metadata)
+  }
+
+  fn insert(&self, metadata: ProcessMetadata) -> Result<(), String> {
+    let mut lock = self
+      .processes
+      .lock()
+      .map_err(|error| format!("failed to acquire process manager lock: {error}"))?;
+    lock.insert(metadata.session_id.clone(), metadata);
+    Ok(())
+  }
+
+  fn remove(&self, session_id: &str) -> Result<(), String> {
+    let mut lock = self
+      .processes
+      .lock()
+      .map_err(|error| format!("failed to acquire process manager lock: {error}"))?;
+    lock.remove(session_id);
+    Ok(())
+  }
+}
+
+fn spawn_process(config: &ProcessLaunchConfig) -> Result<std::process::Child, String> {
+  Command::new(&config.command)
+    .args(&config.args)
+    .current_dir(&config.working_dir)
+    .stdout(Stdio::piped())
+    .stderr(Stdio::piped())
+    .spawn()
+    .map_err(|error| format!("failed to spawn codex process: {error}"))
+}
+
+fn build_metadata(
+  session_id: &str,
+  pid: u32,
+  config: &ProcessLaunchConfig,
+) -> Result<ProcessMetadata, String> {
+  Ok(ProcessMetadata {
+    session_id: session_id.into(),
+    pid,
+    command: config.command.clone(),
+    args: config.args.clone(),
+    working_dir: config.working_dir.display().to_string(),
+    started_at: unix_timestamp()?,
+  })
+}
+
+fn stream_output(
+  output: impl Read,
+  bridge: &EventBridge,
+  config: StreamOutputConfig,
+) {
+  let reader = BufReader::new(output);
+  for line_result in reader.lines() {
+    match line_result {
+      Ok(line) => {
+        let emission_result = if config.is_stdout {
+          bridge.emit_stdout(config.session_id.as_str(), line.as_str())
+        } else {
+          bridge.emit_stderr(config.session_id.as_str(), line.as_str())
+        };
+        if let Err(error) = emission_result {
+          eprintln!("{error}");
+        }
+      }
+      Err(error) => {
+        let message = format!("failed to read process output: {error}");
+        if let Err(emit_error) = bridge.emit_stderr(config.session_id.as_str(), message.as_str()) {
+          eprintln!("{emit_error}");
+        }
+      }
+    }
+  }
+}
+
+struct StreamOutputConfig {
+  session_id: String,
+  is_stdout: bool,
+}
+
+fn watch_exit(
+  mut child: std::process::Child,
+  manager: CodexProcessManager,
+  bridge: EventBridge,
+  session_id: String,
+) {
+  let result = child.wait();
+  if let Err(error) = manager.remove(session_id.as_str()) {
+    eprintln!("{error}");
+  }
+  match result {
+    Ok(status) => {
+      let message = format!("codex process exited: {status}");
+      if let Err(error) = bridge.emit_process_exit(session_id.as_str(), message.as_str()) {
+        eprintln!("{error}");
+      }
+    }
+    Err(error) => {
+      let message = format!("failed to wait codex process: {error}");
+      if let Err(emit_error) = bridge.emit_stderr(session_id.as_str(), message.as_str()) {
+        eprintln!("{emit_error}");
+      }
+    }
+  }
+}
+
+fn unix_timestamp() -> Result<String, String> {
+  let now = SystemTime::now()
+    .duration_since(UNIX_EPOCH)
+    .map_err(|error| format!("failed to get unix timestamp: {error}"))?;
+  Ok(now.as_secs().to_string())
+}
