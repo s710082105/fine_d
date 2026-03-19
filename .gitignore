@@ -2,6 +2,7 @@
 *.pyc
 __pycache__/
 .worktrees/
+.pnpm-store/
 node_modules/
 dist/
 src-tauri/target/
