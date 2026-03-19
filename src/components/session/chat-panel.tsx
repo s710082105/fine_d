@@ -1,24 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ProjectConfig } from '../../lib/types/project-config'
-import type { SessionActivityItem, TimelineItem } from '../../lib/types/session'
+import { Composer, StreamOutput, SessionHeader } from './chat-panel-sections'
 import {
-  ActivityRail,
-  Composer,
-  MessageTimeline,
-  SessionHeader
-} from './chat-panel-sections'
-import {
-  buildActivities,
+  appendRawLine,
   buildMeta,
   buildRefreshRequest,
+  buildSendRequest,
   buildStartRequest,
-  createUserItem,
-  applyStreamEvent,
+  appendRawOutput,
+  extractCodexSessionId,
   resolveStatus,
-  updateActivities,
   validateDraft,
-  getErrorMessage,
-  nowTimestamp
+  getErrorMessage
 } from './chat-panel-state'
 import { ChatPanelServices, resolveTauriServices } from './session-services'
 
@@ -42,16 +35,43 @@ export function ChatPanel({
   services = resolveTauriServices()
 }: ChatPanelProps) {
   const [meta, setMeta] = useState(() => buildMeta(projectId, configVersion))
-  const [timeline, setTimeline] = useState<TimelineItem[]>([])
-  const [activities, setActivities] = useState<SessionActivityItem[]>(buildActivities)
+  const [rawOutput, setRawOutput] = useState('')
   const [draft, setDraft] = useState('')
   const [busy, setBusy] = useState(false)
+  const [codexReady, setCodexReady] = useState(false)
+  const [codexChecked, setCodexChecked] = useState(false)
   const sessionIdRef = useRef('')
+  const codexSessionIdRef = useRef('')
   const startInFlightRef = useRef(false)
+
+  const pushError = (message: string) => {
+    setMeta((current) => ({ ...current, status: 'error' }))
+    setRawOutput((current) => appendRawLine(current, `[error] ${message}`))
+  }
 
   useEffect(() => {
     setMeta((current) => ({ ...current, projectId, configVersion }))
   }, [configVersion, projectId])
+
+  useEffect(() => {
+    let active = true
+    void services
+      .checkCodexInstallation()
+      .then((installed) => {
+        if (!active) return
+        setCodexReady(installed)
+        setCodexChecked(true)
+      })
+      .catch((error) => {
+        if (!active) return
+        setCodexReady(false)
+        setCodexChecked(true)
+        pushError(getErrorMessage(error))
+      })
+    return () => {
+      active = false
+    }
+  }, [services])
 
   useEffect(() => {
     let disposed = false
@@ -59,8 +79,11 @@ export function ChatPanel({
     const subscription = services.subscribe((event) => {
       if (sessionIdRef.current && event.sessionId !== sessionIdRef.current) return
       if (!sessionIdRef.current && !startInFlightRef.current) return
-      setTimeline((current) => applyStreamEvent(current, event))
-      setActivities((current) => updateActivities(current, event))
+      const codexSessionId = extractCodexSessionId(event)
+      if (codexSessionId) {
+        codexSessionIdRef.current = codexSessionId
+      }
+      setRawOutput((current) => appendRawOutput(current, event))
       setMeta((current) => ({ ...current, status: resolveStatus(current.status, event) }))
     })
     void Promise.resolve(subscription).then((cleanup) => {
@@ -76,35 +99,15 @@ export function ChatPanel({
     }
   }, [services])
 
-  const pushError = (message: string) => {
-    setTimeline((current) => [
-      ...current,
-      { id: `error-${Date.now()}`, type: 'error', message, timestamp: nowTimestamp() }
-    ])
-    setMeta((current) => ({ ...current, status: 'error' }))
-  }
-
-  const handleSend = () => {
-    const validationError = validateDraft(config, draft)
-    if (validationError) {
-      pushError(validationError)
-      return
-    }
+  const startSession = () => {
     startInFlightRef.current = true
     setBusy(true)
-    setTimeline((current) => [...current, createUserItem(draft)])
     void services
       .startSession(buildStartRequest(projectId, configVersion, enabledSkills, config, draft))
       .then((response) => {
         sessionIdRef.current = response.sessionId
         setMeta(buildMeta(projectId, configVersion, response.sessionId, 'running'))
-        setActivities((current) =>
-          current.map((item) =>
-            item.id === 'launch'
-              ? { ...item, status: 'active', detail: `PID ${response.process.pid}` }
-              : item
-          )
-        )
+        setRawOutput((current) => appendRawLine(current, `[launch] PID ${response.process.pid}`))
         setDraft('')
       })
       .catch((error) => pushError(getErrorMessage(error)))
@@ -114,11 +117,49 @@ export function ChatPanel({
       })
   }
 
+  const resumeSession = (codexSessionId: string) => {
+    setBusy(true)
+    void services
+      .sendSessionMessage(
+        buildSendRequest(projectId, meta.sessionId, configVersion, config, draft, codexSessionId)
+      )
+      .then((response) => {
+        setMeta(buildMeta(projectId, configVersion, response.sessionId, 'running'))
+        setRawOutput((current) => appendRawLine(current, `[launch] PID ${response.process.pid}`))
+        setDraft('')
+      })
+      .catch((error) => pushError(getErrorMessage(error)))
+      .finally(() => {
+        setBusy(false)
+      })
+  }
+
+  const handleSend = () => {
+    if (!codexReady) {
+      pushError('请使用 npm i -g @openai/codex 安装')
+      return
+    }
+    const validationError = validateDraft(config, draft)
+    if (validationError) {
+      pushError(validationError)
+      return
+    }
+    if (!meta.sessionId) {
+      startSession()
+      return
+    }
+    if (!codexSessionIdRef.current) {
+      pushError('当前 Codex 会话 ID 尚未就绪，无法继续对话')
+      return
+    }
+    resumeSession(codexSessionIdRef.current)
+  }
+
   const handleNewSession = () => {
     sessionIdRef.current = ''
+    codexSessionIdRef.current = ''
     setMeta(buildMeta(projectId, configVersion))
-    setTimeline([])
-    setActivities(buildActivities())
+    setRawOutput('')
     setDraft('')
   }
 
@@ -145,12 +186,18 @@ export function ChatPanel({
   return (
     <div className="chat-panel">
       {isConfigStale && <div className="session-warning">需要新建会话或手动刷新上下文</div>}
+      {codexChecked && !codexReady && (
+        <div className="session-warning">请使用 npm i -g @openai/codex 安装</div>
+      )}
       <SessionHeader meta={meta} projectName={projectName} enabledSkills={enabledSkills} />
-      <MessageTimeline items={timeline} />
-      <ActivityRail items={activities} />
+      <StreamOutput
+        content={rawOutput}
+        emptyMessage={codexReady ? '等待首条消息创建会话' : '等待 Codex 安装完成'}
+      />
       <Composer
         draft={draft}
-        busy={busy}
+        busy={busy || meta.status === 'running'}
+        codexReady={codexReady}
         onDraftChange={setDraft}
         onSend={handleSend}
         onNewSession={handleNewSession}

@@ -1,68 +1,217 @@
-use crate::domain::project_config::ProjectConfig;
+use crate::domain::project_config::{ProjectConfig, PROJECT_SOURCE_SUBDIR};
+use crate::domain::project_initializer::{EmbeddedProjectInitializer, ProjectInitializer};
+use serde::Serialize;
+use serde_json::Value;
 use std::fs;
 use std::io::ErrorKind;
 use std::io::Write;
 use std::path::{Path, PathBuf};
-use tauri::{AppHandle, Manager};
+use tauri::AppHandle;
 
-const PROJECT_CONFIG_DIR: &str = "projects/default";
 const PROJECT_CONFIG_FILE: &str = "project-config.json";
 
-fn resolve_project_config_path(app: &AppHandle) -> Result<PathBuf, String> {
-  let app_data_dir = app
-    .path()
-    .app_data_dir()
-    .map_err(|error| format!("failed to resolve app data directory: {error}"))?;
-  Ok(app_data_dir.join(PROJECT_CONFIG_DIR).join(PROJECT_CONFIG_FILE))
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadProjectConfigResponse {
+    pub exists: bool,
+    pub config: ProjectConfig,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct ReportletEntry {
+    pub name: String,
+    pub path: String,
+    pub kind: String,
+    pub children: Vec<ReportletEntry>,
+}
+
+fn resolve_project_config_path(project_dir: &Path) -> Result<PathBuf, String> {
+    if !project_dir.is_absolute() {
+        return Err("project_dir must be an absolute path".into());
+    }
+    Ok(project_dir.join(PROJECT_CONFIG_FILE))
+}
+
+fn project_name(project_dir: &Path) -> String {
+    project_dir
+        .file_name()
+        .map(|value| value.to_string_lossy().to_string())
+        .filter(|value| !value.is_empty())
+        .unwrap_or_else(|| "default".into())
 }
 
 pub fn save_project_config_to_path(path: &Path, config: &ProjectConfig) -> Result<(), String> {
-  config.validate()?;
+    config.validate()?;
 
-  if let Some(parent) = path.parent() {
-    fs::create_dir_all(parent)
-      .map_err(|error| format!("failed to create project config directory: {error}"))?;
-  }
+    if let Some(parent) = path.parent() {
+        fs::create_dir_all(parent)
+            .map_err(|error| format!("failed to create project config directory: {error}"))?;
+    }
 
-  let payload = serde_json::to_string_pretty(config)
-    .map_err(|error| format!("failed to serialize project config: {error}"))?;
-  write_atomically(path, &payload)
+    let payload = serde_json::to_string_pretty(config)
+        .map_err(|error| format!("failed to serialize project config: {error}"))?;
+    write_atomically(path, &payload)
 }
 
 pub fn load_project_config_from_path(path: &Path) -> Result<ProjectConfig, String> {
-  let payload = match fs::read_to_string(path) {
-    Ok(payload) => payload,
-    Err(error) if error.kind() == ErrorKind::NotFound => return Ok(ProjectConfig::default()),
-    Err(error) => return Err(format!("failed to read project config: {error}")),
-  };
-  let config: ProjectConfig =
-    serde_json::from_str(&payload).map_err(|error| format!("failed to parse project config: {error}"))?;
-  config.validate()?;
-  Ok(config)
+    let payload = match fs::read_to_string(path) {
+        Ok(payload) => payload,
+        Err(error) if error.kind() == ErrorKind::NotFound => return Ok(ProjectConfig::default()),
+        Err(error) => return Err(format!("failed to read project config: {error}")),
+    };
+    let value: Value = serde_json::from_str(&payload)
+        .map_err(|error| format!("failed to parse project config: {error}"))?;
+    let normalized = normalize_legacy_data_connections(value);
+    let config: ProjectConfig = serde_json::from_value(normalized)
+        .map_err(|error| format!("failed to parse project config: {error}"))?;
+    config.validate()?;
+    Ok(config)
 }
 
 #[tauri::command]
-pub fn save_project_config(app: AppHandle, config: ProjectConfig) -> Result<(), String> {
-  let path = resolve_project_config_path(&app)?;
-  save_project_config_to_path(path.as_path(), &config)
+pub fn save_project_config(
+    _app: AppHandle,
+    project_dir: String,
+    mut config: ProjectConfig,
+) -> Result<(), String> {
+    let project_path = Path::new(&project_dir);
+    let path = resolve_project_config_path(project_path)?;
+    config.workspace.root_dir = project_dir.clone();
+    if config.workspace.name.trim().is_empty() {
+        config.workspace.name = project_name(project_path);
+    }
+    save_project_config_to_path(path.as_path(), &config)?;
+    EmbeddedProjectInitializer::default().initialize(project_path, &config)
+}
+
+pub fn load_project_config_from_project_dir(
+    project_dir: &Path,
+) -> Result<LoadProjectConfigResponse, String> {
+    let path = resolve_project_config_path(project_dir)?;
+    let project_dir_string = project_dir.display().to_string();
+    if !path.exists() {
+        let mut config = ProjectConfig::default();
+        config.workspace.root_dir = project_dir_string;
+        config.workspace.name = project_name(project_dir);
+        return Ok(LoadProjectConfigResponse {
+            exists: false,
+            config,
+        });
+    }
+    let mut config = load_project_config_from_path(path.as_path())?;
+    config.workspace.root_dir = project_dir_string;
+    if config.workspace.name.trim().is_empty() {
+        config.workspace.name = project_name(project_dir);
+    }
+    Ok(LoadProjectConfigResponse {
+        exists: true,
+        config,
+    })
+}
+
+pub fn list_reportlet_entries_from_project_dir(
+    project_dir: &Path,
+) -> Result<Vec<ReportletEntry>, String> {
+    let source_dir = project_dir.join(PROJECT_SOURCE_SUBDIR);
+    if !source_dir.exists() {
+        return Ok(Vec::new());
+    }
+    if !source_dir.is_dir() {
+        return Err(format!(
+            "reportlets path is not a directory: {}",
+            source_dir.display()
+        ));
+    }
+    read_reportlet_entries(source_dir.as_path(), source_dir.as_path())
 }
 
 #[tauri::command]
-pub fn load_project_config(app: AppHandle) -> Result<ProjectConfig, String> {
-  let path = resolve_project_config_path(&app)?;
-  load_project_config_from_path(path.as_path())
+pub fn load_project_config(
+    _app: AppHandle,
+    project_dir: String,
+) -> Result<LoadProjectConfigResponse, String> {
+    load_project_config_from_project_dir(Path::new(&project_dir))
+}
+
+#[tauri::command]
+pub fn list_reportlet_entries(
+    _app: AppHandle,
+    project_dir: String,
+) -> Result<Vec<ReportletEntry>, String> {
+    list_reportlet_entries_from_project_dir(Path::new(&project_dir))
 }
 
 fn write_atomically(path: &Path, payload: &str) -> Result<(), String> {
-  let temp_path = path.with_extension("json.tmp");
-  let mut file = fs::File::create(&temp_path)
-    .map_err(|error| format!("failed to create temporary project config file: {error}"))?;
-  file
-    .write_all(payload.as_bytes())
-    .map_err(|error| format!("failed to write temporary project config file: {error}"))?;
-  file
-    .sync_all()
-    .map_err(|error| format!("failed to sync temporary project config file: {error}"))?;
-  fs::rename(&temp_path, path)
-    .map_err(|error| format!("failed to replace project config file atomically: {error}"))
+    let temp_path = path.with_extension("json.tmp");
+    let mut file = fs::File::create(&temp_path)
+        .map_err(|error| format!("failed to create temporary project config file: {error}"))?;
+    file.write_all(payload.as_bytes())
+        .map_err(|error| format!("failed to write temporary project config file: {error}"))?;
+    file.sync_all()
+        .map_err(|error| format!("failed to sync temporary project config file: {error}"))?;
+    fs::rename(&temp_path, path)
+        .map_err(|error| format!("failed to replace project config file atomically: {error}"))
+}
+
+fn read_reportlet_entries(root: &Path, base: &Path) -> Result<Vec<ReportletEntry>, String> {
+    let mut entries: Vec<_> = fs::read_dir(root)
+        .map_err(|error| format!("failed to read reportlets directory: {error}"))?
+        .map(|entry| entry.map_err(|error| format!("failed to read reportlets entry: {error}")))
+        .collect::<Result<Vec<_>, _>>()?;
+    entries.retain(|entry| !is_hidden_entry(entry));
+    entries.sort_by_key(|entry| entry.file_name());
+    entries
+        .into_iter()
+        .map(|entry| build_reportlet_entry(entry.path().as_path(), base))
+        .collect()
+}
+
+fn normalize_legacy_data_connections(mut value: Value) -> Value {
+    let Some(object) = value.as_object_mut() else {
+        return value;
+    };
+    if object.contains_key("data_connections") {
+        return value;
+    }
+    let Some(legacy) = object.remove("data_connection") else {
+        return value;
+    };
+    if legacy.is_null() {
+        object.insert("data_connections".into(), Value::Array(Vec::new()));
+        return value;
+    }
+    object.insert("data_connections".into(), Value::Array(vec![legacy]));
+    value
+}
+
+fn is_hidden_entry(entry: &fs::DirEntry) -> bool {
+    entry.file_name().to_string_lossy().starts_with('.')
+}
+
+fn build_reportlet_entry(path: &Path, base: &Path) -> Result<ReportletEntry, String> {
+    let metadata =
+        fs::metadata(path).map_err(|error| format!("failed to stat reportlet entry: {error}"))?;
+    let relative_path = path
+        .strip_prefix(base)
+        .map_err(|error| format!("failed to resolve reportlet relative path: {error}"))?;
+    let children = if metadata.is_dir() {
+        read_reportlet_entries(path, base)?
+    } else {
+        Vec::new()
+    };
+    Ok(ReportletEntry {
+        name: path
+            .file_name()
+            .map(|value| value.to_string_lossy().to_string())
+            .unwrap_or_default(),
+        path: relative_path.to_string_lossy().replace('\\', "/"),
+        kind: if metadata.is_dir() {
+            "directory"
+        } else {
+            "file"
+        }
+        .into(),
+        children,
+    })
 }

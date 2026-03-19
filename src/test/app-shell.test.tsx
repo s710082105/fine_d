@@ -1,13 +1,17 @@
 import '@testing-library/jest-dom/vitest'
-import { act, fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { AppShell } from '../App'
 import { createDefaultProjectConfig } from '../components/config/project-config-form'
 import type { ChatPanelServices } from '../components/session/chat-panel'
 
 function createChatPanelServices(): ChatPanelServices {
   return {
+    checkCodexInstallation: async () => true,
     startSession: async () => {
       throw new Error('startSession should not be called in this test')
+    },
+    sendSessionMessage: async () => {
+      throw new Error('sendSessionMessage should not be called in this test')
     },
     subscribe: () => () => undefined,
     refreshContext: async () => undefined,
@@ -20,18 +24,23 @@ it('renders config and chat regions', async () => {
     render(
       <AppShell
         projectConfigServices={{
-          loadConfig: async () => createDefaultProjectConfig(),
+          browseDirectory: async () => '/tmp/demo',
+          loadConfig: async () => ({
+            exists: false,
+            config: createDefaultProjectConfig()
+          }),
+          listReportletEntries: async () => [],
           saveConfig: async () => undefined
         }}
         chatPanelServices={createChatPanelServices()}
       />
     )
   })
-  expect(screen.getByText('Project Config')).toBeInTheDocument()
-  expect(screen.getByText('Session Header')).toBeInTheDocument()
-  expect(screen.getByText('Message Timeline')).toBeInTheDocument()
-  expect(screen.getByText('Activity Rail')).toBeInTheDocument()
-  expect(screen.getByText('Composer')).toBeInTheDocument()
+  expect(screen.getByText('项目配置')).toBeInTheDocument()
+  expect(screen.getByLabelText('项目目录')).toBeInTheDocument()
+  expect(screen.getByText('会话信息')).toBeInTheDocument()
+  expect(screen.getByText('Codex 输出')).toBeInTheDocument()
+  expect(screen.getByText('输入区')).toBeInTheDocument()
 })
 
 it('marks the current session stale when config changes', async () => {
@@ -39,7 +48,12 @@ it('marks the current session stale when config changes', async () => {
     render(
       <AppShell
         projectConfigServices={{
-          loadConfig: async () => createDefaultProjectConfig(),
+          browseDirectory: async () => '/tmp/demo',
+          loadConfig: async () => ({
+            exists: false,
+            config: createDefaultProjectConfig()
+          }),
+          listReportletEntries: async () => [],
           saveConfig: async () => undefined
         }}
         chatPanelServices={createChatPanelServices()}
@@ -47,7 +61,11 @@ it('marks the current session stale when config changes', async () => {
     )
   })
 
-  fireEvent.change(screen.getByLabelText('Workspace Name'), {
+  fireEvent.click(screen.getByRole('button', { name: '选择项目目录' }))
+
+  await waitFor(() => expect(screen.getByLabelText('项目名称')).toBeInTheDocument())
+
+  fireEvent.change(screen.getByLabelText('项目名称'), {
     target: { value: 'qa-demo' }
   })
 

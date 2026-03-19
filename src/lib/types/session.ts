@@ -8,21 +8,6 @@ export type SessionEventType =
   | 'tool'
   | 'sync'
 export type SessionStatus = 'idle' | 'running' | 'error' | 'completed'
-export type TimelineItem =
-  | { id: string; type: 'user'; content: string; timestamp: string }
-  | { id: string; type: 'assistant'; content: string; timestamp: string; streaming: boolean }
-  | { id: string; type: 'status'; message: string; timestamp: string }
-  | { id: string; type: 'error'; message: string; timestamp: string }
-  | { id: string; type: 'tool'; name: string; status: string; summary?: string; timestamp: string }
-  | {
-      id: string
-      type: 'sync'
-      action: 'create' | 'update' | 'delete'
-      protocol: 'sftp' | 'ftp'
-      status: string
-      path: string
-      timestamp: string
-    }
 
 export interface SessionMeta {
   sessionId: string
@@ -30,13 +15,6 @@ export interface SessionMeta {
   title: string
   status: SessionStatus
   configVersion: string
-}
-
-export interface SessionActivityItem {
-  id: string
-  label: string
-  status: 'pending' | 'active' | 'completed' | 'error'
-  detail: string
 }
 
 export interface CodexLaunchConfig {
@@ -50,6 +28,16 @@ export interface StartSessionRequest {
   config_version: string
   first_message: string
   enabled_skills: string[]
+  config: ProjectConfig
+  codex: CodexLaunchConfig
+}
+
+export interface SendSessionMessageRequest {
+  project_id: string
+  session_id: string
+  config_version: string
+  message: string
+  codex_session_id: string
   config: ProjectConfig
   codex: CodexLaunchConfig
 }
@@ -81,11 +69,17 @@ export interface StartSessionResponse {
   process: SessionProcessMetadata
 }
 
+export interface SendSessionMessageResponse {
+  sessionId: string
+  process: SessionProcessMetadata
+}
+
 export interface SessionStreamEvent {
   sessionId: string
   eventType: SessionEventType
   message: string
   timestamp: string
+  codexSessionId?: string
   toolName?: string
   toolStatus?: string
   toolSummary?: string

@@ -39,11 +39,12 @@ body {
 .app-shell {
   display: grid;
   grid-template-columns: minmax(320px, 380px) 1fr;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .pane {
   padding: 28px;
+  min-height: 0;
 }
 
 .pane-left {
@@ -53,6 +54,8 @@ body {
 }
 
 .pane-right {
+  display: flex;
+  overflow: hidden;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.92) 100%);
 }
@@ -68,12 +71,26 @@ body {
   line-height: 1.5;
 }
 
+.form-hint {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--text-subtle);
+  background: var(--surface-muted);
+}
+
 .project-config-form,
 .chat-panel {
   margin-top: 18px;
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+.chat-panel {
+  flex: 1;
+  min-height: 0;
+  margin-top: 0;
 }
 
 .project-config-form label,
@@ -85,6 +102,7 @@ body {
 }
 
 .project-config-form input[type='text'],
+.project-config-form input[type='number'],
 .project-config-form select,
 .composer-card textarea {
   border: 1px solid var(--surface-border);
@@ -100,7 +118,32 @@ body {
   gap: 8px;
 }
 
-.project-config-form button,
+.directory-picker {
+  display: flex;
+  gap: 10px;
+}
+
+.directory-picker input {
+  flex: 1;
+}
+
+.config-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.config-tab {
+  background: var(--surface-muted);
+  border: 1px solid var(--surface-border);
+}
+
+.config-tab.is-active {
+  color: #fff;
+  background: linear-gradient(135deg, #1c6fd6 0%, #1154a6 100%);
+}
+
+.project-config-form > button,
 .composer-actions button {
   border: none;
   border-radius: 10px;
@@ -109,7 +152,7 @@ body {
   font: inherit;
 }
 
-.project-config-form button,
+.project-config-form > button,
 .composer-actions button:first-child {
   color: #fff;
   background: linear-gradient(135deg, #1c6fd6 0%, #1154a6 100%);
@@ -120,7 +163,7 @@ body {
   border: 1px solid var(--surface-border);
 }
 
-.project-config-form button:disabled,
+.project-config-form > button:disabled,
 .composer-actions button:disabled {
   cursor: not-allowed;
   opacity: 0.6;
@@ -182,81 +225,87 @@ body {
   font-size: 12px;
 }
 
-.timeline-card {
-  min-height: 220px;
-}
-
 .timeline-empty {
   margin: 0;
   color: var(--text-subtle);
-}
-
-.timeline-item {
-  padding: 12px 14px;
-  border-radius: 14px;
-  margin-bottom: 10px;
-  background: var(--surface-muted);
-}
-
-.timeline-item p {
-  margin: 0;
   white-space: pre-wrap;
 }
 
-.timeline-user {
-  border-left: 4px solid var(--accent);
+.file-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.timeline-assistant {
-  border-left: 4px solid #0a8f71;
+.config-list-actions {
+  display: flex;
+  justify-content: flex-end;
 }
 
-.timeline-status {
-  border-left: 4px solid #8b5cf6;
-}
-
-.timeline-error {
-  border-left: 4px solid var(--danger);
-  background: var(--danger-soft);
-}
-
-.activity-rail {
-  display: grid;
+.config-subsection {
+  display: flex;
+  flex-direction: column;
   gap: 10px;
-}
-
-.activity-item {
-  display: grid;
-  gap: 4px;
-  padding: 12px 14px;
+  padding: 14px;
+  border: 1px solid var(--divider);
   border-radius: 14px;
   background: var(--surface-muted);
 }
 
-.activity-item strong {
-  font-size: 14px;
+.config-subsection-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.activity-item span {
-  color: var(--text-subtle);
+.file-tree-node {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--surface-muted);
   font-size: 13px;
 }
 
-.activity-completed {
-  border-left: 4px solid var(--success);
+.file-tree-kind {
+  min-width: 30px;
+  color: var(--text-subtle);
 }
 
-.activity-active {
-  border-left: 4px solid var(--accent);
+.stream-card {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.activity-error {
-  border-left: 4px solid var(--danger);
+.stream-output {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 14px;
+  overflow: auto;
+  border-radius: 14px;
+  background: #0f1720;
+  color: #d7e3f3;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.composer-card {
+  margin-top: auto;
+  position: sticky;
+  bottom: 0;
 }
 
 .composer-card textarea {
   resize: vertical;
   min-height: 112px;
+  max-height: 240px;
 }
 
 .composer-actions {
@@ -269,11 +318,16 @@ body {
 @media (max-width: 900px) {
   .app-shell {
     grid-template-columns: 1fr;
+    height: auto;
   }
 
   .pane-left {
     border-right: none;
     border-bottom: 1px solid var(--divider);
+  }
+
+  .pane-right {
+    overflow: visible;
   }
 
   .session-header-grid {

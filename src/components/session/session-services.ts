@@ -1,18 +1,24 @@
+import { listen } from '@tauri-apps/api/event'
+import { invoke } from '@tauri-apps/api/core'
 import type {
   RefreshSessionContextRequest,
+  SendSessionMessageRequest,
+  SendSessionMessageResponse,
   SessionStreamEvent,
   StartSessionRequest,
   StartSessionResponse
 } from '../../lib/types/session'
 
-type InvokeFn = <T>(command: string, args?: Record<string, unknown>) => Promise<T>
-type ListenFn = <T>(
-  event: string,
-  callback: (event: { payload: T }) => void
-) => Promise<() => void>
+type CodexInstallStatus = {
+  installed: boolean
+}
 
 export type ChatPanelServices = {
+  checkCodexInstallation: () => Promise<boolean>
   startSession: (request: StartSessionRequest) => Promise<StartSessionResponse>
+  sendSessionMessage: (
+    request: SendSessionMessageRequest
+  ) => Promise<SendSessionMessageResponse>
   subscribe: (
     callback: (event: SessionStreamEvent) => void
   ) => Promise<() => void> | (() => void)
@@ -23,18 +29,14 @@ export type ChatPanelServices = {
 const SESSION_EVENT_TOPIC = 'session://event'
 
 export function resolveTauriServices(): ChatPanelServices {
-  const candidate = (
-    window as { __TAURI__?: { core?: { invoke?: InvokeFn }; event?: { listen?: ListenFn } } }
-  ).__TAURI__
-  if (!candidate?.core?.invoke || !candidate?.event?.listen) {
-    throw new Error('Tauri session APIs are unavailable in this runtime')
-  }
-
-  const invoke = candidate.core.invoke as InvokeFn
-  const listen = candidate.event.listen as ListenFn
-
   return {
+    checkCodexInstallation: async () => {
+      const result = await invoke<CodexInstallStatus>('check_codex_installation')
+      return result.installed
+    },
     startSession: (request) => invoke<StartSessionResponse>('start_session', { request }),
+    sendSessionMessage: (request) =>
+      invoke<SendSessionMessageResponse>('send_session_message_command', { request }),
     subscribe: async (callback) => {
       return listen<SessionStreamEvent>(SESSION_EVENT_TOPIC, (event) => callback(event.payload))
     },

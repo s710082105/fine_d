@@ -1,88 +1,96 @@
 use finereport_tauri_shell_lib::commands::project_config::{
-  load_project_config_from_path,
-  save_project_config_to_path,
+    load_project_config_from_path, load_project_config_from_project_dir,
+    save_project_config_to_path,
 };
 use finereport_tauri_shell_lib::domain::project_config::{
-  AiProfile,
-  ProjectConfig,
-  ProjectMapping,
-  StyleProfile,
-  SyncProfile,
-  SyncProtocol,
-  WorkspaceProfile,
+    ProjectConfig, ProjectMapping, SyncProtocol, WorkspaceProfile,
 };
+use serde_json::json;
 use std::path::PathBuf;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 fn test_config_path() -> PathBuf {
-  let nanos = SystemTime::now()
-    .duration_since(UNIX_EPOCH)
-    .expect("system clock before unix epoch")
-    .as_nanos();
-  std::env::temp_dir().join(format!("project_config_roundtrip_{nanos}.json"))
+    let nanos = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .expect("system clock before unix epoch")
+        .as_nanos();
+    std::env::temp_dir().join(format!("project_config_roundtrip_{nanos}.json"))
 }
 
 #[test]
 fn project_config_roundtrip_preserves_sync_fields() {
-  let config = ProjectConfig {
-    style: StyleProfile {
-      theme: "light".into(),
-    },
-    workspace: WorkspaceProfile {
-      name: "default".into(),
-      root_dir: "/tmp/project".into(),
-    },
-    sync: SyncProfile {
-      protocol: SyncProtocol::Sftp,
-      host: "127.0.0.1".into(),
-      port: 22,
-      username: "deploy".into(),
-      local_source_dir: "/tmp/project/reportlets".into(),
-      remote_runtime_dir: "/srv/tomcat/webapps/webroot/WEB-INF".into(),
-      delete_propagation: true,
-      auto_sync_on_change: true,
-    },
-    ai: AiProfile {
-      provider: "openai".into(),
-      model: "gpt-5".into(),
-    },
-    mappings: vec![ProjectMapping {
-      local: "templates".into(),
-      remote: "reportlets".into(),
-    }],
-  };
+    let mut config = ProjectConfig::default();
+    config.workspace = WorkspaceProfile {
+        name: "default".into(),
+        root_dir: "/tmp/project".into(),
+    };
+    config.data_connections = vec![
+        finereport_tauri_shell_lib::domain::project_config::DataConnectionProfile {
+            connection_name: "FR Demo".into(),
+            dsn: "mysql://127.0.0.1:3306/demo".into(),
+            username: "report".into(),
+            password: "secret".into(),
+        },
+        finereport_tauri_shell_lib::domain::project_config::DataConnectionProfile {
+            connection_name: "FR Analytics".into(),
+            dsn: "mysql://127.0.0.1:3306/analytics".into(),
+            username: "analytics".into(),
+            password: "secret-2".into(),
+        },
+    ];
+    config.sync.host = "127.0.0.1".into();
+    config.sync.port = 22;
+    config.sync.username = "deploy".into();
+    config.sync.remote_runtime_dir = "/srv/tomcat/webapps/webroot/WEB-INF".into();
+    config.sync.delete_propagation = true;
+    config.sync.auto_sync_on_change = true;
+    config.mappings = vec![ProjectMapping {
+        local: "templates".into(),
+        remote: "reportlets".into(),
+    }];
 
-  let path = test_config_path();
-  save_project_config_to_path(path.as_path(), &config).expect("save project config");
-  let loaded = load_project_config_from_path(path.as_path()).expect("load project config");
+    let path = test_config_path();
+    save_project_config_to_path(path.as_path(), &config).expect("save project config");
+    let loaded = load_project_config_from_path(path.as_path()).expect("load project config");
 
-  assert_eq!(loaded.sync.protocol, SyncProtocol::Sftp);
-  assert_eq!(loaded.sync.host, "127.0.0.1");
-  assert_eq!(loaded.sync.port, 22);
-  assert_eq!(loaded.sync.username, "deploy");
-  assert_eq!(loaded.sync.local_source_dir, "/tmp/project/reportlets");
-  assert_eq!(
-    loaded.sync.remote_runtime_dir,
-    "/srv/tomcat/webapps/webroot/WEB-INF"
-  );
-  assert!(loaded.sync.delete_propagation);
-  assert!(loaded.sync.auto_sync_on_change);
+    assert_eq!(loaded.sync.protocol, SyncProtocol::Sftp);
+    assert_eq!(loaded.sync.host, "127.0.0.1");
+    assert_eq!(loaded.sync.port, 22);
+    assert_eq!(loaded.sync.username, "deploy");
+    assert_eq!(loaded.data_connections.len(), 2);
+    assert_eq!(loaded.data_connections[0].connection_name, "FR Demo");
+    assert_eq!(
+        loaded.data_connections[0].dsn,
+        "mysql://127.0.0.1:3306/demo"
+    );
+    assert_eq!(loaded.data_connections[1].username, "analytics");
+    assert_eq!(
+        loaded.local_source_dir().display().to_string(),
+        "/tmp/project/reportlets"
+    );
+    assert_eq!(
+        loaded.sync.remote_runtime_dir,
+        "/srv/tomcat/webapps/webroot/WEB-INF"
+    );
+    assert!(loaded.sync.delete_propagation);
+    assert!(loaded.sync.auto_sync_on_change);
 }
 
 #[test]
 fn load_project_config_from_missing_path_returns_default() {
-  let path = test_config_path();
-  let loaded = load_project_config_from_path(path.as_path()).expect("load default project config");
+    let path = test_config_path();
+    let loaded =
+        load_project_config_from_path(path.as_path()).expect("load default project config");
 
-  assert_eq!(loaded, ProjectConfig::default());
+    assert_eq!(loaded, ProjectConfig::default());
 }
 
 #[test]
 fn load_project_config_from_partial_payload_applies_defaults() {
-  let path = test_config_path();
-  std::fs::write(
-    &path,
-    r#"{
+    let path = test_config_path();
+    std::fs::write(
+        &path,
+        r#"{
       "sync": {
         "host": "127.0.0.1",
         "port": 21,
@@ -91,16 +99,120 @@ fn load_project_config_from_partial_payload_applies_defaults() {
         "remote_runtime_dir": "/srv/tomcat/webapps/webroot/WEB-INF"
       }
     }"#,
-  )
-  .expect("write partial project config");
+    )
+    .expect("write partial project config");
 
-  let loaded = load_project_config_from_path(path.as_path()).expect("load partial project config");
+    let loaded =
+        load_project_config_from_path(path.as_path()).expect("load partial project config");
+    let value = serde_json::to_value(&loaded).expect("serialize loaded config");
 
-  assert_eq!(loaded.style.theme, "light");
-  assert_eq!(loaded.workspace.name, "default");
-  assert_eq!(loaded.sync.protocol, SyncProtocol::Sftp);
-  assert_eq!(loaded.sync.host, "127.0.0.1");
-  assert_eq!(loaded.sync.port, 21);
-  assert_eq!(loaded.sync.username, "ftp-user");
-  assert!(loaded.sync.auto_sync_on_change);
+    assert_eq!(loaded.workspace.name, "default");
+    assert_eq!(loaded.sync.host, "127.0.0.1");
+    assert_eq!(loaded.sync.port, 21);
+    assert_eq!(loaded.sync.username, "ftp-user");
+    assert!(loaded.sync.auto_sync_on_change);
+    assert_eq!(value["style"]["font_family"], "PingFang SC");
+    assert_eq!(value["preview"]["mode"], "embedded");
+}
+
+#[test]
+fn load_project_config_supports_local_sync_preview_and_style_fields() {
+    let path = test_config_path();
+    std::fs::write(
+        &path,
+        json!({
+          "style": {
+            "font_family": "Microsoft YaHei",
+            "font_size": 14,
+            "line_height": 1.8,
+            "column_width": 24,
+            "header_font_family": "DIN Alternate",
+            "header_font_size": 16,
+            "number_format": "#,##0.00"
+          },
+          "data_connections": [
+            {
+              "connection_name": "FR Demo",
+              "dsn": "mysql://127.0.0.1:3306/demo",
+              "username": "report",
+              "password": "secret"
+            }
+          ],
+          "preview": {
+            "url": "http://127.0.0.1:8075/webroot/decision",
+            "mode": "external"
+          },
+          "sync": {
+            "protocol": "local",
+            "host": "",
+            "port": 0,
+            "username": "",
+            "local_source_dir": "/tmp/project/reportlets",
+            "remote_runtime_dir": "/tmp/runtime/reportlets",
+            "delete_propagation": true,
+            "auto_sync_on_change": true
+          }
+        })
+        .to_string(),
+    )
+    .expect("write local sync project config");
+
+    let loaded = load_project_config_from_path(path.as_path()).expect("load local sync config");
+    let value = serde_json::to_value(&loaded).expect("serialize loaded local config");
+
+    assert_eq!(value["sync"]["protocol"], "local");
+    assert_eq!(
+        value["preview"]["url"],
+        "http://127.0.0.1:8075/webroot/decision"
+    );
+    assert_eq!(value["preview"]["mode"], "external");
+    assert_eq!(value["style"]["font_family"], "Microsoft YaHei");
+    assert_eq!(value["style"]["header_font_size"], 16);
+    assert_eq!(value["data_connections"][0]["connection_name"], "FR Demo");
+    assert_eq!(
+        value["data_connections"][0]["dsn"],
+        "mysql://127.0.0.1:3306/demo"
+    );
+}
+
+#[test]
+fn load_project_config_supports_legacy_single_data_connection_field() {
+    let path = test_config_path();
+    std::fs::write(
+        &path,
+        json!({
+          "data_connection": {
+            "connection_name": "Legacy",
+            "dsn": "mysql://127.0.0.1:3306/legacy",
+            "username": "legacy-user",
+            "password": "legacy-pass"
+          },
+          "sync": {
+            "host": "127.0.0.1",
+            "port": 21,
+            "username": "ftp-user",
+            "remote_runtime_dir": "/srv/tomcat/webapps/webroot/WEB-INF"
+          }
+        })
+        .to_string(),
+    )
+    .expect("write legacy project config");
+
+    let loaded = load_project_config_from_path(path.as_path()).expect("load legacy project config");
+
+    assert_eq!(loaded.data_connections.len(), 1);
+    assert_eq!(loaded.data_connections[0].connection_name, "Legacy");
+}
+
+#[test]
+fn load_project_config_from_project_dir_reports_missing_file() {
+    let project_dir = std::env::temp_dir().join("finereport_missing_project_config");
+    let response = load_project_config_from_project_dir(project_dir.as_path())
+        .expect("load project config response");
+
+    assert!(!response.exists);
+    assert_eq!(
+        response.config.workspace.root_dir,
+        project_dir.display().to_string()
+    );
 }

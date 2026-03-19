@@ -11,9 +11,11 @@ import {
 } from './components/session/chat-panel'
 
 const DEFAULT_ENABLED_SKILLS = [
-  'finereport-template',
-  'browser-validate',
-  'sync-publish'
+  'fr-create',
+  'fr-cpt',
+  'fr-fvs',
+  'fr-db',
+  'chrome-cdp'
 ]
 
 interface AppShellProps {
@@ -38,8 +40,8 @@ export function AppShell({
   return (
     <div className="app-shell">
       <section className="pane pane-left">
-        <h1>Project Config</h1>
-        <p>Configure sync protocol and persistence settings.</p>
+        <h1>项目配置</h1>
+        <p>在左侧切换项目、样式、数据连接和文件管理，Codex 改动完成后由系统自动同步到运行目录。</p>
         <ProjectConfigForm
           services={projectConfigServices}
           onSnapshotChange={setSnapshot}

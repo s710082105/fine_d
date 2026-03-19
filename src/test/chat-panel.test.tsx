@@ -1,175 +1,53 @@
 import '@testing-library/jest-dom/vitest'
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import type { Mock } from 'vitest'
 import { vi } from 'vitest'
 import { createDefaultProjectConfig } from '../components/config/project-config-form'
-import {
-  ChatPanel,
-  ChatPanelServices
-} from '../components/session/chat-panel'
-import type { SessionStreamEvent } from '../lib/types/session'
+import { ChatPanel, type ChatPanelServices } from '../components/session/chat-panel'
+import type { SessionStreamEvent, StartSessionResponse } from '../lib/types/session'
 
-it('starts a session and renders streamed events', async () => {
-  const startSession = vi.fn(async () => ({
-    sessionId: 'session-1',
-    sessionDir: '/tmp/session-1',
+function buildStartResponse(sessionId: string, pid: number): StartSessionResponse {
+  return {
+    sessionId,
+    sessionDir: `/tmp/${sessionId}`,
     process: {
-      sessionId: 'session-1',
-      pid: 42,
+      sessionId,
+      pid,
       command: 'codex',
       args: ['chat'],
       workingDir: '/tmp/demo',
       startedAt: '1710806400'
     }
-  }))
+  }
+}
+
+function createServices(
+  overrides: Partial<ChatPanelServices> = {}
+): ChatPanelServices & { emit: (event: SessionStreamEvent) => Promise<void> } {
   let listener: ((event: SessionStreamEvent) => void) | undefined
-  const services: ChatPanelServices = {
-    startSession,
+  return {
+    checkCodexInstallation: async () => true,
+    startSession: async () => buildStartResponse('session-1', 42),
+    sendSessionMessage: async () => buildResumeResponse('session-1', 43),
     subscribe: (callback) => {
       listener = callback
       return () => undefined
     },
     refreshContext: async () => undefined,
-    interruptSession: async () => undefined
-  }
-  const config = createDefaultProjectConfig()
-  config.workspace.name = 'demo'
-  config.workspace.root_dir = '/tmp/demo'
-
-  render(
-    <ChatPanel
-      projectId="default"
-      projectName="demo"
-      config={config}
-      configVersion="v1"
-      enabledSkills={['finereport-template', 'browser-validate']}
-      isConfigStale={false}
-      services={services}
-    />
-  )
-
-  fireEvent.change(screen.getByLabelText('Message Composer'), {
-    target: { value: '生成本周报表' }
-  })
-  fireEvent.click(screen.getByRole('button', { name: 'Send' }))
-
-  await waitFor(() => expect(startSession).toHaveBeenCalledTimes(1))
-  expect(screen.getByText('生成本周报表')).toBeInTheDocument()
-
-  await act(async () => {
-    listener?.({
-      sessionId: 'session-1',
-      eventType: 'status',
-      message: 'session started',
-      timestamp: '1710806401'
-    })
-  })
-
-  expect(screen.getByText('状态：running')).toBeInTheDocument()
-  expect(screen.getByText('session started')).toBeInTheDocument()
-  expect(screen.getByText('finereport-template')).toBeInTheDocument()
-  expect(screen.getByText('browser-validate')).toBeInTheDocument()
-})
-
-it('renders tool and sync events as separate timeline items', async () => {
-  let listener: ((event: SessionStreamEvent) => void) | undefined
-  const services: ChatPanelServices = {
-    startSession: async () => ({
-      sessionId: 'session-2',
-      sessionDir: '/tmp/session-2',
-      process: {
-        sessionId: 'session-2',
-        pid: 43,
-        command: 'codex',
-        args: ['chat'],
-        workingDir: '/tmp/demo',
-        startedAt: '1710806400'
-      }
-    }),
-    subscribe: (callback) => {
-      listener = callback
-      return () => undefined
+    interruptSession: async () => undefined,
+    emit: async (event) => {
+      await act(async () => listener?.(event))
     },
-    refreshContext: async () => undefined,
-    interruptSession: async () => undefined
+    ...overrides
   }
-  const config = createDefaultProjectConfig()
-  config.workspace.name = 'demo'
-  config.workspace.root_dir = '/tmp/demo'
+}
 
-  render(
-    <ChatPanel
-      projectId="default"
-      projectName="demo"
-      config={config}
-      configVersion="v2"
-      enabledSkills={['sync-publish']}
-      isConfigStale={false}
-      services={services}
-    />
-  )
-
-  fireEvent.change(screen.getByLabelText('Message Composer'), {
-    target: { value: '发布模板' }
-  })
-  fireEvent.click(screen.getByRole('button', { name: 'Send' }))
-
-  await act(async () => {
-    listener?.({
-      sessionId: 'session-2',
-      eventType: 'tool',
-      message: 'write_file completed',
-      timestamp: '1710806402',
-      toolName: 'write_file',
-      toolStatus: 'completed',
-      toolSummary: '写入 report.cpt'
-    })
-    listener?.({
-      sessionId: 'session-2',
-      eventType: 'sync',
-      message: 'sync completed',
-      timestamp: '1710806403',
-      syncAction: 'update',
-      syncProtocol: 'sftp',
-      syncStatus: 'completed',
-      syncPath: '/srv/tomcat/webapps/webroot/WEB-INF/reportlets/report.cpt'
-    })
-  })
-
-  expect(screen.getByText('Tool · write_file')).toBeInTheDocument()
-  expect(screen.getAllByText('写入 report.cpt')).toHaveLength(2)
-  expect(screen.getByText('Sync · update · sftp')).toBeInTheDocument()
-  expect(
-    screen.getAllByText('/srv/tomcat/webapps/webroot/WEB-INF/reportlets/report.cpt')
-  ).toHaveLength(2)
-  expect(screen.getByText('写入文件')).toBeInTheDocument()
-})
-
-it('refreshes context and interrupts the active session explicitly', async () => {
-  const refreshContext = vi.fn(async () => undefined)
-  const interruptSession = vi.fn(async () => undefined)
-  const services: ChatPanelServices = {
-    startSession: async () => ({
-      sessionId: 'session-3',
-      sessionDir: '/tmp/session-3',
-      process: {
-        sessionId: 'session-3',
-        pid: 44,
-        command: 'codex',
-        args: [],
-        workingDir: '/tmp/demo',
-        startedAt: '1710806400'
-      }
-    }),
-    subscribe: () => () => undefined,
-    refreshContext,
-    interruptSession
-  }
+function renderChatPanel(services: ChatPanelServices, isConfigStale = false) {
   const config = createDefaultProjectConfig()
   config.workspace.name = 'demo'
   config.workspace.root_dir = '/tmp/demo'
   config.sync.host = 'files.example.com'
   config.sync.username = 'deploy'
-  config.sync.local_source_dir = '/tmp/demo/reportlets'
   config.sync.remote_runtime_dir = '/srv/runtime'
 
   render(
@@ -177,29 +55,209 @@ it('refreshes context and interrupts the active session explicitly', async () =>
       projectId="default"
       projectName="demo"
       config={config}
-      configVersion="v3-draft"
-      enabledSkills={['sync-publish']}
-      isConfigStale={true}
+      configVersion="v1"
+      enabledSkills={['fr-cpt', 'chrome-cdp']}
+      isConfigStale={isConfigStale}
       services={services}
     />
   )
 
-  fireEvent.change(screen.getByLabelText('Message Composer'), {
+  return { config }
+}
+
+function getStreamCard() {
+  return screen.getByText('Codex 输出').closest('section')
+}
+
+async function waitForComposerReady() {
+  await waitFor(() => expect(screen.getByRole('button', { name: '发送' })).toBeEnabled())
+}
+
+function buildResumeResponse(sessionId: string, pid: number) {
+  return {
+    sessionId,
+    process: {
+      sessionId,
+      pid,
+      command: 'codex',
+      args: ['exec', 'resume'],
+      workingDir: '/tmp/demo',
+      startedAt: '1710806402'
+    }
+  }
+}
+
+it('starts a session and renders raw streamed output', async () => {
+  const startSession = vi.fn(async () => buildStartResponse('session-1', 42))
+  const services = createServices({ startSession })
+  renderChatPanel(services)
+
+  await waitForComposerReady()
+  fireEvent.change(screen.getByLabelText('会话输入'), {
+    target: { value: '生成本周报表' }
+  })
+  fireEvent.click(screen.getByRole('button', { name: '发送' }))
+
+  await waitFor(() => expect(startSession).toHaveBeenCalledTimes(1))
+  await services.emit({
+    sessionId: 'session-1',
+    eventType: 'status',
+    message: 'session started',
+    timestamp: '1710806401'
+  })
+  await services.emit({
+    sessionId: 'session-1',
+    eventType: 'stdout',
+    message: '正在生成周报...',
+    timestamp: '1710806402'
+  })
+
+  expect(screen.getByText('状态：运行中')).toBeInTheDocument()
+  expect(getStreamCard()).toHaveTextContent('[launch] PID 42')
+  expect(getStreamCard()).toHaveTextContent('[status] session started')
+  expect(getStreamCard()).toHaveTextContent('正在生成周报...')
+})
+
+it('renders tool and sync events as raw output lines', async () => {
+  const services = createServices({
+    startSession: async () => buildStartResponse('session-2', 43)
+  })
+  renderChatPanel(services)
+
+  await waitForComposerReady()
+  fireEvent.change(screen.getByLabelText('会话输入'), {
+    target: { value: '发布模板' }
+  })
+  fireEvent.click(screen.getByRole('button', { name: '发送' }))
+
+  await waitFor(() => expect(screen.getByText('会话：session-2')).toBeInTheDocument())
+  await services.emit({
+    sessionId: 'session-2',
+    eventType: 'tool',
+    message: 'write_file completed',
+    timestamp: '1710806402',
+    toolName: 'write_file',
+    toolStatus: 'completed',
+    toolSummary: '写入 report.cpt'
+  })
+  await services.emit({
+    sessionId: 'session-2',
+    eventType: 'sync',
+    message: 'sync completed',
+    timestamp: '1710806403',
+    syncAction: 'update',
+    syncProtocol: 'sftp',
+    syncStatus: 'completed',
+    syncPath: '/srv/tomcat/webapps/webroot/WEB-INF/reportlets/report.cpt'
+  })
+
+  expect(getStreamCard()).toHaveTextContent('[tool:write_file] 写入 report.cpt')
+  expect(getStreamCard()).toHaveTextContent(
+    '[sync:update:sftp] /srv/tomcat/webapps/webroot/WEB-INF/reportlets/report.cpt'
+  )
+})
+
+it('shows install guidance and disables actions when codex is unavailable', async () => {
+  const services = createServices({
+    checkCodexInstallation: async () => false
+  })
+  renderChatPanel(services)
+
+  await waitFor(() =>
+    expect(screen.getByText('请使用 npm i -g @openai/codex 安装')).toBeInTheDocument()
+  )
+  expect(screen.getByRole('button', { name: '发送' })).toBeDisabled()
+  expect(screen.getByRole('button', { name: '新建会话' })).toBeDisabled()
+  expect(getStreamCard()).toHaveTextContent('等待 Codex 安装完成')
+})
+
+it('refreshes context and interrupts the active session explicitly', async () => {
+  const refreshContext = vi.fn(async () => undefined)
+  const interruptSession = vi.fn(async () => undefined)
+  const services = createServices({
+    startSession: async () => buildStartResponse('session-3', 44),
+    refreshContext,
+    interruptSession
+  })
+  const { config } = renderChatPanel(services, true)
+
+  await waitForComposerReady()
+  fireEvent.change(screen.getByLabelText('会话输入'), {
     target: { value: '继续执行同步' }
   })
-  fireEvent.click(screen.getByRole('button', { name: 'Send' }))
+  fireEvent.click(screen.getByRole('button', { name: '发送' }))
 
-  await waitFor(() => expect(screen.getByText('状态：running')).toBeInTheDocument())
+  await waitFor(() => expect(screen.getByText('会话：session-3')).toBeInTheDocument())
+  fireEvent.click(screen.getByRole('button', { name: '刷新上下文' }))
+  fireEvent.click(screen.getByRole('button', { name: '中断会话' }))
 
-  fireEvent.click(screen.getByRole('button', { name: 'Refresh Context' }))
-  fireEvent.click(screen.getByRole('button', { name: 'Interrupt Session' }))
-
+  expect(screen.getByText('需要新建会话或手动刷新上下文')).toBeInTheDocument()
   expect(refreshContext).toHaveBeenCalledWith({
     project_id: 'default',
     session_id: 'session-3',
-    config_version: 'v3-draft',
-    enabled_skills: ['sync-publish'],
+    config_version: 'v1',
+    enabled_skills: ['fr-cpt', 'chrome-cdp'],
     config
   })
   expect(interruptSession).toHaveBeenCalledWith('session-3')
+})
+
+it('reuses the existing codex session for follow-up messages', async () => {
+  const startSession = vi.fn(async () => buildStartResponse('session-4', 45))
+  const sendSessionMessage = vi.fn(async () => buildResumeResponse('session-4', 46))
+  const services = Object.assign(createServices({ startSession }), {
+    sendSessionMessage
+  }) as ChatPanelServices & {
+    emit: (event: SessionStreamEvent) => Promise<void>
+    sendSessionMessage: Mock
+  }
+  renderChatPanel(services)
+
+  await waitForComposerReady()
+  fireEvent.change(screen.getByLabelText('会话输入'), {
+    target: { value: '先创建会话' }
+  })
+  fireEvent.click(screen.getByRole('button', { name: '发送' }))
+
+  await waitFor(() => expect(startSession).toHaveBeenCalledTimes(1))
+  await services.emit({
+    sessionId: 'session-4',
+    eventType: 'stdout',
+    message: 'OpenAI Codex v0.115.0 (research preview)',
+    timestamp: '1710806401'
+  })
+  await services.emit({
+    sessionId: 'session-4',
+    eventType: 'stdout',
+    message: 'session id: codex-session-1',
+    timestamp: '1710806402'
+  })
+  await services.emit({
+    sessionId: 'session-4',
+    eventType: 'process_exit',
+    message: 'codex process exited: exit status: 0',
+    timestamp: '1710806403'
+  })
+
+  fireEvent.change(screen.getByLabelText('会话输入'), {
+    target: { value: '继续补充上下文' }
+  })
+  fireEvent.click(screen.getByRole('button', { name: '发送' }))
+
+  await waitFor(() => expect(sendSessionMessage).toHaveBeenCalledTimes(1))
+  expect(startSession).toHaveBeenCalledTimes(1)
+  expect(sendSessionMessage).toHaveBeenCalledWith(
+    expect.objectContaining({
+      project_id: 'default',
+      session_id: 'session-4',
+      config_version: 'v1',
+      message: '继续补充上下文',
+      codex_session_id: 'codex-session-1',
+      codex: {
+        command: 'codex',
+        args: [],
+        working_dir: '/tmp/demo'
+      }
+    })
+  )
 })
