@@ -5,6 +5,7 @@ use crate::domain::codex_process_manager::{
     CodexProcessManager, ProcessLaunchConfig, ProcessMetadata,
 };
 use crate::domain::event_bridge::EventBridge;
+use crate::domain::project_git::uses_git_post_commit_sync;
 use crate::domain::project_config::ProjectConfig;
 use crate::domain::session_store::{
     append_transcript_entry, bootstrap_session, SessionBootstrapInput,
@@ -111,10 +112,16 @@ pub fn start_session_in_project(
         bootstrap.manifest_path.clone(),
     );
     if let Some(sync_manager) = runtime.sync_manager {
-        runtime
-            .bridge
-            .emit_status(session_id.as_str(), "starting sync watcher")?;
-        sync_manager.watch_session(session_id.as_str(), &request.config, runtime.bridge)?;
+        if uses_git_post_commit_sync(project_dir)? {
+            runtime
+                .bridge
+                .emit_status(session_id.as_str(), "git post-commit sync enabled")?;
+        } else {
+            runtime
+                .bridge
+                .emit_status(session_id.as_str(), "starting sync watcher")?;
+            sync_manager.watch_session(session_id.as_str(), &request.config, runtime.bridge)?;
+        }
     }
     runtime
         .bridge

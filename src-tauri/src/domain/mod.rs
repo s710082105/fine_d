@@ -1,10 +1,14 @@
 pub mod codex_cli;
 pub mod codex_process_manager;
 pub mod context_builder;
+pub mod context_builder_data;
 pub mod event_bridge;
+pub mod project_git;
 pub mod project_config;
 pub mod project_initializer;
 pub mod session_store;
 pub mod sync_bootstrap;
 pub mod sync_dispatcher;
 pub mod sync_transport;
+pub mod terminal_event_bridge;
+pub mod terminal_manager;

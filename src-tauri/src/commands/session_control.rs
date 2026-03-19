@@ -4,6 +4,7 @@ use super::session_support::resolve_project_dir;
 use crate::domain::codex_cli::build_resume_args;
 use crate::domain::codex_process_manager::{ProcessLaunchConfig, ProcessMetadata};
 use crate::domain::event_bridge::EventBridge;
+use crate::domain::project_git::uses_git_post_commit_sync;
 use crate::domain::project_config::ProjectConfig;
 use crate::domain::session_store::{
     append_transcript_entry, refresh_session_context, session_manifest_path,
@@ -130,8 +131,12 @@ pub fn send_session_message_in_project(
     )?;
     let launch_config = configure_process_hooks(launch_config, sync_manager, bridge, manifest_path);
     if let Some(sync_manager) = sync_manager {
-        bridge.emit_status(request.session_id.as_str(), "starting sync watcher")?;
-        sync_manager.watch_session(request.session_id.as_str(), &request.config, bridge)?;
+        if uses_git_post_commit_sync(project_dir)? {
+            bridge.emit_status(request.session_id.as_str(), "git post-commit sync enabled")?;
+        } else {
+            bridge.emit_status(request.session_id.as_str(), "starting sync watcher")?;
+            sync_manager.watch_session(request.session_id.as_str(), &request.config, bridge)?;
+        }
     }
     bridge.emit_status(request.session_id.as_str(), "resuming codex process")?;
     let process =

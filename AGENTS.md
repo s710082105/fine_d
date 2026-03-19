@@ -49,3 +49,7 @@ Use focused commits. Do not bundle asset changes, design docs, and runtime code 
 ## Security & Configuration Tips
 
 Do not commit sync credentials, API keys, or host passwords. `SFTP`/`FTP` secrets must stay in local environment or secure storage, never in tracked files.
+
+## Subagent Model Requirement
+
+All subagents used for this repository must run on GPT-5.3 or newer models. Do not dispatch subagents on GPT-5.1, mini variants below 5.3, or older model families.

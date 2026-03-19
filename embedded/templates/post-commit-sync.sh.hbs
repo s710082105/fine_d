@@ -1,0 +1,94 @@
+#!/bin/sh
+set -eu
+
+# {{hook_marker}}
+PROJECT_DIR={{project_dir}}
+SOURCE_SUBDIR={{source_subdir}}
+PROTOCOL={{protocol}}
+REMOTE_ROOT={{remote_root}}
+
+log() {
+  printf '%s\n' "$1" >&2
+}
+
+is_sync_target() {
+  case "$1" in
+    "${SOURCE_SUBDIR}/"*.cpt|"${SOURCE_SUBDIR}/"*.fvs) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+remote_path_for() {
+  printf '%s/%s\n' "$REMOTE_ROOT" "${1#${SOURCE_SUBDIR}/}"
+}
+
+sync_local_upsert() {
+  local_path="$PROJECT_DIR/$1"
+  remote_path="$(remote_path_for "$1")"
+  mkdir -p "$(dirname "$remote_path")"
+  cp "$local_path" "$remote_path"
+}
+
+sync_local_delete() {
+  remote_path="$(remote_path_for "$1")"
+  if [ -e "$remote_path" ]; then
+    rm -f "$remote_path"
+  fi
+}
+
+dispatch_sync() {
+  action="$1"
+  path="$2"
+  case "$PROTOCOL" in
+    local)
+      if [ "$action" = "delete" ]; then
+        sync_local_delete "$path"
+      else
+        sync_local_upsert "$path"
+      fi
+      ;;
+    sftp|ftp)
+      log "post-commit sync for protocol $PROTOCOL is not implemented"
+      return 1
+      ;;
+    *)
+      log "unsupported sync protocol: $PROTOCOL"
+      return 1
+      ;;
+  esac
+}
+
+process_record() {
+  status="$1"
+  primary="$2"
+  secondary="${3-}"
+
+  case "$status" in
+    A|M)
+      if is_sync_target "$primary"; then
+        dispatch_sync "upsert" "$primary"
+      fi
+      ;;
+    D)
+      if is_sync_target "$primary"; then
+        dispatch_sync "delete" "$primary"
+      fi
+      ;;
+    R*|C*)
+      if is_sync_target "$primary"; then
+        dispatch_sync "delete" "$primary"
+      fi
+      if [ -n "$secondary" ] && is_sync_target "$secondary"; then
+        dispatch_sync "upsert" "$secondary"
+      fi
+      ;;
+  esac
+}
+
+git -C "$PROJECT_DIR" -c core.quotePath=false diff-tree --root --no-commit-id --name-status -r HEAD |
+while IFS="$(printf '\t')" read -r status first second; do
+  if [ -z "$status" ]; then
+    continue
+  fi
+  process_record "$status" "$first" "${second-}"
+done

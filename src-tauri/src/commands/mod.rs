@@ -4,3 +4,4 @@ pub mod session;
 pub mod session_control;
 pub mod session_runtime;
 pub mod session_support;
+pub mod terminal;

@@ -1,4 +1,5 @@
 use super::context_builder::build_runtime_context;
+use super::project_git::ensure_project_git_sync;
 use super::project_config::ProjectConfig;
 use super::sync_bootstrap::{ProtocolRuntimeSyncBootstrapper, RuntimeSyncBootstrapper};
 use std::path::Path;
@@ -20,6 +21,7 @@ impl ProjectInitializer for EmbeddedProjectInitializer {
         let source_root = config.local_source_dir();
         self.sync_bootstrapper
             .replace_project_tree(source_root.as_path(), &config.sync)?;
+        ensure_project_git_sync(project_dir, config)?;
         write_project_codex_context(project_dir, config)
     }
 }

@@ -38,7 +38,7 @@ body {
 
 .app-shell {
   display: grid;
-  grid-template-columns: minmax(320px, 380px) 1fr;
+  grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
   height: 100vh;
 }
 
@@ -55,9 +55,16 @@ body {
 
 .pane-right {
   display: flex;
+  padding: 12px;
+  min-width: 0;
   overflow: hidden;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.92) 100%);
+}
+
+.pane-right > * {
+  flex: 1;
+  min-width: 0;
 }
 
 .pane h1 {

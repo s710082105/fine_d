@@ -1,6 +1,6 @@
 use finereport_tauri_shell_lib::domain::context_builder::build_runtime_context;
 use finereport_tauri_shell_lib::domain::project_config::{
-    ProjectConfig, ProjectMapping, WorkspaceProfile,
+    DataConnectionProfile, ProjectConfig, ProjectMapping, WorkspaceProfile,
 };
 use std::path::PathBuf;
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -27,6 +27,20 @@ fn context_builder_generates_sync_rules() {
     config.sync.remote_runtime_dir = "/srv/tomcat/webapps/webroot/WEB-INF".into();
     config.sync.delete_propagation = true;
     config.sync.auto_sync_on_change = true;
+    config.data_connections = vec![
+        DataConnectionProfile {
+            connection_name: "FR Demo".into(),
+            dsn: "mysql://127.0.0.1:3306/demo".into(),
+            username: "report".into(),
+            password: "secret-1".into(),
+        },
+        DataConnectionProfile {
+            connection_name: "Analytics".into(),
+            dsn: "mysql://127.0.0.1:3306/analytics".into(),
+            username: "analytics".into(),
+            password: "secret-2".into(),
+        },
+    ];
     config.mappings = vec![
         ProjectMapping {
             local: "reportlets".into(),
@@ -63,16 +77,23 @@ fn context_builder_generates_sync_rules() {
     assert!(project_context.contains("local_source_dir"));
     assert!(project_context.contains("remote_runtime_dir"));
     assert!(project_context.contains("preview_mode"));
+    assert!(project_context.contains("FR Demo"));
+    assert!(project_context.contains("mysql://127.0.0.1:3306/demo"));
+    assert!(project_context.contains("secret-1"));
     assert!(project_rules.contains("delete_propagation"));
     assert!(project_rules.contains("port"));
     assert!(project_rules.contains("auto_sync_on_change"));
     assert!(project_rules.contains("系统负责执行同步"));
+    assert!(project_rules.contains("Analytics"));
+    assert!(project_rules.contains("secret-2"));
     assert!(mappings.contains("protocol"));
     assert!(mappings.contains("host"));
     assert!(mappings.contains("username"));
     assert!(mappings.contains("source_target_mappings"));
     assert!(mappings.contains("delete_propagation"));
     assert!(mappings.contains("auto_sync_on_change"));
+    assert!(mappings.contains("data_connections"));
+    assert!(mappings.contains("mysql://127.0.0.1:3306/analytics"));
     assert!(mappings.contains("reportlets"));
     assert!(mappings.contains("templates"));
 

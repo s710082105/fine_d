@@ -1,3 +1,4 @@
+use super::context_builder_data::{data_connections_json, markdown_data_connections};
 use super::project_config::{PreviewMode, ProjectConfig, SyncProtocol};
 use include_dir::{include_dir, Dir, DirEntry, File};
 use std::fs;
@@ -118,6 +119,7 @@ fn render_project_context(config: &ProjectConfig, enabled_skills: &[String]) -> 
             ),
             ("number_format", config.style.number_format.clone()),
             ("enabled_skills", markdown_skill_list(enabled_skills)),
+            ("data_connections", markdown_data_connections(config)),
             ("source_target_mappings", markdown_mapping_list(config)),
         ],
     )
@@ -147,6 +149,7 @@ fn render_project_rules(config: &ProjectConfig) -> io::Result<String> {
                 "auto_sync_on_change",
                 bool_text(config.sync.auto_sync_on_change).into(),
             ),
+            ("data_connections", markdown_data_connections(config)),
             ("source_target_mappings", markdown_mapping_list(config)),
         ],
     )
@@ -198,6 +201,7 @@ fn render_mappings(config: &ProjectConfig) -> io::Result<String> {
                 "auto_sync_on_change",
                 bool_text(config.sync.auto_sync_on_change).into(),
             ),
+            ("data_connections_json", data_connections_json(config)?),
             ("source_target_mappings_json", mapping_entries_json(config)?),
         ],
     )

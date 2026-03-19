@@ -5,22 +5,14 @@ import {
   ProjectConfigSnapshot,
   createDefaultProjectConfig
 } from './components/config/project-config-form'
-import {
-  ChatPanel,
-  ChatPanelServices
-} from './components/session/chat-panel'
-
-const DEFAULT_ENABLED_SKILLS = [
-  'fr-create',
-  'fr-cpt',
-  'fr-fvs',
-  'fr-db',
-  'chrome-cdp'
-]
+import { TerminalPanel } from './components/terminal/terminal-panel'
+import type { TerminalServices } from './components/terminal/terminal-services'
+import type { TerminalAdapterFactory } from './components/terminal/xterm-adapter'
 
 interface AppShellProps {
   projectConfigServices?: ProjectConfigServices
-  chatPanelServices?: ChatPanelServices
+  terminalServices?: TerminalServices
+  terminalAdapterFactory?: TerminalAdapterFactory
 }
 
 function createInitialSnapshot(): ProjectConfigSnapshot {
@@ -31,9 +23,20 @@ function createInitialSnapshot(): ProjectConfigSnapshot {
   }
 }
 
+function resolveTerminalProjectId(snapshot: ProjectConfigSnapshot): string {
+  const workspaceRoot = snapshot.config.workspace.root_dir.trim()
+
+  if (workspaceRoot.length > 0) {
+    return workspaceRoot
+  }
+
+  return `${snapshot.config.workspace.name.trim()}::${snapshot.configVersion}`
+}
+
 export function AppShell({
   projectConfigServices,
-  chatPanelServices
+  terminalServices,
+  terminalAdapterFactory
 }: AppShellProps) {
   const [snapshot, setSnapshot] = useState<ProjectConfigSnapshot>(createInitialSnapshot)
 
@@ -48,14 +51,14 @@ export function AppShell({
         />
       </section>
       <section className="pane pane-right">
-        <ChatPanel
-          projectId="default"
+        <TerminalPanel
+          projectId={resolveTerminalProjectId(snapshot)}
           projectName={snapshot.config.workspace.name}
           config={snapshot.config}
           configVersion={snapshot.configVersion}
-          enabledSkills={DEFAULT_ENABLED_SKILLS}
           isConfigStale={snapshot.isDirty}
-          services={chatPanelServices}
+          services={terminalServices}
+          createAdapter={terminalAdapterFactory}
         />
       </section>
     </div>
