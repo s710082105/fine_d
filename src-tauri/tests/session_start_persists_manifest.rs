@@ -9,6 +9,7 @@ use finereport_tauri_shell_lib::domain::project_config::{
     ProjectConfig, ProjectMapping, WorkspaceProfile,
 };
 use finereport_tauri_shell_lib::domain::sync_dispatcher::SyncManager;
+use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::Arc;
 use std::thread;
@@ -96,6 +97,7 @@ fn session_start_persists_manifest() {
         ProcessLaunchConfig {
             command: "sh".into(),
             args: vec!["-c".into(), "printf 'started\\n'".into()],
+            env: HashMap::new(),
             working_dir: project_dir.clone(),
             exit_hook: None,
             stdout_hook: None,
@@ -134,6 +136,7 @@ fn session_start_stops_sync_watcher_after_process_exit() {
         ProcessLaunchConfig {
             command: "sh".into(),
             args: vec!["-c".into(), "exit 0".into()],
+            env: HashMap::new(),
             working_dir: project_dir.clone(),
             exit_hook: None,
             stdout_hook: None,
@@ -164,6 +167,7 @@ fn session_start_cleans_sync_watcher_when_process_launch_fails() {
         ProcessLaunchConfig {
             command: "missing-codex-command".into(),
             args: Vec::new(),
+            env: HashMap::new(),
             working_dir: project_dir.clone(),
             exit_hook: None,
             stdout_hook: None,

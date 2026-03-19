@@ -27,6 +27,9 @@ fn context_builder_generates_sync_rules() {
     config.sync.remote_runtime_dir = "/srv/tomcat/webapps/webroot/WEB-INF".into();
     config.sync.delete_propagation = true;
     config.sync.auto_sync_on_change = true;
+    config.preview.account = "preview-user".into();
+    config.preview.password = "preview-pass".into();
+    config.ai.api_key = "sk-demo".into();
     config.data_connections = vec![
         DataConnectionProfile {
             connection_name: "FR Demo".into(),
@@ -77,6 +80,12 @@ fn context_builder_generates_sync_rules() {
     assert!(project_context.contains("local_source_dir"));
     assert!(project_context.contains("remote_runtime_dir"));
     assert!(project_context.contains("preview_mode"));
+    assert!(project_context.contains("preview_account"));
+    assert!(project_context.contains("preview-user"));
+    assert!(project_context.contains("preview_password"));
+    assert!(project_context.contains("preview-pass"));
+    assert!(project_context.contains("codex_api_key"));
+    assert!(project_context.contains("sk-demo"));
     assert!(project_context.contains("FR Demo"));
     assert!(project_context.contains("mysql://127.0.0.1:3306/demo"));
     assert!(project_context.contains("secret-1"));
@@ -84,11 +93,16 @@ fn context_builder_generates_sync_rules() {
     assert!(project_rules.contains("port"));
     assert!(project_rules.contains("auto_sync_on_change"));
     assert!(project_rules.contains("系统负责执行同步"));
+    assert!(project_rules.contains("chrome-cdp"));
+    assert!(project_rules.contains("页面复核"));
     assert!(project_rules.contains("Analytics"));
     assert!(project_rules.contains("secret-2"));
     assert!(mappings.contains("protocol"));
     assert!(mappings.contains("host"));
     assert!(mappings.contains("username"));
+    assert!(mappings.contains("preview_account"));
+    assert!(mappings.contains("preview_password"));
+    assert!(mappings.contains("codex_api_key"));
     assert!(mappings.contains("source_target_mappings"));
     assert!(mappings.contains("delete_propagation"));
     assert!(mappings.contains("auto_sync_on_change"));
@@ -96,6 +110,9 @@ fn context_builder_generates_sync_rules() {
     assert!(mappings.contains("mysql://127.0.0.1:3306/analytics"));
     assert!(mappings.contains("reportlets"));
     assert!(mappings.contains("templates"));
+    assert!(!project_context.contains("codex_base_url"));
+    assert!(!project_rules.contains("codex_base_url"));
+    assert!(!mappings.contains("codex_base_url"));
 
     assert!(context_dir.join("skills/fr-cpt/SKILL.md").exists());
     assert!(context_dir
@@ -110,4 +127,6 @@ fn context_builder_generates_sync_rules() {
     assert!(context_dir
         .join("skills/chrome-cdp/scripts/cdp.mjs")
         .exists());
+    assert!(agents.contains("chrome-cdp"));
+    assert!(agents.contains("同步完成后"));
 }

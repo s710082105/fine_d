@@ -41,6 +41,7 @@ pub struct TerminalSessionMetadata {
 pub struct TerminalLaunchConfig {
     pub command: String,
     pub args: Vec<String>,
+    pub env: HashMap<String, String>,
     pub working_dir: PathBuf,
 }
 

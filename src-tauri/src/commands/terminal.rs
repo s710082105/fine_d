@@ -1,4 +1,5 @@
 use super::environment::check_codex_installation;
+use crate::domain::codex_auth::{append_runtime_config_args, build_codex_environment};
 use crate::domain::project_config::ProjectConfig;
 use crate::domain::terminal_event_bridge::TerminalEventBridge;
 use crate::domain::terminal_manager::{
@@ -12,6 +13,12 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use tauri::{AppHandle, State};
 
 const CODEX_COMMAND: &str = "codex";
+const TERM_ENV: &str = "TERM";
+const TERM_VALUE: &str = "xterm-256color";
+const COLORTERM_ENV: &str = "COLORTERM";
+const COLORTERM_VALUE: &str = "truecolor";
+const FORCE_COLOR_ENV: &str = "FORCE_COLOR";
+const FORCE_COLOR_VALUE: &str = "1";
 
 #[cfg(test)]
 mod tests;
@@ -80,10 +87,10 @@ struct CreateTerminalSessionOptions {
 }
 
 impl CreateTerminalSessionOptions {
-    fn codex_default() -> Self {
+    fn codex_default(config: &ProjectConfig) -> Self {
         Self {
             command: CODEX_COMMAND.into(),
-            args: Vec::new(),
+            args: build_codex_cli_args(config),
             require_codex_installation: true,
         }
     }
@@ -108,7 +115,7 @@ pub fn create_terminal_session(
     create_terminal_session_with_options(
         &manager,
         &request,
-        &CreateTerminalSessionOptions::codex_default(),
+        &CreateTerminalSessionOptions::codex_default(&request.config),
     )
 }
 
@@ -124,11 +131,7 @@ fn create_terminal_session_with_options(
     let session_id = generate_terminal_session_id()?;
     let process = manager.start_session(
         session_id.as_str(),
-        &TerminalLaunchConfig {
-            command: options.command.clone(),
-            args: options.args.clone(),
-            working_dir,
-        },
+        &build_terminal_launch_config(request, options, working_dir)?,
     )?;
     Ok(CreateTerminalSessionResponse {
         session_id,
@@ -217,6 +220,36 @@ fn ensure_codex_installed() -> Result<(), String> {
         return Ok(());
     }
     Err("codex is not installed".into())
+}
+
+fn build_terminal_launch_config(
+    request: &CreateTerminalSessionRequest,
+    options: &CreateTerminalSessionOptions,
+    working_dir: PathBuf,
+) -> Result<TerminalLaunchConfig, String> {
+    Ok(TerminalLaunchConfig {
+        command: options.command.clone(),
+        args: options.args.clone(),
+        env: build_terminal_environment(&request.config, request.env.as_ref())?,
+        working_dir,
+    })
+}
+
+pub(super) fn build_codex_cli_args(config: &ProjectConfig) -> Vec<String> {
+    let mut args: Vec<String> = Vec::new();
+    append_runtime_config_args(&mut args, config);
+    args
+}
+
+pub(super) fn build_terminal_environment(
+    config: &ProjectConfig,
+    request_env: Option<&HashMap<String, String>>,
+) -> Result<HashMap<String, String>, String> {
+    let mut env = request_env.cloned().unwrap_or_default();
+    env.insert(TERM_ENV.into(), TERM_VALUE.into());
+    env.insert(COLORTERM_ENV.into(), COLORTERM_VALUE.into());
+    env.insert(FORCE_COLOR_ENV.into(), FORCE_COLOR_VALUE.into());
+    build_codex_environment(Some(&env), config)
 }
 
 fn generate_terminal_session_id() -> Result<String, String> {

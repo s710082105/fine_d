@@ -60,7 +60,7 @@ fn project_initializer_creates_git_repo_hook_and_commit_rule() {
     assert!(project_dir.join(".git").exists());
     let hook = fs::read_to_string(project_dir.join(".git/hooks/post-commit"))
         .expect("read post-commit hook");
-    let agents = fs::read_to_string(project_dir.join(".codex/AGENTS.md")).expect("read agents");
+    let agents = fs::read_to_string(project_dir.join("AGENTS.md")).expect("read agents");
 
     assert!(hook.contains("FINEREPORT_POST_COMMIT_SYNC"));
     assert!(agents.contains("必须在项目目录执行 `git add` 和 `git commit`"));
@@ -87,7 +87,10 @@ fn post_commit_hook_syncs_only_reportlet_cpt_and_fvs_changes() {
     fs::write(source_dir.join("notes.txt"), "ignore-me").expect("write txt");
 
     run_git(project_dir.as_path(), &["add", "."]);
-    run_git(project_dir.as_path(), &["commit", "-m", "feat: initial reports"]);
+    run_git(
+        project_dir.as_path(),
+        &["commit", "-m", "feat: initial reports"],
+    );
 
     assert_eq!(
         fs::read_to_string(runtime_dir.join("微信用户列表.cpt")).expect("read synced cpt"),
@@ -104,7 +107,10 @@ fn post_commit_hook_syncs_only_reportlet_cpt_and_fvs_changes() {
     fs::write(source_dir.join("notes.txt"), "still-ignore").expect("update txt");
 
     run_git(project_dir.as_path(), &["add", "-A"]);
-    run_git(project_dir.as_path(), &["commit", "-m", "fix: update reports"]);
+    run_git(
+        project_dir.as_path(),
+        &["commit", "-m", "fix: update reports"],
+    );
 
     assert!(!runtime_dir.join("微信用户列表.cpt").exists());
     assert_eq!(

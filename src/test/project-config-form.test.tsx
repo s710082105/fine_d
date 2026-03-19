@@ -56,7 +56,12 @@ it('renders project tab by default and switches to style tab', async () => {
   )
   expect(screen.getByLabelText('同步协议')).toBeInTheDocument()
   expect(screen.getByLabelText('预览地址')).toBeInTheDocument()
+  expect(screen.getByLabelText('预览账号')).toBeInTheDocument()
+  expect(screen.getByLabelText('预览密码')).toBeInTheDocument()
   expect(screen.getByLabelText('预览方式')).toBeInTheDocument()
+  expect(screen.getByLabelText('Codex 提供方')).toBeInTheDocument()
+  expect(screen.getByLabelText('Codex 模型')).toBeInTheDocument()
+  expect(screen.getByLabelText('Codex API Key')).toBeInTheDocument()
   expect(screen.getByText('真实同步源目录固定为：/tmp/demo/reportlets')).toBeInTheDocument()
   expect(screen.getByLabelText('同步删除')).toBeInTheDocument()
   expect(screen.getByLabelText('文件变更后自动同步')).toBeInTheDocument()
@@ -100,6 +105,11 @@ it('loads config from project directory and saves back to project config file', 
   loaded.workspace.name = 'demo-project'
   loaded.sync.protocol = 'local'
   loaded.sync.remote_runtime_dir = '/tmp/runtime'
+  loaded.preview.account = 'preview-user'
+  loaded.preview.password = 'preview-pass'
+  loaded.ai.provider = 'openai'
+  loaded.ai.model = 'gpt-5'
+  loaded.ai.api_key = 'sk-demo'
   loaded.data_connections = [
     {
       connection_name: 'FR Demo',
@@ -133,6 +143,8 @@ it('loads config from project directory and saves back to project config file', 
   expect(listReportletEntries).toHaveBeenCalledWith('/tmp/existing')
   expect(browseDirectory).toHaveBeenCalledTimes(1)
   expect(screen.getByDisplayValue('demo-project')).toBeInTheDocument()
+  expect(screen.getByDisplayValue('preview-user')).toBeInTheDocument()
+  expect(screen.getByDisplayValue('sk-demo')).toBeInTheDocument()
   expect(screen.getByRole('button', { name: '选择运行目录' })).toBeInTheDocument()
 
   fireEvent.click(screen.getByRole('button', { name: '选择运行目录' }))
@@ -148,7 +160,16 @@ it('loads config from project directory and saves back to project config file', 
       '/tmp/existing',
       expect.objectContaining({
         workspace: expect.objectContaining({ root_dir: '/tmp/existing' }),
+        preview: expect.objectContaining({
+          account: 'preview-user',
+          password: 'preview-pass'
+        }),
         sync: expect.objectContaining({ remote_runtime_dir: '/tmp/runtime-picked' }),
+        ai: expect.objectContaining({
+          provider: 'openai',
+          model: 'gpt-5',
+          api_key: 'sk-demo'
+        }),
         data_connections: [
           expect.objectContaining({
             connection_name: 'FR Demo',

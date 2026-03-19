@@ -49,7 +49,11 @@ fn embedded_project_initializer_pulls_runtime_tree_and_builds_codex_context() {
         fs::read_to_string(source_dir.join("sales/report.cpt")).expect("read source file"),
         "demo-template"
     );
-    assert!(project_dir.join(".codex/AGENTS.md").exists());
+    let agents = fs::read_to_string(project_dir.join("AGENTS.md")).expect("read project agents");
+    assert!(agents.contains("`.codex/project-context.md`"));
+    assert!(agents.contains("`.codex/project-rules.md`"));
+    assert!(agents.contains("`.codex/mappings.json`"));
+    assert!(agents.contains("`.codex/skills/`"));
     assert!(project_dir.join(".codex/project-context.md").exists());
     assert!(project_dir.join(".codex/project-rules.md").exists());
     assert!(project_dir.join(".codex/mappings.json").exists());
@@ -77,7 +81,7 @@ fn embedded_project_initializer_creates_missing_source_directory() {
         fs::read_to_string(project_dir.join("reportlets/report.cpt")).expect("read pulled file"),
         "seed-template"
     );
-    assert!(project_dir.join(".codex/AGENTS.md").exists());
+    assert!(project_dir.join("AGENTS.md").exists());
 }
 
 #[test]

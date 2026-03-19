@@ -48,6 +48,8 @@ pub struct DataConnectionProfile {
 pub struct PreviewProfile {
     pub url: String,
     pub mode: PreviewMode,
+    pub account: String,
+    pub password: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -82,6 +84,7 @@ pub enum SyncProtocol {
 pub struct AiProfile {
     pub provider: String,
     pub model: String,
+    pub api_key: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -94,7 +97,8 @@ impl ProjectConfig {
     pub fn validate(&self) -> Result<(), String> {
         self.style.validate()?;
         self.preview.validate()?;
-        self.sync.validate()
+        self.sync.validate()?;
+        self.ai.validate()
     }
 
     pub fn local_source_dir(&self) -> PathBuf {
@@ -159,6 +163,18 @@ impl SyncProfile {
     }
 }
 
+impl AiProfile {
+    pub fn validate(&self) -> Result<(), String> {
+        if self.provider.trim().is_empty() {
+            return Err("ai.provider is required".into());
+        }
+        if self.model.trim().is_empty() {
+            return Err("ai.model is required".into());
+        }
+        Ok(())
+    }
+}
+
 impl Default for ProjectConfig {
     fn default() -> Self {
         Self {
@@ -212,6 +228,8 @@ impl Default for PreviewProfile {
         Self {
             url: "http://127.0.0.1:8075/webroot/decision".into(),
             mode: PreviewMode::default(),
+            account: String::new(),
+            password: String::new(),
         }
     }
 }
@@ -247,6 +265,7 @@ impl Default for AiProfile {
         Self {
             provider: "openai".into(),
             model: "gpt-5".into(),
+            api_key: String::new(),
         }
     }
 }

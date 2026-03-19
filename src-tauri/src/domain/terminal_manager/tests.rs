@@ -3,6 +3,7 @@ use crate::domain::terminal_event_bridge::{
     TerminalEvent, TerminalEventBridge, TerminalEventEmitter, TerminalEventType,
 };
 use portable_pty::{native_pty_system, CommandBuilder};
+use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::{mpsc, Arc, Mutex};
 use std::thread;
@@ -53,6 +54,7 @@ fn build_config(script: &str) -> TerminalLaunchConfig {
     TerminalLaunchConfig {
         command: "sh".into(),
         args: vec!["-c".into(), script.into()],
+        env: HashMap::new(),
         working_dir: PathBuf::from(std::env::temp_dir()),
     }
 }

@@ -1,10 +1,4 @@
-const EXEC_ARGS: &[&str] = &[
-    "exec",
-    "--full-auto",
-    "--skip-git-repo-check",
-    "--color",
-    "never",
-];
+const EXEC_ARGS: &[&str] = &["exec", "--full-auto", "--skip-git-repo-check"];
 const RESUME_ARGS: &[&str] = &["exec", "resume", "--full-auto", "--skip-git-repo-check"];
 const SESSION_ID_PREFIX: &str = "session id:";
 
@@ -47,6 +41,21 @@ fn build_args(base: &[&str]) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn build_exec_args_omits_unsupported_color_flag() {
+        let args = build_exec_args(&["--json".into()], "生成报表");
+        assert_eq!(
+            args,
+            vec![
+                "exec",
+                "--full-auto",
+                "--skip-git-repo-check",
+                "--json",
+                "生成报表",
+            ]
+        );
+    }
 
     #[test]
     fn build_resume_args_places_session_id_before_prompt() {

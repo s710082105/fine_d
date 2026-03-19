@@ -47,7 +47,10 @@ fn is_git_repository(project_dir: &Path) -> Result<bool, String> {
     if stderr.contains("not a git repository") {
         return Ok(false);
     }
-    Err(format!("failed to inspect git repository: {}", stderr.trim()))
+    Err(format!(
+        "failed to inspect git repository: {}",
+        stderr.trim()
+    ))
 }
 
 fn install_post_commit_hook(project_dir: &Path, config: &ProjectConfig) -> Result<(), String> {
@@ -98,7 +101,10 @@ fn render_post_commit_hook(project_dir: &Path, config: &ProjectConfig) -> String
     let remote_root = resolve_reportlets_remote_root(config);
     HOOK_TEMPLATE
         .replace("{{hook_marker}}", HOOK_MARKER)
-        .replace("{{project_dir}}", &shell_quote(project_dir.to_string_lossy().as_ref()))
+        .replace(
+            "{{project_dir}}",
+            &shell_quote(project_dir.to_string_lossy().as_ref()),
+        )
         .replace("{{source_subdir}}", &shell_quote(PROJECT_SOURCE_SUBDIR))
         .replace(
             "{{protocol}}",

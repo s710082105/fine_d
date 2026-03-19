@@ -2,6 +2,7 @@ use finereport_tauri_shell_lib::domain::codex_process_manager::{
     CodexProcessManager, ProcessLaunchConfig,
 };
 use finereport_tauri_shell_lib::domain::event_bridge::{EventBridge, NullEventEmitter};
+use std::collections::HashMap;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
 use std::thread;
@@ -35,6 +36,7 @@ fn start_process_runs_exit_hook_after_child_exit() {
             &ProcessLaunchConfig {
                 command: "sh".into(),
                 args: vec!["-c".into(), "exit 0".into()],
+                env: HashMap::new(),
                 working_dir: std::env::temp_dir(),
                 exit_hook: Some(Arc::new(move |session_id| {
                     hook_calls_clone.fetch_add(1, Ordering::Relaxed);
@@ -72,6 +74,7 @@ fn interrupt_process_sends_signal_to_running_session() {
                     "-c".into(),
                     "trap 'exit 130' INT; while true; do sleep 1; done".into(),
                 ],
+                env: HashMap::new(),
                 working_dir: std::env::temp_dir(),
                 exit_hook: None,
                 stdout_hook: None,

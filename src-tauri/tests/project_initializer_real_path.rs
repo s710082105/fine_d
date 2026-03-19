@@ -23,7 +23,7 @@ fn real_path_project_initializer_from_env() {
         .initialize(Path::new(&project_dir), &config)
         .expect("initialize real-path project");
 
-    assert!(Path::new(&project_dir).join(".codex/AGENTS.md").exists());
+    assert!(Path::new(&project_dir).join("AGENTS.md").exists());
     assert!(count_files(Path::new(&project_dir).join("reportlets").as_path()) > 0);
 }
 

@@ -2,6 +2,7 @@ use finereport_tauri_shell_lib::domain::terminal_event_bridge::{
     TerminalEvent, TerminalEventBridge, TerminalEventEmitter, TerminalEventType,
 };
 use finereport_tauri_shell_lib::domain::terminal_manager::{TerminalLaunchConfig, TerminalManager};
+use std::collections::HashMap;
 use std::fs;
 use std::path::PathBuf;
 use std::process::Command;
@@ -61,6 +62,7 @@ fn build_config(script: &str) -> TerminalLaunchConfig {
     TerminalLaunchConfig {
         command: "sh".into(),
         args: vec!["-c".into(), script.into()],
+        env: HashMap::new(),
         working_dir: PathBuf::from(std::env::temp_dir()),
     }
 }

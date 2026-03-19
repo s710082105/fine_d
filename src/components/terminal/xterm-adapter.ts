@@ -25,18 +25,44 @@ export type TerminalAdapterFactory = (
   bindings: TerminalAdapterBindings
 ) => TerminalAdapter
 
+const TERMINAL_THEME = {
+  background: '#0b1420',
+  foreground: '#d7e3f3',
+  cursor: '#9bd1ff',
+  cursorAccent: '#08111b',
+  selectionBackground: 'rgba(114, 170, 255, 0.28)',
+  selectionInactiveBackground: 'rgba(114, 170, 255, 0.16)',
+  black: '#0b1220',
+  red: '#f25f6b',
+  green: '#7fd88a',
+  yellow: '#f0c674',
+  blue: '#69b7ff',
+  magenta: '#c792ea',
+  cyan: '#5ad4e6',
+  white: '#d7e3f3',
+  brightBlack: '#60758d',
+  brightRed: '#ff8792',
+  brightGreen: '#9ff3ac',
+  brightYellow: '#ffd787',
+  brightBlue: '#93ceff',
+  brightMagenta: '#ddb1ff',
+  brightCyan: '#86ecff',
+  brightWhite: '#f7fbff'
+} as const
+
+function isWindowsHost() {
+  return navigator.userAgent.toLowerCase().includes('windows')
+}
+
 export const createTerminalAdapter: TerminalAdapterFactory = (host, bindings) => {
   const terminal = new Terminal({
+    allowTransparency: true,
     cursorBlink: true,
     fontFamily: '"IBM Plex Mono", "SFMono-Regular", Consolas, monospace',
     fontSize: 13,
     lineHeight: 1.45,
-    theme: {
-      background: '#0f1720',
-      foreground: '#d7e3f3',
-      cursor: '#9bd1ff',
-      selectionBackground: 'rgba(114, 170, 255, 0.28)'
-    }
+    theme: TERMINAL_THEME,
+    ...(isWindowsHost() ? { windowsPty: { backend: 'conpty' as const } } : {})
   })
   const fitAddon = new FitAddon()
   const resizeObserver = new ResizeObserver(() => {

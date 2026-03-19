@@ -44,6 +44,9 @@ fn project_config_roundtrip_preserves_sync_fields() {
     config.sync.remote_runtime_dir = "/srv/tomcat/webapps/webroot/WEB-INF".into();
     config.sync.delete_propagation = true;
     config.sync.auto_sync_on_change = true;
+    config.preview.account = "preview-user".into();
+    config.preview.password = "preview-pass".into();
+    config.ai.api_key = "sk-demo".into();
     config.mappings = vec![ProjectMapping {
         local: "templates".into(),
         remote: "reportlets".into(),
@@ -74,6 +77,9 @@ fn project_config_roundtrip_preserves_sync_fields() {
     );
     assert!(loaded.sync.delete_propagation);
     assert!(loaded.sync.auto_sync_on_change);
+    assert_eq!(loaded.preview.account, "preview-user");
+    assert_eq!(loaded.preview.password, "preview-pass");
+    assert_eq!(loaded.ai.api_key, "sk-demo");
 }
 
 #[test]
@@ -140,7 +146,14 @@ fn load_project_config_supports_local_sync_preview_and_style_fields() {
           ],
           "preview": {
             "url": "http://127.0.0.1:8075/webroot/decision",
-            "mode": "external"
+            "mode": "external",
+            "account": "preview-user",
+            "password": "preview-pass"
+          },
+          "ai": {
+            "provider": "openai",
+            "model": "gpt-5",
+            "api_key": "sk-demo"
           },
           "sync": {
             "protocol": "local",
@@ -166,6 +179,9 @@ fn load_project_config_supports_local_sync_preview_and_style_fields() {
         "http://127.0.0.1:8075/webroot/decision"
     );
     assert_eq!(value["preview"]["mode"], "external");
+    assert_eq!(value["preview"]["account"], "preview-user");
+    assert_eq!(value["preview"]["password"], "preview-pass");
+    assert_eq!(value["ai"]["api_key"], "sk-demo");
     assert_eq!(value["style"]["font_family"], "Microsoft YaHei");
     assert_eq!(value["style"]["header_font_size"], 16);
     assert_eq!(value["data_connections"][0]["connection_name"], "FR Demo");
@@ -202,6 +218,40 @@ fn load_project_config_supports_legacy_single_data_connection_field() {
 
     assert_eq!(loaded.data_connections.len(), 1);
     assert_eq!(loaded.data_connections[0].connection_name, "Legacy");
+}
+
+#[test]
+fn load_project_config_ignores_legacy_ai_base_url() {
+    let path = test_config_path();
+    std::fs::write(
+        &path,
+        json!({
+          "ai": {
+            "provider": "openai",
+            "model": "gpt-5",
+            "base_url": "http://example.invalid",
+            "api_key": "sk-demo"
+          },
+          "sync": {
+            "host": "127.0.0.1",
+            "port": 21,
+            "username": "ftp-user",
+            "remote_runtime_dir": "/srv/runtime"
+          }
+        })
+        .to_string(),
+    )
+    .expect("write legacy ai base_url config");
+
+    let loaded = load_project_config_from_path(path.as_path()).expect("load legacy ai config");
+
+    assert_eq!(loaded.ai.provider, "openai");
+    assert_eq!(loaded.ai.model, "gpt-5");
+    assert_eq!(loaded.ai.api_key, "sk-demo");
+
+    save_project_config_to_path(path.as_path(), &loaded).expect("rewrite loaded legacy ai config");
+    let rewritten = std::fs::read_to_string(path.as_path()).expect("read rewritten config");
+    assert!(!rewritten.contains("base_url"));
 }
 
 #[test]

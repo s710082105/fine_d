@@ -41,6 +41,7 @@ export function ProjectConfigForm({
     addDataConnection,
     removeDataConnection,
     updateDataConnection,
+    updateAi,
     updatePreview,
     updateStyle,
     updateSync,
@@ -113,6 +114,7 @@ export function ProjectConfigForm({
             updateWorkspace={updateWorkspace}
             updateSync={updateSync}
             updatePreview={updatePreview}
+            updateAi={updateAi}
           />
           <p className="form-hint">{`真实同步源目录固定为：${resolveProjectSourceDir(config.workspace.root_dir)}`}</p>
         </>

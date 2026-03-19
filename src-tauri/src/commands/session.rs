@@ -1,12 +1,13 @@
 use super::session_runtime::configure_process_hooks;
 use super::session_support::resolve_project_dir;
+use crate::domain::codex_auth::{append_runtime_config_args, build_codex_environment};
 use crate::domain::codex_cli::build_exec_args;
 use crate::domain::codex_process_manager::{
     CodexProcessManager, ProcessLaunchConfig, ProcessMetadata,
 };
 use crate::domain::event_bridge::EventBridge;
-use crate::domain::project_git::uses_git_post_commit_sync;
 use crate::domain::project_config::ProjectConfig;
+use crate::domain::project_git::uses_git_post_commit_sync;
 use crate::domain::session_store::{
     append_transcript_entry, bootstrap_session, SessionBootstrapInput,
 };
@@ -74,8 +75,11 @@ pub fn start_session(
         bridge: &bridge,
         sync_manager: Some(&state.sync_manager),
     };
-    let launch_config =
-        validate_external_launch_config(&request.codex, request.first_message.as_str())?;
+    let launch_config = validate_external_launch_config(
+        &request.codex,
+        &request.config,
+        request.first_message.as_str(),
+    )?;
     start_session_in_project(project_dir.as_path(), &request, runtime, launch_config)
 }
 
@@ -153,6 +157,7 @@ fn stop_sync_watcher(sync_manager: Option<&SyncManager>, session_id: &str) {
 
 fn validate_external_launch_config(
     config: &CodexLaunchConfig,
+    project_config: &ProjectConfig,
     first_message: &str,
 ) -> Result<ProcessLaunchConfig, String> {
     if config.command.trim() != "codex" {
@@ -164,11 +169,24 @@ fn validate_external_launch_config(
     }
     Ok(ProcessLaunchConfig {
         command: config.command.clone(),
-        args: build_exec_args(&config.args, first_message),
+        args: build_exec_args(
+            &build_codex_config_args(config, project_config),
+            first_message,
+        ),
+        env: build_codex_environment(None, project_config)?,
         working_dir,
         exit_hook: None,
         stdout_hook: None,
     })
+}
+
+fn build_codex_config_args(
+    config: &CodexLaunchConfig,
+    project_config: &ProjectConfig,
+) -> Vec<String> {
+    let mut args = config.args.clone();
+    append_runtime_config_args(&mut args, project_config);
+    args
 }
 
 fn generate_session_id() -> Result<String, String> {
@@ -191,6 +209,7 @@ mod tests {
                 args: vec!["-c".into(), "echo hi".into()],
                 working_dir: "/tmp".into(),
             },
+            &ProjectConfig::default(),
             "hello",
         )
         .expect_err("non-codex command must be rejected");
@@ -205,6 +224,7 @@ mod tests {
                 args: Vec::new(),
                 working_dir: ".".into(),
             },
+            &ProjectConfig::default(),
             "hello",
         )
         .expect_err("relative working dir must be rejected");
@@ -213,12 +233,15 @@ mod tests {
 
     #[test]
     fn validate_external_launch_config_builds_non_interactive_exec_command() {
+        let mut project_config = ProjectConfig::default();
+        project_config.ai.api_key = "sk-demo".into();
         let launch_config = validate_external_launch_config(
             &CodexLaunchConfig {
                 command: "codex".into(),
                 args: vec!["--json".into()],
                 working_dir: "/tmp".into(),
             },
+            &project_config,
             "生成报表",
         )
         .expect("codex launch config should be valid");
@@ -230,11 +253,20 @@ mod tests {
                 "exec",
                 "--full-auto",
                 "--skip-git-repo-check",
-                "--color",
-                "never",
                 "--json",
+                "-c",
+                r#"openai_base_url="http://cpa.hsy.930320.xyz/v1""#,
+                "-c",
+                r#"forced_login_method="api""#,
                 "生成报表",
             ]
         );
+        let codex_home = launch_config
+            .env
+            .get("CODEX_HOME")
+            .expect("api key should create isolated codex home");
+        let auth_path = Path::new(codex_home).join("auth.json");
+        let auth_content = std::fs::read_to_string(auth_path).expect("read auth file");
+        assert!(auth_content.contains(r#""OPENAI_API_KEY":"sk-demo""#));
     }
 }

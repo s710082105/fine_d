@@ -1,4 +1,5 @@
 import {
+  AiProfile,
   PreviewProfile,
   ProjectConfig,
   StyleProfile,
@@ -13,6 +14,7 @@ interface ProjectFieldProps {
   updateWorkspace: (patch: Partial<WorkspaceProfile>) => void
   updateSync: (patch: Partial<SyncProfile>) => void
   updatePreview: (patch: Partial<PreviewProfile>) => void
+  updateAi: (patch: Partial<AiProfile>) => void
 }
 
 interface StyleFieldProps {
@@ -34,25 +36,38 @@ function runtimeDirLabel(protocol: SyncProtocol): string {
   return protocol === 'local' ? '运行目录' : '远端运行目录'
 }
 
-export function ProjectFields({
+function ProjectIdentityFields({
+  name,
+  updateWorkspace
+}: {
+  name: string
+  updateWorkspace: (patch: Partial<WorkspaceProfile>) => void
+}) {
+  return (
+    <label>
+      项目名称
+      <input
+        type="text"
+        value={name}
+        onChange={(event) => updateWorkspace({ name: event.target.value })}
+      />
+    </label>
+  )
+}
+
+function SyncFields({
   config,
   chooseRuntimeDir,
-  updateWorkspace,
-  updateSync,
-  updatePreview
-}: ProjectFieldProps) {
+  updateSync
+}: {
+  config: ProjectConfig
+  chooseRuntimeDir: () => void
+  updateSync: (patch: Partial<SyncProfile>) => void
+}) {
   const remoteProtocol = isRemoteProtocol(config.sync.protocol)
 
   return (
-    <div className="config-section">
-      <label>
-        项目名称
-        <input
-          type="text"
-          value={config.workspace.name}
-          onChange={(event) => updateWorkspace({ name: event.target.value })}
-        />
-      </label>
+    <>
       <label>
         同步协议
         <select
@@ -66,7 +81,7 @@ export function ProjectFields({
           <option value="local">本地</option>
         </select>
       </label>
-      {remoteProtocol && (
+      {remoteProtocol ? (
         <>
           <label>
             同步主机
@@ -93,49 +108,13 @@ export function ProjectFields({
             />
           </label>
         </>
-      )}
-      {config.sync.protocol === 'local' ? (
-        <label>
-          {runtimeDirLabel(config.sync.protocol)}
-          <div className="directory-picker">
-            <input type="text" value={config.sync.remote_runtime_dir} readOnly />
-            <button type="button" onClick={chooseRuntimeDir}>
-              选择运行目录
-            </button>
-          </div>
-        </label>
-      ) : (
-        <label>
-          {runtimeDirLabel(config.sync.protocol)}
-          <input
-            type="text"
-            value={config.sync.remote_runtime_dir}
-            onChange={(event) => updateSync({ remote_runtime_dir: event.target.value })}
-          />
-        </label>
-      )}
-      <label>
-        预览地址
-        <input
-          type="text"
-          value={config.preview.url}
-          onChange={(event) => updatePreview({ url: event.target.value })}
-        />
-      </label>
-      <label>
-        预览方式
-        <select
-          value={config.preview.mode}
-          onChange={(event) =>
-            updatePreview({
-              mode: event.target.value as PreviewProfile['mode']
-            })
-          }
-        >
-          <option value="embedded">内嵌预览</option>
-          <option value="external">系统浏览器</option>
-        </select>
-      </label>
+      ) : null}
+      <RuntimeDirField
+        protocol={config.sync.protocol}
+        runtimeDir={config.sync.remote_runtime_dir}
+        chooseRuntimeDir={chooseRuntimeDir}
+        updateSync={updateSync}
+      />
       <label className="checkbox-field">
         <input
           type="checkbox"
@@ -152,6 +131,158 @@ export function ProjectFields({
         />
         文件变更后自动同步
       </label>
+    </>
+  )
+}
+
+function RuntimeDirField({
+  protocol,
+  runtimeDir,
+  chooseRuntimeDir,
+  updateSync
+}: {
+  protocol: SyncProtocol
+  runtimeDir: string
+  chooseRuntimeDir: () => void
+  updateSync: (patch: Partial<SyncProfile>) => void
+}) {
+  const label = runtimeDirLabel(protocol)
+
+  if (protocol === 'local') {
+    return (
+      <label>
+        {label}
+        <div className="directory-picker">
+          <input type="text" value={runtimeDir} readOnly />
+          <button type="button" onClick={chooseRuntimeDir}>
+            选择运行目录
+          </button>
+        </div>
+      </label>
+    )
+  }
+
+  return (
+    <label>
+      {label}
+      <input
+        type="text"
+        value={runtimeDir}
+        onChange={(event) => updateSync({ remote_runtime_dir: event.target.value })}
+      />
+    </label>
+  )
+}
+
+function PreviewFields({
+  preview,
+  updatePreview
+}: {
+  preview: PreviewProfile
+  updatePreview: (patch: Partial<PreviewProfile>) => void
+}) {
+  return (
+    <>
+      <label>
+        预览地址
+        <input
+          type="text"
+          value={preview.url}
+          onChange={(event) => updatePreview({ url: event.target.value })}
+        />
+      </label>
+      <label>
+        预览账号
+        <input
+          type="text"
+          value={preview.account}
+          onChange={(event) => updatePreview({ account: event.target.value })}
+        />
+      </label>
+      <label>
+        预览密码
+        <input
+          type="password"
+          value={preview.password}
+          onChange={(event) => updatePreview({ password: event.target.value })}
+        />
+      </label>
+      <label>
+        预览方式
+        <select
+          value={preview.mode}
+          onChange={(event) =>
+            updatePreview({
+              mode: event.target.value as PreviewProfile['mode']
+            })
+          }
+        >
+          <option value="embedded">内嵌预览</option>
+          <option value="external">系统浏览器</option>
+        </select>
+      </label>
+    </>
+  )
+}
+
+function AiFields({
+  ai,
+  updateAi
+}: {
+  ai: AiProfile
+  updateAi: (patch: Partial<AiProfile>) => void
+}) {
+  return (
+    <>
+      <label>
+        Codex 提供方
+        <input
+          type="text"
+          value={ai.provider}
+          onChange={(event) => updateAi({ provider: event.target.value })}
+        />
+      </label>
+      <label>
+        Codex 模型
+        <input
+          type="text"
+          value={ai.model}
+          onChange={(event) => updateAi({ model: event.target.value })}
+        />
+      </label>
+      <label>
+        Codex API Key
+        <input
+          type="password"
+          value={ai.api_key}
+          onChange={(event) => updateAi({ api_key: event.target.value })}
+        />
+      </label>
+    </>
+  )
+}
+
+export function ProjectFields({
+  config,
+  chooseRuntimeDir,
+  updateWorkspace,
+  updateSync,
+  updatePreview,
+  updateAi
+}: ProjectFieldProps) {
+  return (
+    <div className="config-section">
+      <ProjectIdentityFields
+        name={config.workspace.name}
+        updateWorkspace={updateWorkspace}
+      />
+      <SyncFields
+        config={config}
+        chooseRuntimeDir={chooseRuntimeDir}
+        updateSync={updateSync}
+      />
+      <PreviewFields preview={config.preview} updatePreview={updatePreview} />
+      <AiFields ai={config.ai} updateAi={updateAi} />
     </div>
   )
 }

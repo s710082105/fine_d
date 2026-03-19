@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react'
 import {
+  AiProfile,
   DataConnectionProfile,
   PreviewProfile,
   ProjectConfig,
@@ -36,7 +37,9 @@ export function createDefaultProjectConfig(): ProjectConfig {
     data_connections: [],
     preview: {
       url: 'http://127.0.0.1:8075/webroot/decision',
-      mode: 'embedded'
+      mode: 'embedded',
+      account: '',
+      password: ''
     },
     sync: {
       protocol: 'sftp',
@@ -47,7 +50,11 @@ export function createDefaultProjectConfig(): ProjectConfig {
       delete_propagation: false,
       auto_sync_on_change: true
     },
-    ai: { provider: 'openai', model: 'gpt-5' },
+    ai: {
+      provider: 'openai',
+      model: 'gpt-5',
+      api_key: ''
+    },
     mappings: []
   }
 }
@@ -67,6 +74,8 @@ function validateConfig(config: ProjectConfig): string[] {
   if (!ALLOWED_PROTOCOLS.has(config.sync.protocol)) errors.push('同步协议仅支持 SFTP、FTP 或本地')
   if (config.sync.remote_runtime_dir.trim().length === 0) errors.push('运行目录不能为空')
   if (config.preview.url.trim().length === 0) errors.push('预览地址不能为空')
+  if (config.ai.provider.trim().length === 0) errors.push('Codex 提供方不能为空')
+  if (config.ai.model.trim().length === 0) errors.push('Codex 模型不能为空')
   if (config.style.font_family.trim().length === 0) errors.push('字体不能为空')
   if (config.style.header_font_family.trim().length === 0) errors.push('表头字体不能为空')
   if (config.style.number_format.trim().length === 0) errors.push('数字格式不能为空')
@@ -236,6 +245,8 @@ export function useProjectConfigState(
     })
   const updatePreview = (patch: Partial<PreviewProfile>) =>
     updateConfig(mergeConfig(config, 'preview', patch))
+  const updateAi = (patch: Partial<AiProfile>) =>
+    updateConfig(mergeConfig(config, 'ai', patch))
   const updateSync = (patch: Partial<SyncProfile>) =>
     updateConfig(mergeConfig(config, 'sync', patch))
   const updateStyle = (patch: Partial<StyleProfile>) =>
@@ -278,6 +289,7 @@ export function useProjectConfigState(
     updateDataConnection,
     updateWorkspace,
     updatePreview,
+    updateAi,
     updateSync,
     updateStyle,
     onSubmit

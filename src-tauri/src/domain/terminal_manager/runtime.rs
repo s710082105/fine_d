@@ -159,6 +159,9 @@ fn build_command_builder(config: &TerminalLaunchConfig) -> CommandBuilder {
     for arg in &config.args {
         builder.arg(arg.as_str());
     }
+    for (key, value) in &config.env {
+        builder.env(key.as_str(), value.as_str());
+    }
     builder
 }
 

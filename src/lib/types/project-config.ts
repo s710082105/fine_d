@@ -27,6 +27,8 @@ export interface DataConnectionProfile {
 export interface PreviewProfile {
   url: string
   mode: PreviewMode
+  account: string
+  password: string
 }
 
 export interface SyncProfile {
@@ -42,6 +44,7 @@ export interface SyncProfile {
 export interface AiProfile {
   provider: string
   model: string
+  api_key: string
 }
 
 export interface ProjectMapping {

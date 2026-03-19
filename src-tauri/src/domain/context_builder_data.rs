@@ -12,7 +12,10 @@ pub fn markdown_data_connections(config: &ProjectConfig) -> String {
         .map(|connection| {
             format!(
                 "- name: {}\n  dsn: {}\n  username: {}\n  password: {}",
-                connection.connection_name, connection.dsn, connection.username, connection.password
+                connection.connection_name,
+                connection.dsn,
+                connection.username,
+                connection.password
             )
         })
         .collect::<Vec<_>>()

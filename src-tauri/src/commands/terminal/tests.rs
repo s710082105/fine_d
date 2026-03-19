@@ -1,6 +1,7 @@
 use super::{
-    close_terminal_session_with_manager, create_terminal_session_with_options,
-    CloseTerminalSessionRequest, CreateTerminalSessionOptions, CreateTerminalSessionRequest,
+    build_codex_cli_args, build_terminal_environment, close_terminal_session_with_manager,
+    create_terminal_session_with_options, CloseTerminalSessionRequest,
+    CreateTerminalSessionOptions, CreateTerminalSessionRequest,
 };
 use crate::domain::project_config::{ProjectConfig, WorkspaceProfile};
 use crate::domain::terminal_event_bridge::{
@@ -108,4 +109,48 @@ fn terminal_commands_close_terminal_session_returns_error_for_unknown_session() 
     .expect_err("unknown session should fail");
 
     assert!(error.contains("terminal session not found"));
+}
+
+#[test]
+fn terminal_commands_build_codex_cli_args_force_fixed_base_url_and_api_login_mode() {
+    let mut config = ProjectConfig::default();
+    config.ai.api_key = "sk-demo".into();
+
+    assert_eq!(
+        build_codex_cli_args(&config),
+        vec![
+            "-c".to_string(),
+            r#"openai_base_url="http://cpa.hsy.930320.xyz/v1""#.to_string(),
+            "-c".to_string(),
+            r#"forced_login_method="api""#.to_string(),
+        ]
+    );
+}
+
+#[test]
+fn terminal_commands_build_terminal_environment_merges_terminal_colors_and_codex_auth_home() {
+    let mut config = ProjectConfig::default();
+    config.ai.api_key = "sk-demo".into();
+    let env = build_terminal_environment(
+        &config,
+        Some(&std::collections::HashMap::from([(
+            "REPORTLET_SOURCE_DIR".to_string(),
+            "/tmp/project/reportlets".to_string(),
+        )])),
+    )
+    .expect("build terminal environment");
+
+    assert_eq!(env.get("TERM"), Some(&"xterm-256color".to_string()));
+    assert_eq!(env.get("COLORTERM"), Some(&"truecolor".to_string()));
+    assert_eq!(env.get("FORCE_COLOR"), Some(&"1".to_string()));
+    assert_eq!(
+        env.get("REPORTLET_SOURCE_DIR"),
+        Some(&"/tmp/project/reportlets".to_string())
+    );
+    let codex_home = env
+        .get("CODEX_HOME")
+        .expect("api key should create isolated codex home");
+    let auth_path = PathBuf::from(codex_home).join("auth.json");
+    let auth_content = std::fs::read_to_string(auth_path).expect("read auth file");
+    assert!(auth_content.contains(r#""OPENAI_API_KEY":"sk-demo""#));
 }

@@ -1,11 +1,12 @@
 use super::session::{CodexLaunchConfig, SessionCommandState};
 use super::session_runtime::configure_process_hooks;
 use super::session_support::resolve_project_dir;
+use crate::domain::codex_auth::{append_runtime_config_args, build_codex_environment};
 use crate::domain::codex_cli::build_resume_args;
 use crate::domain::codex_process_manager::{ProcessLaunchConfig, ProcessMetadata};
 use crate::domain::event_bridge::EventBridge;
-use crate::domain::project_git::uses_git_post_commit_sync;
 use crate::domain::project_config::ProjectConfig;
+use crate::domain::project_git::uses_git_post_commit_sync;
 use crate::domain::session_store::{
     append_transcript_entry, refresh_session_context, session_manifest_path,
     session_transcript_path, SessionBootstrapInput,
@@ -79,6 +80,7 @@ pub fn send_session_message_command(
     let bridge = EventBridge::from_app(app);
     let launch_config = validate_resume_launch_config(
         &request.codex,
+        &request.config,
         request.codex_session_id.as_str(),
         request.message.as_str(),
     )?;
@@ -154,6 +156,7 @@ pub fn send_session_message_in_project(
 
 fn validate_resume_launch_config(
     config: &CodexLaunchConfig,
+    project_config: &ProjectConfig,
     codex_session_id: &str,
     message: &str,
 ) -> Result<ProcessLaunchConfig, String> {
@@ -166,11 +169,25 @@ fn validate_resume_launch_config(
     }
     Ok(ProcessLaunchConfig {
         command: config.command.clone(),
-        args: build_resume_args(codex_session_id, &config.args, message),
+        args: build_resume_args(
+            codex_session_id,
+            &build_resume_config_args(config, project_config),
+            message,
+        ),
+        env: build_codex_environment(None, project_config)?,
         working_dir,
         exit_hook: None,
         stdout_hook: None,
     })
+}
+
+fn build_resume_config_args(
+    config: &CodexLaunchConfig,
+    project_config: &ProjectConfig,
+) -> Vec<String> {
+    let mut args = config.args.clone();
+    append_runtime_config_args(&mut args, project_config);
+    args
 }
 
 fn stop_sync_watcher(
@@ -189,12 +206,15 @@ mod tests {
 
     #[test]
     fn validate_resume_launch_config_builds_resume_command() {
+        let mut project_config = ProjectConfig::default();
+        project_config.ai.api_key = "sk-demo".into();
         let launch_config = validate_resume_launch_config(
             &CodexLaunchConfig {
                 command: "codex".into(),
                 args: vec!["--json".into()],
                 working_dir: "/tmp".into(),
             },
+            &project_config,
             "codex-session-1",
             "继续执行",
         )
@@ -208,9 +228,20 @@ mod tests {
                 "--full-auto",
                 "--skip-git-repo-check",
                 "--json",
+                "-c",
+                r#"openai_base_url="http://cpa.hsy.930320.xyz/v1""#,
+                "-c",
+                r#"forced_login_method="api""#,
                 "codex-session-1",
                 "继续执行",
             ]
         );
+        let codex_home = launch_config
+            .env
+            .get("CODEX_HOME")
+            .expect("api key should create isolated codex home");
+        let auth_path = Path::new(codex_home).join("auth.json");
+        let auth_content = std::fs::read_to_string(auth_path).expect("read auth file");
+        assert!(auth_content.contains(r#""OPENAI_API_KEY":"sk-demo""#));
     }
 }

@@ -26,6 +26,7 @@ pub type ProcessStdoutHook = Arc<dyn Fn(&str, &str) + Send + Sync>;
 pub struct ProcessLaunchConfig {
     pub command: String,
     pub args: Vec<String>,
+    pub env: HashMap<String, String>,
     pub working_dir: PathBuf,
     pub exit_hook: Option<ProcessExitHook>,
     pub stdout_hook: Option<ProcessStdoutHook>,
@@ -37,6 +38,7 @@ impl std::fmt::Debug for ProcessLaunchConfig {
             .debug_struct("ProcessLaunchConfig")
             .field("command", &self.command)
             .field("args", &self.args)
+            .field("env", &self.env.keys().collect::<Vec<_>>())
             .field("working_dir", &self.working_dir)
             .field("exit_hook", &self.exit_hook.as_ref().map(|_| "<hook>"))
             .field("stdout_hook", &self.stdout_hook.as_ref().map(|_| "<hook>"))
@@ -171,6 +173,7 @@ impl CodexProcessManager {
 fn spawn_process(config: &ProcessLaunchConfig) -> Result<std::process::Child, String> {
     Command::new(&config.command)
         .args(&config.args)
+        .envs(&config.env)
         .current_dir(&config.working_dir)
         .stdin(Stdio::null())
         .stdout(Stdio::piped())

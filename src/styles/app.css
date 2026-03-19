@@ -59,7 +59,8 @@ body {
   min-width: 0;
   overflow: hidden;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.92) 100%);
+    radial-gradient(circle at top right, rgba(34, 96, 168, 0.2), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.18) 100%);
 }
 
 .pane-right > * {
