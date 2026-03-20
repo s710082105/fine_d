@@ -11,6 +11,7 @@
   "bundle": {
     "resources": [
       "../scripts/install-runtime-macos.sh",
+      "../scripts/install-runtime-windows.cmd",
       "../scripts/install-runtime-windows.ps1"
     ]
   },

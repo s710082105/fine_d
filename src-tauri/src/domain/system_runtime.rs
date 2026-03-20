@@ -5,7 +5,7 @@ use tauri::{AppHandle, Manager};
 
 const UNIX_SHELL_PATH: &str = "/bin/sh";
 const MACOS_INSTALLER: &str = "install-runtime-macos.sh";
-const WINDOWS_INSTALLER: &str = "install-runtime-windows.ps1";
+const WINDOWS_INSTALLER: &str = "install-runtime-windows.cmd";
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum RuntimePlatform {
@@ -81,8 +81,15 @@ fn install_script_name(platform: RuntimePlatform) -> Option<&'static str> {
 
 fn inspect_python(platform: RuntimePlatform) -> CommandInstallationStatus {
     match platform {
-        RuntimePlatform::Windows => inspect_command(&["python3", "python"]),
-        RuntimePlatform::Macos | RuntimePlatform::Linux => inspect_command(&["python3"]),
+        RuntimePlatform::Windows => inspect_command(python_candidates(platform)),
+        RuntimePlatform::Macos | RuntimePlatform::Linux => inspect_command(python_candidates(platform)),
+    }
+}
+
+fn python_candidates(platform: RuntimePlatform) -> &'static [&'static str] {
+    match platform {
+        RuntimePlatform::Windows => &["py", "python3", "python"],
+        RuntimePlatform::Macos | RuntimePlatform::Linux => &["python3"],
     }
 }
 
@@ -161,4 +168,25 @@ fn read_git_exec_path() -> Result<PathBuf, String> {
         "failed to resolve git exec path: {}",
         String::from_utf8_lossy(&output.stderr).trim()
     ))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{install_script_name, python_candidates, RuntimePlatform};
+
+    #[test]
+    fn windows_install_script_name_prefers_cmd_wrapper() {
+        assert_eq!(
+            install_script_name(RuntimePlatform::Windows),
+            Some("install-runtime-windows.cmd")
+        );
+    }
+
+    #[test]
+    fn windows_python_candidates_include_py_launcher_first() {
+        assert_eq!(
+            python_candidates(RuntimePlatform::Windows),
+            &["py", "python3", "python"]
+        );
+    }
 }

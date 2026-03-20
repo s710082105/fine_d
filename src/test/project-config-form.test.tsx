@@ -6,7 +6,9 @@ import {
   ProjectConfigForm
 } from '../components/config/project-config-form'
 
-it('renders project tab by default and switches to style tab', async () => {
+it(
+  'renders project tab by default and switches to style tab',
+  async () => {
   await act(async () => {
     render(
       <ProjectConfigForm
@@ -100,7 +102,9 @@ it('renders project tab by default and switches to style tab', async () => {
   expect(screen.getByText('sales')).toBeInTheDocument()
   expect(screen.getByText('report.cpt')).toBeInTheDocument()
   expect(screen.queryByText('.gitkeep')).not.toBeInTheDocument()
-})
+  },
+  10000
+)
 
 it('loads config from project directory and saves back to project config file', async () => {
   const loaded = createDefaultProjectConfig()

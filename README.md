@@ -135,6 +135,7 @@
 安装脚本：
 
 - `scripts/install-runtime-macos.sh`
+- `scripts/install-runtime-windows.cmd`
 - `scripts/install-runtime-windows.ps1`
 
 两套脚本都会先交互选择：
@@ -143,6 +144,17 @@
 - 国内源
 
 然后完成 `git`、`node`、`python3`、`codex` 安装，并在末尾执行版本校验。
+
+说明：
+
+- `macOS` 的“国内源”会切换 `Homebrew` 镜像和 `npm registry`
+- `Windows` 的“国内源”会将 `winget` 源切到中科大镜像 `https://mirrors.ustc.edu.cn/winget-source`，并将 `npm registry` 切到国内源
+- `Windows` 修改 `winget` 源需要管理员权限；切回“官方源”时脚本会执行 `winget source reset winget`
+
+Windows 推荐执行方式：
+
+- 首选：`.\scripts\install-runtime-windows.cmd`
+- 备选：`powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install-runtime-windows.ps1`
 
 为保证 `macOS` 和 `Windows` 的实际可运行性，启动预检不是只看平台名，而是直接检查同步链路依赖：
 

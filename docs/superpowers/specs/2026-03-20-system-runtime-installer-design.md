@@ -71,7 +71,10 @@
 仓库内固定提供两套安装脚本：
 
 - `scripts/install-runtime-macos.sh`
+- `scripts/install-runtime-windows.cmd`
 - `scripts/install-runtime-windows.ps1`
+
+Windows 默认向用户暴露 `.cmd` 入口，由它负责以 `PowerShell -ExecutionPolicy Bypass -File` 拉起 `.ps1`，避免用户直接执行 `.ps1` 时被系统执行策略拦截。
 
 ### Shared Flow
 
@@ -111,10 +114,13 @@
   - `winget install Python.Python.3.12`
   - `npm install -g @openai/codex`
 - 国内源模式：
+  - 先执行 `winget source remove winget`
+  - 再执行 `winget source add winget https://mirrors.ustc.edu.cn/winget-source --trust-level trusted`
   - `npm registry` 切换到国内源
-  - `winget` 仍使用官方分发
+  - 该流程需要管理员权限，脚本必须显式提示
 - 官方源模式：
-  - 所有组件使用默认源
+  - 先执行 `winget source reset winget`
+  - `npm` 使用默认 registry
 
 ## Architecture Changes
 

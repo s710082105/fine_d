@@ -5,13 +5,16 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
 $NpmMirrorRegistry = 'https://registry.npmmirror.com'
+$WingetDomesticSource = 'https://mirrors.ustc.edu.cn/winget-source'
+$DefaultGlobalNpmBin = Join-Path $env:AppData 'npm'
+$CodexPackage = '@openai/codex'
 $SourceMode = 'official'
 
 function Show-Header {
   @(
     'FineReport Runtime Installer (Windows)',
     '',
-    '将安装以下组件：',
+    'The installer will install:',
     '- git',
     '- node',
     '- python3',
@@ -21,22 +24,46 @@ function Show-Header {
 
 function Select-SourceMode {
   Write-Host ''
-  Write-Host '请选择下载源：'
-  Write-Host '1. 官方源'
-  Write-Host '2. 国内源'
-  $choice = Read-Host '输入选项 [1/2]'
+  Write-Host 'Choose download source:'
+  Write-Host '1. Official'
+  Write-Host '2. Domestic mirror (winget USTC mirror + domestic npm mirror)'
+  $choice = Read-Host 'Select [1/2]'
   switch ($choice) {
     '2' { $script:SourceMode = 'domestic' }
     '' { $script:SourceMode = 'official' }
     '1' { $script:SourceMode = 'official' }
-    default { throw "无效选项: $choice" }
+    default { throw "Invalid option: $choice" }
   }
 }
 
 function Assert-Winget {
   if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
-    throw '未检测到 winget，请先升级 App Installer 或系统组件后再执行本脚本。'
+    throw 'winget not found. Please update App Installer or required Windows components first.'
   }
+}
+
+function Get-WingetVersion {
+  $versionText = (& winget --version 2>&1 | Select-Object -First 1).ToString().Trim()
+  if ($versionText.StartsWith('v')) {
+    $versionText = $versionText.Substring(1)
+  }
+  return [version]$versionText
+}
+
+function Configure-WingetSource {
+  if ($SourceMode -eq 'domestic') {
+    Write-Host 'Configuring winget source to USTC mirror...'
+    & winget source remove winget 2>$null
+    $args = @('source', 'add', 'winget', $WingetDomesticSource)
+    if ((Get-WingetVersion) -ge [version]'1.8.0') {
+      $args += @('--trust-level', 'trusted')
+    }
+    & winget @args
+    return
+  }
+
+  Write-Host 'Resetting winget source to official...'
+  & winget source reset winget
 }
 
 function Install-WingetPackage {
@@ -44,54 +71,125 @@ function Install-WingetPackage {
   & winget install --id $Id -e --accept-package-agreements --accept-source-agreements
 }
 
+function Test-CommandAvailable {
+  param([string[]]$Names)
+
+  foreach ($name in $Names) {
+    $command = Get-Command $name -ErrorAction SilentlyContinue
+    if ($command -and -not $command.Source.Contains('\WindowsApps\')) {
+      return $true
+    }
+  }
+
+  return $false
+}
+
 function Install-CorePackages {
   Write-Host ''
-  Write-Host '开始安装 git / node / python。'
-  Install-WingetPackage 'Git.Git'
-  Install-WingetPackage 'OpenJS.NodeJS.LTS'
-  Install-WingetPackage 'Python.Python.3.12'
+  Write-Host 'Installing git / node / python...'
+
+  if (Test-CommandAvailable @('git')) {
+    Write-Host 'git already installed, skip.'
+  } else {
+    Install-WingetPackage 'Git.Git'
+  }
+
+  if (Test-CommandAvailable @('node')) {
+    Write-Host 'node already installed, skip.'
+  } else {
+    Install-WingetPackage 'OpenJS.NodeJS.LTS'
+  }
+
+  if (Test-CommandAvailable @('py', 'python', 'python3')) {
+    Write-Host 'python already installed, skip.'
+  } else {
+    Install-WingetPackage 'Python.Python.3.12'
+  }
+}
+
+function Get-PathEntriesFromTarget {
+  param([System.EnvironmentVariableTarget]$Target)
+  $raw = [Environment]::GetEnvironmentVariable('Path', $Target)
+  if ([string]::IsNullOrWhiteSpace($raw)) {
+    return @()
+  }
+  return $raw -split ';' | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }
 }
 
 function Refresh-Path {
   $segments = @(
+    Get-PathEntriesFromTarget 'Machine'
+    Get-PathEntriesFromTarget 'User'
     $env:ProgramFiles + '\nodejs',
+    $env:ProgramFiles + '\Git\cmd',
     $env:LocalAppData + '\Programs\Python\Python312',
     $env:LocalAppData + '\Programs\Python\Python312\Scripts',
-    $env:LocalAppData + '\Programs\Git\cmd'
+    $env:LocalAppData + '\Programs\Git\cmd',
+    $DefaultGlobalNpmBin
   )
   foreach ($segment in $segments) {
-    if (Test-Path $segment -and -not ($env:Path -split ';' | Where-Object { $_ -eq $segment })) {
+    if ((Test-Path $segment) -and -not ($env:Path -split ';' | Where-Object { $_ -eq $segment })) {
       $env:Path += ";$segment"
     }
   }
 }
 
+function Resolve-CommandPath {
+  param(
+    [string[]]$Names,
+    [string[]]$FallbackPaths
+  )
+
+  foreach ($path in $FallbackPaths) {
+    if (Test-Path $path) {
+      return $path
+    }
+  }
+
+  foreach ($name in $Names) {
+    $command = Get-Command $name -ErrorAction SilentlyContinue
+    if ($command -and -not $command.Source.Contains('\WindowsApps\')) {
+      return $command.Source
+    }
+  }
+
+  throw "Command not found: $($Names -join ', ')"
+}
+
 function Install-Codex {
   Write-Host ''
-  Write-Host '开始安装 Codex。'
+  Write-Host 'Installing Codex...'
+  $npmPath = Resolve-CommandPath @('npm.cmd', 'npm') @(
+    (Join-Path $env:ProgramFiles 'nodejs\npm.cmd'),
+    (Join-Path $env:ProgramFiles 'nodejs\npm')
+  )
+  $npmArgs = @('install', '-g', $CodexPackage)
   if ($SourceMode -eq 'domestic') {
-    $env:npm_config_registry = $NpmMirrorRegistry
+    $npmArgs += @('--registry', $NpmMirrorRegistry)
   }
-  & npm install -g @openai/codex
+  & $npmPath @npmArgs
 }
 
 function Assert-CommandVersion {
-  param([string]$CommandName)
-  $command = Get-Command $CommandName -ErrorAction SilentlyContinue
-  if (-not $command) {
-    throw "$CommandName 未安装成功"
-  }
-  $version = & $CommandName --version 2>&1 | Select-Object -First 1
-  Write-Host ("[ OK ] {0} -> {1}" -f $CommandName, $version)
+  param(
+    [string]$Label,
+    [string[]]$Names,
+    [string[]]$FallbackPaths
+  )
+
+  $commandPath = Resolve-CommandPath $Names $FallbackPaths
+  $version = & $commandPath --version 2>&1 | Select-Object -First 1
+  Write-Host ("[ OK ] {0} -> {1}" -f $Label, $version)
 }
 
 function Show-SourceSummary {
   Write-Host ''
   if ($SourceMode -eq 'domestic') {
-    Write-Host '当前源配置：winget 官方源，npm 国内源。'
+    Write-Host 'Source mode: USTC winget mirror + domestic npm mirror.'
+    Write-Host 'Admin permission is required for winget source replacement.'
     return
   }
-  Write-Host '当前源配置：官方源。'
+  Write-Host 'Source mode: official.'
 }
 
 function Main {
@@ -99,16 +197,28 @@ function Main {
   Select-SourceMode
   Show-SourceSummary
   Assert-Winget
+  Configure-WingetSource
   Install-CorePackages
   Refresh-Path
   Install-Codex
   Refresh-Path
   Write-Host ''
-  Write-Host '安装结果校验：'
-  Assert-CommandVersion 'git'
-  Assert-CommandVersion 'node'
-  Assert-CommandVersion 'python'
-  Assert-CommandVersion 'codex'
+  Write-Host 'Verifying installed commands:'
+  Assert-CommandVersion 'git' @('git') @(
+    (Join-Path $env:ProgramFiles 'Git\cmd\git.exe'),
+    (Join-Path $env:LocalAppData 'Programs\Git\cmd\git.exe')
+  )
+  Assert-CommandVersion 'node' @('node') @(
+    (Join-Path $env:ProgramFiles 'nodejs\node.exe')
+  )
+  Assert-CommandVersion 'python3' @('py', 'python3', 'python') @(
+    (Join-Path $env:LocalAppData 'Programs\Python\Python312\python.exe'),
+    (Join-Path $env:ProgramFiles 'Python312\python.exe')
+  )
+  Assert-CommandVersion 'codex' @('codex') @(
+    (Join-Path $DefaultGlobalNpmBin 'codex.cmd'),
+    (Join-Path $DefaultGlobalNpmBin 'codex')
+  )
 }
 
 Main

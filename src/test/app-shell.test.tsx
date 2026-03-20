@@ -172,7 +172,7 @@ it('blocks the app when startup prerequisites fail', async () => {
               message: '未检测到 git',
               fixHint: '请执行 Windows 安装脚本完成环境安装',
               detectedVersion: '',
-              scriptPath: 'scripts/install-runtime-windows.ps1'
+              scriptPath: 'scripts/install-runtime-windows.cmd'
             }
           ]
         })}
@@ -195,7 +195,7 @@ it('blocks the app when startup prerequisites fail', async () => {
   expect(screen.getByText('基础环境未安装完成')).toBeInTheDocument()
   expect(screen.getByText('未检测到 git')).toBeInTheDocument()
   expect(screen.getByText('请执行 Windows 安装脚本完成环境安装')).toBeInTheDocument()
-  expect(screen.getByText('scripts/install-runtime-windows.ps1')).toBeInTheDocument()
+  expect(screen.getByText('scripts/install-runtime-windows.cmd')).toBeInTheDocument()
   expect(screen.queryByText('项目配置')).not.toBeInTheDocument()
   expect(screen.queryByText('终端状态')).not.toBeInTheDocument()
 })

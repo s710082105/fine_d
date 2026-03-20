@@ -49,6 +49,7 @@
 **Files:**
 - Create: `scripts/install-runtime-macos.sh`
 - Create: `scripts/install-runtime-windows.ps1`
+- Create: `scripts/install-runtime-windows.cmd`
 - Modify: `package.json`
 
 - [ ] Step 1: 创建 `macOS` 安装脚本，支持选择官方源 / 国内源，并安装 `git/node/python/codex`。
@@ -57,6 +58,7 @@
 - [ ] Step 4: 手动执行脚本语法检查：
   - `bash -n scripts/install-runtime-macos.sh`
   - `pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/install-runtime-windows.ps1 -WhatIf` 或最小语法验证
+  - Windows 用户默认执行 `scripts/install-runtime-windows.cmd`
 
 ### Task 5: 清理 bundled runtime 残留并更新文档
 
