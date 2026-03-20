@@ -1,7 +1,7 @@
+import { Button, Card, Input } from 'antd'
 import type {
   DataConnectionProfile,
-  ProjectConfig,
-  ReportletEntry
+  ProjectConfig
 } from '../../lib/types/project-config'
 
 interface DataConnectionFieldsProps {
@@ -9,10 +9,6 @@ interface DataConnectionFieldsProps {
   addDataConnection: () => void
   removeDataConnection: (index: number) => void
   updateDataConnection: (index: number, patch: Partial<DataConnectionProfile>) => void
-}
-
-interface FileManagementFieldsProps {
-  entries: ReportletEntry[]
 }
 
 export function DataConnectionFields({
@@ -29,108 +25,61 @@ export function DataConnectionFields({
   return (
     <div className="config-section">
       <div className="config-list-actions">
-        <button type="button" onClick={addDataConnection}>新增数据连接</button>
+        <Button onClick={addDataConnection}>新增数据连接</Button>
       </div>
       {connections.map((connection, index) => (
-        <section key={`connection-${index}`} className="config-subsection">
+        <Card key={`connection-${index}`} className="config-subsection" size="small">
           <div className="config-subsection-header">
             <strong>{`数据连接 ${index + 1}`}</strong>
-            <button
-              type="button"
+            <Button
+              danger
+              type="text"
               onClick={() => removeDataConnection(index)}
               disabled={config.data_connections.length === 0}
             >
               删除
-            </button>
+            </Button>
           </div>
-          <label>
-            {`数据连接名称 ${index + 1}`}
-            <input
-              type="text"
+          <label className="config-field">
+            <span className="config-field__label">{`数据连接名称 ${index + 1}`}</span>
+            <Input
+              aria-label={`数据连接名称 ${index + 1}`}
               value={connection.connection_name}
               onChange={(event) =>
                 updateDataConnection(index, { connection_name: event.target.value })
               }
             />
           </label>
-          <label>
-            {`DSN ${index + 1}`}
-            <input
-              type="text"
+          <label className="config-field">
+            <span className="config-field__label">{`DSN ${index + 1}`}</span>
+            <Input
+              aria-label={`DSN ${index + 1}`}
               value={connection.dsn}
               onChange={(event) => updateDataConnection(index, { dsn: event.target.value })}
             />
           </label>
-          <label>
-            {`用户名 ${index + 1}`}
-            <input
-              type="text"
+          <label className="config-field">
+            <span className="config-field__label">{`用户名 ${index + 1}`}</span>
+            <Input
+              aria-label={`用户名 ${index + 1}`}
               value={connection.username}
               onChange={(event) =>
                 updateDataConnection(index, { username: event.target.value })
               }
             />
           </label>
-          <label>
-            {`密码 ${index + 1}`}
-            <input
-              type="password"
+          <label className="config-field">
+            <span className="config-field__label">{`密码 ${index + 1}`}</span>
+            <Input.Password
+              aria-label={`密码 ${index + 1}`}
               value={connection.password}
               onChange={(event) =>
                 updateDataConnection(index, { password: event.target.value })
               }
             />
           </label>
-        </section>
+        </Card>
       ))}
     </div>
   )
-}
-
-export function FileManagementFields({ entries }: FileManagementFieldsProps) {
-  const visibleEntries = filterHiddenEntries(entries)
-
-  return (
-    <div className="config-section">
-      <div className="section-heading">reportlets 目录</div>
-      {visibleEntries.length === 0 ? (
-        <p className="form-hint">reportlets 目录为空</p>
-      ) : (
-        <div className="file-tree">
-          {visibleEntries.map((entry) => (
-            <FileTreeNode key={entry.path} entry={entry} depth={0} />
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
-
-function FileTreeNode({
-  entry,
-  depth
-}: {
-  entry: ReportletEntry
-  depth: number
-}) {
-  return (
-    <div>
-      <div className="file-tree-node" style={{ paddingLeft: `${depth * 18}px` }}>
-        <span className="file-tree-kind">{entry.kind === 'directory' ? '目录' : '文件'}</span>
-        <span>{entry.name}</span>
-      </div>
-      {entry.children.map((child) => (
-        <FileTreeNode key={child.path} entry={child} depth={depth + 1} />
-      ))}
-    </div>
-  )
-}
-
-function filterHiddenEntries(entries: ReportletEntry[]): ReportletEntry[] {
-  return entries
-    .filter((entry) => !entry.name.startsWith('.'))
-    .map((entry) => ({
-      ...entry,
-      children: filterHiddenEntries(entry.children)
-    }))
 }

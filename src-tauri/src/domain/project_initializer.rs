@@ -11,7 +11,14 @@ const CODEX_PROJECT_CONTEXT_PATH: &str = ".codex/project-context.md";
 const CODEX_PROJECT_RULES_PATH: &str = ".codex/project-rules.md";
 const CODEX_MAPPINGS_PATH: &str = ".codex/mappings.json";
 const CODEX_SKILLS_PATH: &str = ".codex/skills/";
-const DEFAULT_SKILLS: [&str; 5] = ["fr-create", "fr-cpt", "fr-fvs", "fr-db", "chrome-cdp"];
+const DEFAULT_SKILLS: [&str; 6] = [
+    "fr-create",
+    "fr-cpt",
+    "fr-fvs",
+    "fr-db",
+    "chrome-cdp",
+    "continuous-learning",
+];
 
 pub trait ProjectInitializer: Send + Sync {
     fn initialize(&self, project_dir: &Path, config: &ProjectConfig) -> Result<(), String>;

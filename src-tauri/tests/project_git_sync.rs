@@ -1,3 +1,4 @@
+use finereport_tauri_shell_lib::commands::project_config::save_project_config_to_path;
 use finereport_tauri_shell_lib::domain::project_config::{ProjectConfig, SyncProtocol};
 use finereport_tauri_shell_lib::domain::project_git::uses_git_post_commit_sync;
 use finereport_tauri_shell_lib::domain::project_initializer::{
@@ -23,6 +24,11 @@ fn build_local_config(project_dir: &Path, runtime_dir: &Path) -> ProjectConfig {
     config.sync.protocol = SyncProtocol::Local;
     config.sync.remote_runtime_dir = runtime_dir.display().to_string();
     config
+}
+
+fn persist_project_config(project_dir: &Path, config: &ProjectConfig) {
+    save_project_config_to_path(project_dir.join("project-config.json").as_path(), config)
+        .expect("save project config");
 }
 
 fn run_git(project_dir: &Path, args: &[&str]) {
@@ -71,14 +77,16 @@ fn project_initializer_creates_git_repo_hook_and_commit_rule() {
 fn post_commit_hook_syncs_only_reportlet_cpt_and_fvs_changes() {
     let project_dir = temp_dir("project_git_sync_project");
     let runtime_dir = temp_dir("project_git_sync_runtime");
+    let config = build_local_config(project_dir.as_path(), runtime_dir.as_path());
     fs::create_dir_all(&runtime_dir).expect("create runtime dir");
 
     EmbeddedProjectInitializer::default()
         .initialize(
             project_dir.as_path(),
-            &build_local_config(project_dir.as_path(), runtime_dir.as_path()),
+            &config,
         )
         .expect("initialize git-managed project");
+    persist_project_config(project_dir.as_path(), &config);
 
     let source_dir = project_dir.join("reportlets");
     fs::create_dir_all(&source_dir).expect("create source dir");

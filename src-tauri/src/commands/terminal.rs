@@ -1,4 +1,3 @@
-use super::environment::check_codex_installation;
 use crate::domain::codex_auth::{append_runtime_config_args, build_codex_environment};
 use crate::domain::project_config::ProjectConfig;
 use crate::domain::terminal_event_bridge::TerminalEventBridge;
@@ -12,13 +11,13 @@ use std::sync::Mutex;
 use std::time::{SystemTime, UNIX_EPOCH};
 use tauri::{AppHandle, State};
 
-const CODEX_COMMAND: &str = "codex";
 const TERM_ENV: &str = "TERM";
 const TERM_VALUE: &str = "xterm-256color";
 const COLORTERM_ENV: &str = "COLORTERM";
 const COLORTERM_VALUE: &str = "truecolor";
 const FORCE_COLOR_ENV: &str = "FORCE_COLOR";
 const FORCE_COLOR_VALUE: &str = "1";
+const SYSTEM_CODEX_COMMAND: &str = "codex";
 
 #[cfg(test)]
 mod tests;
@@ -83,16 +82,19 @@ pub struct CloseTerminalSessionRequest {
 struct CreateTerminalSessionOptions {
     command: String,
     args: Vec<String>,
-    require_codex_installation: bool,
 }
 
 impl CreateTerminalSessionOptions {
-    fn codex_default(config: &ProjectConfig) -> Self {
-        Self {
-            command: CODEX_COMMAND.into(),
-            args: build_codex_cli_args(config),
-            require_codex_installation: true,
+    fn codex_default(app: &AppHandle, config: &ProjectConfig) -> Result<Self, String> {
+        let report = super::environment::check_runtime_prerequisites(app.clone())
+            .map_err(|error| format!("failed to inspect runtime prerequisites: {error}"))?;
+        if !report.ready {
+            return Err("runtime prerequisites are not ready".into());
         }
+        Ok(Self {
+            command: SYSTEM_CODEX_COMMAND.into(),
+            args: build_codex_cli_args(config),
+        })
     }
 
     #[cfg(test)]
@@ -100,7 +102,6 @@ impl CreateTerminalSessionOptions {
         Self {
             command: command.into(),
             args,
-            require_codex_installation: false,
         }
     }
 }
@@ -115,7 +116,7 @@ pub fn create_terminal_session(
     create_terminal_session_with_options(
         &manager,
         &request,
-        &CreateTerminalSessionOptions::codex_default(&request.config),
+        &CreateTerminalSessionOptions::codex_default(&app, &request.config)?,
     )
 }
 
@@ -125,9 +126,6 @@ fn create_terminal_session_with_options(
     options: &CreateTerminalSessionOptions,
 ) -> Result<CreateTerminalSessionResponse, String> {
     let working_dir = validate_workspace_dir(request.workspace_dir.as_str())?;
-    if options.require_codex_installation {
-        ensure_codex_installed()?;
-    }
     let session_id = generate_terminal_session_id()?;
     let process = manager.start_session(
         session_id.as_str(),
@@ -212,14 +210,6 @@ fn validate_workspace_dir(workspace_dir: &str) -> Result<PathBuf, String> {
         ));
     }
     Ok(path)
-}
-
-fn ensure_codex_installed() -> Result<(), String> {
-    let status = check_codex_installation()?;
-    if status.installed {
-        return Ok(());
-    }
-    Err("codex is not installed".into())
 }
 
 fn build_terminal_launch_config(

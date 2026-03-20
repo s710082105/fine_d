@@ -18,13 +18,7 @@ pub struct ProjectConfig {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(default)]
 pub struct StyleProfile {
-    pub font_family: String,
-    pub font_size: u16,
-    pub line_height: f32,
-    pub column_width: f32,
-    pub header_font_family: String,
-    pub header_font_size: u16,
-    pub number_format: String,
+    pub instructions: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -66,6 +60,7 @@ pub struct SyncProfile {
     pub host: String,
     pub port: u16,
     pub username: String,
+    pub password: String,
     pub remote_runtime_dir: String,
     pub delete_propagation: bool,
     pub auto_sync_on_change: bool,
@@ -108,27 +103,6 @@ impl ProjectConfig {
 
 impl StyleProfile {
     pub fn validate(&self) -> Result<(), String> {
-        if self.font_family.trim().is_empty() {
-            return Err("font_family is required".into());
-        }
-        if self.font_size == 0 {
-            return Err("font_size must be greater than zero".into());
-        }
-        if self.line_height <= 0.0 {
-            return Err("line_height must be greater than zero".into());
-        }
-        if self.column_width <= 0.0 {
-            return Err("column_width must be greater than zero".into());
-        }
-        if self.header_font_family.trim().is_empty() {
-            return Err("header_font_family is required".into());
-        }
-        if self.header_font_size == 0 {
-            return Err("header_font_size must be greater than zero".into());
-        }
-        if self.number_format.trim().is_empty() {
-            return Err("number_format is required".into());
-        }
         Ok(())
     }
 }
@@ -159,18 +133,15 @@ impl SyncProfile {
         if self.username.trim().is_empty() {
             return Err("username is required".into());
         }
+        if self.password.trim().is_empty() {
+            return Err("password is required".into());
+        }
         Ok(())
     }
 }
 
 impl AiProfile {
     pub fn validate(&self) -> Result<(), String> {
-        if self.provider.trim().is_empty() {
-            return Err("ai.provider is required".into());
-        }
-        if self.model.trim().is_empty() {
-            return Err("ai.model is required".into());
-        }
         Ok(())
     }
 }
@@ -192,13 +163,7 @@ impl Default for ProjectConfig {
 impl Default for StyleProfile {
     fn default() -> Self {
         Self {
-            font_family: "PingFang SC".into(),
-            font_size: 12,
-            line_height: 1.6,
-            column_width: 18.0,
-            header_font_family: "PingFang SC Semibold".into(),
-            header_font_size: 13,
-            number_format: "#,##0.00".into(),
+            instructions: String::new(),
         }
     }
 }
@@ -247,6 +212,7 @@ impl Default for SyncProfile {
             host: String::new(),
             port: 22,
             username: String::new(),
+            password: String::new(),
             remote_runtime_dir: String::new(),
             delete_propagation: false,
             auto_sync_on_change: true,

@@ -42,7 +42,7 @@ fn local_sync_transport_copies_and_deletes_runtime_files() {
 
     let remote_path = runtime_root.join("sales/report.cpt");
     let profile = build_local_profile(&source_root, &runtime_root);
-    let transport = ProtocolSyncTransport;
+    let transport = ProtocolSyncTransport::default();
 
     transport
         .apply(

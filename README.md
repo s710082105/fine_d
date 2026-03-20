@@ -123,6 +123,33 @@
 - `Rust` 负责配置模型定义、任务编排、文件处理、配置生成和同步执行。
 - 核心逻辑以配置驱动，不依赖人工临时修改脚本。
 
+### 运行时依赖
+
+当前产品方向已切换为“系统环境安装 + 启动预检阻断”：
+
+- 软件不再内置 `Node`、`Codex`、`Python 3`
+- 软件启动时统一检查系统 `git`、`node`、`python3`、`codex`
+- 若缺失任一基础环境，则阻断进入主界面
+- 用户手动执行平台安装脚本完成安装
+
+安装脚本：
+
+- `scripts/install-runtime-macos.sh`
+- `scripts/install-runtime-windows.ps1`
+
+两套脚本都会先交互选择：
+
+- 官方源
+- 国内源
+
+然后完成 `git`、`node`、`python3`、`codex` 安装，并在末尾执行版本校验。
+
+为保证 `macOS` 和 `Windows` 的实际可运行性，启动预检不是只看平台名，而是直接检查同步链路依赖：
+
+- `macOS/Linux` 必须存在 `/bin/sh`，因为项目同步 hook 依赖标准 shell 执行。
+- `Windows` 必须安装带 `Git Bash` 的 `Git for Windows`，预检会显式验证 hook 所需的 `sh.exe` 是否可定位。
+- 只要系统 `git/node/python3/codex` 或同步 shell 缺失，界面会停留在阻断页，不做静默降级。
+
 ### AI 协作层
 
 - `Claude Code`、`Codex` 等工具负责基于自然语言和项目配置执行实际开发任务。

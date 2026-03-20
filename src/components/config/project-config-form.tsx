@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { Alert, Button, Input, Space, Tabs } from 'antd'
+import type { TabsProps } from 'antd'
+import type { ReactNode } from 'react'
+import { Suspense, lazy, useMemo, useState } from 'react'
 import { resolveProjectSourceDir } from '../../lib/types/project-config'
-import { ProjectFields, StyleFields } from './project-config-fields'
-import {
-  DataConnectionFields,
-  FileManagementFields
-} from './project-config-extra-fields'
+import { ProjectFields } from './project-config-project-fields'
 import {
   ProjectConfigSnapshot,
   useProjectConfigState
@@ -21,121 +20,270 @@ interface ProjectConfigFormProps {
   onSnapshotChange?: (snapshot: ProjectConfigSnapshot) => void
 }
 
+interface ProjectConfigTabContext {
+  config: ReturnType<typeof useProjectConfigState>['config']
+  projectReady: boolean
+  reportletEntries: ReturnType<typeof useProjectConfigState>['reportletEntries']
+  chooseRuntimeDir: ReturnType<typeof useProjectConfigState>['chooseRuntimeDir']
+  closeRemoteDirectoryPicker: ReturnType<
+    typeof useProjectConfigState
+  >['closeRemoteDirectoryPicker']
+  confirmRemoteDirectory: ReturnType<
+    typeof useProjectConfigState
+  >['confirmRemoteDirectory']
+  loadRemoteDirectoryChildren: ReturnType<
+    typeof useProjectConfigState
+  >['loadRemoteDirectoryChildren']
+  openRemoteDirectoryPicker: ReturnType<
+    typeof useProjectConfigState
+  >['openRemoteDirectoryPicker']
+  remoteDirectoryEntries: ReturnType<
+    typeof useProjectConfigState
+  >['remoteDirectoryEntries']
+  remoteDirectoryLoading: ReturnType<
+    typeof useProjectConfigState
+  >['remoteDirectoryLoading']
+  remoteDirectoryPickerOpen: ReturnType<
+    typeof useProjectConfigState
+  >['remoteDirectoryPickerOpen']
+  addDataConnection: ReturnType<typeof useProjectConfigState>['addDataConnection']
+  selectedRemoteDirectory: ReturnType<
+    typeof useProjectConfigState
+  >['selectedRemoteDirectory']
+  selectRemoteDirectory: ReturnType<
+    typeof useProjectConfigState
+  >['selectRemoteDirectory']
+  removeDataConnection: ReturnType<typeof useProjectConfigState>['removeDataConnection']
+  updateDataConnection: ReturnType<typeof useProjectConfigState>['updateDataConnection']
+  updateAi: ReturnType<typeof useProjectConfigState>['updateAi']
+  updatePreview: ReturnType<typeof useProjectConfigState>['updatePreview']
+  updateStyle: ReturnType<typeof useProjectConfigState>['updateStyle']
+  updateSync: ReturnType<typeof useProjectConfigState>['updateSync']
+  updateWorkspace: ReturnType<typeof useProjectConfigState>['updateWorkspace']
+}
+
+const LazyFileManagementFields = lazy(() =>
+  import('./project-config-file-management-fields').then((module) => ({
+    default: module.FileManagementFields
+  }))
+)
+const LazyStyleFields = lazy(() =>
+  import('./project-config-style-fields').then((module) => ({
+    default: module.StyleFields
+  }))
+)
+const LazyDataConnectionFields = lazy(() =>
+  import('./project-config-extra-fields').then((module) => ({
+    default: module.DataConnectionFields
+  }))
+)
+
 export { createDefaultProjectConfig } from './project-config-state'
 export type { ProjectConfigSnapshot } from './project-config-state'
 export type { ProjectConfigServices } from './project-config-services'
 
-export function ProjectConfigForm({
-  services = tauriServices,
-  onSnapshotChange
-}: ProjectConfigFormProps) {
-  const [activeTab, setActiveTab] = useState<ConfigTab>('project')
-  const {
-    config,
-    error,
-    status,
-    projectReady,
-    reportletEntries,
-    chooseProjectDir,
-    chooseRuntimeDir,
-    addDataConnection,
-    removeDataConnection,
-    updateDataConnection,
-    updateAi,
-    updatePreview,
-    updateStyle,
-    updateSync,
-    updateWorkspace,
-    onSubmit
-  } =
-    useProjectConfigState(services, onSnapshotChange)
-
+function ProjectDirectoryField({
+  rootDir,
+  chooseProjectDir
+}: {
+  rootDir: string
+  chooseProjectDir: () => void
+}) {
   return (
-    <form className="project-config-form" onSubmit={onSubmit}>
-      <label>
-        项目目录
-        <div className="directory-picker">
-          <input type="text" value={config.workspace.root_dir} readOnly />
-          <button type="button" onClick={chooseProjectDir}>
-            选择项目目录
-          </button>
-        </div>
-      </label>
-      {!projectReady && !error && (
-        <p className="form-hint">先选择项目目录，再读取或创建项目配置文件。</p>
-      )}
-      <div className="config-tabs" role="tablist" aria-label="配置分组">
-        <button
-          type="button"
-          role="tab"
-          aria-selected={activeTab === 'project'}
-          className={activeTab === 'project' ? 'config-tab is-active' : 'config-tab'}
-          onClick={() => setActiveTab('project')}
-          disabled={!projectReady}
-        >
-          项目
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={activeTab === 'style'}
-          className={activeTab === 'style' ? 'config-tab is-active' : 'config-tab'}
-          onClick={() => setActiveTab('style')}
-          disabled={!projectReady}
-        >
-          样式
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={activeTab === 'data'}
-          className={activeTab === 'data' ? 'config-tab is-active' : 'config-tab'}
-          onClick={() => setActiveTab('data')}
-          disabled={!projectReady}
-        >
-          数据连接
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={activeTab === 'files'}
-          className={activeTab === 'files' ? 'config-tab is-active' : 'config-tab'}
-          onClick={() => setActiveTab('files')}
-          disabled={!projectReady}
-        >
-          文件管理
-        </button>
-      </div>
-      {projectReady && activeTab === 'project' ? (
-        <>
-          <ProjectFields
-            config={config}
-            chooseRuntimeDir={chooseRuntimeDir}
-            updateWorkspace={updateWorkspace}
-            updateSync={updateSync}
-            updatePreview={updatePreview}
-            updateAi={updateAi}
-          />
-          <p className="form-hint">{`真实同步源目录固定为：${resolveProjectSourceDir(config.workspace.root_dir)}`}</p>
-        </>
-      ) : null}
-      {projectReady && activeTab === 'style' ? (
-        <StyleFields config={config} updateStyle={updateStyle} />
-      ) : null}
-      {projectReady && activeTab === 'data' ? (
-        <DataConnectionFields
+    <label className="config-field">
+      <span className="config-field__label">项目目录</span>
+      <Space.Compact block>
+        <Input aria-label="项目目录" value={rootDir} readOnly />
+        <Button type="default" onClick={chooseProjectDir}>
+          选择项目目录
+        </Button>
+      </Space.Compact>
+    </label>
+  )
+}
+
+function ProjectConfigMessages({
+  error,
+  status
+}: {
+  error: string | null
+  status: string | null
+}) {
+  return (
+    <div className="project-config-form__messages">
+      {error ? <Alert type="error" showIcon message={error} /> : null}
+      {status ? <Alert type="success" showIcon message={status} /> : null}
+    </div>
+  )
+}
+
+function createTabItem(
+  key: ConfigTab,
+  label: string,
+  projectReady: boolean,
+  children: ReactNode
+): NonNullable<TabsProps['items']>[number] {
+  return {
+    key,
+    label,
+    disabled: !projectReady,
+    children: projectReady ? children : null
+  }
+}
+
+function renderLazyTab(children: ReactNode) {
+  return <Suspense fallback={<p className="form-hint">加载中...</p>}>{children}</Suspense>
+}
+
+function buildProjectConfigTabItems({
+  config,
+  projectReady,
+  reportletEntries,
+  chooseRuntimeDir,
+  closeRemoteDirectoryPicker,
+  confirmRemoteDirectory,
+  loadRemoteDirectoryChildren,
+  openRemoteDirectoryPicker,
+  remoteDirectoryEntries,
+  remoteDirectoryLoading,
+  remoteDirectoryPickerOpen,
+  addDataConnection,
+  selectedRemoteDirectory,
+  selectRemoteDirectory,
+  removeDataConnection,
+  updateDataConnection,
+  updateAi,
+  updatePreview,
+  updateStyle,
+  updateSync,
+  updateWorkspace
+}: ProjectConfigTabContext): TabsProps['items'] {
+  return [
+    createTabItem(
+      'project',
+      '项目',
+      projectReady,
+      <>
+        <ProjectFields
+          config={config}
+          chooseRuntimeDir={chooseRuntimeDir}
+          closeRemoteDirectoryPicker={closeRemoteDirectoryPicker}
+          confirmRemoteDirectory={confirmRemoteDirectory}
+          loadRemoteDirectoryChildren={loadRemoteDirectoryChildren}
+          openRemoteDirectoryPicker={openRemoteDirectoryPicker}
+          remoteDirectoryEntries={remoteDirectoryEntries}
+          remoteDirectoryLoading={remoteDirectoryLoading}
+          remoteDirectoryPickerOpen={remoteDirectoryPickerOpen}
+          selectedRemoteDirectory={selectedRemoteDirectory}
+          selectRemoteDirectory={selectRemoteDirectory}
+          updateWorkspace={updateWorkspace}
+          updateSync={updateSync}
+          updatePreview={updatePreview}
+          updateAi={updateAi}
+        />
+        <p className="form-hint">{`真实同步源目录固定为：${resolveProjectSourceDir(config.workspace.root_dir)}`}</p>
+      </>
+    ),
+    createTabItem(
+      'style',
+      '样式',
+      projectReady,
+      renderLazyTab(<LazyStyleFields config={config} updateStyle={updateStyle} />)
+    ),
+    createTabItem(
+      'data',
+      '数据连接',
+      projectReady,
+      renderLazyTab(
+        <LazyDataConnectionFields
           config={config}
           addDataConnection={addDataConnection}
           removeDataConnection={removeDataConnection}
           updateDataConnection={updateDataConnection}
         />
-      ) : null}
-      {projectReady && activeTab === 'files' ? (
-        <FileManagementFields entries={reportletEntries} />
-      ) : null}
-      <button type="submit" disabled={!projectReady}>保存配置</button>
-      {error && <p className="form-error">{error}</p>}
-      {status && <p className="form-status">{status}</p>}
+      )
+    ),
+    createTabItem(
+      'files',
+      '文件管理',
+      projectReady,
+      renderLazyTab(<LazyFileManagementFields entries={reportletEntries} />)
+    )
+  ]
+}
+
+function useProjectConfigFormViewModel(
+  services: ProjectConfigServices,
+  onSnapshotChange?: (snapshot: ProjectConfigSnapshot) => void
+) {
+  const [activeTab, setActiveTab] = useState<ConfigTab>('project')
+  const projectState = useProjectConfigState(services, onSnapshotChange)
+  const tabItems = useMemo(
+    () =>
+      buildProjectConfigTabItems({
+        config: projectState.config,
+        projectReady: projectState.projectReady,
+        reportletEntries: projectState.reportletEntries,
+        chooseRuntimeDir: projectState.chooseRuntimeDir,
+        closeRemoteDirectoryPicker: projectState.closeRemoteDirectoryPicker,
+        confirmRemoteDirectory: projectState.confirmRemoteDirectory,
+        loadRemoteDirectoryChildren: projectState.loadRemoteDirectoryChildren,
+        openRemoteDirectoryPicker: projectState.openRemoteDirectoryPicker,
+        remoteDirectoryEntries: projectState.remoteDirectoryEntries,
+        remoteDirectoryLoading: projectState.remoteDirectoryLoading,
+        remoteDirectoryPickerOpen: projectState.remoteDirectoryPickerOpen,
+        addDataConnection: projectState.addDataConnection,
+        selectedRemoteDirectory: projectState.selectedRemoteDirectory,
+        selectRemoteDirectory: projectState.selectRemoteDirectory,
+        removeDataConnection: projectState.removeDataConnection,
+        updateDataConnection: projectState.updateDataConnection,
+        updateAi: projectState.updateAi,
+        updatePreview: projectState.updatePreview,
+        updateStyle: projectState.updateStyle,
+        updateSync: projectState.updateSync,
+        updateWorkspace: projectState.updateWorkspace
+      }),
+    [projectState]
+  )
+
+  return { activeTab, setActiveTab, tabItems, ...projectState }
+}
+
+export function ProjectConfigForm({
+  services = tauriServices,
+  onSnapshotChange
+}: ProjectConfigFormProps) {
+  const {
+    activeTab,
+    setActiveTab,
+    tabItems,
+    config,
+    error,
+    status,
+    projectReady,
+    chooseProjectDir,
+    onSubmit
+  } = useProjectConfigFormViewModel(services, onSnapshotChange)
+
+  return (
+    <form className="project-config-form" onSubmit={onSubmit}>
+      <ProjectDirectoryField
+        rootDir={config.workspace.root_dir}
+        chooseProjectDir={chooseProjectDir}
+      />
+      {!projectReady && !error && (
+        <p className="form-hint">先选择项目目录，再读取或创建项目配置文件。</p>
+      )}
+      <Tabs
+        className="config-tabs"
+        activeKey={activeTab}
+        onChange={(key) => setActiveTab(key as ConfigTab)}
+        items={tabItems}
+      />
+      <Button htmlType="submit" type="primary" disabled={!projectReady}>
+        保存配置
+      </Button>
+      <ProjectConfigMessages error={error} status={status} />
     </form>
   )
 }

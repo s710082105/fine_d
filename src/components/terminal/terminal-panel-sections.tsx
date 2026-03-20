@@ -1,3 +1,4 @@
+import { Alert, Button, Space } from 'antd'
 import type { RefObject } from 'react'
 import type { TerminalProcessMetadata } from '../../lib/types/terminal'
 
@@ -40,17 +41,17 @@ export function TerminalPanelHeader({
       </div>
       <div className="terminal-panel__meta">
         {process && <p className="terminal-panel__pid">PID {process.pid}</p>}
-        <div className="terminal-panel__header-actions composer-actions">
-          <button type="button" onClick={onStart} disabled={!canStart}>
+        <Space className="terminal-panel__header-actions" wrap>
+          <Button type="primary" onClick={onStart} disabled={!canStart}>
             启动 Codex
-          </button>
-          <button type="button" onClick={onRestart}>
+          </Button>
+          <Button onClick={onRestart}>
             重启终端
-          </button>
-          <button type="button" onClick={onClose}>
+          </Button>
+          <Button danger onClick={onClose}>
             关闭终端
-          </button>
-        </div>
+          </Button>
+        </Space>
       </div>
     </header>
   )
@@ -73,9 +74,15 @@ export function TerminalPanelBody({
 }: TerminalPanelBodyProps) {
   return (
     <div className="terminal-panel__body">
-      {installMessage && <p className="session-warning">{installMessage}</p>}
-      {errorMessage && <p className="session-warning">{errorMessage}</p>}
-      {isConfigStale && <p className="form-status">{STALE_NOTICE}</p>}
+      {installMessage ? (
+        <Alert className="terminal-panel__alert" showIcon type="warning" message={installMessage} />
+      ) : null}
+      {errorMessage ? (
+        <Alert className="terminal-panel__alert" showIcon type="error" message={errorMessage} />
+      ) : null}
+      {isConfigStale ? (
+        <Alert className="terminal-panel__alert" showIcon type="success" message={STALE_NOTICE} />
+      ) : null}
       <div className="terminal-panel__viewport-wrap">
         {idleHint && <p className="terminal-panel__hint">{idleHint}</p>}
         <div ref={hostRef} className="terminal-panel__viewport" data-testid="terminal-viewport" />

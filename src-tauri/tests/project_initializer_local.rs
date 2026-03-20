@@ -60,6 +60,9 @@ fn embedded_project_initializer_pulls_runtime_tree_and_builds_codex_context() {
     assert!(project_dir
         .join(".codex/skills/chrome-cdp/SKILL.md")
         .exists());
+    assert!(project_dir
+        .join(".codex/skills/continuous-learning/SKILL.md")
+        .exists());
 }
 
 #[test]
@@ -117,7 +120,7 @@ fn runtime_sync_bootstrap_rejects_overlapping_local_directories() {
     let source_dir = project_dir.join("reportlets");
     fs::create_dir_all(&source_dir).expect("create overlapping source dir");
 
-    let error = ProtocolRuntimeSyncBootstrapper
+    let error = ProtocolRuntimeSyncBootstrapper::default()
         .replace_project_tree(
             source_dir.as_path(),
             &build_local_config(&project_dir, &project_dir.join("reportlets")).sync,

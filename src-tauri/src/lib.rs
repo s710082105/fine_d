@@ -8,9 +8,11 @@ pub fn run() {
         .manage(commands::terminal::TerminalCommandState::default())
         .invoke_handler(tauri::generate_handler![
             commands::environment::check_codex_installation,
+            commands::environment::check_runtime_prerequisites,
             commands::project_config::save_project_config,
             commands::project_config::load_project_config,
             commands::project_config::list_reportlet_entries,
+            commands::project_sync::list_remote_directories,
             commands::terminal::create_terminal_session,
             commands::terminal::write_terminal_input,
             commands::terminal::resize_terminal,

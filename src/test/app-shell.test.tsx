@@ -2,6 +2,7 @@ import '@testing-library/jest-dom/vitest'
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
 import { AppShell } from '../App'
+import type { EnvironmentServices } from '../components/startup/startup-gate'
 import { createDefaultProjectConfig } from '../components/config/project-config-form'
 import type { TerminalServices } from '../components/terminal/terminal-services'
 import type { TerminalAdapterFactory } from '../components/terminal/xterm-adapter'
@@ -48,6 +49,19 @@ function createTerminalServices(): TerminalServices {
   }
 }
 
+function createEnvironmentServices(
+  ready = true,
+  overrides: Partial<Awaited<ReturnType<EnvironmentServices['checkRuntimePrerequisites']>>> = {}
+): EnvironmentServices {
+  return {
+    checkRuntimePrerequisites: async () => ({
+      ready,
+      items: [],
+      ...overrides
+    })
+  }
+}
+
 it('renders config and terminal regions', async () => {
   await act(async () => {
     render(
@@ -59,14 +73,18 @@ it('renders config and terminal regions', async () => {
             config: createDefaultProjectConfig()
           }),
           listReportletEntries: async () => [],
+          listRemoteDirectories: async () => [],
           saveConfig: async () => undefined
         }}
+        environmentServices={createEnvironmentServices()}
         terminalServices={createTerminalServices()}
         terminalAdapterFactory={terminalAdapterFactory}
       />
     )
   })
   expect(screen.getByText('项目配置')).toBeInTheDocument()
+  expect(screen.getByTestId('pane-left-scroll')).toBeInTheDocument()
+  expect(screen.getByTestId('pane-right-fixed')).toBeInTheDocument()
   expect(screen.getByLabelText('项目目录')).toBeInTheDocument()
   expect(screen.getByText('终端状态')).toBeInTheDocument()
   expect(screen.getByText('等待手动启动 Codex')).toBeInTheDocument()
@@ -85,8 +103,10 @@ it('shows terminal stale notice when config changes', async () => {
             config: createDefaultProjectConfig()
           }),
           listReportletEntries: async () => [],
+          listRemoteDirectories: async () => [],
           saveConfig: async () => undefined
         }}
+        environmentServices={createEnvironmentServices()}
         terminalServices={createTerminalServices()}
         terminalAdapterFactory={terminalAdapterFactory}
       />
@@ -115,8 +135,10 @@ it('resets terminal status after project context changes', async () => {
             config: createDefaultProjectConfig()
           }),
           listReportletEntries: async () => [],
+          listRemoteDirectories: async () => [],
           saveConfig: async () => undefined
         }}
+        environmentServices={createEnvironmentServices()}
         terminalServices={createTerminalServices()}
         terminalAdapterFactory={terminalAdapterFactory}
       />
@@ -134,4 +156,46 @@ it('resets terminal status after project context changes', async () => {
     'data-project-id',
     '/tmp/demo'
   )
+})
+
+it('blocks the app when startup prerequisites fail', async () => {
+  await act(async () => {
+    render(
+      <AppShell
+        environmentServices={createEnvironmentServices(false, {
+          items: [
+            {
+              key: 'git',
+              label: 'Git',
+              status: 'blocked',
+              blocking: true,
+              message: '未检测到 git',
+              fixHint: '请执行 Windows 安装脚本完成环境安装',
+              detectedVersion: '',
+              scriptPath: 'scripts/install-runtime-windows.ps1'
+            }
+          ]
+        })}
+        projectConfigServices={{
+          browseDirectory: async () => '/tmp/demo',
+          loadConfig: async () => ({
+            exists: false,
+            config: createDefaultProjectConfig()
+          }),
+          listReportletEntries: async () => [],
+          listRemoteDirectories: async () => [],
+          saveConfig: async () => undefined
+        }}
+        terminalServices={createTerminalServices()}
+        terminalAdapterFactory={terminalAdapterFactory}
+      />
+    )
+  })
+
+  expect(screen.getByText('基础环境未安装完成')).toBeInTheDocument()
+  expect(screen.getByText('未检测到 git')).toBeInTheDocument()
+  expect(screen.getByText('请执行 Windows 安装脚本完成环境安装')).toBeInTheDocument()
+  expect(screen.getByText('scripts/install-runtime-windows.ps1')).toBeInTheDocument()
+  expect(screen.queryByText('项目配置')).not.toBeInTheDocument()
+  expect(screen.queryByText('终端状态')).not.toBeInTheDocument()
 })

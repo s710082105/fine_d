@@ -6,6 +6,7 @@ PROJECT_DIR={{project_dir}}
 SOURCE_SUBDIR={{source_subdir}}
 PROTOCOL={{protocol}}
 REMOTE_ROOT={{remote_root}}
+SYNC_BIN={{sync_bin}}
 
 log() {
   printf '%s\n' "$1" >&2
@@ -22,20 +23,6 @@ remote_path_for() {
   printf '%s/%s\n' "$REMOTE_ROOT" "${1#${SOURCE_SUBDIR}/}"
 }
 
-sync_local_upsert() {
-  local_path="$PROJECT_DIR/$1"
-  remote_path="$(remote_path_for "$1")"
-  mkdir -p "$(dirname "$remote_path")"
-  cp "$local_path" "$remote_path"
-}
-
-sync_local_delete() {
-  remote_path="$(remote_path_for "$1")"
-  if [ -e "$remote_path" ]; then
-    rm -f "$remote_path"
-  fi
-}
-
 dispatch_sync() {
   action="$1"
   path="$2"
@@ -48,14 +35,27 @@ dispatch_sync() {
       fi
       ;;
     sftp|ftp)
-      log "post-commit sync for protocol $PROTOCOL is not implemented"
-      return 1
+      "$SYNC_BIN" --project-sync-hook "$PROJECT_DIR" "$action" "$path"
       ;;
     *)
       log "unsupported sync protocol: $PROTOCOL"
       return 1
       ;;
   esac
+}
+
+sync_local_upsert() {
+  local_path="$PROJECT_DIR/$1"
+  remote_path="$(remote_path_for "$1")"
+  mkdir -p "$(dirname "$remote_path")"
+  cp "$local_path" "$remote_path"
+}
+
+sync_local_delete() {
+  remote_path="$(remote_path_for "$1")"
+  if [ -e "$remote_path" ]; then
+    rm -f "$remote_path"
+  fi
 }
 
 process_record() {

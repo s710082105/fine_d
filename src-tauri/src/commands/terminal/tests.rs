@@ -1,5 +1,6 @@
 use super::{
-    build_codex_cli_args, build_terminal_environment, close_terminal_session_with_manager,
+    build_codex_cli_args, build_terminal_environment,
+    close_terminal_session_with_manager,
     create_terminal_session_with_options, CloseTerminalSessionRequest,
     CreateTerminalSessionOptions, CreateTerminalSessionRequest,
 };

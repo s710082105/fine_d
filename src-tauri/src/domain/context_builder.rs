@@ -1,5 +1,5 @@
 use super::context_builder_data::{data_connections_json, markdown_data_connections};
-use super::project_config::{PreviewMode, ProjectConfig, SyncProtocol};
+use super::project_config::{ProjectConfig, SyncProtocol};
 use include_dir::{include_dir, Dir, DirEntry, File};
 use std::fs;
 use std::io;
@@ -97,12 +97,6 @@ fn render_project_context(config: &ProjectConfig, enabled_skills: &[String]) -> 
             ("preview_url", config.preview.url.clone()),
             ("preview_account", config.preview.account.clone()),
             ("preview_password", config.preview.password.clone()),
-            (
-                "preview_mode",
-                preview_mode_text(&config.preview.mode).into(),
-            ),
-            ("codex_provider", config.ai.provider.clone()),
-            ("codex_model", config.ai.model.clone()),
             ("codex_api_key", config.ai.api_key.clone()),
             ("protocol", protocol_text(&config.sync.protocol).into()),
             ("host", config.sync.host.clone()),
@@ -110,19 +104,10 @@ fn render_project_context(config: &ProjectConfig, enabled_skills: &[String]) -> 
             ("username", config.sync.username.clone()),
             ("local_source_dir", local_source_dir),
             ("remote_runtime_dir", config.sync.remote_runtime_dir.clone()),
-            ("font_family", config.style.font_family.clone()),
-            ("font_size", config.style.font_size.to_string()),
-            ("line_height", config.style.line_height.to_string()),
-            ("column_width", config.style.column_width.to_string()),
             (
-                "header_font_family",
-                config.style.header_font_family.clone(),
+                "style_instructions",
+                markdown_optional_text(&config.style.instructions),
             ),
-            (
-                "header_font_size",
-                config.style.header_font_size.to_string(),
-            ),
-            ("number_format", config.style.number_format.clone()),
             ("enabled_skills", markdown_skill_list(enabled_skills)),
             ("data_connections", markdown_data_connections(config)),
             ("source_target_mappings", markdown_mapping_list(config)),
@@ -144,13 +129,11 @@ fn render_project_rules(config: &ProjectConfig) -> io::Result<String> {
             ("preview_url", config.preview.url.clone()),
             ("preview_account", config.preview.account.clone()),
             ("preview_password", config.preview.password.clone()),
-            (
-                "preview_mode",
-                preview_mode_text(&config.preview.mode).into(),
-            ),
-            ("codex_provider", config.ai.provider.clone()),
-            ("codex_model", config.ai.model.clone()),
             ("codex_api_key", config.ai.api_key.clone()),
+            (
+                "style_instructions",
+                markdown_optional_text(&config.style.instructions),
+            ),
             (
                 "delete_propagation",
                 bool_text(config.sync.delete_propagation).into(),
@@ -192,28 +175,10 @@ fn render_mappings(config: &ProjectConfig) -> io::Result<String> {
                 json_string(&config.preview.password)?,
             ),
             (
-                "preview_mode_json",
-                json_string(preview_mode_text(&config.preview.mode))?,
+                "style_instructions_json",
+                json_string(&config.style.instructions)?,
             ),
-            ("codex_provider_json", json_string(&config.ai.provider)?),
-            ("codex_model_json", json_string(&config.ai.model)?),
             ("codex_api_key_json", json_string(&config.ai.api_key)?),
-            ("font_family_json", json_string(&config.style.font_family)?),
-            ("font_size", config.style.font_size.to_string()),
-            ("line_height", config.style.line_height.to_string()),
-            ("column_width", config.style.column_width.to_string()),
-            (
-                "header_font_family_json",
-                json_string(&config.style.header_font_family)?,
-            ),
-            (
-                "header_font_size",
-                config.style.header_font_size.to_string(),
-            ),
-            (
-                "number_format_json",
-                json_string(&config.style.number_format)?,
-            ),
             (
                 "delete_propagation",
                 bool_text(config.sync.delete_propagation).into(),
@@ -285,18 +250,18 @@ fn markdown_skill_list(enabled_skills: &[String]) -> String {
         .join("\n")
 }
 
+fn markdown_optional_text(value: &str) -> String {
+    if value.trim().is_empty() {
+        return "- (none)".into();
+    }
+    value.into()
+}
+
 fn protocol_text(protocol: &SyncProtocol) -> &'static str {
     match protocol {
         SyncProtocol::Sftp => "sftp",
         SyncProtocol::Ftp => "ftp",
         SyncProtocol::Local => "local",
-    }
-}
-
-fn preview_mode_text(mode: &PreviewMode) -> &'static str {
-    match mode {
-        PreviewMode::Embedded => "embedded",
-        PreviewMode::External => "external",
     }
 }
 

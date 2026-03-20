@@ -177,7 +177,7 @@ it('does not recreate the adapter when config changes without project switch', a
   const initialConfig = buildConfig()
   const nextConfig = {
     ...initialConfig,
-    style: { ...initialConfig.style, font_family: 'Monaco' }
+    style: { ...initialConfig.style, instructions: '改成强调财务字段的展示风格。' }
   }
   const view = render(
     <TerminalPanel

@@ -3,13 +3,7 @@ export type PreviewMode = 'embedded' | 'external'
 export const PROJECT_SOURCE_SUBDIR = 'reportlets'
 
 export interface StyleProfile {
-  font_family: string
-  font_size: number
-  line_height: number
-  column_width: number
-  header_font_family: string
-  header_font_size: number
-  number_format: string
+  instructions: string
 }
 
 export interface WorkspaceProfile {
@@ -36,6 +30,7 @@ export interface SyncProfile {
   host: string
   port: number
   username: string
+  password: string
   remote_runtime_dir: string
   delete_propagation: boolean
   auto_sync_on_change: boolean
@@ -57,6 +52,21 @@ export interface ReportletEntry {
   path: string
   kind: 'file' | 'directory'
   children: ReportletEntry[]
+}
+
+export interface RemoteDirectoryEntry {
+  name: string
+  path: string
+  children: RemoteDirectoryEntry[]
+}
+
+export interface ListRemoteDirectoriesRequest {
+  protocol: SyncProtocol
+  host: string
+  port: number
+  username: string
+  password: string
+  path: string
 }
 
 export interface ProjectConfig {

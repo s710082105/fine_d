@@ -40,6 +40,50 @@ body {
   display: grid;
   grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
   height: 100vh;
+  overflow: hidden;
+}
+
+.startup-gate {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.startup-gate__card {
+  width: min(760px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px;
+  border: 1px solid var(--divider);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow-soft);
+}
+
+.startup-gate__card--compact {
+  width: min(360px, 100%);
+  align-items: center;
+  text-align: center;
+}
+
+.startup-gate__card h1,
+.startup-gate__card p {
+  margin: 0;
+}
+
+.startup-gate__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.startup-gate__detail {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .pane {
@@ -48,15 +92,28 @@ body {
 }
 
 .pane-left {
+  display: flex;
   border-right: 1px solid var(--divider);
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.pane-left__scroll {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  gap: 18px;
+  overflow-y: auto;
+  padding-right: 6px;
 }
 
 .pane-right {
   display: flex;
   padding: 12px;
   min-width: 0;
+  min-height: 0;
   overflow: hidden;
   background:
     radial-gradient(circle at top right, rgba(34, 96, 168, 0.2), transparent 34%),
@@ -79,39 +136,17 @@ body {
   line-height: 1.5;
 }
 
-.form-hint {
-  margin: 0;
-  padding: 10px 12px;
-  border-radius: 10px;
-  color: var(--text-subtle);
-  background: var(--surface-muted);
-}
-
-.project-config-form,
-.chat-panel {
-  margin-top: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
 .chat-panel {
   flex: 1;
   min-height: 0;
   margin-top: 0;
 }
-
-.project-config-form label,
 .composer-card label {
   display: flex;
   flex-direction: column;
   gap: 6px;
   font-size: 13px;
 }
-
-.project-config-form input[type='text'],
-.project-config-form input[type='number'],
-.project-config-form select,
 .composer-card textarea {
   border: 1px solid var(--surface-border);
   border-radius: 10px;
@@ -119,39 +154,6 @@ body {
   font: inherit;
   background: var(--surface);
 }
-
-.project-config-form .checkbox-field {
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-}
-
-.directory-picker {
-  display: flex;
-  gap: 10px;
-}
-
-.directory-picker input {
-  flex: 1;
-}
-
-.config-tabs {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.config-tab {
-  background: var(--surface-muted);
-  border: 1px solid var(--surface-border);
-}
-
-.config-tab.is-active {
-  color: #fff;
-  background: linear-gradient(135deg, #1c6fd6 0%, #1154a6 100%);
-}
-
-.project-config-form > button,
 .composer-actions button {
   border: none;
   border-radius: 10px;
@@ -159,8 +161,6 @@ body {
   cursor: pointer;
   font: inherit;
 }
-
-.project-config-form > button,
 .composer-actions button:first-child {
   color: #fff;
   background: linear-gradient(135deg, #1c6fd6 0%, #1154a6 100%);
@@ -170,8 +170,6 @@ body {
   background: var(--surface);
   border: 1px solid var(--surface-border);
 }
-
-.project-config-form > button:disabled,
 .composer-actions button:disabled {
   cursor: not-allowed;
   opacity: 0.6;
@@ -239,49 +237,6 @@ body {
   white-space: pre-wrap;
 }
 
-.file-tree {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.config-list-actions {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.config-subsection {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 14px;
-  border: 1px solid var(--divider);
-  border-radius: 14px;
-  background: var(--surface-muted);
-}
-
-.config-subsection-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.file-tree-node {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  padding: 8px 10px;
-  border-radius: 10px;
-  background: var(--surface-muted);
-  font-size: 13px;
-}
-
-.file-tree-kind {
-  min-width: 30px;
-  color: var(--text-subtle);
-}
-
 .stream-card {
   flex: 1;
   min-height: 0;
@@ -326,16 +281,17 @@ body {
 @media (max-width: 900px) {
   .app-shell {
     grid-template-columns: 1fr;
-    height: auto;
+    height: 100vh;
   }
 
   .pane-left {
     border-right: none;
     border-bottom: 1px solid var(--divider);
+    min-height: 0;
   }
 
   .pane-right {
-    overflow: visible;
+    min-height: 0;
   }
 
   .session-header-grid {

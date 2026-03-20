@@ -29,6 +29,7 @@ fn build_config(project_dir: &PathBuf, host: &str, protocol: SyncProtocol) -> Pr
     config.sync.host = host.into();
     config.sync.port = 22;
     config.sync.username = "deploy".into();
+    config.sync.password = "deploy-pass".into();
     config.sync.remote_runtime_dir = "/srv/runtime".into();
     config.sync.delete_propagation = true;
     config.sync.auto_sync_on_change = true;

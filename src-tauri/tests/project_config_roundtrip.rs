@@ -7,14 +7,18 @@ use finereport_tauri_shell_lib::domain::project_config::{
 };
 use serde_json::json;
 use std::path::PathBuf;
+use std::sync::atomic::{AtomicU64, Ordering};
 use std::time::{SystemTime, UNIX_EPOCH};
+
+static TEST_PATH_COUNTER: AtomicU64 = AtomicU64::new(0);
 
 fn test_config_path() -> PathBuf {
     let nanos = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .expect("system clock before unix epoch")
         .as_nanos();
-    std::env::temp_dir().join(format!("project_config_roundtrip_{nanos}.json"))
+    let suffix = TEST_PATH_COUNTER.fetch_add(1, Ordering::Relaxed);
+    std::env::temp_dir().join(format!("project_config_roundtrip_{nanos}_{suffix}.json"))
 }
 
 #[test]
@@ -41,6 +45,7 @@ fn project_config_roundtrip_preserves_sync_fields() {
     config.sync.host = "127.0.0.1".into();
     config.sync.port = 22;
     config.sync.username = "deploy".into();
+    config.sync.password = "deploy-pass".into();
     config.sync.remote_runtime_dir = "/srv/tomcat/webapps/webroot/WEB-INF".into();
     config.sync.delete_propagation = true;
     config.sync.auto_sync_on_change = true;
@@ -60,6 +65,7 @@ fn project_config_roundtrip_preserves_sync_fields() {
     assert_eq!(loaded.sync.host, "127.0.0.1");
     assert_eq!(loaded.sync.port, 22);
     assert_eq!(loaded.sync.username, "deploy");
+    assert_eq!(loaded.sync.password, "deploy-pass");
     assert_eq!(loaded.data_connections.len(), 2);
     assert_eq!(loaded.data_connections[0].connection_name, "FR Demo");
     assert_eq!(
@@ -98,6 +104,7 @@ fn load_project_config_from_partial_payload_applies_defaults() {
         &path,
         r#"{
       "sync": {
+        "protocol": "local",
         "host": "127.0.0.1",
         "port": 21,
         "username": "ftp-user",
@@ -117,7 +124,7 @@ fn load_project_config_from_partial_payload_applies_defaults() {
     assert_eq!(loaded.sync.port, 21);
     assert_eq!(loaded.sync.username, "ftp-user");
     assert!(loaded.sync.auto_sync_on_change);
-    assert_eq!(value["style"]["font_family"], "PingFang SC");
+    assert_eq!(value["style"]["instructions"], "");
     assert_eq!(value["preview"]["mode"], "embedded");
 }
 
@@ -128,13 +135,7 @@ fn load_project_config_supports_local_sync_preview_and_style_fields() {
         &path,
         json!({
           "style": {
-            "font_family": "Microsoft YaHei",
-            "font_size": 14,
-            "line_height": 1.8,
-            "column_width": 24,
-            "header_font_family": "DIN Alternate",
-            "header_font_size": 16,
-            "number_format": "#,##0.00"
+            "instructions": "表头使用深色粗体，数据列右对齐，金额保留两位小数。"
           },
           "data_connections": [
             {
@@ -182,13 +183,47 @@ fn load_project_config_supports_local_sync_preview_and_style_fields() {
     assert_eq!(value["preview"]["account"], "preview-user");
     assert_eq!(value["preview"]["password"], "preview-pass");
     assert_eq!(value["ai"]["api_key"], "sk-demo");
-    assert_eq!(value["style"]["font_family"], "Microsoft YaHei");
-    assert_eq!(value["style"]["header_font_size"], 16);
+    assert_eq!(
+        value["style"]["instructions"],
+        "表头使用深色粗体，数据列右对齐，金额保留两位小数。"
+    );
     assert_eq!(value["data_connections"][0]["connection_name"], "FR Demo");
     assert_eq!(
         value["data_connections"][0]["dsn"],
         "mysql://127.0.0.1:3306/demo"
     );
+}
+
+#[test]
+fn load_project_config_converts_legacy_style_fields_into_text_instructions() {
+    let path = test_config_path();
+    std::fs::write(
+        &path,
+        json!({
+          "style": {
+            "font_family": "Microsoft YaHei",
+            "font_size": 14,
+            "line_height": 1.8,
+            "column_width": 24,
+            "header_font_family": "DIN Alternate",
+            "header_font_size": 16,
+            "number_format": "#,##0.00"
+          },
+          "sync": {
+            "protocol": "local",
+            "remote_runtime_dir": "/tmp/runtime/reportlets"
+          }
+        })
+        .to_string(),
+    )
+    .expect("write legacy style config");
+
+    let loaded = load_project_config_from_path(path.as_path()).expect("load migrated config");
+
+    assert!(loaded.style.instructions.contains("字体：Microsoft YaHei"));
+    assert!(loaded.style.instructions.contains("字号：14"));
+    assert!(loaded.style.instructions.contains("表头字体：DIN Alternate"));
+    assert!(loaded.style.instructions.contains("数字格式：#,##0.00"));
 }
 
 #[test]
@@ -207,6 +242,7 @@ fn load_project_config_supports_legacy_single_data_connection_field() {
             "host": "127.0.0.1",
             "port": 21,
             "username": "ftp-user",
+            "password": "ftp-pass",
             "remote_runtime_dir": "/srv/tomcat/webapps/webroot/WEB-INF"
           }
         })
@@ -218,6 +254,30 @@ fn load_project_config_supports_legacy_single_data_connection_field() {
 
     assert_eq!(loaded.data_connections.len(), 1);
     assert_eq!(loaded.data_connections[0].connection_name, "Legacy");
+}
+
+#[test]
+fn remote_sync_profile_requires_password() {
+    let path = test_config_path();
+    std::fs::write(
+        &path,
+        json!({
+          "sync": {
+            "protocol": "sftp",
+            "host": "127.0.0.1",
+            "port": 22,
+            "username": "deploy",
+            "remote_runtime_dir": "/srv/runtime"
+          }
+        })
+        .to_string(),
+    )
+    .expect("write invalid remote sync config");
+
+    let error = load_project_config_from_path(path.as_path())
+        .expect_err("remote sync config without password must fail");
+
+    assert!(error.contains("password is required"));
 }
 
 #[test]
@@ -236,6 +296,7 @@ fn load_project_config_ignores_legacy_ai_base_url() {
             "host": "127.0.0.1",
             "port": 21,
             "username": "ftp-user",
+            "password": "ftp-pass",
             "remote_runtime_dir": "/srv/runtime"
           }
         })

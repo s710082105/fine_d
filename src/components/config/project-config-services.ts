@@ -1,5 +1,10 @@
 import { invoke } from '@tauri-apps/api/core'
-import type { ProjectConfig, ReportletEntry } from '../../lib/types/project-config'
+import type {
+  ListRemoteDirectoriesRequest,
+  ProjectConfig,
+  RemoteDirectoryEntry,
+  ReportletEntry
+} from '../../lib/types/project-config'
 
 type InvokeFn = <T>(command: string, args?: Record<string, unknown>) => Promise<T>
 type LoadResult = { exists: boolean; config: ProjectConfig }
@@ -8,6 +13,9 @@ export type ProjectConfigServices = {
   browseDirectory: () => Promise<string | null>
   loadConfig: (projectDir: string) => Promise<LoadResult>
   listReportletEntries: (projectDir: string) => Promise<ReportletEntry[]>
+  listRemoteDirectories: (
+    request: ListRemoteDirectoriesRequest
+  ) => Promise<RemoteDirectoryEntry[]>
   saveConfig: (projectDir: string, config: ProjectConfig) => Promise<void>
 }
 
@@ -29,6 +37,12 @@ async function listReportletEntries(projectDir: string): Promise<ReportletEntry[
   return resolveInvoke()<ReportletEntry[]>('list_reportlet_entries', { projectDir })
 }
 
+async function listRemoteDirectories(
+  request: ListRemoteDirectoriesRequest
+): Promise<RemoteDirectoryEntry[]> {
+  return resolveInvoke()<RemoteDirectoryEntry[]>('list_remote_directories', { request })
+}
+
 async function saveConfig(projectDir: string, config: ProjectConfig): Promise<void> {
   await resolveInvoke()<void>('save_project_config', { projectDir, config })
 }
@@ -37,5 +51,6 @@ export const tauriServices: ProjectConfigServices = {
   browseDirectory,
   loadConfig,
   listReportletEntries,
+  listRemoteDirectories,
   saveConfig
 }

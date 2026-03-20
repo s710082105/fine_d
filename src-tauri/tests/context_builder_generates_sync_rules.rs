@@ -24,9 +24,11 @@ fn context_builder_generates_sync_rules() {
     config.sync.host = "files.example.com".into();
     config.sync.port = 22;
     config.sync.username = "deploy".into();
+    config.sync.password = "deploy-pass".into();
     config.sync.remote_runtime_dir = "/srv/tomcat/webapps/webroot/WEB-INF".into();
     config.sync.delete_propagation = true;
     config.sync.auto_sync_on_change = true;
+    config.style.instructions = "标题使用蓝灰配色，数字列右对齐，金额统一保留两位小数。".into();
     config.preview.account = "preview-user".into();
     config.preview.password = "preview-pass".into();
     config.ai.api_key = "sk-demo".into();
@@ -60,6 +62,7 @@ fn context_builder_generates_sync_rules() {
         "fr-db".to_string(),
         "fr-fvs".to_string(),
         "chrome-cdp".to_string(),
+        "continuous-learning".to_string(),
     ];
 
     build_runtime_context(context_dir.as_path(), &config, &enabled_skills)
@@ -79,13 +82,14 @@ fn context_builder_generates_sync_rules() {
     assert!(project_context.contains("deploy"));
     assert!(project_context.contains("local_source_dir"));
     assert!(project_context.contains("remote_runtime_dir"));
-    assert!(project_context.contains("preview_mode"));
     assert!(project_context.contains("preview_account"));
     assert!(project_context.contains("preview-user"));
     assert!(project_context.contains("preview_password"));
     assert!(project_context.contains("preview-pass"));
     assert!(project_context.contains("codex_api_key"));
     assert!(project_context.contains("sk-demo"));
+    assert!(project_context.contains("style_instructions"));
+    assert!(project_context.contains("蓝灰配色"));
     assert!(project_context.contains("FR Demo"));
     assert!(project_context.contains("mysql://127.0.0.1:3306/demo"));
     assert!(project_context.contains("secret-1"));
@@ -95,6 +99,8 @@ fn context_builder_generates_sync_rules() {
     assert!(project_rules.contains("系统负责执行同步"));
     assert!(project_rules.contains("chrome-cdp"));
     assert!(project_rules.contains("页面复核"));
+    assert!(project_rules.contains("客户指出问题并提供学习样本"));
+    assert!(project_rules.contains("必须更新相关 skill"));
     assert!(project_rules.contains("Analytics"));
     assert!(project_rules.contains("secret-2"));
     assert!(mappings.contains("protocol"));
@@ -103,6 +109,7 @@ fn context_builder_generates_sync_rules() {
     assert!(mappings.contains("preview_account"));
     assert!(mappings.contains("preview_password"));
     assert!(mappings.contains("codex_api_key"));
+    assert!(mappings.contains("style_instructions"));
     assert!(mappings.contains("source_target_mappings"));
     assert!(mappings.contains("delete_propagation"));
     assert!(mappings.contains("auto_sync_on_change"));
@@ -110,8 +117,17 @@ fn context_builder_generates_sync_rules() {
     assert!(mappings.contains("mysql://127.0.0.1:3306/analytics"));
     assert!(mappings.contains("reportlets"));
     assert!(mappings.contains("templates"));
+    assert!(!project_context.contains("preview_mode"));
+    assert!(!project_context.contains("codex_provider"));
+    assert!(!project_context.contains("codex_model"));
     assert!(!project_context.contains("codex_base_url"));
+    assert!(!project_rules.contains("preview_mode"));
+    assert!(!project_rules.contains("codex_provider"));
+    assert!(!project_rules.contains("codex_model"));
     assert!(!project_rules.contains("codex_base_url"));
+    assert!(!mappings.contains("\"preview_mode\""));
+    assert!(!mappings.contains("\"codex_provider\""));
+    assert!(!mappings.contains("\"codex_model\""));
     assert!(!mappings.contains("codex_base_url"));
 
     assert!(context_dir.join("skills/fr-cpt/SKILL.md").exists());
@@ -126,6 +142,9 @@ fn context_builder_generates_sync_rules() {
         .exists());
     assert!(context_dir
         .join("skills/chrome-cdp/scripts/cdp.mjs")
+        .exists());
+    assert!(context_dir
+        .join("skills/continuous-learning/SKILL.md")
         .exists());
     assert!(agents.contains("chrome-cdp"));
     assert!(agents.contains("同步完成后"));

@@ -33,6 +33,7 @@ fn build_request(project_dir: &PathBuf) -> StartSessionRequest {
     config.sync.host = "files.example.com".into();
     config.sync.port = 22;
     config.sync.username = "deploy".into();
+    config.sync.password = "deploy-pass".into();
     config.sync.remote_runtime_dir = "/srv/tomcat/webapps/webroot/WEB-INF".into();
     config.sync.delete_propagation = true;
     config.sync.auto_sync_on_change = true;

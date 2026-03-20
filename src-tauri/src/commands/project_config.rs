@@ -1,7 +1,7 @@
 use crate::domain::project_config::{ProjectConfig, PROJECT_SOURCE_SUBDIR};
 use crate::domain::project_initializer::{EmbeddedProjectInitializer, ProjectInitializer};
 use serde::Serialize;
-use serde_json::Value;
+use serde_json::{json, Value};
 use std::fs;
 use std::io::ErrorKind;
 use std::io::Write;
@@ -62,7 +62,7 @@ pub fn load_project_config_from_path(path: &Path) -> Result<ProjectConfig, Strin
     };
     let value: Value = serde_json::from_str(&payload)
         .map_err(|error| format!("failed to parse project config: {error}"))?;
-    let normalized = normalize_legacy_data_connections(value);
+    let normalized = normalize_legacy_project_config(value);
     let config: ProjectConfig = serde_json::from_value(normalized)
         .map_err(|error| format!("failed to parse project config: {error}"))?;
     config.validate()?;
@@ -183,6 +183,67 @@ fn normalize_legacy_data_connections(mut value: Value) -> Value {
     }
     object.insert("data_connections".into(), Value::Array(vec![legacy]));
     value
+}
+
+fn normalize_legacy_project_config(value: Value) -> Value {
+    normalize_legacy_style_profile(normalize_legacy_data_connections(value))
+}
+
+fn normalize_legacy_style_profile(mut value: Value) -> Value {
+    let Some(object) = value.as_object_mut() else {
+        return value;
+    };
+    let Some(style) = object.get("style").cloned() else {
+        return value;
+    };
+    if style
+        .get("instructions")
+        .and_then(Value::as_str)
+        .is_some()
+    {
+        return value;
+    }
+    object.insert(
+        "style".into(),
+        json!({ "instructions": legacy_style_instructions(&style) }),
+    );
+    value
+}
+
+fn legacy_style_instructions(style: &Value) -> String {
+    let Some(object) = style.as_object() else {
+        return String::new();
+    };
+    [
+        ("font_family", "字体"),
+        ("font_size", "字号"),
+        ("line_height", "行高"),
+        ("column_width", "列宽"),
+        ("header_font_family", "表头字体"),
+        ("header_font_size", "表头字号"),
+        ("number_format", "数字格式"),
+    ]
+    .into_iter()
+    .filter_map(|(key, label)| legacy_style_line(object, key, label))
+    .collect::<Vec<_>>()
+    .join("\n")
+}
+
+fn legacy_style_line(
+    object: &serde_json::Map<String, Value>,
+    key: &str,
+    label: &str,
+) -> Option<String> {
+    let value = object.get(key)?;
+    let text = match value {
+        Value::String(content) => content.trim().to_string(),
+        Value::Number(content) => content.to_string(),
+        _ => String::new(),
+    };
+    if text.is_empty() {
+        return None;
+    }
+    Some(format!("{label}：{text}"))
 }
 
 fn is_hidden_entry(entry: &fs::DirEntry) -> bool {

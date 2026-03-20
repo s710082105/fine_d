@@ -9,12 +9,12 @@
 - preview_url: {{preview_url}}
 - preview_account: {{preview_account}}
 - preview_password: {{preview_password}}
-- preview_mode: {{preview_mode}}
-- codex_provider: {{codex_provider}}
-- codex_model: {{codex_model}}
 - codex_api_key: {{codex_api_key}}
 - delete_propagation: {{delete_propagation}}
 - auto_sync_on_change: {{auto_sync_on_change}}
+
+## style_instructions
+{{style_instructions}}
 
 ## data_connections
 {{data_connections}}
@@ -30,3 +30,5 @@
 - `reportlets/` 相关改动提交并同步完成后，必须使用 `chrome-cdp` skill 打开 `preview_url` 做页面复核。
 - 如果预览页需要登录，优先使用 `preview_account` 和 `preview_password` 完成登录，再继续复核。
 - 复核发现问题后直接继续调整，再次提交并重复同步与页面复核，直到页面结果符合需求。
+- 客户指出问题并提供学习样本后，必须先归纳差异，再更新 `.codex/skills/` 下的相关 skill，确保后续同类需求直接复用，也就是必须更新相关 skill。
+- 如果现有 skill 无法承载新的经验，必须新增或拆分 skill，并把学习样本沉淀进 skill 文档。

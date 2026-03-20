@@ -37,6 +37,7 @@ it('renders project tab by default and switches to style tab', async () => {
               children: []
             }
           ],
+          listRemoteDirectories: async () => [],
           saveConfig: async () => undefined
         }}
       />
@@ -54,34 +55,33 @@ it('renders project tab by default and switches to style tab', async () => {
   await waitFor(() =>
     expect(screen.getByLabelText('项目名称')).toBeInTheDocument()
   )
-  expect(screen.getByLabelText('同步协议')).toBeInTheDocument()
+  expect(screen.getByRole('combobox', { name: '同步协议' })).toBeInTheDocument()
   expect(screen.getByLabelText('预览地址')).toBeInTheDocument()
   expect(screen.getByLabelText('预览账号')).toBeInTheDocument()
   expect(screen.getByLabelText('预览密码')).toBeInTheDocument()
-  expect(screen.getByLabelText('预览方式')).toBeInTheDocument()
-  expect(screen.getByLabelText('Codex 提供方')).toBeInTheDocument()
-  expect(screen.getByLabelText('Codex 模型')).toBeInTheDocument()
+  expect(screen.queryByRole('combobox', { name: '预览方式' })).not.toBeInTheDocument()
+  expect(screen.queryByLabelText('Codex 提供方')).not.toBeInTheDocument()
+  expect(screen.queryByLabelText('Codex 模型')).not.toBeInTheDocument()
   expect(screen.getByLabelText('Codex API Key')).toBeInTheDocument()
   expect(screen.getByText('真实同步源目录固定为：/tmp/demo/reportlets')).toBeInTheDocument()
   expect(screen.getByLabelText('同步删除')).toBeInTheDocument()
   expect(screen.getByLabelText('文件变更后自动同步')).toBeInTheDocument()
-  expect(screen.getByRole('option', { name: 'SFTP' })).toBeInTheDocument()
-  expect(screen.getByRole('option', { name: 'FTP' })).toBeInTheDocument()
-  expect(screen.getByRole('option', { name: '本地' })).toBeInTheDocument()
+  expect(screen.getByRole('combobox', { name: '同步协议' })).toBeInTheDocument()
 
   fireEvent.click(screen.getByRole('tab', { name: '样式' }))
 
-  expect(screen.getByLabelText('字体')).toBeInTheDocument()
-  expect(screen.getByLabelText('字号')).toBeInTheDocument()
-  expect(screen.getByLabelText('行高')).toBeInTheDocument()
-  expect(screen.getByLabelText('列宽')).toBeInTheDocument()
-  expect(screen.getByLabelText('表头字体')).toBeInTheDocument()
-  expect(screen.getByLabelText('表头字号')).toBeInTheDocument()
-  expect(screen.getByLabelText('数字格式')).toBeInTheDocument()
+  await waitFor(() => expect(screen.getByRole('tabpanel')).toBeInTheDocument())
+  await waitFor(() => expect(screen.getByLabelText('样式说明')).toBeInTheDocument())
+  expect(screen.getByLabelText('样式说明')).toBeInTheDocument()
+  expect(
+    screen.getByText('这里的内容会作为 AI 的项目上下文写入，直接描述版式、配色、字体和输出风格。')
+  ).toBeInTheDocument()
 
   fireEvent.click(screen.getByRole('tab', { name: '数据连接' }))
 
-  expect(screen.getByRole('button', { name: '新增数据连接' })).toBeInTheDocument()
+  await waitFor(() =>
+    expect(screen.getByRole('button', { name: '新增数据连接' })).toBeInTheDocument()
+  )
   expect(screen.getByLabelText('数据连接名称 1')).toBeInTheDocument()
   expect(screen.getByLabelText('DSN 1')).toBeInTheDocument()
   expect(screen.getByLabelText('用户名 1')).toBeInTheDocument()
@@ -94,7 +94,9 @@ it('renders project tab by default and switches to style tab', async () => {
 
   fireEvent.click(screen.getByRole('tab', { name: '文件管理' }))
 
-  expect(screen.getByText('reportlets 目录')).toBeInTheDocument()
+  await waitFor(() => expect(screen.getByText('reportlets 目录')).toBeInTheDocument())
+  expect(screen.getByRole('tree')).toBeInTheDocument()
+  expect(screen.getAllByRole('treeitem')).toHaveLength(2)
   expect(screen.getByText('sales')).toBeInTheDocument()
   expect(screen.getByText('report.cpt')).toBeInTheDocument()
   expect(screen.queryByText('.gitkeep')).not.toBeInTheDocument()
@@ -103,8 +105,13 @@ it('renders project tab by default and switches to style tab', async () => {
 it('loads config from project directory and saves back to project config file', async () => {
   const loaded = createDefaultProjectConfig()
   loaded.workspace.name = 'demo-project'
-  loaded.sync.protocol = 'local'
-  loaded.sync.remote_runtime_dir = '/tmp/runtime'
+  loaded.sync.protocol = 'sftp'
+  loaded.sync.host = '127.0.0.1'
+  loaded.sync.port = 22
+  loaded.sync.username = 'deploy'
+  loaded.sync.password = 'deploy-pass'
+  loaded.sync.remote_runtime_dir = '/srv/runtime'
+  loaded.style.instructions = '表格使用蓝灰配色，标题左对齐，金额保留两位小数。'
   loaded.preview.account = 'preview-user'
   loaded.preview.password = 'preview-pass'
   loaded.ai.provider = 'openai'
@@ -123,16 +130,28 @@ it('loads config from project directory and saves back to project config file', 
     config: loaded
   }))
   const listReportletEntries = vi.fn(async () => [])
+  const listRemoteDirectories = vi.fn(async () => [
+    {
+      name: 'reportlets',
+      path: '/srv/runtime/reportlets',
+      children: []
+    }
+  ])
   const saveConfig = vi.fn(async () => undefined)
   const browseDirectory = vi
     .fn<() => Promise<string | null>>()
     .mockResolvedValueOnce('/tmp/existing')
-    .mockResolvedValueOnce('/tmp/runtime-picked')
 
   await act(async () => {
     render(
       <ProjectConfigForm
-        services={{ browseDirectory, loadConfig, listReportletEntries, saveConfig }}
+        services={{
+          browseDirectory,
+          loadConfig,
+          listReportletEntries,
+          listRemoteDirectories,
+          saveConfig
+        }}
       />
     )
   })
@@ -143,14 +162,34 @@ it('loads config from project directory and saves back to project config file', 
   expect(listReportletEntries).toHaveBeenCalledWith('/tmp/existing')
   expect(browseDirectory).toHaveBeenCalledTimes(1)
   expect(screen.getByDisplayValue('demo-project')).toBeInTheDocument()
+  expect(
+    screen.queryByRole('combobox', { name: '预览方式' })
+  ).not.toBeInTheDocument()
+  expect(screen.queryByLabelText('Codex 提供方')).not.toBeInTheDocument()
+  expect(screen.queryByLabelText('Codex 模型')).not.toBeInTheDocument()
   expect(screen.getByDisplayValue('preview-user')).toBeInTheDocument()
   expect(screen.getByDisplayValue('sk-demo')).toBeInTheDocument()
-  expect(screen.getByRole('button', { name: '选择运行目录' })).toBeInTheDocument()
+  expect(screen.getByDisplayValue('deploy')).toBeInTheDocument()
+  expect(screen.getByDisplayValue('deploy-pass')).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: '选择远程目录' })).toBeInTheDocument()
 
-  fireEvent.click(screen.getByRole('button', { name: '选择运行目录' }))
+  fireEvent.click(screen.getByRole('button', { name: '选择远程目录' }))
 
   await waitFor(() =>
-    expect(screen.getByDisplayValue('/tmp/runtime-picked')).toBeInTheDocument()
+    expect(listRemoteDirectories).toHaveBeenCalledWith({
+      protocol: 'sftp',
+      host: '127.0.0.1',
+      port: 22,
+      username: 'deploy',
+      password: 'deploy-pass',
+      path: '/srv/runtime'
+    })
+  )
+  fireEvent.click(screen.getByText('/srv/runtime/reportlets'))
+  fireEvent.click(screen.getByRole('button', { name: '使用当前目录' }))
+
+  await waitFor(() =>
+    expect(screen.getByDisplayValue('/srv/runtime/reportlets')).toBeInTheDocument()
   )
 
   fireEvent.click(screen.getByRole('button', { name: '保存配置' }))
@@ -164,7 +203,12 @@ it('loads config from project directory and saves back to project config file', 
           account: 'preview-user',
           password: 'preview-pass'
         }),
-        sync: expect.objectContaining({ remote_runtime_dir: '/tmp/runtime-picked' }),
+        sync: expect.objectContaining({
+          host: '127.0.0.1',
+          username: 'deploy',
+          password: 'deploy-pass',
+          remote_runtime_dir: '/srv/runtime/reportlets'
+        }),
         ai: expect.objectContaining({
           provider: 'openai',
           model: 'gpt-5',

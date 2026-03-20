@@ -1,0 +1,115 @@
+.form-hint {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--text-subtle);
+  background: var(--surface-muted);
+}
+
+.project-config-form {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.config-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.config-field__label {
+  color: var(--text-main);
+}
+
+.config-textarea {
+  min-height: 180px;
+}
+
+.config-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.config-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.config-tabs {
+  margin-top: 4px;
+}
+
+.config-tabs .ant-tabs-nav {
+  margin-bottom: 14px;
+}
+
+.project-config-form > .ant-btn,
+.config-list-actions .ant-btn {
+  align-self: flex-start;
+}
+
+.project-config-form__messages,
+.terminal-panel__alert {
+  margin: 0;
+}
+
+.project-config-form__messages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.config-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.config-list-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.config-subsection .ant-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.config-subsection-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.file-tree {
+  border: 1px solid var(--divider);
+  border-radius: 14px;
+  background: var(--surface-muted);
+  padding: 10px;
+}
+
+.file-tree-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.file-tree-kind {
+  min-width: 30px;
+  color: var(--text-subtle);
+}
+
+.terminal-panel__header-actions {
+  justify-content: flex-end;
+}
+
+.terminal-panel__alert + .terminal-panel__alert {
+  margin-top: 10px;
+}

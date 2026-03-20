@@ -1,15 +1,34 @@
 use super::project_config::{SyncProfile, SyncProtocol};
+use super::remote_runtime::{ProtocolRemoteRuntimeFactory, RemoteRuntimeClientFactory};
 use std::collections::HashMap;
 use std::fs;
 use std::path::{Path, PathBuf};
+use std::sync::Arc;
 
 pub trait RuntimeSyncBootstrapper: Send + Sync {
-    fn replace_project_tree(&self, source_root: &Path, profile: &SyncProfile)
-        -> Result<(), String>;
+    fn replace_project_tree(
+        &self,
+        source_root: &Path,
+        profile: &SyncProfile,
+    ) -> Result<(), String>;
 }
 
-#[derive(Clone, Default)]
-pub struct ProtocolRuntimeSyncBootstrapper;
+#[derive(Clone)]
+pub struct ProtocolRuntimeSyncBootstrapper {
+    factory: Arc<dyn RemoteRuntimeClientFactory>,
+}
+
+impl Default for ProtocolRuntimeSyncBootstrapper {
+    fn default() -> Self {
+        Self::with_factory(ProtocolRemoteRuntimeFactory::shared())
+    }
+}
+
+impl ProtocolRuntimeSyncBootstrapper {
+    pub fn with_factory(factory: Arc<dyn RemoteRuntimeClientFactory>) -> Self {
+        Self { factory }
+    }
+}
 
 impl RuntimeSyncBootstrapper for ProtocolRuntimeSyncBootstrapper {
     fn replace_project_tree(
@@ -17,13 +36,10 @@ impl RuntimeSyncBootstrapper for ProtocolRuntimeSyncBootstrapper {
         source_root: &Path,
         profile: &SyncProfile,
     ) -> Result<(), String> {
-        if profile.protocol != SyncProtocol::Local {
-            return Err(format!(
-                "full runtime bootstrap for {} is not implemented yet",
-                protocol_text(&profile.protocol)
-            ));
+        if profile.protocol == SyncProtocol::Local {
+            return replace_local_project_tree(source_root, Path::new(&profile.remote_runtime_dir));
         }
-        replace_local_project_tree(source_root, Path::new(&profile.remote_runtime_dir))
+        replace_remote_project_tree(source_root, profile, &self.factory)
     }
 }
 
@@ -33,6 +49,16 @@ fn replace_local_project_tree(source_root: &Path, runtime_root: &Path) -> Result
     reset_project_source_root(source_root)?;
     copy_local_tree(runtime_root, source_root)?;
     import_versioned_reports(source_root, runtime_root)
+}
+
+fn replace_remote_project_tree(
+    source_root: &Path,
+    profile: &SyncProfile,
+    factory: &Arc<dyn RemoteRuntimeClientFactory>,
+) -> Result<(), String> {
+    reset_project_source_root(source_root)?;
+    let mut client = factory.connect(profile)?;
+    client.download_tree(&profile.remote_runtime_dir, source_root)
 }
 
 fn validate_runtime_root(runtime_root: &Path) -> Result<(), String> {
@@ -167,13 +193,5 @@ impl VersionCandidate {
             rank,
             path: path.to_path_buf(),
         }
-    }
-}
-
-fn protocol_text(protocol: &SyncProtocol) -> &'static str {
-    match protocol {
-        SyncProtocol::Sftp => "sftp",
-        SyncProtocol::Ftp => "ftp",
-        SyncProtocol::Local => "local",
     }
 }

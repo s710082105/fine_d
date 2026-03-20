@@ -8,6 +8,12 @@
     "devUrl": "http://localhost:1420",
     "frontendDist": "../dist"
   },
+  "bundle": {
+    "resources": [
+      "../scripts/install-runtime-macos.sh",
+      "../scripts/install-runtime-windows.ps1"
+    ]
+  },
   "app": {
     "windows": [
       {

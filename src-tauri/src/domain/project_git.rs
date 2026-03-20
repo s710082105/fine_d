@@ -1,4 +1,5 @@
 use super::project_config::{ProjectConfig, SyncProtocol, PROJECT_SOURCE_SUBDIR};
+use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::Command;
@@ -114,6 +115,21 @@ fn render_post_commit_hook(project_dir: &Path, config: &ProjectConfig) -> String
             "{{remote_root}}",
             &shell_quote(remote_root.to_string_lossy().as_ref()),
         )
+        .replace(
+            "{{sync_bin}}",
+            &shell_quote(
+                resolve_sync_binary_path()
+                    .to_string_lossy()
+                    .as_ref(),
+            ),
+        )
+}
+
+fn resolve_sync_binary_path() -> PathBuf {
+    env::var_os("CARGO_BIN_EXE_finereport_tauri_shell")
+        .map(PathBuf::from)
+        .or_else(|| env::current_exe().ok())
+        .unwrap_or_else(|| PathBuf::from("finereport_tauri_shell"))
 }
 
 fn resolve_reportlets_remote_root(config: &ProjectConfig) -> PathBuf {
