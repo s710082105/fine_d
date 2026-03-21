@@ -5,7 +5,7 @@ use crate::domain::terminal_event_bridge::{
 use crate::test_support::{python_command, python_long_running_script, python_pid_script};
 use portable_pty::{native_pty_system, CommandBuilder};
 use std::collections::HashMap;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::sync::{mpsc, Arc, Mutex};
 use std::thread;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
@@ -69,6 +69,12 @@ fn unique_marker_path() -> PathBuf {
 
 fn build_pid_script(path: &str) -> String {
     python_pid_script(PathBuf::from(path).as_path())
+}
+
+fn pid_file_has_content(path: &Path) -> bool {
+    std::fs::read_to_string(path)
+        .map(|content| !content.trim().is_empty())
+        .unwrap_or(false)
 }
 
 fn wait_until(label: &str, condition: impl Fn() -> bool) {
@@ -140,7 +146,7 @@ fn terminal_manager_spawn_cleanup_terminates_process_when_metadata_creation_fail
         .expect("spawn child");
     let child = Arc::new(Mutex::new(child));
 
-    wait_until("pid file creation", || pid_path.exists());
+    wait_until("pid file creation", || pid_file_has_content(pid_path.as_path()));
     let pid = std::fs::read_to_string(&pid_path).expect("read pid file");
     let child_probe = child.clone();
     let error = cleanup_spawn_failure("metadata failure", child, "clock failed".into());
