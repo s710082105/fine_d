@@ -43,10 +43,12 @@ impl RuntimePlatform {
 
 pub fn inspect_system_runtime(platform: RuntimePlatform) -> RuntimeInspectionStatus {
     let git = inspect_command(&["git"]);
+    let node = inspect_with_fallbacks(platform, &["node"], windows_node_fallbacks);
+    let codex = inspect_with_fallbacks(platform, &["codex"], windows_codex_fallbacks);
     RuntimeInspectionStatus {
-        node: inspect_command(&["node"]),
+        node,
         python: inspect_python(platform),
-        codex: inspect_command(&["codex"]),
+        codex,
         hook_shell: detect_hook_shell(platform, git.installed),
         git,
     }
@@ -93,6 +95,50 @@ fn python_candidates(platform: RuntimePlatform) -> &'static [&'static str] {
         RuntimePlatform::Windows => &["py", "python3", "python"],
         RuntimePlatform::Macos | RuntimePlatform::Linux => &["python3"],
     }
+}
+
+/// 先尝试 PATH 上的候选命令，若未找到则在 Windows 上尝试 fallback 绝对路径。
+/// GUI 进程的 PATH 可能不包含 npm 全局 bin 等目录（需要注销重登才生效），
+/// 因此需要直接探测已知安装位置。
+fn inspect_with_fallbacks(
+    platform: RuntimePlatform,
+    candidates: &[&str],
+    win_fallbacks: fn() -> Vec<PathBuf>,
+) -> CommandInstallationStatus {
+    let result = inspect_command(candidates);
+    if result.installed || platform != RuntimePlatform::Windows {
+        return result;
+    }
+    // PATH 上没找到，尝试 Windows 已知安装路径
+    let fallbacks: Vec<String> = win_fallbacks()
+        .into_iter()
+        .filter(|p| p.exists())
+        .map(|p| p.display().to_string())
+        .collect();
+    if fallbacks.is_empty() {
+        return result;
+    }
+    let refs: Vec<&str> = fallbacks.iter().map(|s| s.as_str()).collect();
+    inspect_command(&refs)
+}
+
+/// Windows 上 node 可能安装在 Program Files 但 GUI 进程 PATH 尚未刷新
+fn windows_node_fallbacks() -> Vec<PathBuf> {
+    let mut paths = Vec::new();
+    if let Ok(pf) = std::env::var("ProgramFiles") {
+        paths.push(PathBuf::from(&pf).join("nodejs").join("node.exe"));
+    }
+    paths
+}
+
+/// Windows 上 `npm install -g` 将 codex 安装到 %APPDATA%\npm
+fn windows_codex_fallbacks() -> Vec<PathBuf> {
+    let mut paths = Vec::new();
+    if let Ok(appdata) = std::env::var("APPDATA") {
+        paths.push(PathBuf::from(&appdata).join("npm").join("codex.cmd"));
+        paths.push(PathBuf::from(&appdata).join("npm").join("codex"));
+    }
+    paths
 }
 
 fn inspect_command(candidates: &[&str]) -> CommandInstallationStatus {
