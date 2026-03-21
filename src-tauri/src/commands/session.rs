@@ -201,13 +201,17 @@ fn generate_session_id() -> Result<String, String> {
 mod tests {
     use super::*;
 
+    fn temp_working_dir() -> String {
+        std::env::temp_dir().display().to_string()
+    }
+
     #[test]
     fn validate_external_launch_config_rejects_non_codex_command() {
         let error = validate_external_launch_config(
             &CodexLaunchConfig {
                 command: "sh".into(),
                 args: vec!["-c".into(), "echo hi".into()],
-                working_dir: "/tmp".into(),
+                working_dir: temp_working_dir(),
             },
             &ProjectConfig::default(),
             "hello",
@@ -239,7 +243,7 @@ mod tests {
             &CodexLaunchConfig {
                 command: "codex".into(),
                 args: vec!["--json".into()],
-                working_dir: "/tmp".into(),
+                working_dir: temp_working_dir(),
             },
             &project_config,
             "生成报表",

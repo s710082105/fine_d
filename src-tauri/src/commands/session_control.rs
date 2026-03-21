@@ -204,6 +204,10 @@ fn stop_sync_watcher(
 mod tests {
     use super::*;
 
+    fn temp_working_dir() -> String {
+        std::env::temp_dir().display().to_string()
+    }
+
     #[test]
     fn validate_resume_launch_config_builds_resume_command() {
         let mut project_config = ProjectConfig::default();
@@ -212,7 +216,7 @@ mod tests {
             &CodexLaunchConfig {
                 command: "codex".into(),
                 args: vec!["--json".into()],
-                working_dir: "/tmp".into(),
+                working_dir: temp_working_dir(),
             },
             &project_config,
             "codex-session-1",

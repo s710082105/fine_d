@@ -21,12 +21,16 @@ fn test_config_path() -> PathBuf {
     std::env::temp_dir().join(format!("project_config_roundtrip_{nanos}_{suffix}.json"))
 }
 
+fn test_project_root() -> PathBuf {
+    std::env::temp_dir().join("project-config-roundtrip")
+}
+
 #[test]
 fn project_config_roundtrip_preserves_sync_fields() {
     let mut config = ProjectConfig::default();
     config.workspace = WorkspaceProfile {
         name: "default".into(),
-        root_dir: "/tmp/project".into(),
+        root_dir: test_project_root().display().to_string(),
     };
     config.data_connections = vec![
         finereport_tauri_shell_lib::domain::project_config::DataConnectionProfile {
@@ -74,8 +78,8 @@ fn project_config_roundtrip_preserves_sync_fields() {
     );
     assert_eq!(loaded.data_connections[1].username, "analytics");
     assert_eq!(
-        loaded.local_source_dir().display().to_string(),
-        "/tmp/project/reportlets"
+        loaded.local_source_dir(),
+        test_project_root().join("reportlets")
     );
     assert_eq!(
         loaded.sync.remote_runtime_dir,
@@ -100,18 +104,20 @@ fn load_project_config_from_missing_path_returns_default() {
 #[test]
 fn load_project_config_from_partial_payload_applies_defaults() {
     let path = test_config_path();
+    let local_source_dir = test_project_root().join("reportlets");
     std::fs::write(
         &path,
-        r#"{
-      "sync": {
-        "protocol": "local",
-        "host": "127.0.0.1",
-        "port": 21,
-        "username": "ftp-user",
-        "local_source_dir": "/tmp/project/reportlets",
-        "remote_runtime_dir": "/srv/tomcat/webapps/webroot/WEB-INF"
-      }
-    }"#,
+        json!({
+          "sync": {
+            "protocol": "local",
+            "host": "127.0.0.1",
+            "port": 21,
+            "username": "ftp-user",
+            "local_source_dir": local_source_dir.display().to_string(),
+            "remote_runtime_dir": "/srv/tomcat/webapps/webroot/WEB-INF"
+          }
+        })
+        .to_string(),
     )
     .expect("write partial project config");
 
@@ -131,6 +137,8 @@ fn load_project_config_from_partial_payload_applies_defaults() {
 #[test]
 fn load_project_config_supports_local_sync_preview_and_style_fields() {
     let path = test_config_path();
+    let local_source_dir = test_project_root().join("reportlets");
+    let runtime_dir = std::env::temp_dir().join("project-config-runtime/reportlets");
     std::fs::write(
         &path,
         json!({
@@ -161,8 +169,8 @@ fn load_project_config_supports_local_sync_preview_and_style_fields() {
             "host": "",
             "port": 0,
             "username": "",
-            "local_source_dir": "/tmp/project/reportlets",
-            "remote_runtime_dir": "/tmp/runtime/reportlets",
+            "local_source_dir": local_source_dir.display().to_string(),
+            "remote_runtime_dir": runtime_dir.display().to_string(),
             "delete_propagation": true,
             "auto_sync_on_change": true
           }
@@ -197,6 +205,7 @@ fn load_project_config_supports_local_sync_preview_and_style_fields() {
 #[test]
 fn load_project_config_converts_legacy_style_fields_into_text_instructions() {
     let path = test_config_path();
+    let runtime_dir = std::env::temp_dir().join("project-config-runtime/reportlets");
     std::fs::write(
         &path,
         json!({
@@ -211,7 +220,7 @@ fn load_project_config_converts_legacy_style_fields_into_text_instructions() {
           },
           "sync": {
             "protocol": "local",
-            "remote_runtime_dir": "/tmp/runtime/reportlets"
+            "remote_runtime_dir": runtime_dir.display().to_string()
           }
         })
         .to_string(),
@@ -222,7 +231,10 @@ fn load_project_config_converts_legacy_style_fields_into_text_instructions() {
 
     assert!(loaded.style.instructions.contains("字体：Microsoft YaHei"));
     assert!(loaded.style.instructions.contains("字号：14"));
-    assert!(loaded.style.instructions.contains("表头字体：DIN Alternate"));
+    assert!(loaded
+        .style
+        .instructions
+        .contains("表头字体：DIN Alternate"));
     assert!(loaded.style.instructions.contains("数字格式：#,##0.00"));
 }
 

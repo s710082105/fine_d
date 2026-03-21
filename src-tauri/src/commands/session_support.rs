@@ -38,7 +38,7 @@ mod tests {
 
     #[test]
     fn resolve_project_dir_rejects_path_traversal() {
-        let root = PathBuf::from("/tmp/finereport-projects");
+        let root = std::env::temp_dir().join("finereport-projects");
         let error = resolve_project_dir_from_root(root, "../escape")
             .expect_err("path traversal project id must be rejected");
         assert!(error.contains("invalid path components"));
