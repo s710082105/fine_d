@@ -2,6 +2,11 @@ use finereport_tauri_shell_lib::domain::terminal_event_bridge::{
     TerminalEvent, TerminalEventBridge, TerminalEventEmitter, TerminalEventType,
 };
 use finereport_tauri_shell_lib::domain::terminal_manager::{TerminalLaunchConfig, TerminalManager};
+use finereport_tauri_shell_lib::test_support::{
+    python_command, python_exit_script, python_input_echo_script, python_long_running_script,
+    python_pid_script, python_print_line_script, python_print_no_newline_script,
+    python_split_utf8_script,
+};
 use std::collections::HashMap;
 use std::fs;
 use std::path::PathBuf;
@@ -13,10 +18,6 @@ use std::time::{Duration, SystemTime, UNIX_EPOCH};
 const WAIT_ATTEMPTS: u8 = 80;
 const WAIT_INTERVAL_MS: u64 = 25;
 const NO_NEWLINE_ATTEMPTS: u8 = 12;
-const LONG_RUNNING_SCRIPT: &str = "trap 'exit 0' INT TERM; while true; do sleep 1; done";
-const UTF8_SPLIT_SCRIPT: &str = "printf '\\344\\270'; sleep 1; printf '\\255\\n'";
-const INPUT_ECHO_SCRIPT: &str =
-    "printf 'ready\\n'; read line; printf 'input:%s\\n' \"$line\"; while true; do sleep 1; done";
 
 #[derive(Clone)]
 struct TestEmitter {
@@ -59,16 +60,17 @@ fn wait_until(label: &str, attempts: u8, condition: impl Fn() -> bool) {
 }
 
 fn build_config(script: &str) -> TerminalLaunchConfig {
+    let (command, args) = python_command(script);
     TerminalLaunchConfig {
-        command: "sh".into(),
-        args: vec!["-c".into(), script.into()],
+        command,
+        args,
         env: HashMap::new(),
         working_dir: PathBuf::from(std::env::temp_dir()),
     }
 }
 
 fn build_pid_script(path: &str) -> String {
-    format!("echo $$ > {path}; while true; do sleep 1; done")
+    python_pid_script(PathBuf::from(path).as_path())
 }
 
 fn unique_marker_path() -> PathBuf {
@@ -80,6 +82,13 @@ fn unique_marker_path() -> PathBuf {
 }
 
 fn process_is_running(pid: &str) -> bool {
+    if cfg!(target_os = "windows") {
+        return Command::new("tasklist")
+            .args(["/FI", &format!("PID eq {pid}")])
+            .output()
+            .map(|output| String::from_utf8_lossy(&output.stdout).contains(pid))
+            .unwrap_or(false);
+    }
     Command::new("ps")
         .args(["-p", pid])
         .status()
@@ -112,7 +121,7 @@ fn terminal_manager_lifecycle_starts_process_and_streams_output() {
     manager
         .start_session(
             "terminal-session-1",
-            &build_config("printf 'terminal-ready\\n'"),
+            &build_config(python_print_line_script("terminal-ready").as_str()),
         )
         .expect("start terminal session");
 
@@ -132,7 +141,10 @@ fn terminal_manager_lifecycle_cleans_session_after_process_exit() {
     let manager = TerminalManager::new(TerminalEventBridge::new(Arc::new(emitter)));
 
     manager
-        .start_session("terminal-session-2", &build_config("exit 0"))
+        .start_session(
+            "terminal-session-2",
+            &build_config(python_exit_script(0).as_str()),
+        )
         .expect("start short-lived terminal session");
 
     wait_until("terminal cleanup", WAIT_ATTEMPTS, || {
@@ -173,7 +185,10 @@ fn terminal_manager_lifecycle_close_session_terminates_running_process() {
     let manager = TerminalManager::new(TerminalEventBridge::new(Arc::new(emitter.clone())));
 
     manager
-        .start_session("terminal-session-4", &build_config(LONG_RUNNING_SCRIPT))
+        .start_session(
+            "terminal-session-4",
+            &build_config(python_long_running_script().as_str()),
+        )
         .expect("start long-running session");
     manager
         .close_session("terminal-session-4")
@@ -199,7 +214,10 @@ fn terminal_manager_lifecycle_resize_session_validates_bounds() {
     let manager = TerminalManager::new(TerminalEventBridge::new(Arc::new(emitter)));
 
     manager
-        .start_session("terminal-session-5", &build_config(LONG_RUNNING_SCRIPT))
+        .start_session(
+            "terminal-session-5",
+            &build_config(python_long_running_script().as_str()),
+        )
         .expect("start long-running session");
 
     assert_eq!(
@@ -230,7 +248,7 @@ fn terminal_manager_lifecycle_streams_output_without_newline_before_exit() {
     manager
         .start_session(
             "terminal-session-6",
-            &build_config("printf 'chunk-without-newline'; sleep 1"),
+            &build_config(python_print_no_newline_script("chunk-without-newline").as_str()),
         )
         .expect("start session without newline output");
 
@@ -248,7 +266,10 @@ fn terminal_manager_lifecycle_streams_multibyte_utf8_across_read_boundaries() {
     let manager = TerminalManager::new(TerminalEventBridge::new(Arc::new(emitter.clone())));
 
     manager
-        .start_session("terminal-session-7", &build_config(UTF8_SPLIT_SCRIPT))
+        .start_session(
+            "terminal-session-7",
+            &build_config(python_split_utf8_script("中\n").as_str()),
+        )
         .expect("start session with split utf8 output");
 
     wait_until("split utf8 output", WAIT_ATTEMPTS, || {
@@ -267,7 +288,10 @@ fn terminal_manager_lifecycle_take_failures_observes_background_failure() {
     let manager = TerminalManager::new(TerminalEventBridge::new(Arc::new(emitter)));
 
     manager
-        .start_session("terminal-session-8", &build_config("printf 'boom-output'"))
+        .start_session(
+            "terminal-session-8",
+            &build_config(python_print_no_newline_script("boom-output").as_str()),
+        )
         .expect("start session with failing emitter");
 
     wait_until("background failure capture", WAIT_ATTEMPTS, || {
@@ -281,7 +305,10 @@ fn terminal_manager_lifecycle_write_input_forwards_payload_to_process() {
     let manager = TerminalManager::new(TerminalEventBridge::new(Arc::new(emitter.clone())));
 
     manager
-        .start_session("terminal-session-9", &build_config(INPUT_ECHO_SCRIPT))
+        .start_session(
+            "terminal-session-9",
+            &build_config(python_input_echo_script().as_str()),
+        )
         .expect("start terminal session that reads input");
     wait_until("session readiness output", WAIT_ATTEMPTS, || {
         has_event(&emitter, TerminalEventType::Output, "ready")

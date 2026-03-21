@@ -2,6 +2,9 @@ use finereport_tauri_shell_lib::domain::codex_process_manager::{
     CodexProcessManager, ProcessLaunchConfig,
 };
 use finereport_tauri_shell_lib::domain::event_bridge::{EventBridge, NullEventEmitter};
+use finereport_tauri_shell_lib::test_support::{
+    python_command, python_exit_script, python_long_running_script,
+};
 use std::collections::HashMap;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
@@ -29,13 +32,15 @@ fn start_process_runs_exit_hook_after_child_exit() {
     let hook_session_id_clone = hook_session_id.clone();
     let manager = CodexProcessManager::default();
     let bridge = EventBridge::new(Arc::new(NullEventEmitter));
+    let exit_script = python_exit_script(0);
+    let (command, args) = python_command(exit_script.as_str());
 
     manager
         .start_process(
             "session-1",
             &ProcessLaunchConfig {
-                command: "sh".into(),
-                args: vec!["-c".into(), "exit 0".into()],
+                command,
+                args,
                 env: HashMap::new(),
                 working_dir: std::env::temp_dir(),
                 exit_hook: Some(Arc::new(move |session_id| {
@@ -64,16 +69,15 @@ fn start_process_runs_exit_hook_after_child_exit() {
 fn interrupt_process_sends_signal_to_running_session() {
     let manager = CodexProcessManager::default();
     let bridge = EventBridge::new(Arc::new(NullEventEmitter));
+    let long_running_script = python_long_running_script();
+    let (command, args) = python_command(long_running_script.as_str());
 
     manager
         .start_process(
             "session-2",
             &ProcessLaunchConfig {
-                command: "sh".into(),
-                args: vec![
-                    "-c".into(),
-                    "trap 'exit 130' INT; while true; do sleep 1; done".into(),
-                ],
+                command,
+                args,
                 env: HashMap::new(),
                 working_dir: std::env::temp_dir(),
                 exit_hook: None,

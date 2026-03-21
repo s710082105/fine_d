@@ -1,6 +1,5 @@
 use super::{
-    build_codex_cli_args, build_terminal_environment,
-    close_terminal_session_with_manager,
+    build_codex_cli_args, build_terminal_environment, close_terminal_session_with_manager,
     create_terminal_session_with_options, CloseTerminalSessionRequest,
     CreateTerminalSessionOptions, CreateTerminalSessionRequest,
 };
@@ -9,11 +8,10 @@ use crate::domain::terminal_event_bridge::{
     TerminalEvent, TerminalEventBridge, TerminalEventEmitter,
 };
 use crate::domain::terminal_manager::TerminalManager;
+use crate::test_support::{python_command, python_long_running_script, python_print_line_script};
 use std::path::PathBuf;
 use std::sync::Arc;
 use std::time::{SystemTime, UNIX_EPOCH};
-
-const LONG_RUNNING_SCRIPT: &str = "trap 'exit 0' INT TERM; while true; do sleep 1; done";
 
 struct NoopEmitter;
 
@@ -36,6 +34,7 @@ fn unique_dir(name: &str) -> PathBuf {
 }
 
 fn build_request(workspace_dir: &str) -> CreateTerminalSessionRequest {
+    let (shell, _) = python_command("print('unused')");
     let mut config = ProjectConfig::default();
     config.workspace = WorkspaceProfile {
         name: "default".into(),
@@ -45,7 +44,7 @@ fn build_request(workspace_dir: &str) -> CreateTerminalSessionRequest {
         project_id: "default".into(),
         config_version: "v1".into(),
         workspace_dir: workspace_dir.into(),
-        shell: "bash".into(),
+        shell,
         env: None,
         config,
     }
@@ -55,10 +54,12 @@ fn build_request(workspace_dir: &str) -> CreateTerminalSessionRequest {
 fn terminal_commands_create_terminal_session_rejects_missing_project_directory() {
     let missing_dir = unique_dir("missing");
     let manager = build_manager();
+    let ok_script = python_print_line_script("ok");
+    let (command, args) = python_command(ok_script.as_str());
     let error = create_terminal_session_with_options(
         &manager,
         &build_request(missing_dir.to_string_lossy().as_ref()),
-        &CreateTerminalSessionOptions::test_command("sh", vec!["-c".into(), "printf ok".into()]),
+        &CreateTerminalSessionOptions::test_command(command.as_str(), args),
     )
     .expect_err("missing directory should be rejected");
 
@@ -70,18 +71,17 @@ fn terminal_commands_create_terminal_session_returns_metadata_on_success() {
     let project_dir = unique_dir("success");
     std::fs::create_dir_all(&project_dir).expect("create project directory");
     let manager = build_manager();
+    let long_running_script = python_long_running_script();
+    let (command, args) = python_command(long_running_script.as_str());
     let response = create_terminal_session_with_options(
         &manager,
         &build_request(project_dir.to_string_lossy().as_ref()),
-        &CreateTerminalSessionOptions::test_command(
-            "sh",
-            vec!["-c".into(), LONG_RUNNING_SCRIPT.into()],
-        ),
+        &CreateTerminalSessionOptions::test_command(command.as_str(), args),
     )
     .expect("create terminal session");
 
     assert_eq!(response.session_id, response.process.session_id);
-    assert_eq!(response.process.command, "sh");
+    assert_eq!(response.process.command, command);
     assert_eq!(
         response.process.working_dir,
         project_dir.display().to_string()

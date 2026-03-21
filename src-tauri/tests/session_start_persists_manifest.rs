@@ -9,6 +9,9 @@ use finereport_tauri_shell_lib::domain::project_config::{
     ProjectConfig, ProjectMapping, WorkspaceProfile,
 };
 use finereport_tauri_shell_lib::domain::sync_dispatcher::SyncManager;
+use finereport_tauri_shell_lib::test_support::{
+    python_command, python_exit_script, python_print_line_script,
+};
 use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -42,6 +45,8 @@ fn build_request(project_dir: &PathBuf) -> StartSessionRequest {
         remote: "reportlets".into(),
     }];
 
+    let started_script = python_print_line_script("started");
+    let (command, args) = python_command(started_script.as_str());
     StartSessionRequest {
         project_id: "default".into(),
         config_version: "v1".into(),
@@ -49,8 +54,8 @@ fn build_request(project_dir: &PathBuf) -> StartSessionRequest {
         enabled_skills: vec!["fr-cpt".into(), "chrome-cdp".into()],
         config,
         codex: CodexLaunchConfig {
-            command: "sh".into(),
-            args: vec!["-c".into(), "printf 'started\\n'".into()],
+            command,
+            args,
             working_dir: ".".into(),
         },
     }
@@ -86,6 +91,8 @@ fn session_start_persists_manifest() {
     let request = build_request(&project_dir);
     let process_manager = CodexProcessManager::default();
     let bridge = EventBridge::new(Arc::new(NullEventEmitter));
+    let started_script = python_print_line_script("started");
+    let (command, args) = python_command(started_script.as_str());
 
     let response = start_session_in_project(
         project_dir.as_path(),
@@ -96,8 +103,8 @@ fn session_start_persists_manifest() {
             sync_manager: None,
         },
         ProcessLaunchConfig {
-            command: "sh".into(),
-            args: vec!["-c".into(), "printf 'started\\n'".into()],
+            command,
+            args,
             env: HashMap::new(),
             working_dir: project_dir.clone(),
             exit_hook: None,
@@ -125,6 +132,8 @@ fn session_start_stops_sync_watcher_after_process_exit() {
     let process_manager = CodexProcessManager::default();
     let sync_manager = SyncManager::default();
     let bridge = EventBridge::new(Arc::new(NullEventEmitter));
+    let exit_script = python_exit_script(0);
+    let (command, args) = python_command(exit_script.as_str());
 
     let response = start_session_in_project(
         project_dir.as_path(),
@@ -135,8 +144,8 @@ fn session_start_stops_sync_watcher_after_process_exit() {
             sync_manager: Some(&sync_manager),
         },
         ProcessLaunchConfig {
-            command: "sh".into(),
-            args: vec!["-c".into(), "exit 0".into()],
+            command,
+            args,
             env: HashMap::new(),
             working_dir: project_dir.clone(),
             exit_hook: None,

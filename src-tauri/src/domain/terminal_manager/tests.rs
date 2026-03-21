@@ -2,6 +2,7 @@ use super::{cleanup::cleanup_spawn_failure, TerminalLaunchConfig, TerminalManage
 use crate::domain::terminal_event_bridge::{
     TerminalEvent, TerminalEventBridge, TerminalEventEmitter, TerminalEventType,
 };
+use crate::test_support::{python_command, python_long_running_script, python_pid_script};
 use portable_pty::{native_pty_system, CommandBuilder};
 use std::collections::HashMap;
 use std::path::PathBuf;
@@ -11,8 +12,6 @@ use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 const WAIT_ATTEMPTS: u8 = 80;
 const WAIT_INTERVAL_MS: u64 = 25;
-const LONG_RUNNING_SCRIPT: &str = "trap 'exit 0' INT TERM; while true; do sleep 1; done";
-
 #[derive(Clone)]
 struct BlockingStartedEmitter {
     sender: mpsc::Sender<()>,
@@ -51,9 +50,10 @@ impl TerminalEventEmitter for BlockingStartedEmitter {
 }
 
 fn build_config(script: &str) -> TerminalLaunchConfig {
+    let (command, args) = python_command(script);
     TerminalLaunchConfig {
-        command: "sh".into(),
-        args: vec!["-c".into(), script.into()],
+        command,
+        args,
         env: HashMap::new(),
         working_dir: PathBuf::from(std::env::temp_dir()),
     }
@@ -68,7 +68,7 @@ fn unique_marker_path() -> PathBuf {
 }
 
 fn build_pid_script(path: &str) -> String {
-    format!("echo $$ > {path}; while true; do sleep 1; done")
+    python_pid_script(PathBuf::from(path).as_path())
 }
 
 fn wait_until(label: &str, condition: impl Fn() -> bool) {
@@ -88,7 +88,10 @@ fn terminal_manager_rejects_duplicate_session_id_while_first_start_is_in_progres
     let first_manager = manager.clone();
 
     let first = thread::spawn(move || {
-        first_manager.start_session("shared", &build_config(LONG_RUNNING_SCRIPT))
+        first_manager.start_session(
+            "shared",
+            &build_config(python_long_running_script().as_str()),
+        )
     });
     started_rx
         .recv_timeout(Duration::from_secs(1))
@@ -96,7 +99,10 @@ fn terminal_manager_rejects_duplicate_session_id_while_first_start_is_in_progres
 
     let second_manager = manager.clone();
     let second = thread::spawn(move || {
-        second_manager.start_session("shared", &build_config(LONG_RUNNING_SCRIPT))
+        second_manager.start_session(
+            "shared",
+            &build_config(python_long_running_script().as_str()),
+        )
     });
 
     release_tx.send(()).expect("release started emit");
@@ -121,12 +127,14 @@ fn terminal_manager_spawn_cleanup_terminates_process_when_metadata_creation_fail
     let pair = native_pty_system()
         .openpty(super::runtime::pty_size(24, 80))
         .expect("open pty");
+    let (command, args) = python_command(script.as_str());
     let child = pair
         .slave
         .spawn_command({
-            let mut builder = CommandBuilder::new("sh");
-            builder.arg("-c");
-            builder.arg(script.as_str());
+            let mut builder = CommandBuilder::new(command);
+            for arg in args {
+                builder.arg(arg);
+            }
             builder
         })
         .expect("spawn child");
