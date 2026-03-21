@@ -3,8 +3,9 @@ use crate::domain::terminal_event_bridge::{
     TerminalEvent, TerminalEventBridge, TerminalEventEmitter, TerminalEventType,
 };
 use crate::test_support::{python_command, python_long_running_script};
-use portable_pty::{native_pty_system, CommandBuilder};
+use portable_pty::{Child, ChildKiller, ExitStatus};
 use std::collections::HashMap;
+use std::io;
 use std::path::PathBuf;
 use std::sync::{mpsc, Arc, Mutex};
 use std::thread;
@@ -16,6 +17,29 @@ const WAIT_INTERVAL_MS: u64 = 25;
 struct BlockingStartedEmitter {
     sender: mpsc::Sender<()>,
     receiver: Arc<Mutex<mpsc::Receiver<()>>>,
+}
+
+#[derive(Clone, Debug)]
+struct FakeChild {
+    state: Arc<Mutex<FakeChildState>>,
+}
+
+#[derive(Debug, Default)]
+struct FakeChildState {
+    killed: bool,
+}
+
+impl FakeChild {
+    fn new() -> Self {
+        Self {
+            state: Arc::new(Mutex::new(FakeChildState::default())),
+        }
+    }
+}
+
+#[derive(Clone, Debug)]
+struct FakeChildKiller {
+    state: Arc<Mutex<FakeChildState>>,
 }
 
 impl BlockingStartedEmitter {
@@ -46,6 +70,50 @@ impl TerminalEventEmitter for BlockingStartedEmitter {
                 .map_err(|error| format!("failed to wait for release signal: {error}"))?;
         }
         Ok(())
+    }
+}
+
+impl ChildKiller for FakeChild {
+    fn kill(&mut self) -> io::Result<()> {
+        self.state.lock().expect("lock fake child state").killed = true;
+        Ok(())
+    }
+
+    fn clone_killer(&self) -> Box<dyn ChildKiller + Send + Sync> {
+        Box::new(FakeChildKiller {
+            state: self.state.clone(),
+        })
+    }
+}
+
+impl ChildKiller for FakeChildKiller {
+    fn kill(&mut self) -> io::Result<()> {
+        self.state.lock().expect("lock fake killer state").killed = true;
+        Ok(())
+    }
+
+    fn clone_killer(&self) -> Box<dyn ChildKiller + Send + Sync> {
+        Box::new(self.clone())
+    }
+}
+
+impl Child for FakeChild {
+    fn try_wait(&mut self) -> io::Result<Option<ExitStatus>> {
+        let killed = self.state.lock().expect("lock fake child state").killed;
+        Ok(killed.then(|| ExitStatus::with_exit_code(1)))
+    }
+
+    fn wait(&mut self) -> io::Result<ExitStatus> {
+        Ok(ExitStatus::with_exit_code(1))
+    }
+
+    fn process_id(&self) -> Option<u32> {
+        Some(42)
+    }
+
+    #[cfg(windows)]
+    fn as_raw_handle(&self) -> Option<std::os::windows::io::RawHandle> {
+        None
     }
 }
 
@@ -110,31 +178,8 @@ fn terminal_manager_rejects_duplicate_session_id_while_first_start_is_in_progres
 
 #[test]
 fn terminal_manager_spawn_cleanup_terminates_process_when_metadata_creation_fails() {
-    let pair = native_pty_system()
-        .openpty(super::runtime::pty_size(24, 80))
-        .expect("open pty");
-    let (command, args) = python_command(python_long_running_script().as_str());
-    let child = pair
-        .slave
-        .spawn_command({
-            let mut builder = CommandBuilder::new(command);
-            for arg in args {
-                builder.arg(arg);
-            }
-            builder
-        })
-        .expect("spawn child");
-    let child = Arc::new(Mutex::new(child));
+    let child = Arc::new(Mutex::new(Box::new(FakeChild::new()) as Box<dyn Child + Send + Sync>));
     let child_probe = child.clone();
-
-    wait_until("spawned child", || {
-        child_probe
-            .lock()
-            .expect("lock child probe")
-            .try_wait()
-            .expect("poll child status")
-            .is_none()
-    });
     let error = cleanup_spawn_failure("metadata failure", child, "clock failed".into());
 
     assert!(error.contains("clock failed"));
