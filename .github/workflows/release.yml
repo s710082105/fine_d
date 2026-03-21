@@ -186,16 +186,26 @@ jobs:
       - name: Build macOS ARM64 bundle
         run: pnpm tauri build --target aarch64-apple-darwin
 
+      - name: List build output
+        run: ls -R src-tauri/target/aarch64-apple-darwin/release/bundle/ || true
+
       - name: Package macOS app
         run: |
-          cd src-tauri/target/aarch64-apple-darwin/release/bundle/macos
-          tar -czf FineReport-Codex-Panel-macos-arm64.tar.gz "FineReport Codex Panel.app"
+          # Tauri v2 输出 .app 到 bundle/macos/，dmg 到 bundle/dmg/
+          # 优先打包 .app，回退到直接上传二进制
+          if [ -d "src-tauri/target/aarch64-apple-darwin/release/bundle/macos" ]; then
+            cd src-tauri/target/aarch64-apple-darwin/release/bundle/macos
+            tar -czf /tmp/FineReport-Codex-Panel-macos-arm64.tar.gz *.app
+          else
+            cd src-tauri/target/aarch64-apple-darwin/release
+            tar -czf /tmp/FineReport-Codex-Panel-macos-arm64.tar.gz finereport_tauri_shell
+          fi
 
       - name: Upload macOS ARM64 artifact
         uses: actions/upload-artifact@v4
         with:
           name: finereport-macos-arm64
-          path: src-tauri/target/aarch64-apple-darwin/release/bundle/macos/FineReport-Codex-Panel-macos-arm64.tar.gz
+          path: /tmp/FineReport-Codex-Panel-macos-arm64.tar.gz
           if-no-files-found: error
 
   # ── Release (仅 tag 触发) ──────────────────────────────────────────
