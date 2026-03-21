@@ -1,11 +1,12 @@
-use crate::domain::project_config::{ProjectConfig, PROJECT_SOURCE_SUBDIR};
+use crate::domain::project_config::{DataConnectionProfile, DbType, ProjectConfig, PROJECT_SOURCE_SUBDIR};
 use crate::domain::project_initializer::{EmbeddedProjectInitializer, ProjectInitializer};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::fs;
 use std::io::ErrorKind;
 use std::io::Write;
 use std::path::{Path, PathBuf};
+use std::process::Command;
 use tauri::AppHandle;
 
 const PROJECT_CONFIG_FILE: &str = "project-config.json";
@@ -142,6 +143,108 @@ pub fn list_reportlet_entries(
     list_reportlet_entries_from_project_dir(Path::new(&project_dir))
 }
 
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TestConnectionResult {
+    pub ok: bool,
+    pub message: String,
+}
+
+#[tauri::command]
+pub async fn test_data_connection(
+    connection: DataConnectionProfile,
+) -> Result<TestConnectionResult, String> {
+    let db_type_str = match connection.db_type {
+        DbType::Mysql => "mysql",
+        DbType::Postgresql => "postgresql",
+        DbType::Oracle => "oracle",
+        DbType::Sqlserver => "sqlserver",
+    };
+
+    // URL 编码密码中的特殊字符
+    let encoded_password = urlencoding::encode(&connection.password);
+
+    let script = format!(
+        r#"
+import sys, json
+try:
+    from sqlalchemy import create_engine, text
+except ImportError:
+    print(json.dumps({{"ok": False, "message": "缺少 sqlalchemy，请运行: pip install sqlalchemy"}}))
+    sys.exit(0)
+
+db_type = "{db_type}"
+driver_map = {{"mysql": "pymysql", "postgresql": "psycopg2", "oracle": "cx_Oracle", "sqlserver": "pymssql"}}
+driver = driver_map[db_type]
+try:
+    __import__(driver)
+except ImportError:
+    print(json.dumps({{"ok": False, "message": f"缺少 {{driver}} 驱动，请运行: pip install {{driver}}"}}))
+    sys.exit(0)
+
+url_map = {{
+    "mysql": "mysql+pymysql://{{user}}:{{password}}@{{host}}:{{port}}/{{database}}",
+    "postgresql": "postgresql+psycopg2://{{user}}:{{password}}@{{host}}:{{port}}/{{database}}",
+    "oracle": "oracle+cx_oracle://{{user}}:{{password}}@{{host}}:{{port}}/{{database}}",
+    "sqlserver": "mssql+pymssql://{{user}}:{{password}}@{{host}}:{{port}}/{{database}}"
+}}
+url = url_map[db_type].format(user="{user}", password="{password}", host="{host}", port={port}, database="{database}")
+try:
+    engine = create_engine(url, connect_args={{"connect_timeout": 5}} if db_type in ("mysql", "postgresql") else {{}})
+    with engine.connect() as conn:
+        conn.execute(text("SELECT 1"))
+    print(json.dumps({{"ok": True, "message": "连接成功"}}))
+except Exception as e:
+    print(json.dumps({{"ok": False, "message": str(e)}}))
+"#,
+        db_type = db_type_str,
+        user = connection.username.replace('"', r#"\""#),
+        password = encoded_password,
+        host = connection.host.replace('"', r#"\""#),
+        port = connection.port,
+        database = connection.database.replace('"', r#"\""#),
+    );
+
+    let python = find_python().map_err(|e| format!("找不到 Python: {e}"))?;
+
+    let output = Command::new(&python)
+        .args(["-c", &script])
+        .output()
+        .map_err(|e| format!("执行 Python 脚本失败: {e}"))?;
+
+    let stdout = String::from_utf8_lossy(&output.stdout).trim().to_string();
+    let stderr = String::from_utf8_lossy(&output.stderr).trim().to_string();
+
+    if stdout.is_empty() {
+        return Ok(TestConnectionResult {
+            ok: false,
+            message: if stderr.is_empty() {
+                "Python 脚本无输出".into()
+            } else {
+                stderr
+            },
+        });
+    }
+
+    serde_json::from_str::<TestConnectionResult>(&stdout).map_err(|e| {
+        format!(
+            "解析测试结果失败: {e}\nstdout: {stdout}\nstderr: {stderr}"
+        )
+    })
+}
+
+fn find_python() -> Result<String, String> {
+    for name in &["python3", "python", "py"] {
+        if Command::new(name)
+            .arg("--version")
+            .output()
+            .is_ok()
+        {
+            return Ok(name.to_string());
+        }
+    }
+    Err("python3/python/py 均不可用".into())
+}
+
 fn write_atomically(path: &Path, payload: &str) -> Result<(), String> {
     let temp_path = path.with_extension("json.tmp");
     let mut file = fs::File::create(&temp_path)
@@ -185,8 +288,57 @@ fn normalize_legacy_data_connections(mut value: Value) -> Value {
     value
 }
 
+fn normalize_legacy_dsn_fields(mut value: Value) -> Value {
+    let Some(object) = value.as_object_mut() else {
+        return value;
+    };
+    let Some(connections) = object.get_mut("data_connections") else {
+        return value;
+    };
+    let Some(array) = connections.as_array_mut() else {
+        return value;
+    };
+    for conn in array.iter_mut() {
+        let Some(conn_obj) = conn.as_object_mut() else {
+            continue;
+        };
+        // 如果已有 host 字段，跳过迁移
+        if conn_obj.contains_key("host") {
+            continue;
+        }
+        // 从 dsn 字段解析连接信息（格式：scheme://host:port/database）
+        if let Some(dsn) = conn_obj.remove("dsn").and_then(|v| v.as_str().map(String::from)) {
+            if let Some(rest) = dsn.strip_prefix("mysql://") {
+                conn_obj.entry("db_type").or_insert(json!("mysql"));
+                parse_dsn_parts(conn_obj, rest);
+            } else if let Some(rest) = dsn.strip_prefix("postgresql://") {
+                conn_obj.entry("db_type").or_insert(json!("postgresql"));
+                parse_dsn_parts(conn_obj, rest);
+            } else {
+                conn_obj.entry("db_type").or_insert(json!("mysql"));
+                conn_obj.entry("host").or_insert(json!(""));
+                conn_obj.entry("port").or_insert(json!(3306));
+                conn_obj.entry("database").or_insert(json!(""));
+            }
+        }
+    }
+    value
+}
+
+fn parse_dsn_parts(conn_obj: &mut serde_json::Map<String, Value>, host_port_db: &str) {
+    // 格式：host:port/database
+    let (host_port, database) = host_port_db
+        .split_once('/')
+        .unwrap_or((host_port_db, ""));
+    let (host, port_str) = host_port.split_once(':').unwrap_or((host_port, ""));
+    let port: u16 = port_str.parse().unwrap_or(3306);
+    conn_obj.entry("host").or_insert(json!(host));
+    conn_obj.entry("port").or_insert(json!(port));
+    conn_obj.entry("database").or_insert(json!(database));
+}
+
 fn normalize_legacy_project_config(value: Value) -> Value {
-    normalize_legacy_style_profile(normalize_legacy_data_connections(value))
+    normalize_legacy_style_profile(normalize_legacy_dsn_fields(normalize_legacy_data_connections(value)))
 }
 
 fn normalize_legacy_style_profile(mut value: Value) -> Value {

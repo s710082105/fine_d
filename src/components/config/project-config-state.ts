@@ -196,30 +196,14 @@ export function useProjectConfigState(
     updateConfig(mergeConfig(config, 'workspace', patch))
   const updateDataConnection = (
     index: number,
-    patch: Partial<DataConnectionProfile>
+    conn: DataConnectionProfile
   ) => {
     const nextConnections = [...config.data_connections]
-    const current = nextConnections[index] ?? {
-      connection_name: '',
-      dsn: '',
-      username: '',
-      password: ''
-    }
-    nextConnections[index] = { ...current, ...patch }
+    nextConnections[index] = conn
     updateConfig({ ...config, data_connections: nextConnections })
   }
-  const addDataConnection = () => {
-    const nextConnections =
-      config.data_connections.length > 0
-        ? [...config.data_connections]
-        : [{ connection_name: '', dsn: '', username: '', password: '' }]
-    nextConnections.push({
-      connection_name: '',
-      dsn: '',
-      username: '',
-      password: ''
-    })
-    updateConfig({ ...config, data_connections: nextConnections })
+  const addDataConnection = (conn: DataConnectionProfile) => {
+    updateConfig({ ...config, data_connections: [...config.data_connections, conn] })
   }
   const removeDataConnection = (index: number) =>
     updateConfig({
@@ -234,6 +218,8 @@ export function useProjectConfigState(
     updateConfig(mergeConfig(config, 'sync', patch))
   const updateStyle = (patch: Partial<StyleProfile>) =>
     updateConfig(mergeConfig(config, 'style', patch))
+  const testDataConnection = (conn: DataConnectionProfile) =>
+    services.testDataConnection(conn)
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -284,6 +270,7 @@ export function useProjectConfigState(
     updateAi,
     updateSync,
     updateStyle,
+    testDataConnection,
     onSubmit
   }
 }

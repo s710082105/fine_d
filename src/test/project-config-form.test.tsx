@@ -40,7 +40,8 @@ it(
             }
           ],
           listRemoteDirectories: async () => [],
-          saveConfig: async () => undefined
+          saveConfig: async () => undefined,
+          testDataConnection: async () => ({ ok: true, message: '连接成功' })
         }}
       />
     )
@@ -84,15 +85,8 @@ it(
   await waitFor(() =>
     expect(screen.getByRole('button', { name: '新增数据连接' })).toBeInTheDocument()
   )
-  expect(screen.getByLabelText('数据连接名称 1')).toBeInTheDocument()
-  expect(screen.getByLabelText('DSN 1')).toBeInTheDocument()
-  expect(screen.getByLabelText('用户名 1')).toBeInTheDocument()
-  expect(screen.getByLabelText('密码 1')).toBeInTheDocument()
-
-  fireEvent.click(screen.getByRole('button', { name: '新增数据连接' }))
-
-  expect(screen.getByLabelText('数据连接名称 2')).toBeInTheDocument()
-  expect(screen.getByLabelText('DSN 2')).toBeInTheDocument()
+  // 表格应显示空状态
+  expect(screen.getByText('暂无数据连接')).toBeInTheDocument()
 
   fireEvent.click(screen.getByRole('tab', { name: '文件管理' }))
 
@@ -124,7 +118,10 @@ it('loads config from project directory and saves back to project config file', 
   loaded.data_connections = [
     {
       connection_name: 'FR Demo',
-      dsn: 'mysql://127.0.0.1:3306/demo',
+      db_type: 'mysql',
+      host: '127.0.0.1',
+      port: 3306,
+      database: 'demo',
       username: 'report',
       password: 'secret'
     }
@@ -142,6 +139,7 @@ it('loads config from project directory and saves back to project config file', 
     }
   ])
   const saveConfig = vi.fn(async () => undefined)
+  const testDataConnection = vi.fn(async () => ({ ok: true, message: '连接成功' }))
   const browseDirectory = vi
     .fn<() => Promise<string | null>>()
     .mockResolvedValueOnce('/tmp/existing')
@@ -154,7 +152,8 @@ it('loads config from project directory and saves back to project config file', 
           loadConfig,
           listReportletEntries,
           listRemoteDirectories,
-          saveConfig
+          saveConfig,
+          testDataConnection
         }}
       />
     )
@@ -196,6 +195,21 @@ it('loads config from project directory and saves back to project config file', 
     expect(screen.getByDisplayValue('/srv/runtime/reportlets')).toBeInTheDocument()
   )
 
+  // 切换到数据连接页签验证 Table 行
+  fireEvent.click(screen.getByRole('tab', { name: '数据连接' }))
+  await waitFor(() =>
+    expect(screen.getByText('FR Demo')).toBeInTheDocument()
+  )
+  expect(screen.getByText('127.0.0.1:3306')).toBeInTheDocument()
+  expect(screen.getByText('demo')).toBeInTheDocument()
+  expect(screen.getByText('report')).toBeInTheDocument()
+
+  // 切换回项目页签再保存
+  fireEvent.click(screen.getByRole('tab', { name: '项目' }))
+  await waitFor(() =>
+    expect(screen.getByRole('button', { name: '保存配置' })).toBeInTheDocument()
+  )
+
   fireEvent.click(screen.getByRole('button', { name: '保存配置' }))
 
   await waitFor(() =>
@@ -221,7 +235,10 @@ it('loads config from project directory and saves back to project config file', 
         data_connections: [
           expect.objectContaining({
             connection_name: 'FR Demo',
-            dsn: 'mysql://127.0.0.1:3306/demo',
+            db_type: 'mysql',
+            host: '127.0.0.1',
+            port: 3306,
+            database: 'demo',
             username: 'report',
             password: 'secret'
           })

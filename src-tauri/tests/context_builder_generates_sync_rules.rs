@@ -1,6 +1,6 @@
 use finereport_tauri_shell_lib::domain::context_builder::build_runtime_context;
 use finereport_tauri_shell_lib::domain::project_config::{
-    DataConnectionProfile, ProjectConfig, ProjectMapping, WorkspaceProfile,
+    DataConnectionProfile, DbType, ProjectConfig, ProjectMapping, WorkspaceProfile,
 };
 use std::path::PathBuf;
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -35,13 +35,19 @@ fn context_builder_generates_sync_rules() {
     config.data_connections = vec![
         DataConnectionProfile {
             connection_name: "FR Demo".into(),
-            dsn: "mysql://127.0.0.1:3306/demo".into(),
+            db_type: DbType::Mysql,
+            host: "127.0.0.1".into(),
+            port: 3306,
+            database: "demo".into(),
             username: "report".into(),
             password: "secret-1".into(),
         },
         DataConnectionProfile {
             connection_name: "Analytics".into(),
-            dsn: "mysql://127.0.0.1:3306/analytics".into(),
+            db_type: DbType::Mysql,
+            host: "127.0.0.1".into(),
+            port: 3306,
+            database: "analytics".into(),
             username: "analytics".into(),
             password: "secret-2".into(),
         },
@@ -91,7 +97,9 @@ fn context_builder_generates_sync_rules() {
     assert!(project_context.contains("style_instructions"));
     assert!(project_context.contains("蓝灰配色"));
     assert!(project_context.contains("FR Demo"));
-    assert!(project_context.contains("mysql://127.0.0.1:3306/demo"));
+    assert!(project_context.contains("db_type: mysql"));
+    assert!(project_context.contains("host: 127.0.0.1"));
+    assert!(project_context.contains("database: demo"));
     assert!(project_context.contains("secret-1"));
     assert!(project_rules.contains("delete_propagation"));
     assert!(project_rules.contains("port"));
@@ -114,7 +122,7 @@ fn context_builder_generates_sync_rules() {
     assert!(mappings.contains("delete_propagation"));
     assert!(mappings.contains("auto_sync_on_change"));
     assert!(mappings.contains("data_connections"));
-    assert!(mappings.contains("mysql://127.0.0.1:3306/analytics"));
+    assert!(mappings.contains("analytics"));
     assert!(mappings.contains("reportlets"));
     assert!(mappings.contains("templates"));
     assert!(!project_context.contains("preview_mode"));

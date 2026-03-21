@@ -29,10 +29,28 @@ pub struct WorkspaceProfile {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "lowercase")]
+pub enum DbType {
+    Mysql,
+    Postgresql,
+    Oracle,
+    Sqlserver,
+}
+
+impl Default for DbType {
+    fn default() -> Self {
+        Self::Mysql
+    }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(default)]
 pub struct DataConnectionProfile {
     pub connection_name: String,
-    pub dsn: String,
+    pub db_type: DbType,
+    pub host: String,
+    pub port: u16,
+    pub database: String,
     pub username: String,
     pub password: String,
 }
@@ -181,7 +199,10 @@ impl Default for DataConnectionProfile {
     fn default() -> Self {
         Self {
             connection_name: String::new(),
-            dsn: String::new(),
+            db_type: DbType::default(),
+            host: String::new(),
+            port: 3306,
+            database: String::new(),
             username: String::new(),
             password: String::new(),
         }

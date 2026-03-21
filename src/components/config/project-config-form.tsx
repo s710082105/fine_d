@@ -46,6 +46,7 @@ interface ProjectConfigTabContext {
   remoteDirectoryPickerOpen: ReturnType<
     typeof useProjectConfigState
   >['remoteDirectoryPickerOpen']
+  testDataConnection: ReturnType<typeof useProjectConfigState>['testDataConnection']
   addDataConnection: ReturnType<typeof useProjectConfigState>['addDataConnection']
   selectedRemoteDirectory: ReturnType<
     typeof useProjectConfigState
@@ -147,6 +148,7 @@ function buildProjectConfigTabItems({
   remoteDirectoryEntries,
   remoteDirectoryLoading,
   remoteDirectoryPickerOpen,
+  testDataConnection,
   addDataConnection,
   selectedRemoteDirectory,
   selectRemoteDirectory,
@@ -200,6 +202,7 @@ function buildProjectConfigTabItems({
           addDataConnection={addDataConnection}
           removeDataConnection={removeDataConnection}
           updateDataConnection={updateDataConnection}
+          testDataConnection={testDataConnection}
         />
       )
     ),
@@ -232,6 +235,7 @@ function useProjectConfigFormViewModel(
         remoteDirectoryEntries: projectState.remoteDirectoryEntries,
         remoteDirectoryLoading: projectState.remoteDirectoryLoading,
         remoteDirectoryPickerOpen: projectState.remoteDirectoryPickerOpen,
+        testDataConnection: projectState.testDataConnection,
         addDataConnection: projectState.addDataConnection,
         selectedRemoteDirectory: projectState.selectedRemoteDirectory,
         selectRemoteDirectory: projectState.selectRemoteDirectory,

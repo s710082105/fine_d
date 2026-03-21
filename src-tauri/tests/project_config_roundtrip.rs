@@ -3,7 +3,7 @@ use finereport_tauri_shell_lib::commands::project_config::{
     save_project_config_to_path,
 };
 use finereport_tauri_shell_lib::domain::project_config::{
-    ProjectConfig, ProjectMapping, SyncProtocol, WorkspaceProfile,
+    DbType, ProjectConfig, ProjectMapping, SyncProtocol, WorkspaceProfile,
 };
 use serde_json::json;
 use std::path::PathBuf;
@@ -35,13 +35,19 @@ fn project_config_roundtrip_preserves_sync_fields() {
     config.data_connections = vec![
         finereport_tauri_shell_lib::domain::project_config::DataConnectionProfile {
             connection_name: "FR Demo".into(),
-            dsn: "mysql://127.0.0.1:3306/demo".into(),
+            db_type: DbType::Mysql,
+            host: "127.0.0.1".into(),
+            port: 3306,
+            database: "demo".into(),
             username: "report".into(),
             password: "secret".into(),
         },
         finereport_tauri_shell_lib::domain::project_config::DataConnectionProfile {
             connection_name: "FR Analytics".into(),
-            dsn: "mysql://127.0.0.1:3306/analytics".into(),
+            db_type: DbType::Mysql,
+            host: "127.0.0.1".into(),
+            port: 3306,
+            database: "analytics".into(),
             username: "analytics".into(),
             password: "secret-2".into(),
         },
@@ -72,10 +78,10 @@ fn project_config_roundtrip_preserves_sync_fields() {
     assert_eq!(loaded.sync.password, "deploy-pass");
     assert_eq!(loaded.data_connections.len(), 2);
     assert_eq!(loaded.data_connections[0].connection_name, "FR Demo");
-    assert_eq!(
-        loaded.data_connections[0].dsn,
-        "mysql://127.0.0.1:3306/demo"
-    );
+    assert_eq!(loaded.data_connections[0].db_type, DbType::Mysql);
+    assert_eq!(loaded.data_connections[0].host, "127.0.0.1");
+    assert_eq!(loaded.data_connections[0].port, 3306);
+    assert_eq!(loaded.data_connections[0].database, "demo");
     assert_eq!(loaded.data_connections[1].username, "analytics");
     assert_eq!(
         loaded.local_source_dir(),
@@ -196,10 +202,10 @@ fn load_project_config_supports_local_sync_preview_and_style_fields() {
         "表头使用深色粗体，数据列右对齐，金额保留两位小数。"
     );
     assert_eq!(value["data_connections"][0]["connection_name"], "FR Demo");
-    assert_eq!(
-        value["data_connections"][0]["dsn"],
-        "mysql://127.0.0.1:3306/demo"
-    );
+    assert_eq!(value["data_connections"][0]["db_type"], "mysql");
+    assert_eq!(value["data_connections"][0]["host"], "127.0.0.1");
+    assert_eq!(value["data_connections"][0]["port"], 3306);
+    assert_eq!(value["data_connections"][0]["database"], "demo");
 }
 
 #[test]

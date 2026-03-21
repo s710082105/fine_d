@@ -11,9 +11,14 @@ export interface WorkspaceProfile {
   root_dir: string
 }
 
+export type DbType = 'mysql' | 'postgresql' | 'oracle' | 'sqlserver'
+
 export interface DataConnectionProfile {
   connection_name: string
-  dsn: string
+  db_type: DbType
+  host: string
+  port: number
+  database: string
   username: string
   password: string
 }

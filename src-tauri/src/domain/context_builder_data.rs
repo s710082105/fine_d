@@ -1,5 +1,14 @@
-use super::project_config::ProjectConfig;
+use super::project_config::{DbType, ProjectConfig};
 use std::io;
+
+fn db_type_label(db_type: &DbType) -> &'static str {
+    match db_type {
+        DbType::Mysql => "mysql",
+        DbType::Postgresql => "postgresql",
+        DbType::Oracle => "oracle",
+        DbType::Sqlserver => "sqlserver",
+    }
+}
 
 pub fn markdown_data_connections(config: &ProjectConfig) -> String {
     if config.data_connections.is_empty() {
@@ -11,9 +20,12 @@ pub fn markdown_data_connections(config: &ProjectConfig) -> String {
         .iter()
         .map(|connection| {
             format!(
-                "- name: {}\n  dsn: {}\n  username: {}\n  password: {}",
+                "- name: {}\n  db_type: {}\n  host: {}\n  port: {}\n  database: {}\n  username: {}\n  password: {}",
                 connection.connection_name,
-                connection.dsn,
+                db_type_label(&connection.db_type),
+                connection.host,
+                connection.port,
+                connection.database,
                 connection.username,
                 connection.password
             )

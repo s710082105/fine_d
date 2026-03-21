@@ -18,7 +18,8 @@ function Show-Header {
     '- git',
     '- node',
     '- python3',
-    '- codex'
+    '- codex',
+    '- database drivers (sqlalchemy, pymysql, psycopg2, cx_Oracle, pymssql)'
   ) | ForEach-Object { Write-Host $_ }
 }
 
@@ -156,6 +157,21 @@ function Resolve-CommandPath {
   throw "Command not found: $($Names -join ', ')"
 }
 
+function Install-DatabaseDrivers {
+  Write-Host ''
+  Write-Host 'Installing database drivers (SQLAlchemy + connectors)...'
+  $pipPath = Resolve-CommandPath @('pip3', 'pip') @(
+    (Join-Path $env:LocalAppData 'Programs\Python\Python312\Scripts\pip.exe'),
+    (Join-Path $env:ProgramFiles 'Python312\Scripts\pip.exe')
+  )
+  $packages = @('sqlalchemy', 'pymysql', 'psycopg2-binary', 'cx_Oracle', 'pymssql')
+  $pipArgs = @('install') + $packages
+  if ($SourceMode -eq 'domestic') {
+    $pipArgs += @('-i', 'https://pypi.tuna.tsinghua.edu.cn/simple', '--trusted-host', 'pypi.tuna.tsinghua.edu.cn')
+  }
+  & $pipPath @pipArgs
+}
+
 function Install-Codex {
   Write-Host ''
   Write-Host 'Installing Codex...'
@@ -200,6 +216,7 @@ function Main {
   Configure-WingetSource
   Install-CorePackages
   Refresh-Path
+  Install-DatabaseDrivers
   Install-Codex
   Refresh-Path
   Write-Host ''
@@ -219,6 +236,16 @@ function Main {
     (Join-Path $DefaultGlobalNpmBin 'codex.cmd'),
     (Join-Path $DefaultGlobalNpmBin 'codex')
   )
+  Write-Host ''
+  Write-Host 'Verifying database drivers:'
+  $pyPath = Resolve-CommandPath @('python3', 'python', 'py') @(
+    (Join-Path $env:LocalAppData 'Programs\Python\Python312\python.exe'),
+    (Join-Path $env:ProgramFiles 'Python312\python.exe')
+  )
+  & $pyPath -c "import sqlalchemy; print('[ OK ] sqlalchemy ->', sqlalchemy.__version__)"
+  & $pyPath -c "import pymysql; print('[ OK ] pymysql ->', pymysql.__version__)"
+  & $pyPath -c "import psycopg2; print('[ OK ] psycopg2 ->', psycopg2.__version__)"
+  & $pyPath -c "import pymssql; print('[ OK ] pymssql ->', pymssql.__version__)"
 }
 
 Main

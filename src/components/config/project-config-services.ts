@@ -1,5 +1,6 @@
 import { invoke } from '@tauri-apps/api/core'
 import type {
+  DataConnectionProfile,
   ListRemoteDirectoriesRequest,
   ProjectConfig,
   RemoteDirectoryEntry,
@@ -9,6 +10,8 @@ import type {
 type InvokeFn = <T>(command: string, args?: Record<string, unknown>) => Promise<T>
 type LoadResult = { exists: boolean; config: ProjectConfig }
 
+export type TestConnectionResult = { ok: boolean; message: string }
+
 export type ProjectConfigServices = {
   browseDirectory: () => Promise<string | null>
   loadConfig: (projectDir: string) => Promise<LoadResult>
@@ -17,6 +20,7 @@ export type ProjectConfigServices = {
     request: ListRemoteDirectoriesRequest
   ) => Promise<RemoteDirectoryEntry[]>
   saveConfig: (projectDir: string, config: ProjectConfig) => Promise<void>
+  testDataConnection: (connection: DataConnectionProfile) => Promise<TestConnectionResult>
 }
 
 function resolveInvoke(): InvokeFn {
@@ -47,10 +51,17 @@ async function saveConfig(projectDir: string, config: ProjectConfig): Promise<vo
   await resolveInvoke()<void>('save_project_config', { projectDir, config })
 }
 
+async function testDataConnection(
+  connection: DataConnectionProfile
+): Promise<TestConnectionResult> {
+  return resolveInvoke()<TestConnectionResult>('test_data_connection', { connection })
+}
+
 export const tauriServices: ProjectConfigServices = {
   browseDirectory,
   loadConfig,
   listReportletEntries,
   listRemoteDirectories,
-  saveConfig
+  saveConfig,
+  testDataConnection
 }
