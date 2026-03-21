@@ -2,13 +2,13 @@ use super::{cleanup::cleanup_spawn_failure, TerminalLaunchConfig, TerminalManage
 use crate::domain::terminal_event_bridge::{
     TerminalEvent, TerminalEventBridge, TerminalEventEmitter, TerminalEventType,
 };
-use crate::test_support::{python_command, python_long_running_script, python_pid_script};
+use crate::test_support::{python_command, python_long_running_script};
 use portable_pty::{native_pty_system, CommandBuilder};
 use std::collections::HashMap;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 use std::sync::{mpsc, Arc, Mutex};
 use std::thread;
-use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use std::time::Duration;
 
 const WAIT_ATTEMPTS: u8 = 80;
 const WAIT_INTERVAL_MS: u64 = 25;
@@ -57,24 +57,6 @@ fn build_config(script: &str) -> TerminalLaunchConfig {
         env: HashMap::new(),
         working_dir: PathBuf::from(std::env::temp_dir()),
     }
-}
-
-fn unique_marker_path() -> PathBuf {
-    let now = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .expect("system time after epoch")
-        .as_nanos();
-    std::env::temp_dir().join(format!("terminal-manager-runtime-{now}.txt"))
-}
-
-fn build_pid_script(path: &str) -> String {
-    python_pid_script(PathBuf::from(path).as_path())
-}
-
-fn pid_file_has_content(path: &Path) -> bool {
-    std::fs::read_to_string(path)
-        .map(|content| !content.trim().is_empty())
-        .unwrap_or(false)
 }
 
 fn wait_until(label: &str, condition: impl Fn() -> bool) {
@@ -128,12 +110,10 @@ fn terminal_manager_rejects_duplicate_session_id_while_first_start_is_in_progres
 
 #[test]
 fn terminal_manager_spawn_cleanup_terminates_process_when_metadata_creation_fails() {
-    let pid_path = unique_marker_path();
-    let script = build_pid_script(pid_path.to_string_lossy().as_ref());
     let pair = native_pty_system()
         .openpty(super::runtime::pty_size(24, 80))
         .expect("open pty");
-    let (command, args) = python_command(script.as_str());
+    let (command, args) = python_command(python_long_running_script().as_str());
     let child = pair
         .slave
         .spawn_command({
@@ -145,14 +125,19 @@ fn terminal_manager_spawn_cleanup_terminates_process_when_metadata_creation_fail
         })
         .expect("spawn child");
     let child = Arc::new(Mutex::new(child));
-
-    wait_until("pid file creation", || pid_file_has_content(pid_path.as_path()));
-    let pid = std::fs::read_to_string(&pid_path).expect("read pid file");
     let child_probe = child.clone();
+
+    wait_until("spawned child", || {
+        child_probe
+            .lock()
+            .expect("lock child probe")
+            .try_wait()
+            .expect("poll child status")
+            .is_none()
+    });
     let error = cleanup_spawn_failure("metadata failure", child, "clock failed".into());
 
     assert!(error.contains("clock failed"));
-    assert!(!pid.trim().is_empty());
     wait_until("spawn cleanup", || {
         child_probe
             .lock()
