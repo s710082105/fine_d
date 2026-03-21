@@ -120,14 +120,10 @@ impl CodexProcessManager {
 
     pub fn interrupt_process(&self, session_id: &str) -> Result<(), String> {
         let metadata = self.metadata_for(session_id)?;
-        let status = Command::new("kill")
-            .arg("-INT")
-            .arg(metadata.pid.to_string())
-            .status()
-            .map_err(|error| format!("failed to interrupt codex process: {error}"))?;
+        let status = interrupt_process_by_pid(metadata.pid)?;
         if !status.success() {
             return Err(format!(
-                "failed to interrupt codex process: kill exited with {status}"
+                "failed to interrupt codex process: interrupt command exited with {status}"
             ));
         }
         Ok(())
@@ -180,6 +176,24 @@ fn spawn_process(config: &ProcessLaunchConfig) -> Result<std::process::Child, St
         .stderr(Stdio::piped())
         .spawn()
         .map_err(|error| format!("failed to spawn codex process: {error}"))
+}
+
+#[cfg(target_os = "windows")]
+fn interrupt_process_by_pid(pid: u32) -> Result<std::process::ExitStatus, String> {
+    let pid_arg = pid.to_string();
+    Command::new("taskkill")
+        .args(["/PID", pid_arg.as_str(), "/T", "/F"])
+        .status()
+        .map_err(|error| format!("failed to interrupt codex process: {error}"))
+}
+
+#[cfg(not(target_os = "windows"))]
+fn interrupt_process_by_pid(pid: u32) -> Result<std::process::ExitStatus, String> {
+    Command::new("kill")
+        .arg("-INT")
+        .arg(pid.to_string())
+        .status()
+        .map_err(|error| format!("failed to interrupt codex process: {error}"))
 }
 
 fn build_metadata(
