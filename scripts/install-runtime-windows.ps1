@@ -172,7 +172,11 @@ function Install-DatabaseDrivers {
   $packages = @('sqlalchemy', 'pymysql', 'psycopg2-binary', 'oracledb', 'pymssql')
   foreach ($pkg in $packages) {
     Write-Host "  Installing $pkg..."
-    & $pipPath install $pkg @mirrorArgs 2>&1 | Out-Null
+    try {
+      $ErrorActionPreference = 'Continue'
+      & $pipPath install $pkg @mirrorArgs 2>&1 | Out-Null
+    } catch {}
+    finally { $ErrorActionPreference = 'Stop' }
     if ($LASTEXITCODE -ne 0) {
       Write-Host "  [WARN] $pkg install failed, skipping (install manually if needed)"
     }
