@@ -192,6 +192,7 @@ Windows 推荐执行方式：
 - [templates/blank.fvs](/Users/wj/data/mcp/finereport/templates/blank.fvs)
 - [reportlets/GettingStarted.cpt](/Users/wj/data/mcp/finereport/reportlets/GettingStarted.cpt)
 - [reportlets/第一张FVS模板.fvs](/Users/wj/data/mcp/finereport/reportlets/第一张FVS模板.fvs)
+- [docs/fine-remote-design-protocol.md](/Users/wj/data/mcp/finereport/docs/fine-remote-design-protocol.md)
 
 这些文件说明仓库已经具备基础模板和示例报表资源，后续应围绕“配置生成 + AI 协作 + 自动校验 + 文件同步”逐步补齐完整能力。
 
