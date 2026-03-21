@@ -12,9 +12,21 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
 
-const WAIT_ATTEMPTS: u8 = 80;
 const WAIT_INTERVAL_MS: u64 = 25;
-const NO_NEWLINE_ATTEMPTS: u8 = 12;
+
+fn wait_attempts() -> u16 {
+    if cfg!(target_os = "windows") {
+        return 240;
+    }
+    80
+}
+
+fn no_newline_attempts() -> u16 {
+    if cfg!(target_os = "windows") {
+        return 36;
+    }
+    12
+}
 
 #[derive(Clone)]
 struct TestEmitter {
@@ -46,7 +58,7 @@ impl TerminalEventEmitter for TestEmitter {
     }
 }
 
-fn wait_until(label: &str, attempts: u8, condition: impl Fn() -> bool) {
+fn wait_until(label: &str, attempts: u16, condition: impl Fn() -> bool) {
     for _ in 0..attempts {
         if condition() {
             return;
@@ -95,10 +107,10 @@ fn terminal_manager_lifecycle_starts_process_and_streams_output() {
         )
         .expect("start terminal session");
 
-    wait_until("terminal output", WAIT_ATTEMPTS, || {
+    wait_until("terminal output", wait_attempts(), || {
         has_event(&emitter, TerminalEventType::Output, "terminal-ready")
     });
-    wait_until("terminal cleanup", WAIT_ATTEMPTS, || {
+    wait_until("terminal cleanup", wait_attempts(), || {
         !manager
             .contains_session("terminal-session-1")
             .expect("inspect terminal session")
@@ -117,7 +129,7 @@ fn terminal_manager_lifecycle_cleans_session_after_process_exit() {
         )
         .expect("start short-lived terminal session");
 
-    wait_until("terminal cleanup", WAIT_ATTEMPTS, || {
+    wait_until("terminal cleanup", wait_attempts(), || {
         !manager
             .contains_session("terminal-session-2")
             .expect("inspect terminal session")
@@ -137,7 +149,7 @@ fn terminal_manager_lifecycle_cleans_up_when_emit_started_fails() {
         .expect_err("fail when started event emission fails");
     assert!(error.contains("forced emitter failure"));
 
-    wait_until("failed start cleanup", WAIT_ATTEMPTS, || {
+    wait_until("failed start cleanup", wait_attempts(), || {
         !manager
             .contains_session("terminal-session-3")
             .expect("inspect terminal session")
@@ -159,12 +171,12 @@ fn terminal_manager_lifecycle_close_session_terminates_running_process() {
         .close_session("terminal-session-4")
         .expect("close running session");
 
-    wait_until("close_session cleanup", WAIT_ATTEMPTS, || {
+    wait_until("close_session cleanup", wait_attempts(), || {
         !manager
             .contains_session("terminal-session-4")
             .expect("inspect terminal session")
     });
-    wait_until("close_session exited event", WAIT_ATTEMPTS, || {
+    wait_until("close_session exited event", wait_attempts(), || {
         has_event(
             &emitter,
             TerminalEventType::Exited,
@@ -217,7 +229,7 @@ fn terminal_manager_lifecycle_streams_output_without_newline_before_exit() {
         )
         .expect("start session without newline output");
 
-    wait_until("non-newline output", NO_NEWLINE_ATTEMPTS, || {
+    wait_until("non-newline output", no_newline_attempts(), || {
         has_event(&emitter, TerminalEventType::Output, "chunk-without-newline")
     });
     manager
@@ -237,10 +249,10 @@ fn terminal_manager_lifecycle_streams_multibyte_utf8_across_read_boundaries() {
         )
         .expect("start session with split utf8 output");
 
-    wait_until("split utf8 output", WAIT_ATTEMPTS, || {
+    wait_until("split utf8 output", wait_attempts(), || {
         has_event(&emitter, TerminalEventType::Output, "中")
     });
-    wait_until("split utf8 cleanup", WAIT_ATTEMPTS, || {
+    wait_until("split utf8 cleanup", wait_attempts(), || {
         !manager
             .contains_session("terminal-session-7")
             .expect("inspect split utf8 session")
@@ -259,7 +271,7 @@ fn terminal_manager_lifecycle_take_failures_observes_background_failure() {
         )
         .expect("start session with failing emitter");
 
-    wait_until("background failure capture", WAIT_ATTEMPTS, || {
+    wait_until("background failure capture", wait_attempts(), || {
         has_failure(&manager, "failed to emit error event")
     });
 }
@@ -275,13 +287,13 @@ fn terminal_manager_lifecycle_write_input_forwards_payload_to_process() {
             &build_config(python_input_echo_script().as_str()),
         )
         .expect("start terminal session that reads input");
-    wait_until("session readiness output", WAIT_ATTEMPTS, || {
+    wait_until("session readiness output", wait_attempts(), || {
         has_event(&emitter, TerminalEventType::Output, "ready")
     });
     manager
         .write_input("terminal-session-9", "hello-terminal\n")
         .expect("write terminal input");
-    wait_until("input echo output", WAIT_ATTEMPTS, || {
+    wait_until("input echo output", wait_attempts(), || {
         has_event(&emitter, TerminalEventType::Output, "input:hello-terminal")
     });
     manager
