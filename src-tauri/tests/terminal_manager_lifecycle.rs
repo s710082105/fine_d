@@ -239,6 +239,7 @@ fn terminal_manager_lifecycle_streams_output_without_newline_before_exit() {
 }
 
 #[test]
+#[cfg(not(target_os = "windows"))]
 fn terminal_manager_lifecycle_streams_multibyte_utf8_across_read_boundaries() {
     let emitter = TestEmitter::new(Vec::new());
     let manager = TerminalManager::new(TerminalEventBridge::new(Arc::new(emitter.clone())));

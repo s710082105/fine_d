@@ -131,6 +131,55 @@ impl TerminalEventEmitter for TauriTerminalEmitter {
     }
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn decoder_reassembles_split_multibyte_utf8() {
+        let mut decoder = TerminalOutputDecoder::default();
+        // "中" = 0xE4 0xB8 0xAD（3字节），分两次写入
+        let data = "中\n".as_bytes();
+        // 前2字节：不完整序列，应返回 None
+        assert_eq!(decoder.push(&data[..2]).unwrap(), None);
+        // 后2字节：拼接后产出完整字符
+        assert_eq!(decoder.push(&data[2..]).unwrap(), Some("中\n".into()));
+        decoder.finish().unwrap();
+    }
+
+    #[test]
+    fn decoder_emits_valid_prefix_and_holds_incomplete_tail() {
+        let mut decoder = TerminalOutputDecoder::default();
+        // "ab" + "中"的前2字节
+        let mut chunk = b"ab".to_vec();
+        chunk.extend_from_slice(&"中".as_bytes()[..2]);
+        assert_eq!(decoder.push(&chunk).unwrap(), Some("ab".into()));
+        // 补齐"中"的最后1字节
+        assert_eq!(
+            decoder.push(&"中".as_bytes()[2..]).unwrap(),
+            Some("中".into())
+        );
+        decoder.finish().unwrap();
+    }
+
+    #[test]
+    fn decoder_finish_rejects_incomplete_sequence() {
+        let mut decoder = TerminalOutputDecoder::default();
+        let _ = decoder.push(&"中".as_bytes()[..2]).unwrap();
+        assert!(decoder.finish().is_err());
+    }
+
+    #[test]
+    fn decoder_handles_pure_ascii() {
+        let mut decoder = TerminalOutputDecoder::default();
+        assert_eq!(
+            decoder.push(b"hello").unwrap(),
+            Some("hello".into())
+        );
+        decoder.finish().unwrap();
+    }
+}
+
 fn unix_timestamp() -> Result<String, String> {
     let now = SystemTime::now()
         .duration_since(UNIX_EPOCH)
