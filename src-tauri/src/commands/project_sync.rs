@@ -55,7 +55,12 @@ fn run_post_commit_sync(args: &[OsString]) -> Result<(), String> {
         return Err("project-config.json is required for post-commit sync".into());
     }
     let local_path = project_dir.join(relative_path);
-    let task = resolve_sync_task(POST_COMMIT_SESSION_ID, &response.config, &local_path, action)?;
+    let task = resolve_sync_task(
+        POST_COMMIT_SESSION_ID,
+        &response.config,
+        &local_path,
+        action,
+    )?;
     ProtocolSyncTransport::default().apply(&task, &response.config.sync)
 }
 

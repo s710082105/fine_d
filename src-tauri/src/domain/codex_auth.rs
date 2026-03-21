@@ -96,8 +96,12 @@ fn seed_shared_codex_home(target_dir: &Path) -> Result<(), String> {
 }
 
 fn copy_shared_entry(source: &Path, target: &Path) -> Result<(), String> {
-    let metadata = fs::metadata(source)
-        .map_err(|error| format!("failed to inspect codex home entry {}: {error}", source.display()))?;
+    let metadata = fs::metadata(source).map_err(|error| {
+        format!(
+            "failed to inspect codex home entry {}: {error}",
+            source.display()
+        )
+    })?;
     if metadata.is_dir() {
         copy_dir_recursive(source, target)
     } else {
@@ -106,13 +110,24 @@ fn copy_shared_entry(source: &Path, target: &Path) -> Result<(), String> {
 }
 
 fn copy_dir_recursive(source: &Path, target: &Path) -> Result<(), String> {
-    fs::create_dir_all(target)
-        .map_err(|error| format!("failed to create codex home directory {}: {error}", target.display()))?;
-    for entry in fs::read_dir(source)
-        .map_err(|error| format!("failed to read codex home directory {}: {error}", source.display()))?
-    {
-        let entry = entry
-            .map_err(|error| format!("failed to iterate codex home directory {}: {error}", source.display()))?;
+    fs::create_dir_all(target).map_err(|error| {
+        format!(
+            "failed to create codex home directory {}: {error}",
+            target.display()
+        )
+    })?;
+    for entry in fs::read_dir(source).map_err(|error| {
+        format!(
+            "failed to read codex home directory {}: {error}",
+            source.display()
+        )
+    })? {
+        let entry = entry.map_err(|error| {
+            format!(
+                "failed to iterate codex home directory {}: {error}",
+                source.display()
+            )
+        })?;
         let child_source = entry.path();
         let child_target = target.join(entry.file_name());
         copy_shared_entry(child_source.as_path(), child_target.as_path())?;
@@ -122,7 +137,10 @@ fn copy_dir_recursive(source: &Path, target: &Path) -> Result<(), String> {
 
 fn copy_file(source: &Path, target: &Path) -> Result<(), String> {
     let Some(parent) = target.parent() else {
-        return Err(format!("invalid codex home target path: {}", target.display()));
+        return Err(format!(
+            "invalid codex home target path: {}",
+            target.display()
+        ));
     };
     fs::create_dir_all(parent).map_err(|error| {
         format!(
@@ -254,10 +272,12 @@ mod tests {
         let _guard = env_lock().lock().expect("lock env");
         let source_home = unique_dir("shared");
         fs::create_dir_all(source_home.join("skills/example")).expect("create source skills dir");
-        fs::create_dir_all(source_home.join("superpowers/tools")).expect("create source superpowers dir");
+        fs::create_dir_all(source_home.join("superpowers/tools"))
+            .expect("create source superpowers dir");
         fs::write(source_home.join("config.toml"), "theme = 'light'").expect("write config.toml");
         fs::write(source_home.join("skills/example/SKILL.md"), "# Skill").expect("write skill");
-        fs::write(source_home.join("superpowers/tools/readme.txt"), "tooling").expect("write superpowers");
+        fs::write(source_home.join("superpowers/tools/readme.txt"), "tooling")
+            .expect("write superpowers");
         fs::create_dir_all(source_home.join("memories")).expect("create memories dir");
         fs::write(source_home.join("memories/keep.txt"), "do not copy").expect("write memories");
         let _codex_home = EnvVarGuard::set(CODEX_HOME_ENV, source_home.as_path());

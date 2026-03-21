@@ -117,11 +117,7 @@ fn render_post_commit_hook(project_dir: &Path, config: &ProjectConfig) -> String
         )
         .replace(
             "{{sync_bin}}",
-            &shell_quote(
-                resolve_sync_binary_path()
-                    .to_string_lossy()
-                    .as_ref(),
-            ),
+            &shell_quote(resolve_sync_binary_path().to_string_lossy().as_ref()),
         )
 }
 

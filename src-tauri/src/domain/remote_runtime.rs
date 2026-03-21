@@ -40,7 +40,9 @@ impl RemoteRuntimeClientFactory for ProtocolRemoteRuntimeFactory {
         match profile.protocol {
             SyncProtocol::Sftp => connect_sftp(profile),
             SyncProtocol::Ftp => connect_ftp(profile),
-            SyncProtocol::Local => Err("remote runtime client does not support local protocol".into()),
+            SyncProtocol::Local => {
+                Err("remote runtime client does not support local protocol".into())
+            }
         }
     }
 }
@@ -80,7 +82,11 @@ impl RemoteRuntimeClient for FtpRuntimeClient {
         list_ftp_directories(&mut self.ftp, normalize_remote_path(path))
     }
     fn download_tree(&mut self, remote_root: &str, local_root: &Path) -> Result<(), String> {
-        download_ftp_tree(&mut self.ftp, normalize_remote_path(remote_root), local_root)
+        download_ftp_tree(
+            &mut self.ftp,
+            normalize_remote_path(remote_root),
+            local_root,
+        )
     }
     fn upload_file(&mut self, local_path: &Path, remote_path: &str) -> Result<(), String> {
         let remote_path = normalize_remote_path(remote_path);
@@ -132,7 +138,10 @@ fn connect_ftp(profile: &SyncProfile) -> Result<Box<dyn RemoteRuntimeClient>, St
         .map_err(|error| format!("failed to authenticate ftp session: {error}"))?;
     Ok(Box::new(FtpRuntimeClient { ftp }))
 }
-fn list_sftp_directories(sftp: &ssh2::Sftp, path: String) -> Result<Vec<RemoteDirectoryEntry>, String> {
+fn list_sftp_directories(
+    sftp: &ssh2::Sftp,
+    path: String,
+) -> Result<Vec<RemoteDirectoryEntry>, String> {
     let mut entries = sftp
         .readdir(Path::new(&path))
         .map_err(|error| format!("failed to read remote sftp directory: {error}"))?
@@ -153,13 +162,21 @@ fn build_sftp_directory_entry(path: PathBuf, stat: ssh2::FileStat) -> Option<Rem
         children: Vec::new(),
     })
 }
-fn download_sftp_tree(sftp: &ssh2::Sftp, remote_dir: String, local_dir: &Path) -> Result<(), String> {
-    fs::create_dir_all(local_dir).map_err(|error| format!("failed to create local directory: {error}"))?;
+fn download_sftp_tree(
+    sftp: &ssh2::Sftp,
+    remote_dir: String,
+    local_dir: &Path,
+) -> Result<(), String> {
+    fs::create_dir_all(local_dir)
+        .map_err(|error| format!("failed to create local directory: {error}"))?;
     for (path, stat) in sftp
         .readdir(Path::new(&remote_dir))
         .map_err(|error| format!("failed to read remote sftp directory: {error}"))?
     {
-        let Some(name) = path.file_name().map(|value| value.to_string_lossy().to_string()) else {
+        let Some(name) = path
+            .file_name()
+            .map(|value| value.to_string_lossy().to_string())
+        else {
             continue;
         };
         if name == "." || name == ".." {
@@ -180,7 +197,10 @@ fn download_sftp_tree(sftp: &ssh2::Sftp, remote_dir: String, local_dir: &Path) -
     }
     Ok(())
 }
-fn list_ftp_directories(ftp: &mut FtpStream, path: String) -> Result<Vec<RemoteDirectoryEntry>, String> {
+fn list_ftp_directories(
+    ftp: &mut FtpStream,
+    path: String,
+) -> Result<Vec<RemoteDirectoryEntry>, String> {
     let mut entries = ftp
         .mlsd(Some(&path))
         .map_err(|error| format!("failed to read remote ftp directory: {error}"))?
@@ -201,8 +221,13 @@ fn build_ftp_directory_entry(path: &str, line: &str) -> Option<RemoteDirectoryEn
         children: Vec::new(),
     })
 }
-fn download_ftp_tree(ftp: &mut FtpStream, remote_dir: String, local_dir: &Path) -> Result<(), String> {
-    fs::create_dir_all(local_dir).map_err(|error| format!("failed to create local directory: {error}"))?;
+fn download_ftp_tree(
+    ftp: &mut FtpStream,
+    remote_dir: String,
+    local_dir: &Path,
+) -> Result<(), String> {
+    fs::create_dir_all(local_dir)
+        .map_err(|error| format!("failed to create local directory: {error}"))?;
     for line in ftp
         .mlsd(Some(&remote_dir))
         .map_err(|error| format!("failed to read remote ftp directory: {error}"))?
@@ -223,7 +248,8 @@ fn download_ftp_tree(ftp: &mut FtpStream, remote_dir: String, local_dir: &Path) 
             .map_err(|error| format!("failed to download remote ftp file: {error}"))?;
         let mut local = File::create(&local_path)
             .map_err(|error| format!("failed to create local bootstrap file: {error}"))?;
-        local.write_all(buffer.get_mut())
+        local
+            .write_all(buffer.get_mut())
             .map_err(|error| format!("failed to write local bootstrap file: {error}"))?;
     }
     Ok(())
@@ -243,7 +269,8 @@ fn ensure_sftp_directory(sftp: &ssh2::Sftp, remote_path: &Path) -> Result<(), St
     Ok(())
 }
 fn ensure_ftp_directory(ftp: &mut FtpStream, parent: &str) -> Result<(), String> {
-    ftp.cwd("/").map_err(|error| format!("failed to cwd ftp root: {error}"))?;
+    ftp.cwd("/")
+        .map_err(|error| format!("failed to cwd ftp root: {error}"))?;
     for segment in parent.split('/').filter(|value| !value.is_empty()) {
         if ftp.cwd(segment).is_ok() {
             continue;
@@ -261,10 +288,18 @@ fn is_sftp_directory(stat: &ssh2::FileStat) -> bool {
 }
 fn normalize_remote_path(path: &str) -> String {
     let trimmed = path.trim();
-    if trimmed.is_empty() { "/".into() } else { trimmed.replace('\\', "/") }
+    if trimmed.is_empty() {
+        "/".into()
+    } else {
+        trimmed.replace('\\', "/")
+    }
 }
 fn join_remote_path(parent: &str, name: &str) -> String {
-    if parent == "/" { format!("/{name}") } else { format!("{}/{}", parent.trim_end_matches('/'), name) }
+    if parent == "/" {
+        format!("/{name}")
+    } else {
+        format!("{}/{}", parent.trim_end_matches('/'), name)
+    }
 }
 fn parent_remote_path(path: &str) -> String {
     Path::new(path)

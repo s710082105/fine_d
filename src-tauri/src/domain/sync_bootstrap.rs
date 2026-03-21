@@ -6,11 +6,8 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 pub trait RuntimeSyncBootstrapper: Send + Sync {
-    fn replace_project_tree(
-        &self,
-        source_root: &Path,
-        profile: &SyncProfile,
-    ) -> Result<(), String>;
+    fn replace_project_tree(&self, source_root: &Path, profile: &SyncProfile)
+        -> Result<(), String>;
 }
 
 #[derive(Clone)]

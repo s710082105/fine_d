@@ -55,10 +55,7 @@ struct FakeClient {
 
 impl RemoteRuntimeClientFactory for FakeFactory {
     fn connect(&self, profile: &SyncProfile) -> Result<Box<dyn RemoteRuntimeClient>, String> {
-        self.state
-            .lock()
-            .expect("lock fake state")
-            .last_password = profile.password.clone();
+        self.state.lock().expect("lock fake state").last_password = profile.password.clone();
         Ok(Box::new(FakeClient {
             state: Arc::clone(&self.state),
         }))
@@ -125,9 +122,8 @@ fn remote_runtime_bootstrap_downloads_tree_via_factory() {
     let source_root = temp_dir("remote_bootstrap_source");
     fs::create_dir_all(&source_root).expect("create source root");
     fs::write(source_root.join("stale.txt"), "stale").expect("write stale file");
-    let bootstrapper = ProtocolRuntimeSyncBootstrapper::with_factory(Arc::new(
-        FakeFactory::default(),
-    ));
+    let bootstrapper =
+        ProtocolRuntimeSyncBootstrapper::with_factory(Arc::new(FakeFactory::default()));
 
     bootstrapper
         .replace_project_tree(source_root.as_path(), &build_remote_profile())

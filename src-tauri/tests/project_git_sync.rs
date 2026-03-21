@@ -81,10 +81,7 @@ fn post_commit_hook_syncs_only_reportlet_cpt_and_fvs_changes() {
     fs::create_dir_all(&runtime_dir).expect("create runtime dir");
 
     EmbeddedProjectInitializer::default()
-        .initialize(
-            project_dir.as_path(),
-            &config,
-        )
+        .initialize(project_dir.as_path(), &config)
         .expect("initialize git-managed project");
     persist_project_config(project_dir.as_path(), &config);
 

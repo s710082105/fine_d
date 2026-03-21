@@ -196,11 +196,7 @@ fn normalize_legacy_style_profile(mut value: Value) -> Value {
     let Some(style) = object.get("style").cloned() else {
         return value;
     };
-    if style
-        .get("instructions")
-        .and_then(Value::as_str)
-        .is_some()
-    {
+    if style.get("instructions").and_then(Value::as_str).is_some() {
         return value;
     }
     object.insert(

@@ -82,7 +82,9 @@ fn install_script_name(platform: RuntimePlatform) -> Option<&'static str> {
 fn inspect_python(platform: RuntimePlatform) -> CommandInstallationStatus {
     match platform {
         RuntimePlatform::Windows => inspect_command(python_candidates(platform)),
-        RuntimePlatform::Macos | RuntimePlatform::Linux => inspect_command(python_candidates(platform)),
+        RuntimePlatform::Macos | RuntimePlatform::Linux => {
+            inspect_command(python_candidates(platform))
+        }
     }
 }
 

@@ -1,6 +1,4 @@
-use finereport_tauri_shell_lib::commands::environment::{
-    inspect_runtime_prerequisites_with,
-};
+use finereport_tauri_shell_lib::commands::environment::inspect_runtime_prerequisites_with;
 use finereport_tauri_shell_lib::domain::system_runtime::{
     CommandInstallationStatus, RuntimeInspectionStatus, RuntimePlatform,
 };
@@ -18,9 +16,18 @@ fn runtime_prerequisites_report_blocking_items_when_system_runtime_missing() {
     );
 
     assert!(!report.ready);
-    assert!(report.items.iter().any(|item| item.key == "node" && item.blocking));
-    assert!(report.items.iter().any(|item| item.key == "codex" && item.blocking));
-    assert!(report.items.iter().any(|item| item.key == "python" && item.blocking));
+    assert!(report
+        .items
+        .iter()
+        .any(|item| item.key == "node" && item.blocking));
+    assert!(report
+        .items
+        .iter()
+        .any(|item| item.key == "codex" && item.blocking));
+    assert!(report
+        .items
+        .iter()
+        .any(|item| item.key == "python" && item.blocking));
 }
 
 #[test]

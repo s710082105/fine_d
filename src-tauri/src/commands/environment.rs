@@ -11,11 +11,9 @@ const NODE_KEY: &str = "node";
 const PYTHON_KEY: &str = "python";
 const CODEX_KEY: &str = "codex";
 const PLATFORM_SYNC_KEY: &str = "platform-sync";
-const WINDOWS_GIT_SHELL_HINT: &str =
-    "Windows 请先执行安装脚本安装 Git，并确保 Git Bash 可用。";
+const WINDOWS_GIT_SHELL_HINT: &str = "Windows 请先执行安装脚本安装 Git，并确保 Git Bash 可用。";
 const MACOS_GIT_HINT: &str = "请执行 macOS 安装脚本，或手动安装 Homebrew 后执行 brew install git。";
-const MACOS_RUNTIME_HINT: &str =
-    "请执行 macOS 安装脚本，并按提示选择官方源或国内源完成环境安装。";
+const MACOS_RUNTIME_HINT: &str = "请执行 macOS 安装脚本，并按提示选择官方源或国内源完成环境安装。";
 const WINDOWS_RUNTIME_HINT: &str =
     "请执行 Windows 安装脚本，并按提示选择官方源或国内源完成环境安装。";
 const LINUX_RUNTIME_HINT: &str = "当前产品未提供 Linux 安装脚本，请手动安装缺失环境。";
@@ -107,7 +105,11 @@ pub fn inspect_runtime_prerequisites_with(
             runtime_install_hint(platform),
             installer_path.as_str(),
         ),
-        platform_sync_item(platform, inspection.hook_shell.as_ref(), installer_path.as_str()),
+        platform_sync_item(
+            platform,
+            inspection.hook_shell.as_ref(),
+            installer_path.as_str(),
+        ),
     ];
     let ready = items
         .iter()
@@ -174,7 +176,13 @@ fn windows_sync_item(hook_shell: Option<&PathBuf>, script_path: &str) -> Runtime
 }
 
 fn unix_sync_item(message: &str, script_path: &str) -> RuntimePrerequisiteItem {
-    ready_item(PLATFORM_SYNC_KEY, "同步链路", message.into(), "", script_path)
+    ready_item(
+        PLATFORM_SYNC_KEY,
+        "同步链路",
+        message.into(),
+        "",
+        script_path,
+    )
 }
 
 fn ready_item(

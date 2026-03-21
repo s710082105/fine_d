@@ -51,7 +51,9 @@ fn write_project_codex_context(project_dir: &Path, config: &ProjectConfig) -> Re
 }
 
 fn relocate_project_agents_file(project_dir: &Path) -> Result<(), String> {
-    let source = project_dir.join(PROJECT_CODEX_DIR).join(PROJECT_AGENTS_FILE);
+    let source = project_dir
+        .join(PROJECT_CODEX_DIR)
+        .join(PROJECT_AGENTS_FILE);
     let target = project_dir.join(PROJECT_AGENTS_FILE);
     let content = fs::read_to_string(&source)
         .map_err(|error| format!("failed to read generated project AGENTS.md: {error}"))?;
@@ -64,8 +66,14 @@ fn relocate_project_agents_file(project_dir: &Path) -> Result<(), String> {
 
 fn rewrite_project_agents_content(content: &str) -> String {
     content
-        .replace("`project-context.md`", &format!("`{CODEX_PROJECT_CONTEXT_PATH}`"))
-        .replace("`project-rules.md`", &format!("`{CODEX_PROJECT_RULES_PATH}`"))
+        .replace(
+            "`project-context.md`",
+            &format!("`{CODEX_PROJECT_CONTEXT_PATH}`"),
+        )
+        .replace(
+            "`project-rules.md`",
+            &format!("`{CODEX_PROJECT_RULES_PATH}`"),
+        )
         .replace("`mappings.json`", &format!("`{CODEX_MAPPINGS_PATH}`"))
         .replace("`skills/`", &format!("`{CODEX_SKILLS_PATH}`"))
 }
