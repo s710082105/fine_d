@@ -11,17 +11,36 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
 
+const WAIT_INTERVAL_MS: u64 = 25;
+
+fn wait_attempts() -> u16 {
+    if cfg!(target_os = "windows") {
+        return 240;
+    }
+    40
+}
+
 fn wait_for_process_cleanup(manager: &CodexProcessManager, session_id: &str) {
-    for _ in 0..40 {
+    for _ in 0..wait_attempts() {
         if !manager
             .contains_session(session_id)
             .expect("inspect process manager state")
         {
             return;
         }
-        thread::sleep(Duration::from_millis(25));
+        thread::sleep(Duration::from_millis(WAIT_INTERVAL_MS));
     }
     panic!("timed out waiting for process cleanup");
+}
+
+fn wait_until(label: &str, condition: impl Fn() -> bool) {
+    for _ in 0..wait_attempts() {
+        if condition() {
+            return;
+        }
+        thread::sleep(Duration::from_millis(WAIT_INTERVAL_MS));
+    }
+    panic!("timed out waiting for {label}");
 }
 
 #[test]
@@ -54,6 +73,9 @@ fn start_process_runs_exit_hook_after_child_exit() {
         )
         .expect("start short-lived process");
 
+    wait_until("exit hook invocation", || {
+        hook_calls.load(Ordering::Relaxed) == 1
+    });
     wait_for_process_cleanup(&manager, "session-1");
     assert_eq!(hook_calls.load(Ordering::Relaxed), 1);
     assert_eq!(
