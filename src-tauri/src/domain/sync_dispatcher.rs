@@ -142,7 +142,7 @@ pub fn resolve_sync_task(
         action,
         protocol: protocol_text(&config.sync.protocol).into(),
         local_path: local_path.display().to_string(),
-        remote_path: remote_path.display().to_string(),
+        remote_path: render_remote_path(&config.sync.protocol, remote_path.as_path()),
     })
 }
 
@@ -162,6 +162,15 @@ fn resolve_remote_root(config: &ProjectConfig, source_root: &Path) -> PathBuf {
         return remote_root;
     };
     remote_root.join(&mapping.remote)
+}
+
+fn render_remote_path(protocol: &SyncProtocol, path: &Path) -> String {
+    match protocol {
+        SyncProtocol::Local => path.display().to_string(),
+        SyncProtocol::Sftp | SyncProtocol::Ftp => path
+            .to_string_lossy()
+            .replace(std::path::MAIN_SEPARATOR, "/"),
+    }
 }
 
 fn scan_files(root: &Path) -> HashMap<PathBuf, SystemTime> {
