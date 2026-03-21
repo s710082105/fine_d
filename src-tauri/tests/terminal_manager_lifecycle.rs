@@ -5,6 +5,7 @@ use finereport_tauri_shell_lib::domain::terminal_manager::{TerminalLaunchConfig,
 use finereport_tauri_shell_lib::test_support::{
     python_command, python_exit_script, python_input_echo_script, python_long_running_script,
     python_print_line_script, python_print_no_newline_script, python_split_utf8_script,
+    terminal_input_line,
 };
 use std::collections::HashMap;
 use std::path::PathBuf;
@@ -291,7 +292,10 @@ fn terminal_manager_lifecycle_write_input_forwards_payload_to_process() {
         has_event(&emitter, TerminalEventType::Output, "ready")
     });
     manager
-        .write_input("terminal-session-9", "hello-terminal\n")
+        .write_input(
+            "terminal-session-9",
+            terminal_input_line("hello-terminal").as_str(),
+        )
         .expect("write terminal input");
     wait_until("input echo output", wait_attempts(), || {
         has_event(&emitter, TerminalEventType::Output, "input:hello-terminal")
