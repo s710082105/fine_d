@@ -74,7 +74,8 @@ it('renders config and terminal regions', async () => {
           }),
           listReportletEntries: async () => [],
           listRemoteDirectories: async () => [],
-          saveConfig: async () => undefined
+          saveConfig: async () => undefined,
+          testDataConnection: async () => ({ ok: true, message: '连接成功' })
         }}
         environmentServices={createEnvironmentServices()}
         terminalServices={createTerminalServices()}
@@ -104,7 +105,8 @@ it('shows terminal stale notice when config changes', async () => {
           }),
           listReportletEntries: async () => [],
           listRemoteDirectories: async () => [],
-          saveConfig: async () => undefined
+          saveConfig: async () => undefined,
+          testDataConnection: async () => ({ ok: true, message: '连接成功' })
         }}
         environmentServices={createEnvironmentServices()}
         terminalServices={createTerminalServices()}
@@ -136,7 +138,8 @@ it('resets terminal status after project context changes', async () => {
           }),
           listReportletEntries: async () => [],
           listRemoteDirectories: async () => [],
-          saveConfig: async () => undefined
+          saveConfig: async () => undefined,
+          testDataConnection: async () => ({ ok: true, message: '连接成功' })
         }}
         environmentServices={createEnvironmentServices()}
         terminalServices={createTerminalServices()}
@@ -184,7 +187,8 @@ it('blocks the app when startup prerequisites fail', async () => {
           }),
           listReportletEntries: async () => [],
           listRemoteDirectories: async () => [],
-          saveConfig: async () => undefined
+          saveConfig: async () => undefined,
+          testDataConnection: async () => ({ ok: true, message: '连接成功' })
         }}
         terminalServices={createTerminalServices()}
         terminalAdapterFactory={terminalAdapterFactory}
