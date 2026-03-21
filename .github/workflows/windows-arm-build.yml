@@ -62,5 +62,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: finereport-windows-arm64-bundle
-          path: src-tauri/target/aarch64-pc-windows-msvc/release/bundle/**
+          path: src-tauri/target/aarch64-pc-windows-msvc/release/finereport_tauri_shell.exe
           if-no-files-found: error
