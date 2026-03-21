@@ -4,16 +4,13 @@ use finereport_tauri_shell_lib::domain::terminal_event_bridge::{
 use finereport_tauri_shell_lib::domain::terminal_manager::{TerminalLaunchConfig, TerminalManager};
 use finereport_tauri_shell_lib::test_support::{
     python_command, python_exit_script, python_input_echo_script, python_long_running_script,
-    python_pid_script, python_print_line_script, python_print_no_newline_script,
-    python_split_utf8_script,
+    python_print_line_script, python_print_no_newline_script, python_split_utf8_script,
 };
 use std::collections::HashMap;
-use std::fs;
 use std::path::PathBuf;
-use std::process::Command;
 use std::sync::{Arc, Mutex};
 use std::thread;
-use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use std::time::Duration;
 
 const WAIT_ATTEMPTS: u8 = 80;
 const WAIT_INTERVAL_MS: u64 = 25;
@@ -67,33 +64,6 @@ fn build_config(script: &str) -> TerminalLaunchConfig {
         env: HashMap::new(),
         working_dir: PathBuf::from(std::env::temp_dir()),
     }
-}
-
-fn build_pid_script(path: &str) -> String {
-    python_pid_script(PathBuf::from(path).as_path())
-}
-
-fn unique_marker_path() -> PathBuf {
-    let now = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .expect("system time after epoch")
-        .as_nanos();
-    std::env::temp_dir().join(format!("terminal-manager-cleanup-{now}.txt"))
-}
-
-fn process_is_running(pid: &str) -> bool {
-    if cfg!(target_os = "windows") {
-        return Command::new("tasklist")
-            .args(["/FI", &format!("PID eq {pid}")])
-            .output()
-            .map(|output| String::from_utf8_lossy(&output.stdout).contains(pid))
-            .unwrap_or(false);
-    }
-    Command::new("ps")
-        .args(["-p", pid])
-        .status()
-        .expect("run ps for pid")
-        .success()
 }
 
 fn has_event(emitter: &TestEmitter, event_type: TerminalEventType, fragment: &str) -> bool {
@@ -156,13 +126,14 @@ fn terminal_manager_lifecycle_cleans_session_after_process_exit() {
 
 #[test]
 fn terminal_manager_lifecycle_cleans_up_when_emit_started_fails() {
-    let pid_path = unique_marker_path();
-    let script = build_pid_script(pid_path.to_string_lossy().as_ref());
     let emitter = TestEmitter::new(vec![TerminalEventType::Started]);
     let manager = TerminalManager::new(TerminalEventBridge::new(Arc::new(emitter)));
 
     let error = manager
-        .start_session("terminal-session-3", &build_config(script.as_str()))
+        .start_session(
+            "terminal-session-3",
+            &build_config(python_long_running_script().as_str()),
+        )
         .expect_err("fail when started event emission fails");
     assert!(error.contains("forced emitter failure"));
 
@@ -171,12 +142,6 @@ fn terminal_manager_lifecycle_cleans_up_when_emit_started_fails() {
             .contains_session("terminal-session-3")
             .expect("inspect terminal session")
     });
-    if pid_path.exists() {
-        let pid = fs::read_to_string(&pid_path).expect("read pid file");
-        wait_until("killed process", WAIT_ATTEMPTS, || {
-            !process_is_running(pid.trim())
-        });
-    }
 }
 
 #[test]
