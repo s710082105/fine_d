@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.0.5 (2026-03-21)
+
+### Fixes
+
+- Windows ARM64 兼容性：`psycopg[binary]` 改为 `psycopg` 纯 Python 模式，避免缺少预编译 wheel 导致依赖冲突
+- Windows 测试连接时 `find_python` 优先尝试 `py` (Python Launcher) / `python`，避免触发 Microsoft Store 别名
+
 ## v0.0.4 (2026-03-21)
 
 ### Features
