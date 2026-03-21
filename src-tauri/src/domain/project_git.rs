@@ -107,7 +107,7 @@ fn render_post_commit_hook(project_dir: &Path, config: &ProjectConfig) -> String
         .replace("{{hook_marker}}", HOOK_MARKER)
         .replace(
             "{{project_dir}}",
-            &shell_quote(project_dir.to_string_lossy().as_ref()),
+            &shell_quote(&to_posix_path(project_dir.to_string_lossy().as_ref())),
         )
         .replace("{{source_subdir}}", &shell_quote(PROJECT_SOURCE_SUBDIR))
         .replace(
@@ -120,7 +120,9 @@ fn render_post_commit_hook(project_dir: &Path, config: &ProjectConfig) -> String
         )
         .replace(
             "{{sync_bin}}",
-            &shell_quote(resolve_sync_binary_path().to_string_lossy().as_ref()),
+            &shell_quote(&to_posix_path(
+                resolve_sync_binary_path().to_string_lossy().as_ref(),
+            )),
         )
 }
 
@@ -147,6 +149,18 @@ fn shell_quote(value: &str) -> String {
     format!("'{}'", value.replace('\'', "'\"'\"'"))
 }
 
+/// 将 Windows 路径转为 Git Bash 兼容的 POSIX 路径
+/// `C:\Users\wj\app.exe` → `/c/Users/wj/app.exe`
+fn to_posix_path(path: &str) -> String {
+    if path.len() >= 2 && path.as_bytes()[1] == b':' {
+        let drive = path.as_bytes()[0].to_ascii_lowercase() as char;
+        let rest = &path[2..];
+        format!("/{drive}{}", rest.replace('\\', "/"))
+    } else {
+        path.replace('\\', "/")
+    }
+}
+
 fn protocol_text(protocol: &SyncProtocol) -> &'static str {
     match protocol {
         SyncProtocol::Sftp => "sftp",
@@ -170,5 +184,31 @@ fn set_executable(path: &Path) -> Result<(), String> {
     {
         let _ = path;
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::to_posix_path;
+
+    #[test]
+    fn windows_drive_path_converts_to_posix() {
+        assert_eq!(
+            to_posix_path(r"C:\Users\wj\app.exe"),
+            "/c/Users/wj/app.exe"
+        );
+    }
+
+    #[test]
+    fn unix_path_unchanged() {
+        assert_eq!(
+            to_posix_path("/usr/local/bin/app"),
+            "/usr/local/bin/app"
+        );
+    }
+
+    #[test]
+    fn backslashes_converted_without_drive() {
+        assert_eq!(to_posix_path(r"some\relative\path"), "some/relative/path");
     }
 }
