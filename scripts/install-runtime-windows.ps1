@@ -19,7 +19,7 @@ function Show-Header {
     '- node',
     '- python3',
     '- codex',
-    '- database drivers (sqlalchemy, pymysql, psycopg, oracledb, pymssql)'
+    '- database drivers (sqlalchemy, pymysql, psycopg)'
   ) | ForEach-Object { Write-Host $_ }
 }
 
@@ -169,8 +169,9 @@ function Install-DatabaseDrivers {
     $mirrorArgs = @('-i', 'https://pypi.tuna.tsinghua.edu.cn/simple', '--trusted-host', 'pypi.tuna.tsinghua.edu.cn')
   }
   # 逐个安装，避免一个失败影响其他包
-  # psycopg[binary] = psycopg3 纯 Python + 预编译加速，比 psycopg2-binary 兼容性更好
-  $packages = @('sqlalchemy', 'pymysql', 'psycopg[binary]', 'oracledb', 'pymssql')
+  # psycopg = psycopg3 纯 Python，无需编译，兼容所有平台（含 Windows ARM64）
+  # oracledb / pymssql 在 ARM64 上可能需要 C 编译工具链，安装失败会跳过
+  $packages = @('sqlalchemy', 'pymysql', 'psycopg', 'oracledb', 'pymssql')
   foreach ($pkg in $packages) {
     Write-Host "  Installing $pkg..."
     $ErrorActionPreference = 'Continue'
