@@ -154,8 +154,14 @@ fn build_session_metadata(
 }
 
 fn build_command_builder(config: &TerminalLaunchConfig) -> CommandBuilder {
-    let mut builder = CommandBuilder::new(config.command.as_str());
+    // Windows 上 .cmd/.bat 文件不能直接通过 PTY 的 CreateProcessW 执行，
+    // 需要通过 cmd.exe /c 包装
+    let (command, extra_args) = wrap_cmd_for_windows(&config.command);
+    let mut builder = CommandBuilder::new(command.as_str());
     builder.cwd(config.working_dir.clone());
+    for arg in &extra_args {
+        builder.arg(arg.as_str());
+    }
     for arg in &config.args {
         builder.arg(arg.as_str());
     }
@@ -163,6 +169,52 @@ fn build_command_builder(config: &TerminalLaunchConfig) -> CommandBuilder {
         builder.env(key.as_str(), value.as_str());
     }
     builder
+}
+
+/// Windows 上 .cmd/.bat 需要通过 cmd.exe /c 执行
+#[cfg(target_os = "windows")]
+fn wrap_cmd_for_windows(command: &str) -> (String, Vec<String>) {
+    let lower = command.to_lowercase();
+    if lower.ends_with(".cmd") || lower.ends_with(".bat") {
+        ("cmd.exe".into(), vec!["/c".into(), command.into()])
+    } else if !lower.ends_with(".exe") && !lower.contains('/') && !lower.contains('\\') {
+        // 裸命令名（如 "codex"），尝试查找对应 .cmd 文件
+        if let Some(cmd_path) = resolve_cmd_on_path(command) {
+            ("cmd.exe".into(), vec!["/c".into(), cmd_path])
+        } else {
+            (command.into(), Vec::new())
+        }
+    } else {
+        (command.into(), Vec::new())
+    }
+}
+
+#[cfg(target_os = "windows")]
+fn resolve_cmd_on_path(name: &str) -> Option<String> {
+    // 先检查 PATH
+    if let Ok(path_var) = std::env::var("PATH") {
+        for dir in path_var.split(';') {
+            let candidate = std::path::Path::new(dir).join(format!("{name}.cmd"));
+            if candidate.exists() {
+                return Some(candidate.display().to_string());
+            }
+        }
+    }
+    // 检查 npm 全局 bin 目录
+    if let Ok(appdata) = std::env::var("APPDATA") {
+        let candidate = std::path::Path::new(&appdata)
+            .join("npm")
+            .join(format!("{name}.cmd"));
+        if candidate.exists() {
+            return Some(candidate.display().to_string());
+        }
+    }
+    None
+}
+
+#[cfg(not(target_os = "windows"))]
+fn wrap_cmd_for_windows(command: &str) -> (String, Vec<String>) {
+    (command.into(), Vec::new())
 }
 
 fn stream_output(mut context: OutputContext) {
