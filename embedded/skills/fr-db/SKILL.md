@@ -23,7 +23,7 @@ from sqlalchemy import create_engine, inspect, text
 # 根据数据库类型选择连接 URL
 # MySQL: mysql+pymysql://user:pass@host:port/db
 # PostgreSQL: postgresql+psycopg2://user:pass@host:port/db
-# Oracle: oracle+cx_oracle://user:pass@host:port/service
+# Oracle: oracle+oracledb://user:pass@host:port/service
 # SQL Server: mssql+pymssql://user:pass@host:port/db
 
 engine = create_engine('<connection_url>')

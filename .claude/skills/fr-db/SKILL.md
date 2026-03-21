@@ -33,7 +33,7 @@ PGPASSWORD=<password> psql -h <host> -p <port> -U <user> -d <database> -c "
 from sqlalchemy import create_engine, inspect
 # MySQL: mysql+pymysql://user:pass@host:port/db
 # PostgreSQL: postgresql://user:pass@host:port/db
-# Oracle: oracle+cx_oracle://user:pass@host:port/service
+# Oracle: oracle+oracledb://user:pass@host:port/service
 # SQL Server: mssql+pymssql://user:pass@host:port/db
 engine = create_engine('<connection_url>')
 inspector = inspect(engine)

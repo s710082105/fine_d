@@ -173,7 +173,7 @@ except ImportError:
     sys.exit(0)
 
 db_type = "{db_type}"
-driver_map = {{"mysql": "pymysql", "postgresql": "psycopg2", "oracle": "cx_Oracle", "sqlserver": "pymssql"}}
+driver_map = {{"mysql": "pymysql", "postgresql": "psycopg2", "oracle": "oracledb", "sqlserver": "pymssql"}}
 driver = driver_map[db_type]
 try:
     __import__(driver)
@@ -184,7 +184,7 @@ except ImportError:
 url_map = {{
     "mysql": "mysql+pymysql://{{user}}:{{password}}@{{host}}:{{port}}/{{database}}",
     "postgresql": "postgresql+psycopg2://{{user}}:{{password}}@{{host}}:{{port}}/{{database}}",
-    "oracle": "oracle+cx_oracle://{{user}}:{{password}}@{{host}}:{{port}}/{{database}}",
+    "oracle": "oracle+oracledb://{{user}}:{{password}}@{{host}}:{{port}}/{{database}}",
     "sqlserver": "mssql+pymssql://{{user}}:{{password}}@{{host}}:{{port}}/{{database}}"
 }}
 url = url_map[db_type].format(user="{user}", password="{password}", host="{host}", port={port}, database="{database}")

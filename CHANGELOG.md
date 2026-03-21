@@ -9,7 +9,7 @@
 - **数据模型拆分**：`DataConnectionProfile` 的 `dsn` 字段拆分为 `db_type`、`host`、`port`、`database` 独立字段，支持 MySQL / PostgreSQL / Oracle / SQL Server 四种类型
 - **数据库类型自动端口**：选择数据库类型后自动填充默认端口（MySQL:3306, PostgreSQL:5432, Oracle:1521, SQL Server:1433）
 - **fr-db Skill 升级**：统一使用 SQLAlchemy 连接所有数据库类型，优先从项目配置读取连接信息，执行查询时自动提权
-- **Windows 数据库驱动安装**：`install-runtime-windows.ps1` 新增 `Install-DatabaseDrivers` 步骤，自动安装 sqlalchemy、pymysql、psycopg2-binary、cx_Oracle、pymssql
+- **Windows 数据库驱动安装**：`install-runtime-windows.ps1` 新增 `Install-DatabaseDrivers` 步骤，自动安装 sqlalchemy、pymysql、psycopg2-binary、oracledb、pymssql
 
 ### Improvements
 

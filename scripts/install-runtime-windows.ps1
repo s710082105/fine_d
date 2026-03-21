@@ -19,7 +19,7 @@ function Show-Header {
     '- node',
     '- python3',
     '- codex',
-    '- database drivers (sqlalchemy, pymysql, psycopg2, cx_Oracle, pymssql)'
+    '- database drivers (sqlalchemy, pymysql, psycopg2, oracledb, pymssql)'
   ) | ForEach-Object { Write-Host $_ }
 }
 
@@ -164,12 +164,19 @@ function Install-DatabaseDrivers {
     (Join-Path $env:LocalAppData 'Programs\Python\Python312\Scripts\pip.exe'),
     (Join-Path $env:ProgramFiles 'Python312\Scripts\pip.exe')
   )
-  $packages = @('sqlalchemy', 'pymysql', 'psycopg2-binary', 'cx_Oracle', 'pymssql')
-  $pipArgs = @('install') + $packages
+  $mirrorArgs = @()
   if ($SourceMode -eq 'domestic') {
-    $pipArgs += @('-i', 'https://pypi.tuna.tsinghua.edu.cn/simple', '--trusted-host', 'pypi.tuna.tsinghua.edu.cn')
+    $mirrorArgs = @('-i', 'https://pypi.tuna.tsinghua.edu.cn/simple', '--trusted-host', 'pypi.tuna.tsinghua.edu.cn')
   }
-  & $pipPath @pipArgs
+  # 逐个安装，避免一个失败影响其他包
+  $packages = @('sqlalchemy', 'pymysql', 'psycopg2-binary', 'oracledb', 'pymssql')
+  foreach ($pkg in $packages) {
+    Write-Host "  Installing $pkg..."
+    & $pipPath install $pkg @mirrorArgs 2>&1 | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+      Write-Host "  [WARN] $pkg install failed, skipping (install manually if needed)"
+    }
+  }
 }
 
 function Install-Codex {
