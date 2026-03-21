@@ -173,23 +173,46 @@ except ImportError:
     sys.exit(0)
 
 db_type = "{db_type}"
-driver_map = {{"mysql": "pymysql", "postgresql": "psycopg2", "oracle": "oracledb", "sqlserver": "pymssql"}}
-driver = driver_map[db_type]
-try:
-    __import__(driver)
-except ImportError:
-    print(json.dumps({{"ok": False, "message": f"缺少 {{driver}} 驱动，请运行: pip install {{driver}}"}}))
-    sys.exit(0)
+scheme = None
+if db_type == "mysql":
+    try:
+        import pymysql
+        scheme = "mysql+pymysql"
+    except ImportError:
+        print(json.dumps({{"ok": False, "message": "缺少 pymysql 驱动，请运行: pip install pymysql"}}))
+        sys.exit(0)
+elif db_type == "postgresql":
+    try:
+        import psycopg2
+        scheme = "postgresql+psycopg2"
+    except ImportError:
+        try:
+            import psycopg
+            scheme = "postgresql+psycopg"
+        except ImportError:
+            print(json.dumps({{"ok": False, "message": "缺少 PostgreSQL 驱动，请运行: pip install psycopg[binary]"}}))
+            sys.exit(0)
+elif db_type == "oracle":
+    try:
+        import oracledb
+        scheme = "oracle+oracledb"
+    except ImportError:
+        print(json.dumps({{"ok": False, "message": "缺少 oracledb 驱动，请运行: pip install oracledb"}}))
+        sys.exit(0)
+elif db_type == "sqlserver":
+    try:
+        import pymssql
+        scheme = "mssql+pymssql"
+    except ImportError:
+        print(json.dumps({{"ok": False, "message": "缺少 pymssql 驱动，请运行: pip install pymssql"}}))
+        sys.exit(0)
 
-url_map = {{
-    "mysql": "mysql+pymysql://{{user}}:{{password}}@{{host}}:{{port}}/{{database}}",
-    "postgresql": "postgresql+psycopg2://{{user}}:{{password}}@{{host}}:{{port}}/{{database}}",
-    "oracle": "oracle+oracledb://{{user}}:{{password}}@{{host}}:{{port}}/{{database}}",
-    "sqlserver": "mssql+pymssql://{{user}}:{{password}}@{{host}}:{{port}}/{{database}}"
-}}
-url = url_map[db_type].format(user="{user}", password="{password}", host="{host}", port={port}, database="{database}")
+url = f"{{scheme}}://{user}:{password}@{host}:{port}/{database}"
 try:
-    engine = create_engine(url, connect_args={{"connect_timeout": 5}} if db_type in ("mysql", "postgresql") else {{}})
+    kwargs = {{}}
+    if db_type in ("mysql", "postgresql"):
+        kwargs["connect_args"] = {{"connect_timeout": 5}}
+    engine = create_engine(url, **kwargs)
     with engine.connect() as conn:
         conn.execute(text("SELECT 1"))
     print(json.dumps({{"ok": True, "message": "连接成功"}}))

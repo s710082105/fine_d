@@ -19,7 +19,7 @@ function Show-Header {
     '- node',
     '- python3',
     '- codex',
-    '- database drivers (sqlalchemy, pymysql, psycopg2, oracledb, pymssql)'
+    '- database drivers (sqlalchemy, pymysql, psycopg, oracledb, pymssql)'
   ) | ForEach-Object { Write-Host $_ }
 }
 
@@ -169,14 +169,13 @@ function Install-DatabaseDrivers {
     $mirrorArgs = @('-i', 'https://pypi.tuna.tsinghua.edu.cn/simple', '--trusted-host', 'pypi.tuna.tsinghua.edu.cn')
   }
   # 逐个安装，避免一个失败影响其他包
-  $packages = @('sqlalchemy', 'pymysql', 'psycopg2-binary', 'oracledb', 'pymssql')
+  # psycopg[binary] = psycopg3 纯 Python + 预编译加速，比 psycopg2-binary 兼容性更好
+  $packages = @('sqlalchemy', 'pymysql', 'psycopg[binary]', 'oracledb', 'pymssql')
   foreach ($pkg in $packages) {
     Write-Host "  Installing $pkg..."
-    try {
-      $ErrorActionPreference = 'Continue'
-      & $pipPath install $pkg @mirrorArgs 2>&1 | Out-Null
-    } catch {}
-    finally { $ErrorActionPreference = 'Stop' }
+    $ErrorActionPreference = 'Continue'
+    & $pipPath install $pkg @mirrorArgs
+    $ErrorActionPreference = 'Stop'
     if ($LASTEXITCODE -ne 0) {
       Write-Host "  [WARN] $pkg install failed, skipping (install manually if needed)"
     }
@@ -255,7 +254,7 @@ function Main {
   )
   & $pyPath -c "import sqlalchemy; print('[ OK ] sqlalchemy ->', sqlalchemy.__version__)"
   & $pyPath -c "import pymysql; print('[ OK ] pymysql ->', pymysql.__version__)"
-  & $pyPath -c "import psycopg2; print('[ OK ] psycopg2 ->', psycopg2.__version__)"
+  & $pyPath -c "import psycopg; print('[ OK ] psycopg ->', psycopg.__version__)"
   & $pyPath -c "import pymssql; print('[ OK ] pymssql ->', pymssql.__version__)"
 }
 
