@@ -256,13 +256,17 @@ except Exception as e:
 }
 
 fn find_python() -> Result<String, String> {
-    for name in &["python3", "python", "py"] {
-        if Command::new(name)
-            .arg("--version")
-            .output()
-            .is_ok()
-        {
-            return Ok(name.to_string());
+    // Windows 上优先 py (Python Launcher) 和 python，python3 可能触发 Store 别名
+    let candidates = if cfg!(target_os = "windows") {
+        &["py", "python", "python3"][..]
+    } else {
+        &["python3", "python", "py"][..]
+    };
+    for name in candidates {
+        if let Ok(output) = Command::new(name).arg("--version").output() {
+            if output.status.success() {
+                return Ok(name.to_string());
+            }
         }
     }
     Err("python3/python/py 均不可用".into())
