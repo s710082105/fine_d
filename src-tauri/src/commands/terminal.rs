@@ -91,8 +91,21 @@ impl CreateTerminalSessionOptions {
         if !report.ready {
             return Err("runtime prerequisites are not ready".into());
         }
+        // 使用检测到的实际 codex 命令路径（可能是 fallback 绝对路径）
+        let command = report
+            .items
+            .iter()
+            .find(|item| item.key == "codex")
+            .and_then(|item| {
+                if item.resolved_command.is_empty() {
+                    None
+                } else {
+                    Some(item.resolved_command.clone())
+                }
+            })
+            .unwrap_or_else(|| SYSTEM_CODEX_COMMAND.into());
         Ok(Self {
-            command: SYSTEM_CODEX_COMMAND.into(),
+            command,
             args: build_codex_cli_args(config),
         })
     }

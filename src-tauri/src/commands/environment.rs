@@ -35,6 +35,8 @@ pub struct RuntimePrerequisiteItem {
     pub fix_hint: String,
     pub detected_version: String,
     pub script_path: String,
+    /// 实际检测到的命令路径（可能是 fallback 绝对路径）
+    pub resolved_command: String,
 }
 
 #[derive(Debug, Clone, Serialize, PartialEq, Eq)]
@@ -125,13 +127,15 @@ fn command_item(
     script_path: &str,
 ) -> RuntimePrerequisiteItem {
     if status.installed {
-        return ready_item(
+        let mut item = ready_item(
             key,
             label,
             format!("已检测到 {label}"),
             status.detected_version.as_str(),
             script_path,
         );
+        item.resolved_command = status.resolved_command.clone();
+        return item;
     }
     blocked_item(
         key,
@@ -201,6 +205,7 @@ fn ready_item(
         fix_hint: String::new(),
         detected_version: detected_version.into(),
         script_path: script_path.into(),
+        resolved_command: String::new(),
     }
 }
 
@@ -221,6 +226,7 @@ fn blocked_item(
         fix_hint: fix_hint.into(),
         detected_version: detected_version.into(),
         script_path: script_path.into(),
+        resolved_command: String::new(),
     }
 }
 

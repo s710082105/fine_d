@@ -65,18 +65,22 @@ fn runtime_prerequisites_report_windows_shell_gap_explicitly() {
             git: CommandInstallationStatus {
                 installed: true,
                 detected_version: "git version 2.49.0".into(),
+                ..Default::default()
             },
             node: CommandInstallationStatus {
                 installed: true,
                 detected_version: "v22.15.0".into(),
+                ..Default::default()
             },
             python: CommandInstallationStatus {
                 installed: true,
                 detected_version: "Python 3.12.9".into(),
+                ..Default::default()
             },
             codex: CommandInstallationStatus {
                 installed: true,
                 detected_version: "codex-cli 0.116.0".into(),
+                ..Default::default()
             },
             hook_shell: None,
         },
@@ -101,18 +105,22 @@ fn runtime_prerequisites_ready_when_system_runtime_and_git_are_available() {
             git: CommandInstallationStatus {
                 installed: true,
                 detected_version: "git version 2.49.0".into(),
+                ..Default::default()
             },
             node: CommandInstallationStatus {
                 installed: true,
                 detected_version: "v24.8.0".into(),
+                ..Default::default()
             },
             python: CommandInstallationStatus {
                 installed: true,
                 detected_version: "Python 3.14.0".into(),
+                ..Default::default()
             },
             codex: CommandInstallationStatus {
                 installed: true,
                 detected_version: "codex-cli 0.116.0".into(),
+                ..Default::default()
             },
             hook_shell: Some("/bin/sh".into()),
         },

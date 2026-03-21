@@ -1,4 +1,5 @@
 use super::project_config::{ProjectConfig, SyncProtocol, PROJECT_SOURCE_SUBDIR};
+use super::system_runtime::hide_window;
 use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -35,10 +36,12 @@ fn ensure_git_repository(project_dir: &Path) -> Result<(), String> {
 }
 
 fn is_git_repository(project_dir: &Path) -> Result<bool, String> {
-    let output = Command::new("git")
-        .arg("-C")
+    let mut cmd = Command::new("git");
+    cmd.arg("-C")
         .arg(project_dir)
-        .args(["rev-parse", "--is-inside-work-tree"])
+        .args(["rev-parse", "--is-inside-work-tree"]);
+    hide_window(&mut cmd);
+    let output = cmd
         .output()
         .map_err(|error| format!("failed to execute git rev-parse: {error}"))?;
     if output.status.success() {
@@ -83,10 +86,10 @@ fn resolve_git_path(project_dir: &Path, target: &str) -> Result<PathBuf, String>
 }
 
 fn run_git<const N: usize>(project_dir: &Path, args: [&str; N]) -> Result<String, String> {
-    let output = Command::new("git")
-        .arg("-C")
-        .arg(project_dir)
-        .args(args)
+    let mut cmd = Command::new("git");
+    cmd.arg("-C").arg(project_dir).args(args);
+    hide_window(&mut cmd);
+    let output = cmd
         .output()
         .map_err(|error| format!("failed to execute git command: {error}"))?;
     if output.status.success() {

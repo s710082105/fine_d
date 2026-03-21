@@ -18,6 +18,8 @@ pub enum RuntimePlatform {
 pub struct CommandInstallationStatus {
     pub installed: bool,
     pub detected_version: String,
+    /// 实际检测到的命令路径（可能是 PATH 上的名称或 fallback 绝对路径）
+    pub resolved_command: String,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
@@ -143,11 +145,15 @@ fn windows_codex_fallbacks() -> Vec<PathBuf> {
 
 fn inspect_command(candidates: &[&str]) -> CommandInstallationStatus {
     for candidate in candidates {
-        match Command::new(candidate).arg("--version").output() {
+        let mut cmd = Command::new(candidate);
+        cmd.arg("--version");
+        hide_window(&mut cmd);
+        match cmd.output() {
             Ok(output) if output.status.success() => {
                 return CommandInstallationStatus {
                     installed: true,
                     detected_version: detect_version_line(&output.stdout, &output.stderr),
+                    resolved_command: candidate.to_string(),
                 };
             }
             Ok(_) => continue,
@@ -156,6 +162,27 @@ fn inspect_command(candidates: &[&str]) -> CommandInstallationStatus {
         }
     }
     CommandInstallationStatus::default()
+}
+
+/// Windows GUI 进程派生子进程时隐藏控制台窗口
+#[cfg(target_os = "windows")]
+pub fn hide_window(cmd: &mut Command) {
+    use std::os::windows::process::CommandExt;
+    const CREATE_NO_WINDOW: u32 = 0x08000000;
+    cmd.creation_flags(CREATE_NO_WINDOW);
+}
+
+#[cfg(not(target_os = "windows"))]
+pub fn hide_window(_cmd: &mut Command) {}
+
+/// 返回当前平台上实际可用的 codex 命令路径
+pub fn resolve_codex_command(platform: RuntimePlatform) -> Option<String> {
+    let status = inspect_with_fallbacks(platform, &["codex"], windows_codex_fallbacks);
+    if status.installed {
+        Some(status.resolved_command)
+    } else {
+        None
+    }
 }
 
 fn detect_version_line(stdout: &[u8], stderr: &[u8]) -> String {
@@ -203,8 +230,10 @@ fn detect_windows_git_shell(git_installed: bool) -> Option<PathBuf> {
 }
 
 fn read_git_exec_path() -> Result<PathBuf, String> {
-    let output = Command::new("git")
-        .arg("--exec-path")
+    let mut cmd = Command::new("git");
+    cmd.arg("--exec-path");
+    hide_window(&mut cmd);
+    let output = cmd
         .output()
         .map_err(|error| format!("failed to resolve git exec path: {error}"))?;
     if output.status.success() {

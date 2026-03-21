@@ -1,4 +1,5 @@
 use super::event_bridge::EventBridge;
+use super::system_runtime::hide_window;
 use serde::Serialize;
 use std::collections::HashMap;
 use std::io::{BufRead, BufReader, Read};
@@ -167,23 +168,25 @@ impl CodexProcessManager {
 }
 
 fn spawn_process(config: &ProcessLaunchConfig) -> Result<std::process::Child, String> {
-    Command::new(&config.command)
-        .args(&config.args)
+    let mut cmd = Command::new(&config.command);
+    cmd.args(&config.args)
         .envs(&config.env)
         .current_dir(&config.working_dir)
         .stdin(Stdio::null())
         .stdout(Stdio::piped())
-        .stderr(Stdio::piped())
-        .spawn()
+        .stderr(Stdio::piped());
+    hide_window(&mut cmd);
+    cmd.spawn()
         .map_err(|error| format!("failed to spawn codex process: {error}"))
 }
 
 #[cfg(target_os = "windows")]
 fn interrupt_process_by_pid(pid: u32) -> Result<std::process::ExitStatus, String> {
     let pid_arg = pid.to_string();
-    Command::new("taskkill")
-        .args(["/PID", pid_arg.as_str(), "/T", "/F"])
-        .status()
+    let mut cmd = Command::new("taskkill");
+    cmd.args(["/PID", pid_arg.as_str(), "/T", "/F"]);
+    hide_window(&mut cmd);
+    cmd.status()
         .map_err(|error| format!("failed to interrupt codex process: {error}"))
 }
 
