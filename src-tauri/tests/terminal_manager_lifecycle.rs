@@ -17,7 +17,7 @@ const WAIT_INTERVAL_MS: u64 = 25;
 
 fn wait_attempts() -> u16 {
     if cfg!(target_os = "windows") {
-        return 240;
+        return 400;
     }
     80
 }
