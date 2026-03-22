@@ -33,13 +33,12 @@ fn build_request(project_dir: &PathBuf) -> StartSessionRequest {
         name: "demo".into(),
         root_dir: project_dir.display().to_string(),
     };
-    config.sync.host = "files.example.com".into();
-    config.sync.port = 22;
-    config.sync.username = "deploy".into();
-    config.sync.password = "deploy-pass".into();
+    config.sync.designer_root = std::env::temp_dir().display().to_string();
     config.sync.remote_runtime_dir = "/srv/tomcat/webapps/webroot/WEB-INF".into();
     config.sync.delete_propagation = true;
     config.sync.auto_sync_on_change = true;
+    config.preview.account = "preview-user".into();
+    config.preview.password = "preview-pass".into();
     config.mappings = vec![ProjectMapping {
         local: "reportlets".into(),
         remote: "reportlets".into(),

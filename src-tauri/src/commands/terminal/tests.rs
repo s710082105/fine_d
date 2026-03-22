@@ -1,7 +1,7 @@
 use super::{
-    build_codex_cli_args, build_terminal_environment, close_terminal_session_with_manager,
-    create_terminal_session_with_options, CloseTerminalSessionRequest,
-    CreateTerminalSessionOptions, CreateTerminalSessionRequest,
+    apply_terminal_color_env, build_codex_cli_args, build_terminal_environment,
+    close_terminal_session_with_manager, create_terminal_session_with_options,
+    CloseTerminalSessionRequest, CreateTerminalSessionOptions, CreateTerminalSessionRequest,
 };
 use crate::domain::project_config::{ProjectConfig, WorkspaceProfile};
 use crate::domain::terminal_event_bridge::{
@@ -143,7 +143,11 @@ fn terminal_commands_build_terminal_environment_merges_terminal_colors_and_codex
 
     assert_eq!(env.get("TERM"), Some(&"xterm-256color".to_string()));
     assert_eq!(env.get("COLORTERM"), Some(&"truecolor".to_string()));
-    assert_eq!(env.get("FORCE_COLOR"), Some(&"1".to_string()));
+    if std::env::var_os("NO_COLOR").is_some() {
+        assert_eq!(env.get("FORCE_COLOR"), None);
+    } else {
+        assert_eq!(env.get("FORCE_COLOR"), Some(&"1".to_string()));
+    }
     assert_eq!(
         env.get("REPORTLET_SOURCE_DIR"),
         Some(&"/tmp/project/reportlets".to_string())
@@ -154,4 +158,24 @@ fn terminal_commands_build_terminal_environment_merges_terminal_colors_and_codex
     let auth_path = PathBuf::from(codex_home).join("auth.json");
     let auth_content = std::fs::read_to_string(auth_path).expect("read auth file");
     assert!(auth_content.contains(r#""OPENAI_API_KEY":"sk-demo""#));
+}
+
+#[test]
+fn terminal_commands_apply_terminal_color_env_skips_force_color_when_no_color_is_inherited() {
+    let mut env = std::collections::HashMap::new();
+
+    apply_terminal_color_env(&mut env, true);
+
+    assert_eq!(env.get("TERM"), Some(&"xterm-256color".to_string()));
+    assert_eq!(env.get("COLORTERM"), Some(&"truecolor".to_string()));
+    assert_eq!(env.get("FORCE_COLOR"), None);
+}
+
+#[test]
+fn terminal_commands_apply_terminal_color_env_keeps_force_color_without_no_color() {
+    let mut env = std::collections::HashMap::new();
+
+    apply_terminal_color_env(&mut env, false);
+
+    assert_eq!(env.get("FORCE_COLOR"), Some(&"1".to_string()));
 }

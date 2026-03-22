@@ -43,14 +43,16 @@ fn project_name(project_dir: &Path) -> String {
 }
 
 pub fn save_project_config_to_path(path: &Path, config: &ProjectConfig) -> Result<(), String> {
-    config.validate()?;
+    let mut normalized = config.clone();
+    normalize_sync_profile(&mut normalized);
+    normalized.validate()?;
 
     if let Some(parent) = path.parent() {
         fs::create_dir_all(parent)
             .map_err(|error| format!("failed to create project config directory: {error}"))?;
     }
 
-    let payload = serde_json::to_string_pretty(config)
+    let payload = serde_json::to_string_pretty(&normalized)
         .map_err(|error| format!("failed to serialize project config: {error}"))?;
     write_atomically(path, &payload)
 }
@@ -64,8 +66,9 @@ pub fn load_project_config_from_path(path: &Path) -> Result<ProjectConfig, Strin
     let value: Value = serde_json::from_str(&payload)
         .map_err(|error| format!("failed to parse project config: {error}"))?;
     let normalized = normalize_legacy_project_config(value);
-    let config: ProjectConfig = serde_json::from_value(normalized)
+    let mut config: ProjectConfig = serde_json::from_value(normalized)
         .map_err(|error| format!("failed to parse project config: {error}"))?;
+    normalize_sync_profile(&mut config);
     config.validate()?;
     Ok(config)
 }
@@ -315,6 +318,11 @@ fn normalize_legacy_data_connections(mut value: Value) -> Value {
     value
 }
 
+fn normalize_sync_profile(config: &mut ProjectConfig) {
+    config.sync.protocol = crate::domain::project_config::SyncProtocol::Fine;
+    config.sync.remote_runtime_dir = PROJECT_SOURCE_SUBDIR.into();
+}
+
 fn normalize_legacy_dsn_fields(mut value: Value) -> Value {
     let Some(object) = value.as_object_mut() else {
         return value;
@@ -365,7 +373,57 @@ fn parse_dsn_parts(conn_obj: &mut serde_json::Map<String, Value>, host_port_db: 
 }
 
 fn normalize_legacy_project_config(value: Value) -> Value {
-    normalize_legacy_style_profile(normalize_legacy_dsn_fields(normalize_legacy_data_connections(value)))
+    normalize_legacy_sync_profile(normalize_legacy_style_profile(
+        normalize_legacy_dsn_fields(normalize_legacy_data_connections(value)),
+    ))
+}
+
+fn normalize_legacy_sync_profile(mut value: Value) -> Value {
+    let Some(object) = value.as_object_mut() else {
+        return value;
+    };
+    let Some(sync) = object.get_mut("sync").and_then(Value::as_object_mut) else {
+        return value;
+    };
+    sync.insert("protocol".into(), json!("fine"));
+    let legacy_username = sync
+        .remove("username")
+        .and_then(|item| item.as_str().map(str::to_owned));
+    let legacy_password = sync
+        .remove("password")
+        .and_then(|item| item.as_str().map(str::to_owned));
+    sync.remove("host");
+    sync.remove("port");
+    let preview = object
+        .entry("preview")
+        .or_insert_with(|| json!({}))
+        .as_object_mut();
+    let Some(preview) = preview else {
+        return value;
+    };
+    if preview
+        .get("account")
+        .and_then(Value::as_str)
+        .unwrap_or_default()
+        .trim()
+        .is_empty()
+    {
+        if let Some(username) = legacy_username {
+            preview.insert("account".into(), json!(username));
+        }
+    }
+    if preview
+        .get("password")
+        .and_then(Value::as_str)
+        .unwrap_or_default()
+        .trim()
+        .is_empty()
+    {
+        if let Some(password) = legacy_password {
+            preview.insert("password".into(), json!(password));
+        }
+    }
+    value
 }
 
 fn normalize_legacy_style_profile(mut value: Value) -> Value {

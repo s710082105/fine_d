@@ -23,37 +23,25 @@ interface ProjectConfigFormProps {
 interface ProjectConfigTabContext {
   config: ReturnType<typeof useProjectConfigState>['config']
   projectReady: boolean
+  remoteConnectionMessage: ReturnType<
+    typeof useProjectConfigState
+  >['remoteConnectionMessage']
+  remoteConnectionStatus: ReturnType<
+    typeof useProjectConfigState
+  >['remoteConnectionStatus']
   reportletEntries: ReturnType<typeof useProjectConfigState>['reportletEntries']
-  chooseRuntimeDir: ReturnType<typeof useProjectConfigState>['chooseRuntimeDir']
-  closeRemoteDirectoryPicker: ReturnType<
+  reportletEntriesLoading: ReturnType<
     typeof useProjectConfigState
-  >['closeRemoteDirectoryPicker']
-  confirmRemoteDirectory: ReturnType<
+  >['reportletEntriesLoading']
+  chooseDesignerRoot: ReturnType<typeof useProjectConfigState>['chooseDesignerRoot']
+  refreshRemoteReportletEntries: ReturnType<
     typeof useProjectConfigState
-  >['confirmRemoteDirectory']
-  loadRemoteDirectoryChildren: ReturnType<
+  >['refreshRemoteReportletEntries']
+  testRemoteSyncConnection: ReturnType<
     typeof useProjectConfigState
-  >['loadRemoteDirectoryChildren']
-  openRemoteDirectoryPicker: ReturnType<
-    typeof useProjectConfigState
-  >['openRemoteDirectoryPicker']
-  remoteDirectoryEntries: ReturnType<
-    typeof useProjectConfigState
-  >['remoteDirectoryEntries']
-  remoteDirectoryLoading: ReturnType<
-    typeof useProjectConfigState
-  >['remoteDirectoryLoading']
-  remoteDirectoryPickerOpen: ReturnType<
-    typeof useProjectConfigState
-  >['remoteDirectoryPickerOpen']
+  >['testRemoteSyncConnection']
   testDataConnection: ReturnType<typeof useProjectConfigState>['testDataConnection']
   addDataConnection: ReturnType<typeof useProjectConfigState>['addDataConnection']
-  selectedRemoteDirectory: ReturnType<
-    typeof useProjectConfigState
-  >['selectedRemoteDirectory']
-  selectRemoteDirectory: ReturnType<
-    typeof useProjectConfigState
-  >['selectRemoteDirectory']
   removeDataConnection: ReturnType<typeof useProjectConfigState>['removeDataConnection']
   updateDataConnection: ReturnType<typeof useProjectConfigState>['updateDataConnection']
   updateAi: ReturnType<typeof useProjectConfigState>['updateAi']
@@ -139,19 +127,15 @@ function renderLazyTab(children: ReactNode) {
 function buildProjectConfigTabItems({
   config,
   projectReady,
+  remoteConnectionMessage,
+  remoteConnectionStatus,
   reportletEntries,
-  chooseRuntimeDir,
-  closeRemoteDirectoryPicker,
-  confirmRemoteDirectory,
-  loadRemoteDirectoryChildren,
-  openRemoteDirectoryPicker,
-  remoteDirectoryEntries,
-  remoteDirectoryLoading,
-  remoteDirectoryPickerOpen,
+  reportletEntriesLoading,
+  chooseDesignerRoot,
+  refreshRemoteReportletEntries,
+  testRemoteSyncConnection,
   testDataConnection,
   addDataConnection,
-  selectedRemoteDirectory,
-  selectRemoteDirectory,
   removeDataConnection,
   updateDataConnection,
   updateAi,
@@ -168,16 +152,10 @@ function buildProjectConfigTabItems({
       <>
         <ProjectFields
           config={config}
-          chooseRuntimeDir={chooseRuntimeDir}
-          closeRemoteDirectoryPicker={closeRemoteDirectoryPicker}
-          confirmRemoteDirectory={confirmRemoteDirectory}
-          loadRemoteDirectoryChildren={loadRemoteDirectoryChildren}
-          openRemoteDirectoryPicker={openRemoteDirectoryPicker}
-          remoteDirectoryEntries={remoteDirectoryEntries}
-          remoteDirectoryLoading={remoteDirectoryLoading}
-          remoteDirectoryPickerOpen={remoteDirectoryPickerOpen}
-          selectedRemoteDirectory={selectedRemoteDirectory}
-          selectRemoteDirectory={selectRemoteDirectory}
+          chooseDesignerRoot={chooseDesignerRoot}
+          remoteConnectionMessage={remoteConnectionMessage}
+          remoteConnectionStatus={remoteConnectionStatus}
+          testRemoteSyncConnection={testRemoteSyncConnection}
           updateWorkspace={updateWorkspace}
           updateSync={updateSync}
           updatePreview={updatePreview}
@@ -208,9 +186,15 @@ function buildProjectConfigTabItems({
     ),
     createTabItem(
       'files',
-      '文件管理',
-      projectReady,
-      renderLazyTab(<LazyFileManagementFields entries={reportletEntries} />)
+        '文件管理',
+        projectReady,
+      renderLazyTab(
+        <LazyFileManagementFields
+          entries={reportletEntries}
+          loading={reportletEntriesLoading}
+          onRefresh={refreshRemoteReportletEntries}
+        />
+      )
     )
   ]
 }
@@ -226,19 +210,15 @@ function useProjectConfigFormViewModel(
       buildProjectConfigTabItems({
         config: projectState.config,
         projectReady: projectState.projectReady,
+        remoteConnectionMessage: projectState.remoteConnectionMessage,
+        remoteConnectionStatus: projectState.remoteConnectionStatus,
         reportletEntries: projectState.reportletEntries,
-        chooseRuntimeDir: projectState.chooseRuntimeDir,
-        closeRemoteDirectoryPicker: projectState.closeRemoteDirectoryPicker,
-        confirmRemoteDirectory: projectState.confirmRemoteDirectory,
-        loadRemoteDirectoryChildren: projectState.loadRemoteDirectoryChildren,
-        openRemoteDirectoryPicker: projectState.openRemoteDirectoryPicker,
-        remoteDirectoryEntries: projectState.remoteDirectoryEntries,
-        remoteDirectoryLoading: projectState.remoteDirectoryLoading,
-        remoteDirectoryPickerOpen: projectState.remoteDirectoryPickerOpen,
+        reportletEntriesLoading: projectState.reportletEntriesLoading,
+        chooseDesignerRoot: projectState.chooseDesignerRoot,
+        refreshRemoteReportletEntries: projectState.refreshRemoteReportletEntries,
+        testRemoteSyncConnection: projectState.testRemoteSyncConnection,
         testDataConnection: projectState.testDataConnection,
         addDataConnection: projectState.addDataConnection,
-        selectedRemoteDirectory: projectState.selectedRemoteDirectory,
-        selectRemoteDirectory: projectState.selectRemoteDirectory,
         removeDataConnection: projectState.removeDataConnection,
         updateDataConnection: projectState.updateDataConnection,
         updateAi: projectState.updateAi,
@@ -284,9 +264,11 @@ export function ProjectConfigForm({
         onChange={(key) => setActiveTab(key as ConfigTab)}
         items={tabItems}
       />
-      <Button htmlType="submit" type="primary" disabled={!projectReady}>
-        保存配置
-      </Button>
+      {activeTab !== 'files' ? (
+        <Button htmlType="submit" type="primary" disabled={!projectReady}>
+          保存配置
+        </Button>
+      ) : null}
       <ProjectConfigMessages error={error} status={status} />
     </form>
   )

@@ -75,3 +75,27 @@ CSS px = screenshot image px / DPR
 - Prefer `snap --compact` over `html` for page structure.
 - Use `type` (not eval) to enter text in cross-origin iframes — `click`/`clickxy` to focus first, then `type`.
 - Chrome shows an "Allow debugging" modal once per tab on first access. A background daemon keeps the session alive so subsequent commands need no further approval. Daemons auto-exit after 20 minutes of inactivity.
+
+## FineReport Query Button
+
+When a FineReport preview page includes a query button like:
+
+```html
+<button unselectable="none" type="button" data-role="none" class="fr-btn-text fr-widget-font" style="max-width: 74px;">查询</button>
+```
+
+- Prefer a direct DOM selector instead of `clickxy`.
+- Use `html`/`eval` first if needed to confirm the matched button text is `查询`.
+- Prefer this selector:
+
+```bash
+scripts/cdp.mjs click <target> 'button.fr-btn-text.fr-widget-font[data-role="none"][type="button"][unselectable="none"]'
+```
+
+- If multiple elements match, use `eval` and click the one whose text matches exactly:
+
+```bash
+scripts/cdp.mjs eval <target> "(() => { const button = Array.from(document.querySelectorAll('button.fr-btn-text.fr-widget-font[data-role=\"none\"][type=\"button\"][unselectable=\"none\"]')).find((node) => node.textContent?.trim() === '查询'); if (!button) throw new Error('query button not found'); button.click(); return 'clicked'; })()"
+```
+
+- After clicking, verify that the page shows actual result rows before checking column names or data. Do not treat a click as successful only because the command returned without error.

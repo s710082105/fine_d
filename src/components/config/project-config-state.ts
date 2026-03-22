@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from 'react'
 import {
   AiProfile,
   DataConnectionProfile,
+  FIXED_REMOTE_RUNTIME_DIR,
   PreviewProfile,
   ProjectConfig,
   RemoteDirectoryEntry,
@@ -49,12 +50,17 @@ export function useProjectConfigState(
   const [revision, setRevision] = useState(INITIAL_CONFIG_REVISION)
   const [projectReady, setProjectReady] = useState(false)
   const [reportletEntries, setReportletEntries] = useState<ReportletEntry[]>([])
+  const [reportletEntriesLoading, setReportletEntriesLoading] = useState(false)
   const [remoteDirectoryPickerOpen, setRemoteDirectoryPickerOpen] = useState(false)
   const [remoteDirectoryLoading, setRemoteDirectoryLoading] = useState(false)
   const [remoteDirectoryEntries, setRemoteDirectoryEntries] = useState<
     RemoteDirectoryEntry[]
   >([])
   const [selectedRemoteDirectory, setSelectedRemoteDirectory] = useState('')
+  const [remoteConnectionStatus, setRemoteConnectionStatus] = useState<
+    'idle' | 'loading' | 'success' | 'error'
+  >('idle')
+  const [remoteConnectionMessage, setRemoteConnectionMessage] = useState('')
 
   useEffect(() => {
     onSnapshotChange?.({
@@ -76,11 +82,37 @@ export function useProjectConfigState(
       })
   }
 
+  const refreshRemoteReportletEntries = () => {
+    setError('')
+    setStatus('')
+    setReportletEntriesLoading(true)
+    return services
+      .listRemoteReportletEntries({
+        designerRoot: config.sync.designer_root.trim(),
+        url: config.preview.url.trim(),
+        username: config.preview.account.trim(),
+        password: config.preview.password,
+        path: FIXED_REMOTE_RUNTIME_DIR
+      })
+      .then((entries) => {
+        setReportletEntries(entries)
+        setStatus('已从远程刷新 reportlets 列表')
+        return entries
+      })
+      .catch((loadError) => {
+        setError(`读取远程 reportlets 失败：${getErrorMessage(loadError)}`)
+        throw loadError
+      })
+      .finally(() => setReportletEntriesLoading(false))
+  }
+
   const updateConfig = (next: ProjectConfig) => {
     setConfig(next)
     setIsDirty(true)
     setError('')
     setStatus('')
+    setRemoteConnectionStatus('idle')
+    setRemoteConnectionMessage('')
   }
 
   const commitProjectDir = (projectDir: string) => {
@@ -125,16 +157,16 @@ export function useProjectConfigState(
       )
   }
 
-  const chooseRuntimeDir = () => {
+  const chooseDesignerRoot = () => {
     setError('')
     void services
       .browseDirectory()
-      .then((runtimeDir) => {
-        if (!runtimeDir) return
-        updateConfig(mergeConfig(config, 'sync', { remote_runtime_dir: runtimeDir }))
+      .then((designerRoot) => {
+        if (!designerRoot) return
+        updateConfig(mergeConfig(config, 'sync', { designer_root: designerRoot }))
       })
       .catch((browseError) =>
-        setError(`选择运行目录失败：${getErrorMessage(browseError)}`)
+        setError(`选择本地设计器目录失败：${getErrorMessage(browseError)}`)
       )
   }
 
@@ -142,19 +174,43 @@ export function useProjectConfigState(
     setRemoteDirectoryLoading(true)
     return services
       .listRemoteDirectories({
-        protocol: config.sync.protocol,
-        host: config.sync.host.trim(),
-        port: config.sync.port,
-        username: config.sync.username.trim(),
-        password: config.sync.password,
+        designerRoot: config.sync.designer_root.trim(),
+        url: config.preview.url.trim(),
+        username: config.preview.account.trim(),
+        password: config.preview.password,
         path
       })
       .finally(() => setRemoteDirectoryLoading(false))
   }
 
+  const testRemoteSyncConnection = () => {
+    setRemoteConnectionStatus('loading')
+    setRemoteConnectionMessage('')
+    const path = config.sync.remote_runtime_dir.trim() || FIXED_REMOTE_RUNTIME_DIR
+    return services
+      .testRemoteSyncConnection({
+        designerRoot: config.sync.designer_root.trim(),
+        url: config.preview.url.trim(),
+        username: config.preview.account.trim(),
+        password: config.preview.password,
+        path
+      })
+      .then((result) => {
+        setRemoteConnectionStatus(result.ok ? 'success' : 'error')
+        setRemoteConnectionMessage(result.message)
+        return result
+      })
+      .catch((testError) => {
+        const message = getErrorMessage(testError)
+        setRemoteConnectionStatus('error')
+        setRemoteConnectionMessage(message)
+        throw testError
+      })
+  }
+
   const openRemoteDirectoryPicker = () => {
     setError('')
-    const path = config.sync.remote_runtime_dir.trim() || '/'
+    const path = config.sync.remote_runtime_dir.trim() || FIXED_REMOTE_RUNTIME_DIR
     void loadRemoteDirectories(path)
       .then((entries) => {
         setRemoteDirectoryEntries(entries)
@@ -249,14 +305,19 @@ export function useProjectConfigState(
     config,
     error,
     status,
+    remoteConnectionStatus,
+    remoteConnectionMessage,
     projectReady,
     reportletEntries,
+    reportletEntriesLoading,
     remoteDirectoryPickerOpen,
     remoteDirectoryLoading,
     remoteDirectoryEntries,
     selectedRemoteDirectory,
     chooseProjectDir,
-    chooseRuntimeDir,
+    chooseDesignerRoot,
+    refreshRemoteReportletEntries,
+    testRemoteSyncConnection,
     openRemoteDirectoryPicker,
     closeRemoteDirectoryPicker,
     loadRemoteDirectoryChildren,

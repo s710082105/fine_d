@@ -89,19 +89,18 @@ fn write_embedded_file(file: &File<'_>, destination: &Path) -> io::Result<()> {
 
 fn render_project_context(config: &ProjectConfig, enabled_skills: &[String]) -> io::Result<String> {
     let local_source_dir = config.local_source_dir().display().to_string();
+    let preview_url = preview_review_url(&config.preview.url);
     render_text_template(
         embedded_text(TEMPLATE_PROJECT_CONTEXT_PATH)?,
         &[
             ("workspace_name", config.workspace.name.clone()),
             ("workspace_root_dir", config.workspace.root_dir.clone()),
-            ("preview_url", config.preview.url.clone()),
+            ("preview_url", preview_url.clone()),
             ("preview_account", config.preview.account.clone()),
             ("preview_password", config.preview.password.clone()),
             ("codex_api_key", config.ai.api_key.clone()),
             ("protocol", protocol_text(&config.sync.protocol).into()),
-            ("host", config.sync.host.clone()),
-            ("port", config.sync.port.to_string()),
-            ("username", config.sync.username.clone()),
+            ("designer_root", config.sync.designer_root.clone()),
             ("local_source_dir", local_source_dir),
             ("remote_runtime_dir", config.sync.remote_runtime_dir.clone()),
             (
@@ -117,16 +116,15 @@ fn render_project_context(config: &ProjectConfig, enabled_skills: &[String]) -> 
 
 fn render_project_rules(config: &ProjectConfig) -> io::Result<String> {
     let local_source_dir = config.local_source_dir().display().to_string();
+    let preview_url = preview_review_url(&config.preview.url);
     render_text_template(
         embedded_text(TEMPLATE_PROJECT_RULES_PATH)?,
         &[
             ("protocol", protocol_text(&config.sync.protocol).into()),
-            ("host", config.sync.host.clone()),
-            ("port", config.sync.port.to_string()),
-            ("username", config.sync.username.clone()),
+            ("designer_root", config.sync.designer_root.clone()),
             ("local_source_dir", local_source_dir),
             ("remote_runtime_dir", config.sync.remote_runtime_dir.clone()),
-            ("preview_url", config.preview.url.clone()),
+            ("preview_url", preview_url),
             ("preview_account", config.preview.account.clone()),
             ("preview_password", config.preview.password.clone()),
             ("codex_api_key", config.ai.api_key.clone()),
@@ -150,6 +148,7 @@ fn render_project_rules(config: &ProjectConfig) -> io::Result<String> {
 
 fn render_mappings(config: &ProjectConfig) -> io::Result<String> {
     let local_source_dir = config.local_source_dir().display().to_string();
+    let preview_url = preview_review_url(&config.preview.url);
     render_json_template(
         embedded_text(TEMPLATE_MAPPINGS_PATH)?,
         &[
@@ -157,15 +156,16 @@ fn render_mappings(config: &ProjectConfig) -> io::Result<String> {
                 "protocol_json",
                 json_string(protocol_text(&config.sync.protocol))?,
             ),
-            ("host_json", json_string(&config.sync.host)?),
-            ("port", config.sync.port.to_string()),
-            ("username_json", json_string(&config.sync.username)?),
+            (
+                "designer_root_json",
+                json_string(&config.sync.designer_root)?,
+            ),
             ("local_source_dir_json", json_string(&local_source_dir)?),
             (
                 "remote_runtime_dir_json",
                 json_string(&config.sync.remote_runtime_dir)?,
             ),
-            ("preview_url_json", json_string(&config.preview.url)?),
+            ("preview_url_json", json_string(&preview_url)?),
             (
                 "preview_account_json",
                 json_string(&config.preview.account)?,
@@ -257,11 +257,36 @@ fn markdown_optional_text(value: &str) -> String {
     value.into()
 }
 
+fn preview_review_url(url: &str) -> String {
+    let trimmed = url.trim();
+    let (body, fragment) = split_once(trimmed, '#');
+    let (base, query) = split_once(body, '?');
+    let mut pairs = query
+        .unwrap_or("")
+        .split('&')
+        .filter(|segment| !segment.is_empty())
+        .filter(|segment| !segment.starts_with("op="))
+        .map(str::to_string)
+        .collect::<Vec<_>>();
+    pairs.push("op=view".into());
+    let mut normalized = format!("{base}?{}", pairs.join("&"));
+    if let Some(fragment) = fragment {
+        normalized.push('#');
+        normalized.push_str(fragment);
+    }
+    normalized
+}
+
+fn split_once<'a>(value: &'a str, separator: char) -> (&'a str, Option<&'a str>) {
+    match value.split_once(separator) {
+        Some((left, right)) => (left, Some(right)),
+        None => (value, None),
+    }
+}
+
 fn protocol_text(protocol: &SyncProtocol) -> &'static str {
     match protocol {
-        SyncProtocol::Sftp => "sftp",
-        SyncProtocol::Ftp => "ftp",
-        SyncProtocol::Local => "local",
+        SyncProtocol::Fine => "fine",
     }
 }
 

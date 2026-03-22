@@ -142,7 +142,7 @@ pub fn resolve_sync_task(
         action,
         protocol: protocol_text(&config.sync.protocol).into(),
         local_path: local_path.display().to_string(),
-        remote_path: render_remote_path(&config.sync.protocol, remote_path.as_path()),
+        remote_path: render_remote_path(remote_path.as_path()),
     })
 }
 
@@ -164,13 +164,9 @@ fn resolve_remote_root(config: &ProjectConfig, source_root: &Path) -> PathBuf {
     remote_root.join(&mapping.remote)
 }
 
-fn render_remote_path(protocol: &SyncProtocol, path: &Path) -> String {
-    match protocol {
-        SyncProtocol::Local => path.display().to_string(),
-        SyncProtocol::Sftp | SyncProtocol::Ftp => path
-            .to_string_lossy()
-            .replace(std::path::MAIN_SEPARATOR, "/"),
-    }
+fn render_remote_path(path: &Path) -> String {
+    path.to_string_lossy()
+        .replace(std::path::MAIN_SEPARATOR, "/")
 }
 
 fn scan_files(root: &Path) -> HashMap<PathBuf, SystemTime> {
@@ -252,7 +248,8 @@ fn apply_sync_change(
     action: SyncAction,
 ) {
     let result = resolve_sync_task(session_id, config, path, action.clone()).and_then(|task| {
-        transport.apply(&task, &config.sync)?;
+        let profile = config.fine_remote_profile()?;
+        transport.apply(&task, &profile)?;
         Ok(task)
     });
     match result {
@@ -289,8 +286,6 @@ fn action_text(action: &SyncAction) -> &'static str {
 
 fn protocol_text(protocol: &SyncProtocol) -> &'static str {
     match protocol {
-        SyncProtocol::Sftp => "sftp",
-        SyncProtocol::Ftp => "ftp",
-        SyncProtocol::Local => "local",
+        SyncProtocol::Fine => "fine",
     }
 }

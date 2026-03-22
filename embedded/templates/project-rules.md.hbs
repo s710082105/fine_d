@@ -1,9 +1,7 @@
 # Project Rules
 
 - protocol: {{protocol}}
-- host: {{host}}
-- port: {{port}}
-- username: {{username}}
+- designer_root: {{designer_root}}
 - local_source_dir: {{local_source_dir}}
 - remote_runtime_dir: {{remote_runtime_dir}}
 - preview_url: {{preview_url}}
@@ -27,8 +25,14 @@
 - Sync failures must be exposed.
 - Do not add silent fallback sync behaviors.
 - 系统负责执行同步，不依赖 skill。
+- 新建 `reportlets/*.cpt|*.fvs` 前，必须先在项目目录执行 `./.codex/project-sync.sh prepare-create reportlets/<name>.cpt|fvs`，先检查远端重名并创建远端占位文件。
+- 修改现有 `reportlets/*.cpt|*.fvs` 前，必须先在项目目录执行 `./.codex/project-sync.sh prepare-edit reportlets/<name>.cpt|fvs`，先检查远端是否存在、是否锁定，并把远端最新内容拉回项目目录。
+- 如果 `prepare-create` / `prepare-edit` 明确报错，必须立即停止，不允许绕过远端检查继续开发。
 - `reportlets/` 相关改动提交并同步完成后，必须使用 `chrome-cdp` skill 打开 `preview_url` 做页面复核。
 - 如果预览页需要登录，优先使用 `preview_account` 和 `preview_password` 完成登录，再继续复核。
+- 同步完成后必须自动开始浏览器复核，不需要再次征求用户确认。
+- 进入预览页后，如果页面存在查询按钮、参数面板或其他查询触发条件，必须先执行查询，并确认页面已经出现实际数据结果，再检查列名、数据、排序和样式；禁止在没有查询结果时凭静态页面猜测。
+- 对于 `<button unselectable="none" type="button" data-role="none" class="fr-btn-text fr-widget-font">查询</button>` 这类 FineReport 查询按钮，必须优先使用 `button.fr-btn-text.fr-widget-font[data-role="none"][type="button"][unselectable="none"]` 这类 DOM 选择器直接点击，必要时先确认 `textContent?.trim() === '查询'`；不要用坐标点击冒充成功。
 - 复核发现问题后直接继续调整，再次提交并重复同步与页面复核，直到页面结果符合需求。
 - 客户指出问题并提供学习样本后，必须先归纳差异，再更新 `.codex/skills/` 下的相关 skill，确保后续同类需求直接复用，也就是必须更新相关 skill。
 - 如果现有 skill 无法承载新的经验，必须新增或拆分 skill，并把学习样本沉淀进 skill 文档。

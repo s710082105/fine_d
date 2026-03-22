@@ -1,6 +1,7 @@
-export type SyncProtocol = 'sftp' | 'ftp' | 'local'
+export type SyncProtocol = 'fine'
 export type PreviewMode = 'embedded' | 'external'
 export const PROJECT_SOURCE_SUBDIR = 'reportlets'
+export const FIXED_REMOTE_RUNTIME_DIR = PROJECT_SOURCE_SUBDIR
 
 export interface StyleProfile {
   instructions: string
@@ -32,10 +33,7 @@ export interface PreviewProfile {
 
 export interface SyncProfile {
   protocol: SyncProtocol
-  host: string
-  port: number
-  username: string
-  password: string
+  designer_root: string
   remote_runtime_dir: string
   delete_propagation: boolean
   auto_sync_on_change: boolean
@@ -66,9 +64,16 @@ export interface RemoteDirectoryEntry {
 }
 
 export interface ListRemoteDirectoriesRequest {
-  protocol: SyncProtocol
-  host: string
-  port: number
+  designerRoot: string
+  url: string
+  username: string
+  password: string
+  path: string
+}
+
+export interface TestRemoteSyncConnectionRequest {
+  designerRoot: string
+  url: string
   username: string
   password: string
   path: string

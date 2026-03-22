@@ -63,6 +63,9 @@ public final class FrRemoteBridge {
     if ("write".equals(arguments.command)) {
       return writeFile(client, arguments.path, arguments.inputFile);
     }
+    if ("delete".equals(arguments.command)) {
+      return deleteFile(client, arguments.path);
+    }
     throw new IllegalArgumentException("Unsupported command: " + arguments.command);
   }
 
@@ -105,6 +108,19 @@ public final class FrRemoteBridge {
         + json(path)
         + ",\"bytesWritten\":"
         + content.length
+        + "}";
+  }
+
+  private static String deleteFile(WorkspaceClient client, String path) throws Exception {
+    WorkResource resource = (WorkResource) client.getPool().get(WorkResource.class);
+    boolean existed = resource.exist(path);
+    boolean deleted = existed && resource.delete(path);
+    return "{\"path\":"
+        + json(path)
+        + ",\"existed\":"
+        + existed
+        + ",\"deleted\":"
+        + deleted
         + "}";
   }
 

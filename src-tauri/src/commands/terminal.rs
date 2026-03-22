@@ -15,6 +15,7 @@ const TERM_ENV: &str = "TERM";
 const TERM_VALUE: &str = "xterm-256color";
 const COLORTERM_ENV: &str = "COLORTERM";
 const COLORTERM_VALUE: &str = "truecolor";
+const NO_COLOR_ENV: &str = "NO_COLOR";
 const FORCE_COLOR_ENV: &str = "FORCE_COLOR";
 const FORCE_COLOR_VALUE: &str = "1";
 const SYSTEM_CODEX_COMMAND: &str = "codex";
@@ -249,10 +250,22 @@ pub(super) fn build_terminal_environment(
     request_env: Option<&HashMap<String, String>>,
 ) -> Result<HashMap<String, String>, String> {
     let mut env = request_env.cloned().unwrap_or_default();
+    apply_terminal_color_env(&mut env, std::env::var_os(NO_COLOR_ENV).is_some());
+    build_codex_environment(Some(&env), config)
+}
+
+pub(super) fn apply_terminal_color_env(
+    env: &mut HashMap<String, String>,
+    inherited_no_color: bool,
+) {
     env.insert(TERM_ENV.into(), TERM_VALUE.into());
     env.insert(COLORTERM_ENV.into(), COLORTERM_VALUE.into());
+    let explicit_no_color = env.contains_key(NO_COLOR_ENV);
+    if inherited_no_color || explicit_no_color {
+        env.remove(FORCE_COLOR_ENV);
+        return;
+    }
     env.insert(FORCE_COLOR_ENV.into(), FORCE_COLOR_VALUE.into());
-    build_codex_environment(Some(&env), config)
 }
 
 fn generate_terminal_session_id() -> Result<String, String> {

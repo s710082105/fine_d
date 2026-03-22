@@ -4,7 +4,8 @@ import type {
   ListRemoteDirectoriesRequest,
   ProjectConfig,
   RemoteDirectoryEntry,
-  ReportletEntry
+  ReportletEntry,
+  TestRemoteSyncConnectionRequest
 } from '../../lib/types/project-config'
 
 type InvokeFn = <T>(command: string, args?: Record<string, unknown>) => Promise<T>
@@ -16,11 +17,17 @@ export type ProjectConfigServices = {
   browseDirectory: () => Promise<string | null>
   loadConfig: (projectDir: string) => Promise<LoadResult>
   listReportletEntries: (projectDir: string) => Promise<ReportletEntry[]>
+  listRemoteReportletEntries: (
+    request: TestRemoteSyncConnectionRequest
+  ) => Promise<ReportletEntry[]>
   listRemoteDirectories: (
     request: ListRemoteDirectoriesRequest
   ) => Promise<RemoteDirectoryEntry[]>
   saveConfig: (projectDir: string, config: ProjectConfig) => Promise<void>
   testDataConnection: (connection: DataConnectionProfile) => Promise<TestConnectionResult>
+  testRemoteSyncConnection: (
+    request: TestRemoteSyncConnectionRequest
+  ) => Promise<TestConnectionResult>
 }
 
 function resolveInvoke(): InvokeFn {
@@ -41,6 +48,12 @@ async function listReportletEntries(projectDir: string): Promise<ReportletEntry[
   return resolveInvoke()<ReportletEntry[]>('list_reportlet_entries', { projectDir })
 }
 
+async function listRemoteReportletEntries(
+  request: TestRemoteSyncConnectionRequest
+): Promise<ReportletEntry[]> {
+  return resolveInvoke()<ReportletEntry[]>('list_remote_reportlet_entries', { request })
+}
+
 async function listRemoteDirectories(
   request: ListRemoteDirectoriesRequest
 ): Promise<RemoteDirectoryEntry[]> {
@@ -57,11 +70,19 @@ async function testDataConnection(
   return resolveInvoke()<TestConnectionResult>('test_data_connection', { connection })
 }
 
+async function testRemoteSyncConnection(
+  request: TestRemoteSyncConnectionRequest
+): Promise<TestConnectionResult> {
+  return resolveInvoke()<TestConnectionResult>('test_remote_sync_connection', { request })
+}
+
 export const tauriServices: ProjectConfigServices = {
   browseDirectory,
   loadConfig,
   listReportletEntries,
+  listRemoteReportletEntries,
   listRemoteDirectories,
   saveConfig,
-  testDataConnection
+  testDataConnection,
+  testRemoteSyncConnection
 }

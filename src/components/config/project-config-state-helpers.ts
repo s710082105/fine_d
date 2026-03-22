@@ -3,9 +3,9 @@ import type {
   RemoteDirectoryEntry,
   SyncProtocol
 } from '../../lib/types/project-config'
+import { FIXED_REMOTE_RUNTIME_DIR } from '../../lib/types/project-config'
 
-const ALLOWED_PROTOCOLS = new Set<SyncProtocol>(['sftp', 'ftp', 'local'])
-const REMOTE_PROTOCOLS = new Set<SyncProtocol>(['sftp', 'ftp'])
+const ALLOWED_PROTOCOLS = new Set<SyncProtocol>(['fine'])
 
 export function createDefaultProjectConfig(): ProjectConfig {
   return {
@@ -19,12 +19,9 @@ export function createDefaultProjectConfig(): ProjectConfig {
       password: ''
     },
     sync: {
-      protocol: 'sftp',
-      host: '',
-      port: 22,
-      username: '',
-      password: '',
-      remote_runtime_dir: '',
+      protocol: 'fine',
+      designer_root: '',
+      remote_runtime_dir: FIXED_REMOTE_RUNTIME_DIR,
       delete_propagation: false,
       auto_sync_on_change: true
     },
@@ -41,14 +38,11 @@ export function validateConfig(config: ProjectConfig): string[] {
   const errors: string[] = []
   if (config.workspace.name.trim().length === 0) errors.push('项目名称不能为空')
   if (config.workspace.root_dir.trim().length === 0) errors.push('项目目录不能为空')
-  if (!ALLOWED_PROTOCOLS.has(config.sync.protocol)) errors.push('同步协议仅支持 SFTP、FTP 或本地')
-  if (config.sync.remote_runtime_dir.trim().length === 0) errors.push('运行目录不能为空')
+  if (!ALLOWED_PROTOCOLS.has(config.sync.protocol)) errors.push('同步协议仅支持 FineReport 远程设计')
+  if (config.sync.designer_root.trim().length === 0) errors.push('本地设计器目录不能为空')
   if (config.preview.url.trim().length === 0) errors.push('预览地址不能为空')
-  if (!REMOTE_PROTOCOLS.has(config.sync.protocol)) return errors
-  if (config.sync.host.trim().length === 0) errors.push('同步主机不能为空')
-  if (config.sync.port <= 0) errors.push('同步端口必须大于 0')
-  if (config.sync.username.trim().length === 0) errors.push('同步用户名不能为空')
-  if (config.sync.password.trim().length === 0) errors.push('同步密码不能为空')
+  if (config.preview.account.trim().length === 0) errors.push('预览账号不能为空')
+  if (config.preview.password.trim().length === 0) errors.push('预览密码不能为空')
   return errors
 }
 

@@ -1,4 +1,4 @@
-use super::project_config::SyncProfile;
+use super::project_config::FineRemoteProfile;
 use super::remote_runtime::{
     ProtocolRemoteRuntimeFactory, RemoteDirectoryEntry, RemoteRuntimeClientFactory,
 };
@@ -22,7 +22,7 @@ impl RemoteDirectoryBrowser {
 
     pub fn list_directories(
         &self,
-        profile: &SyncProfile,
+        profile: &FineRemoteProfile,
         path: &str,
     ) -> Result<Vec<RemoteDirectoryEntry>, String> {
         let mut client = self.factory.connect(profile)?;

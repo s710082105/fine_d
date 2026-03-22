@@ -1,4 +1,4 @@
-use finereport_tauri_shell_lib::domain::project_config::{ProjectConfig, SyncProtocol};
+use finereport_tauri_shell_lib::domain::project_config::ProjectConfig;
 use finereport_tauri_shell_lib::domain::project_initializer::{
     EmbeddedProjectInitializer, ProjectInitializer,
 };
@@ -16,8 +16,13 @@ fn real_path_project_initializer_from_env() {
     let mut config = ProjectConfig::default();
     config.workspace.name = "real-path-check".into();
     config.workspace.root_dir = project_dir.clone();
-    config.sync.protocol = SyncProtocol::Local;
+    config.sync.designer_root = std::env::var("FINEREPORT_REAL_DESIGNER_ROOT")
+        .expect("FINEREPORT_REAL_DESIGNER_ROOT is required");
     config.sync.remote_runtime_dir = runtime_dir;
+    config.preview.account = std::env::var("FINEREPORT_REAL_PREVIEW_ACCOUNT")
+        .expect("FINEREPORT_REAL_PREVIEW_ACCOUNT is required");
+    config.preview.password = std::env::var("FINEREPORT_REAL_PREVIEW_PASSWORD")
+        .expect("FINEREPORT_REAL_PREVIEW_PASSWORD is required");
 
     EmbeddedProjectInitializer::default()
         .initialize(Path::new(&project_dir), &config)

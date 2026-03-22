@@ -126,7 +126,7 @@ fn render_post_commit_hook(project_dir: &Path, config: &ProjectConfig) -> String
         )
 }
 
-fn resolve_sync_binary_path() -> PathBuf {
+pub(crate) fn resolve_sync_binary_path() -> PathBuf {
     env::var_os("CARGO_BIN_EXE_finereport_tauri_shell")
         .map(PathBuf::from)
         .or_else(|| env::current_exe().ok())
@@ -151,7 +151,7 @@ fn shell_quote(value: &str) -> String {
 
 /// 将 Windows 路径转为 Git Bash 兼容的 POSIX 路径
 /// `C:\Users\wj\app.exe` → `/c/Users/wj/app.exe`
-fn to_posix_path(path: &str) -> String {
+pub(crate) fn to_posix_path(path: &str) -> String {
     if path.len() >= 2 && path.as_bytes()[1] == b':' {
         let drive = path.as_bytes()[0].to_ascii_lowercase() as char;
         let rest = &path[2..];
@@ -163,9 +163,7 @@ fn to_posix_path(path: &str) -> String {
 
 fn protocol_text(protocol: &SyncProtocol) -> &'static str {
     match protocol {
-        SyncProtocol::Sftp => "sftp",
-        SyncProtocol::Ftp => "ftp",
-        SyncProtocol::Local => "local",
+        SyncProtocol::Fine => "fine",
     }
 }
 

@@ -51,6 +51,9 @@ class FineRemoteClient:
     def write_file(self, path: str, content: bytes) -> None:
         self._bridge.invoke("write", options=self._options(path), input_bytes=content)
 
+    def delete_file(self, path: str) -> None:
+        self._bridge.invoke("delete", options=self._options(path))
+
     def _options(self, path: str) -> dict[str, str]:
         return {
             **self._base_options,

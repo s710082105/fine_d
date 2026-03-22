@@ -22,19 +22,34 @@ description: 创建新的 FineReport 模板（CPT 普通报表 或 FVS 决策报
 
 根据用户描述判断需要 CPT 还是 FVS。不确定时询问用户。
 
-### 步骤 2：从空白模板复制
+### 步骤 2：先执行远端创建预检
+
+在项目目录先执行：
+
+```bash
+./.codex/project-sync.sh prepare-create reportlets/<名称>.cpt
+./.codex/project-sync.sh prepare-create reportlets/<名称>.fvs
+```
+
+这个步骤会负责：
+
+- 先读取远端目录，发现同名直接失败
+- 在线上先创建同名占位文件，避免开发过程中被别人抢占同名
+- 若宿主明确报错，必须立即停止，不能跳过
+
+### 步骤 3：从空白模板复制
 
 空白模板位于本 skill 的 `assets/` 目录：
 
 ```bash
 # CPT
-cp /Users/wj/data/mcp/finereport/.claude/skills/fr-create/assets/blank.cpt /Users/wj/data/mcp/finereport/reportlets/<名称>.cpt
+cp ./.codex/skills/fr-create/assets/blank.cpt ./reportlets/<名称>.cpt
 
 # FVS
-cp /Users/wj/data/mcp/finereport/.claude/skills/fr-create/assets/blank.fvs /Users/wj/data/mcp/finereport/reportlets/<名称>.fvs
+cp ./.codex/skills/fr-create/assets/blank.fvs ./reportlets/<名称>.fvs
 ```
 
-### 步骤 3：配置数据源（如果用户提供了数据库信息）
+### 步骤 4：配置数据源（如果用户提供了数据库信息）
 
 **CPT 数据源**（插入到 `<TableDataMap>` 内）：
 ```xml
@@ -53,7 +68,7 @@ cp /Users/wj/data/mcp/finereport/.claude/skills/fr-create/assets/blank.fvs /User
 
 **FVS 数据源**：格式同上，额外在 `<TableData>` 内首行添加 `<Desensitizations desensitizeOpen="false"/>`。
 
-### 步骤 4：初始化基本内容
+### 步骤 5：初始化基本内容
 
 - **CPT** — 根据用户需求设置表头和数据列（操作 `<CellElementList>`）
 - **FVS** — 需解压 ZIP 修改后重新打包：
@@ -67,9 +82,12 @@ cp /Users/wj/data/mcp/finereport/.claude/skills/fr-create/assets/blank.fvs /User
   cp "$WORK_DIR/output.fvs" <目标路径>.fvs
   ```
 
-### 步骤 5：确认并汇报
+### 步骤 6：提交并等待宿主同步、自动复核
 
-告知用户文件已创建、文件路径，以及后续可用的编辑 skill（`fr-cpt` 或 `fr-fvs`）。
+- 在项目目录执行 `git add`、`git commit`
+- 由宿主完成提交后同步
+- 同步完成后直接进入浏览器复核，不需要再次等待用户确认
+- 进入预览页后如果存在查询按钮、参数面板或其他查询触发条件，必须先执行查询，并确认页面出现实际数据结果，再检查列名、数据和样式
 
 ## 单位换算参考
 

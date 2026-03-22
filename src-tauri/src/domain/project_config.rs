@@ -75,10 +75,7 @@ pub enum PreviewMode {
 #[serde(default)]
 pub struct SyncProfile {
     pub protocol: SyncProtocol,
-    pub host: String,
-    pub port: u16,
-    pub username: String,
-    pub password: String,
+    pub designer_root: String,
     pub remote_runtime_dir: String,
     pub delete_propagation: bool,
     pub auto_sync_on_change: bool,
@@ -87,9 +84,19 @@ pub struct SyncProfile {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum SyncProtocol {
-    Sftp,
-    Ftp,
-    Local,
+    Fine,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct FineRemoteProfile {
+    pub protocol: SyncProtocol,
+    pub designer_root: String,
+    pub url: String,
+    pub username: String,
+    pub password: String,
+    pub remote_runtime_dir: String,
+    pub delete_propagation: bool,
+    pub auto_sync_on_change: bool,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -117,6 +124,41 @@ impl ProjectConfig {
     pub fn local_source_dir(&self) -> PathBuf {
         join_workspace_child(&self.workspace.root_dir, PROJECT_SOURCE_SUBDIR)
     }
+
+    pub fn fine_remote_profile(&self) -> Result<FineRemoteProfile, String> {
+        let designer_root = self.sync.designer_root.trim();
+        if designer_root.is_empty() {
+            return Err("sync.designer_root is required".into());
+        }
+        let designer_path = Path::new(designer_root);
+        if !designer_path.is_dir() {
+            return Err(format!(
+                "sync.designer_root does not exist or is not a directory: {}",
+                designer_path.display()
+            ));
+        }
+        let url = self.preview.url.trim();
+        if url.is_empty() {
+            return Err("preview.url is required".into());
+        }
+        let username = self.preview.account.trim();
+        if username.is_empty() {
+            return Err("preview.account is required".into());
+        }
+        if self.preview.password.trim().is_empty() {
+            return Err("preview.password is required".into());
+        }
+        Ok(FineRemoteProfile {
+            protocol: self.sync.protocol.clone(),
+            designer_root: designer_root.into(),
+            url: url.into(),
+            username: username.into(),
+            password: self.preview.password.clone(),
+            remote_runtime_dir: self.sync.remote_runtime_dir.clone(),
+            delete_propagation: self.sync.delete_propagation,
+            auto_sync_on_change: self.sync.auto_sync_on_change,
+        })
+    }
 }
 
 impl StyleProfile {
@@ -138,21 +180,6 @@ impl SyncProfile {
     pub fn validate(&self) -> Result<(), String> {
         if self.remote_runtime_dir.trim().is_empty() {
             return Err("remote_runtime_dir is required".into());
-        }
-        if self.protocol == SyncProtocol::Local {
-            return Ok(());
-        }
-        if self.host.trim().is_empty() {
-            return Err("host is required".into());
-        }
-        if self.port == 0 {
-            return Err("port must be greater than zero".into());
-        }
-        if self.username.trim().is_empty() {
-            return Err("username is required".into());
-        }
-        if self.password.trim().is_empty() {
-            return Err("password is required".into());
         }
         Ok(())
     }
@@ -230,11 +257,8 @@ impl Default for SyncProfile {
     fn default() -> Self {
         Self {
             protocol: SyncProtocol::default(),
-            host: String::new(),
-            port: 22,
-            username: String::new(),
-            password: String::new(),
-            remote_runtime_dir: String::new(),
+            designer_root: String::new(),
+            remote_runtime_dir: PROJECT_SOURCE_SUBDIR.into(),
             delete_propagation: false,
             auto_sync_on_change: true,
         }
@@ -243,7 +267,7 @@ impl Default for SyncProfile {
 
 impl Default for SyncProtocol {
     fn default() -> Self {
-        Self::Sftp
+        Self::Fine
     }
 }
 

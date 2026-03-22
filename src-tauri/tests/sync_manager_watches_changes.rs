@@ -2,7 +2,7 @@ use finereport_tauri_shell_lib::domain::event_bridge::{
     EventBridge, SessionEvent, SessionEventEmitter,
 };
 use finereport_tauri_shell_lib::domain::project_config::{
-    ProjectConfig, ProjectMapping, SyncProfile,
+    FineRemoteProfile, ProjectConfig, ProjectMapping,
 };
 use finereport_tauri_shell_lib::domain::sync_dispatcher::{ResolvedSyncTask, SyncManager};
 use finereport_tauri_shell_lib::domain::sync_transport::SyncTransport;
@@ -18,7 +18,7 @@ struct RecordingTransport {
 }
 
 impl SyncTransport for RecordingTransport {
-    fn apply(&self, task: &ResolvedSyncTask, _: &SyncProfile) -> Result<(), String> {
+    fn apply(&self, task: &ResolvedSyncTask, _: &FineRemoteProfile) -> Result<(), String> {
         self.tasks
             .lock()
             .expect("lock transport tasks")
@@ -58,13 +58,12 @@ fn build_config(source_root: &PathBuf) -> ProjectConfig {
         .expect("source root parent")
         .display()
         .to_string();
-    config.sync.host = "files.example.com".into();
-    config.sync.port = 22;
-    config.sync.username = "deploy".into();
-    config.sync.password = "deploy-pass".into();
+    config.sync.designer_root = std::env::temp_dir().display().to_string();
     config.sync.remote_runtime_dir = "/srv/tomcat/webapps/webroot/WEB-INF".into();
     config.sync.delete_propagation = true;
     config.sync.auto_sync_on_change = true;
+    config.preview.account = "designer".into();
+    config.preview.password = "designer-pass".into();
     config.mappings = vec![ProjectMapping {
         local: "reportlets".into(),
         remote: "reportlets".into(),

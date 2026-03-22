@@ -5,6 +5,7 @@ import {
   createDefaultProjectConfig,
   ProjectConfigForm
 } from '../components/config/project-config-form'
+import type { ReportletEntry } from '../lib/types/project-config'
 
 it(
   'renders project tab by default and switches to style tab',
@@ -39,9 +40,11 @@ it(
               children: []
             }
           ],
+          listRemoteReportletEntries: async () => [],
           listRemoteDirectories: async () => [],
           saveConfig: async () => undefined,
-          testDataConnection: async () => ({ ok: true, message: '连接成功' })
+          testDataConnection: async () => ({ ok: true, message: '连接成功' }),
+          testRemoteSyncConnection: async () => ({ ok: true, message: '远程设计连接成功' })
         }}
       />
     )
@@ -58,7 +61,11 @@ it(
   await waitFor(() =>
     expect(screen.getByLabelText('项目名称')).toBeInTheDocument()
   )
-  expect(screen.getByRole('combobox', { name: '同步协议' })).toBeInTheDocument()
+  expect(screen.queryByLabelText('同步方式')).not.toBeInTheDocument()
+  expect(screen.getByLabelText('本地 FineReport 设计器目录')).toBeInTheDocument()
+  expect(
+    screen.getByText('请选择 FineReport 安装根目录，也就是包含 lib 目录和设计器 jars 的那一级目录。')
+  ).toBeInTheDocument()
   expect(screen.getByLabelText('预览地址')).toBeInTheDocument()
   expect(screen.getByLabelText('预览账号')).toBeInTheDocument()
   expect(screen.getByLabelText('预览密码')).toBeInTheDocument()
@@ -69,7 +76,7 @@ it(
   expect(screen.getByText('真实同步源目录固定为：/tmp/demo/reportlets')).toBeInTheDocument()
   expect(screen.getByLabelText('同步删除')).toBeInTheDocument()
   expect(screen.getByLabelText('文件变更后自动同步')).toBeInTheDocument()
-  expect(screen.getByRole('combobox', { name: '同步协议' })).toBeInTheDocument()
+  expect(screen.queryByLabelText('远端运行目录')).not.toBeInTheDocument()
 
   fireEvent.click(screen.getByRole('tab', { name: '样式' }))
 
@@ -103,12 +110,9 @@ it(
 it('loads config from project directory and saves back to project config file', async () => {
   const loaded = createDefaultProjectConfig()
   loaded.workspace.name = 'demo-project'
-  loaded.sync.protocol = 'sftp'
-  loaded.sync.host = '127.0.0.1'
-  loaded.sync.port = 22
-  loaded.sync.username = 'deploy'
-  loaded.sync.password = 'deploy-pass'
-  loaded.sync.remote_runtime_dir = '/srv/runtime'
+  loaded.sync.protocol = 'fine'
+  loaded.sync.designer_root = '/Applications/FineReport'
+  loaded.sync.remote_runtime_dir = 'reportlets'
   loaded.style.instructions = '表格使用蓝灰配色，标题左对齐，金额保留两位小数。'
   loaded.preview.account = 'preview-user'
   loaded.preview.password = 'preview-pass'
@@ -131,15 +135,32 @@ it('loads config from project directory and saves back to project config file', 
     config: loaded
   }))
   const listReportletEntries = vi.fn(async () => [])
-  const listRemoteDirectories = vi.fn(async () => [
+  const listRemoteReportletEntries = vi.fn<
+    (request: {
+      designerRoot: string
+      url: string
+      username: string
+      password: string
+      path: string
+    }) => Promise<ReportletEntry[]>
+  >(async () => [
     {
-      name: 'reportlets',
-      path: '/srv/runtime/reportlets',
-      children: []
+      name: 'sales',
+      path: 'reportlets/sales',
+      kind: 'directory' as const,
+      children: [
+        {
+          name: 'remote.cpt',
+          path: 'reportlets/sales/remote.cpt',
+          kind: 'file' as const,
+          children: []
+        }
+      ]
     }
   ])
   const saveConfig = vi.fn(async () => undefined)
   const testDataConnection = vi.fn(async () => ({ ok: true, message: '连接成功' }))
+  const testRemoteSyncConnection = vi.fn(async () => ({ ok: true, message: '远程设计连接成功' }))
   const browseDirectory = vi
     .fn<() => Promise<string | null>>()
     .mockResolvedValueOnce('/tmp/existing')
@@ -151,9 +172,11 @@ it('loads config from project directory and saves back to project config file', 
           browseDirectory,
           loadConfig,
           listReportletEntries,
-          listRemoteDirectories,
+          listRemoteReportletEntries,
+          listRemoteDirectories: async () => [],
           saveConfig,
-          testDataConnection
+          testDataConnection,
+          testRemoteSyncConnection
         }}
       />
     )
@@ -170,30 +193,28 @@ it('loads config from project directory and saves back to project config file', 
   ).not.toBeInTheDocument()
   expect(screen.queryByLabelText('Codex 提供方')).not.toBeInTheDocument()
   expect(screen.queryByLabelText('Codex 模型')).not.toBeInTheDocument()
+  expect(screen.getByDisplayValue('/Applications/FineReport')).toBeInTheDocument()
+  expect(
+    screen.getByText('请选择 FineReport 安装根目录，也就是包含 lib 目录和设计器 jars 的那一级目录。')
+  ).toBeInTheDocument()
   expect(screen.getByDisplayValue('preview-user')).toBeInTheDocument()
   expect(screen.getByDisplayValue('sk-demo')).toBeInTheDocument()
-  expect(screen.getByDisplayValue('deploy')).toBeInTheDocument()
-  expect(screen.getByDisplayValue('deploy-pass')).toBeInTheDocument()
-  expect(screen.getByRole('button', { name: '选择远程目录' })).toBeInTheDocument()
+  expect(screen.queryByLabelText('远端运行目录')).not.toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: '选择远端目录' })).not.toBeInTheDocument()
+  expect(screen.getByRole('button', { name: '测试远程连接' })).toBeInTheDocument()
 
-  fireEvent.click(screen.getByRole('button', { name: '选择远程目录' }))
+  fireEvent.click(screen.getByRole('button', { name: '测试远程连接' }))
 
   await waitFor(() =>
-    expect(listRemoteDirectories).toHaveBeenCalledWith({
-      protocol: 'sftp',
-      host: '127.0.0.1',
-      port: 22,
-      username: 'deploy',
-      password: 'deploy-pass',
-      path: '/srv/runtime'
+    expect(testRemoteSyncConnection).toHaveBeenCalledWith({
+      designerRoot: '/Applications/FineReport',
+      url: 'http://127.0.0.1:8075/webroot/decision',
+      username: 'preview-user',
+      password: 'preview-pass',
+      path: 'reportlets'
     })
   )
-  fireEvent.click(screen.getByText('/srv/runtime/reportlets'))
-  fireEvent.click(screen.getByRole('button', { name: '使用当前目录' }))
-
-  await waitFor(() =>
-    expect(screen.getByDisplayValue('/srv/runtime/reportlets')).toBeInTheDocument()
-  )
+  expect(screen.getByText('远程设计连接成功')).toBeInTheDocument()
 
   // 切换到数据连接页签验证 Table 行
   fireEvent.click(screen.getByRole('tab', { name: '数据连接' }))
@@ -222,10 +243,8 @@ it('loads config from project directory and saves back to project config file', 
           password: 'preview-pass'
         }),
         sync: expect.objectContaining({
-          host: '127.0.0.1',
-          username: 'deploy',
-          password: 'deploy-pass',
-          remote_runtime_dir: '/srv/runtime/reportlets'
+          designer_root: '/Applications/FineReport',
+          remote_runtime_dir: 'reportlets'
         }),
         ai: expect.objectContaining({
           provider: 'openai',
@@ -246,4 +265,24 @@ it('loads config from project directory and saves back to project config file', 
       })
     )
   )
+
+  fireEvent.click(screen.getByRole('tab', { name: '文件管理' }))
+
+  await waitFor(() =>
+    expect(screen.getByRole('button', { name: '刷新列表' })).toBeInTheDocument()
+  )
+  expect(screen.queryByRole('button', { name: '保存配置' })).not.toBeInTheDocument()
+
+  fireEvent.click(screen.getByRole('button', { name: '刷新列表' }))
+
+  await waitFor(() =>
+    expect(listRemoteReportletEntries).toHaveBeenCalledWith({
+      designerRoot: '/Applications/FineReport',
+      url: 'http://127.0.0.1:8075/webroot/decision',
+      username: 'preview-user',
+      password: 'preview-pass',
+      path: 'reportlets'
+    })
+  )
+  expect(screen.getByText('remote.cpt')).toBeInTheDocument()
 })

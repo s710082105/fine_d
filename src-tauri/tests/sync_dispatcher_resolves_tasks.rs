@@ -10,13 +10,12 @@ fn build_config() -> ProjectConfig {
     let mut config = ProjectConfig::default();
     config.workspace.name = "default".into();
     config.workspace.root_dir = project_root().display().to_string();
-    config.sync.host = "files.example.com".into();
-    config.sync.port = 22;
-    config.sync.username = "deploy".into();
-    config.sync.password = "deploy-pass".into();
+    config.sync.designer_root = std::env::temp_dir().display().to_string();
     config.sync.remote_runtime_dir = "/srv/tomcat/webapps/webroot/WEB-INF".into();
     config.sync.delete_propagation = true;
     config.sync.auto_sync_on_change = true;
+    config.preview.account = "designer".into();
+    config.preview.password = "designer-pass".into();
     config.mappings = vec![ProjectMapping {
         local: "reportlets".into(),
         remote: "reportlets".into(),
@@ -36,7 +35,7 @@ fn resolve_sync_task_maps_local_file_to_runtime_target() {
     )
     .expect("resolve sync task");
 
-    assert_eq!(task.protocol, "sftp");
+    assert_eq!(task.protocol, "fine");
     assert_eq!(
         task.remote_path,
         "/srv/tomcat/webapps/webroot/WEB-INF/reportlets/sales/report.cpt"

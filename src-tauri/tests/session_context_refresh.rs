@@ -3,7 +3,7 @@ use finereport_tauri_shell_lib::commands::session_control::{
 };
 use finereport_tauri_shell_lib::domain::event_bridge::{EventBridge, NullEventEmitter};
 use finereport_tauri_shell_lib::domain::project_config::{
-    ProjectConfig, ProjectMapping, SyncProtocol, WorkspaceProfile,
+    ProjectConfig, ProjectMapping, WorkspaceProfile,
 };
 use finereport_tauri_shell_lib::domain::session_store::{bootstrap_session, SessionBootstrapInput};
 use std::fs;
@@ -19,20 +19,18 @@ fn test_project_dir() -> PathBuf {
     std::env::temp_dir().join(format!("session_refresh_{nanos}/projects/default"))
 }
 
-fn build_config(project_dir: &PathBuf, host: &str, protocol: SyncProtocol) -> ProjectConfig {
+fn build_config(project_dir: &PathBuf, preview_account: &str) -> ProjectConfig {
     let mut config = ProjectConfig::default();
     config.workspace = WorkspaceProfile {
         name: "demo".into(),
         root_dir: project_dir.display().to_string(),
     };
-    config.sync.protocol = protocol;
-    config.sync.host = host.into();
-    config.sync.port = 22;
-    config.sync.username = "deploy".into();
-    config.sync.password = "deploy-pass".into();
+    config.sync.designer_root = std::env::temp_dir().display().to_string();
     config.sync.remote_runtime_dir = "/srv/runtime".into();
     config.sync.delete_propagation = true;
     config.sync.auto_sync_on_change = true;
+    config.preview.account = preview_account.into();
+    config.preview.password = "preview-pass".into();
     config.mappings = vec![ProjectMapping {
         local: "reportlets".into(),
         remote: "reportlets".into(),
@@ -44,7 +42,7 @@ fn build_config(project_dir: &PathBuf, host: &str, protocol: SyncProtocol) -> Pr
 fn refresh_session_context_rebuilds_runtime_files_and_manifest() {
     let project_dir = test_project_dir();
     fs::create_dir_all(project_dir.join("reportlets")).expect("create source root");
-    let initial_config = build_config(&project_dir, "old.example.com", SyncProtocol::Sftp);
+    let initial_config = build_config(&project_dir, "old-user");
 
     let bootstrap = bootstrap_session(
         project_dir.as_path(),
@@ -58,7 +56,7 @@ fn refresh_session_context_rebuilds_runtime_files_and_manifest() {
     )
     .expect("bootstrap session");
 
-    let refreshed_config = build_config(&project_dir, "new.example.com", SyncProtocol::Ftp);
+    let refreshed_config = build_config(&project_dir, "new-user");
     refresh_session_context_in_project(
         project_dir.as_path(),
         &RefreshSessionContextRequest {
@@ -78,9 +76,9 @@ fn refresh_session_context_rebuilds_runtime_files_and_manifest() {
         .expect("read project rules");
     let manifest = fs::read_to_string(bootstrap.manifest_path).expect("read refreshed manifest");
 
-    assert!(project_context.contains("new.example.com"));
-    assert!(project_context.contains("protocol: ftp"));
-    assert!(project_rules.contains("protocol: ftp"));
+    assert!(project_context.contains("new-user"));
+    assert!(project_context.contains("protocol: fine"));
+    assert!(project_rules.contains("protocol: fine"));
     assert!(manifest.contains("\"configVersion\": \"v3\""));
     assert!(manifest.contains("\"enabledSkills\": [\n    \"chrome-cdp\",\n    \"fr-db\"\n  ]"));
 }

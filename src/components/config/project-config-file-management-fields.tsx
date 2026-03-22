@@ -1,9 +1,11 @@
-import { Tree } from 'antd'
+import { Button, Tree } from 'antd'
 import type { ReactNode } from 'react'
 import type { ReportletEntry } from '../../lib/types/project-config'
 
 interface FileManagementFieldsProps {
   entries: ReportletEntry[]
+  loading: boolean
+  onRefresh: () => Promise<unknown>
 }
 
 interface FileTreeDataNode {
@@ -12,12 +14,21 @@ interface FileTreeDataNode {
   children: FileTreeDataNode[]
 }
 
-export function FileManagementFields({ entries }: FileManagementFieldsProps) {
+export function FileManagementFields({
+  entries,
+  loading,
+  onRefresh
+}: FileManagementFieldsProps) {
   const visibleEntries = filterHiddenEntries(entries)
 
   return (
     <div className="config-section">
       <div className="section-heading">reportlets 目录</div>
+      <div className="config-list-actions">
+        <Button type="default" loading={loading} onClick={() => void onRefresh()}>
+          刷新列表
+        </Button>
+      </div>
       {visibleEntries.length === 0 ? (
         <p className="form-hint">reportlets 目录为空</p>
       ) : (
