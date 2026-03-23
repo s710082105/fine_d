@@ -4,7 +4,7 @@ from base64 import b64decode
 from dataclasses import dataclass
 from pathlib import Path
 
-from .jvm import JvmBridgeConfig, JvmBridgeRunner
+from .jvm import JvmBridgeConfig, JvmBridgeRunner, resolve_jvm_command
 
 
 @dataclass(frozen=True)
@@ -30,7 +30,12 @@ class FineRemoteClient:
             "--username": username,
             "--password": password,
         }
-        config = JvmBridgeConfig(fine_home=Path(fine_home), java_bin=java_bin, javac_bin=javac_bin)
+        fine_home = Path(fine_home)
+        config = JvmBridgeConfig(
+            fine_home=fine_home,
+            java_bin=resolve_jvm_command(fine_home, java_bin),
+            javac_bin=resolve_jvm_command(fine_home, javac_bin),
+        )
         self._bridge = JvmBridgeRunner(config)
 
     def list_files(self, path: str) -> list[RemoteFileEntry]:

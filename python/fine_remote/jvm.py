@@ -11,6 +11,7 @@ from typing import Any
 
 BRIDGE_CLASS = "fine_remote.FrRemoteBridge"
 CLASSPATH_SEPARATOR = os.pathsep
+WINDOWS_EXECUTABLE_SUFFIX = ".exe"
 
 
 @dataclass(frozen=True)
@@ -34,13 +35,7 @@ class JvmBridgeRunner:
         input_path = self._write_input_file(input_bytes)
         try:
             arguments = self._build_java_command(command, options, output_path, input_path)
-            completed = subprocess.run(
-                arguments,
-                cwd=self._build_dir,
-                capture_output=True,
-                text=True,
-                check=False,
-            )
+            completed = run_subprocess(arguments, cwd=self._build_dir)
             if completed.returncode != 0:
                 details = completed.stderr.strip() or completed.stdout.strip()
                 raise RuntimeError(details or f"Bridge exited with code {completed.returncode}")
@@ -58,7 +53,7 @@ class JvmBridgeRunner:
         if class_file.exists() and class_file.stat().st_mtime_ns >= self._source_file.stat().st_mtime_ns:
             return
         self._build_dir.mkdir(parents=True, exist_ok=True)
-        completed = subprocess.run(
+        completed = run_subprocess(
             [
                 self._config.javac_bin,
                 "-cp",
@@ -68,9 +63,6 @@ class JvmBridgeRunner:
                 str(self._source_file),
             ],
             cwd=self._build_dir,
-            capture_output=True,
-            text=True,
-            check=False,
         )
         if completed.returncode != 0:
             details = completed.stderr.strip() or completed.stdout.strip()
@@ -115,3 +107,46 @@ class JvmBridgeRunner:
         with tempfile.NamedTemporaryFile(dir=self._build_dir, suffix=".bin", delete=False) as input_file:
             input_file.write(input_bytes)
             return Path(input_file.name)
+
+
+def resolve_jvm_command(fine_home: Path, default_command: str) -> str:
+    executable_names = command_candidates(default_command)
+    for candidate in bundled_command_candidates(fine_home, executable_names):
+        if candidate.exists():
+            return str(candidate)
+    return default_command
+
+
+def command_candidates(command: str) -> tuple[str, ...]:
+    if command.endswith(WINDOWS_EXECUTABLE_SUFFIX):
+        return (command,)
+    return (command, f"{command}{WINDOWS_EXECUTABLE_SUFFIX}")
+
+
+def bundled_command_candidates(fine_home: Path, executable_names: tuple[str, ...]) -> list[Path]:
+    candidates: list[Path] = []
+    for relative_dir in (
+        ("bin",),
+        ("jre", "bin"),
+        ("jdk", "bin"),
+        ("java", "bin"),
+    ):
+        directory = fine_home.joinpath(*relative_dir)
+        for executable_name in executable_names:
+            candidates.append(directory / executable_name)
+    return candidates
+
+
+def run_subprocess(arguments: list[str], *, cwd: Path) -> subprocess.CompletedProcess[str]:
+    try:
+        return subprocess.run(
+            arguments,
+            cwd=cwd,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except FileNotFoundError as error:
+        raise RuntimeError(
+            f"required executable not found: {arguments[0]}"
+        ) from error

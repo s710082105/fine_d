@@ -178,6 +178,16 @@ fn summarize_bridge_error(url: &str, designer_root: &str, raw: &str) -> String {
     if raw.contains("sync.designer_root does not exist") {
         return format!("本地设计器目录不存在：`{designer_root}`。");
     }
+    if raw.contains("required executable not found: javac") {
+        return format!(
+            "本地 Java 编译器不可用：未找到 `javac`。已尝试复用设计器目录 `{designer_root}` 下的 Java 环境，但该目录只包含运行时。请安装 JDK，或把 `javac` 加入 PATH 后重试。"
+        );
+    }
+    if raw.contains("required executable not found: java") {
+        return format!(
+            "本地 Java 运行时不可用：未找到 `java`。请确认 FineReport 设计器目录 `{designer_root}` 下的 `jre/bin/java(.exe)` 存在，或把 Java 加入 PATH 后重试。"
+        );
+    }
     format!("远程设计连接失败：{raw}")
 }
 
@@ -219,5 +229,17 @@ mod tests {
 
         assert!(message.contains("远端磁盘空间不足"));
         assert!(message.contains("无法保存"));
+    }
+
+    #[test]
+    fn summarize_bridge_error_translates_missing_javac() {
+        let message = summarize_bridge_error(
+            "http://demo",
+            "C:/FineReport",
+            "required executable not found: javac",
+        );
+
+        assert!(message.contains("Java"));
+        assert!(message.contains("javac"));
     }
 }

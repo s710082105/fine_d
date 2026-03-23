@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import base64
 import json
+import sys
 from pathlib import Path
 
 from .client import FineRemoteClient
@@ -77,7 +78,11 @@ def write_payload(
 
 def main() -> None:
     args = build_parser().parse_args()
-    print(json.dumps(run_command(args), ensure_ascii=False))
+    try:
+        print(json.dumps(run_command(args), ensure_ascii=False))
+    except Exception as error:
+        print(str(error), file=sys.stderr)
+        raise SystemExit(1) from error
 
 
 if __name__ == "__main__":
