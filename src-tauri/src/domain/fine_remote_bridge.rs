@@ -123,8 +123,21 @@ impl FineRemoteBridge {
                 &raw,
             ));
         }
-        serde_json::from_slice(&output.stdout)
-            .map_err(|error| format!("failed to parse fine remote bridge response: {error}"))
+        parse_bridge_payload(&output.stdout)
+    }
+}
+
+fn parse_bridge_payload<T: for<'de> Deserialize<'de>>(stdout: &[u8]) -> Result<T, String> {
+    match serde_json::from_slice(stdout) {
+        Ok(payload) => Ok(payload),
+        Err(primary_error) => {
+            let lossy = String::from_utf8_lossy(stdout);
+            serde_json::from_str(lossy.as_ref()).map_err(|fallback_error| {
+                format!(
+                    "failed to parse fine remote bridge response: {primary_error}; fallback parse also failed: {fallback_error}"
+                )
+            })
+        }
     }
 }
 
@@ -198,7 +211,7 @@ fn summarize_bridge_error(url: &str, designer_root: &str, raw: &str) -> String {
 
 #[cfg(test)]
 mod tests {
-    use super::summarize_bridge_error;
+    use super::{parse_bridge_payload, summarize_bridge_error, ListPayload};
 
     #[test]
     fn summarize_bridge_error_translates_connection_refused() {
@@ -259,5 +272,19 @@ mod tests {
         assert!(message.contains("Java 版本不兼容"));
         assert!(message.contains("C:/FineReport"));
         assert!(message.contains("重新编译"));
+    }
+
+    #[test]
+    fn parse_bridge_payload_retries_with_utf8_lossy() {
+        let mut payload = br#"{"items":[{"path":""#.to_vec();
+        payload.extend_from_slice(&[0xED, 0xA0, 0x80]);
+        payload.extend_from_slice(br#"","directory":true,"lock":null}]}"#);
+
+        let parsed: ListPayload = parse_bridge_payload(&payload).expect("parse bridge payload");
+
+        assert_eq!(parsed.items.len(), 1);
+        assert_eq!(parsed.items[0].path, "\u{FFFD}\u{FFFD}\u{FFFD}");
+        assert!(parsed.items[0].directory);
+        assert_eq!(parsed.items[0].lock, None);
     }
 }
