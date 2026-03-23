@@ -188,6 +188,11 @@ fn summarize_bridge_error(url: &str, designer_root: &str, raw: &str) -> String {
             "本地 Java 运行时不可用：未找到 `java`。请确认 FineReport 设计器目录 `{designer_root}` 下的 `jre/bin/java(.exe)` 存在，或把 Java 加入 PATH 后重试。"
         );
     }
+    if raw.contains("UnsupportedClassVersionError") || raw.contains("class file version") {
+        return format!(
+            "本地 Java 版本不兼容：设计器目录 `{designer_root}` 下的运行时版本过低，无法加载桥接类。当前版本已改为优先编译 Java 8 兼容字节码；请重试一次，让桥接重新编译后再连接。"
+        );
+    }
     format!("远程设计连接失败：{raw}")
 }
 
@@ -241,5 +246,18 @@ mod tests {
 
         assert!(message.contains("Java"));
         assert!(message.contains("javac"));
+    }
+
+    #[test]
+    fn summarize_bridge_error_translates_unsupported_class_version() {
+        let message = summarize_bridge_error(
+            "http://demo",
+            "C:/FineReport",
+            "java.lang.UnsupportedClassVersionError: fine_remote/FrRemoteBridge has been compiled by a more recent version of the Java Runtime (class file version 70.0), this version of the Java Runtime only recognizes class file versions up to 52.0",
+        );
+
+        assert!(message.contains("Java 版本不兼容"));
+        assert!(message.contains("C:/FineReport"));
+        assert!(message.contains("重新编译"));
     }
 }

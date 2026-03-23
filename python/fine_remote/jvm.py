@@ -12,6 +12,8 @@ from typing import Any
 BRIDGE_CLASS = "fine_remote.FrRemoteBridge"
 CLASSPATH_SEPARATOR = os.pathsep
 WINDOWS_EXECUTABLE_SUFFIX = ".exe"
+JAVA_COMPATIBILITY_RELEASE = "8"
+BUILD_METADATA_VERSION = 1
 
 
 @dataclass(frozen=True)
@@ -50,23 +52,14 @@ class JvmBridgeRunner:
 
     def _compile_if_needed(self) -> None:
         class_file = self._build_dir / "fine_remote" / "FrRemoteBridge.class"
-        if class_file.exists() and class_file.stat().st_mtime_ns >= self._source_file.stat().st_mtime_ns:
+        if self._is_current_build(class_file):
             return
         self._build_dir.mkdir(parents=True, exist_ok=True)
-        completed = run_subprocess(
-            [
-                self._config.javac_bin,
-                "-cp",
-                self._classpath(),
-                "-d",
-                str(self._build_dir),
-                str(self._source_file),
-            ],
-            cwd=self._build_dir,
-        )
+        completed = self._compile_bridge()
         if completed.returncode != 0:
             details = completed.stderr.strip() or completed.stdout.strip()
             raise RuntimeError(details or f"javac exited with code {completed.returncode}")
+        self._write_build_metadata()
 
     def _build_java_command(
         self,
@@ -95,6 +88,61 @@ class JvmBridgeRunner:
         if not jars:
             raise FileNotFoundError(f"No FineReport jars found under {self._config.fine_home}")
         return CLASSPATH_SEPARATOR.join(jars)
+
+    def _is_current_build(self, class_file: Path) -> bool:
+        if not class_file.exists():
+            return False
+        if class_file.stat().st_mtime_ns < self._source_file.stat().st_mtime_ns:
+            return False
+        metadata = self._read_build_metadata()
+        return metadata == self._expected_build_metadata()
+
+    def _compile_bridge(self) -> subprocess.CompletedProcess[str]:
+        release_arguments = self._javac_arguments("--release", JAVA_COMPATIBILITY_RELEASE)
+        completed = run_subprocess(release_arguments, cwd=self._build_dir)
+        if completed.returncode == 0 or not is_unsupported_release_error(completed.stderr):
+            return completed
+        return run_subprocess(
+            self._javac_arguments("-source", JAVA_COMPATIBILITY_RELEASE, "-target", JAVA_COMPATIBILITY_RELEASE),
+            cwd=self._build_dir,
+        )
+
+    def _javac_arguments(self, *compatibility_arguments: str) -> list[str]:
+        return [
+            self._config.javac_bin,
+            *compatibility_arguments,
+            "-cp",
+            self._classpath(),
+            "-d",
+            str(self._build_dir),
+            str(self._source_file),
+        ]
+
+    def _build_metadata_file(self) -> Path:
+        return self._build_dir / "fine_remote_bridge_build.json"
+
+    def _read_build_metadata(self) -> dict[str, Any] | None:
+        metadata_file = self._build_metadata_file()
+        if not metadata_file.exists():
+            return None
+        try:
+            return json.loads(metadata_file.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            return None
+
+    def _write_build_metadata(self) -> None:
+        metadata_file = self._build_metadata_file()
+        metadata_file.write_text(
+            json.dumps(self._expected_build_metadata(), sort_keys=True),
+            encoding="utf-8",
+        )
+
+    def _expected_build_metadata(self) -> dict[str, Any]:
+        return {
+            "sourceMtimeNs": self._source_file.stat().st_mtime_ns,
+            "compatibilityRelease": JAVA_COMPATIBILITY_RELEASE,
+            "metadataVersion": BUILD_METADATA_VERSION,
+        }
 
     def _collect_jars(self, directory: Path) -> list[str]:
         if not directory.exists():
@@ -150,3 +198,8 @@ def run_subprocess(arguments: list[str], *, cwd: Path) -> subprocess.CompletedPr
         raise RuntimeError(
             f"required executable not found: {arguments[0]}"
         ) from error
+
+
+def is_unsupported_release_error(stderr: str) -> bool:
+    normalized = stderr.lower()
+    return "invalid flag: --release" in normalized or "source release 8 requires target release 8" in normalized
