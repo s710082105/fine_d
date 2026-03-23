@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import tempfile
 from dataclasses import dataclass
@@ -9,6 +10,7 @@ from typing import Any
 
 
 BRIDGE_CLASS = "fine_remote.FrRemoteBridge"
+CLASSPATH_SEPARATOR = os.pathsep
 
 
 @dataclass(frozen=True)
@@ -84,7 +86,7 @@ class JvmBridgeRunner:
         arguments = [
             self._config.java_bin,
             "-cp",
-            f"{self._build_dir}:{self._classpath()}",
+            f"{self._build_dir}{CLASSPATH_SEPARATOR}{self._classpath()}",
             BRIDGE_CLASS,
             command,
         ]
@@ -100,7 +102,7 @@ class JvmBridgeRunner:
         jars.extend(self._collect_jars(self._config.fine_home / "lib"))
         if not jars:
             raise FileNotFoundError(f"No FineReport jars found under {self._config.fine_home}")
-        return ":".join(jars)
+        return CLASSPATH_SEPARATOR.join(jars)
 
     def _collect_jars(self, directory: Path) -> list[str]:
         if not directory.exists():

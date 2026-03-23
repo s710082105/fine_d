@@ -1,11 +1,13 @@
+use super::fine_remote_bridge_runtime::{prepare_bridge_runtime, FineRemoteBridgeRuntime};
 use super::project_config::FineRemoteProfile;
+use super::system_runtime::hide_window;
 use base64::engine::general_purpose::STANDARD as BASE64_STANDARD;
 use base64::Engine;
 use serde::Deserialize;
 use serde_json::Value;
 use std::env;
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 use std::process::Command;
 use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -38,17 +40,14 @@ struct DeletePayload {
 #[derive(Clone)]
 pub struct FineRemoteBridge {
     python_command: String,
-    repo_root: PathBuf,
+    runtime: FineRemoteBridgeRuntime,
 }
 
 impl FineRemoteBridge {
     pub fn detect() -> Result<Self, String> {
         Ok(Self {
             python_command: resolve_python_command()?,
-            repo_root: Path::new(env!("CARGO_MANIFEST_DIR"))
-                .parent()
-                .ok_or("failed to resolve repository root")?
-                .to_path_buf(),
+            runtime: prepare_bridge_runtime()?,
         })
     }
 
@@ -96,14 +95,15 @@ impl FineRemoteBridge {
         let input_path = write_temp_input(input)?;
         let mut process = Command::new(&self.python_command);
         process
-            .current_dir(&self.repo_root)
-            .env(ENV_PYTHONPATH, self.repo_root.join("python"))
+            .current_dir(&self.runtime.working_dir)
+            .env(ENV_PYTHONPATH, &self.runtime.python_path)
             .args(["-m", "fine_remote.cli", command])
             .args(["--url", &profile.url])
             .args(["--username", &profile.username])
             .args(["--password", &profile.password])
             .args(["--fine-home", &profile.designer_root])
             .args(["--path", path]);
+        hide_window(&mut process);
         if let Some(input_path) = input_path.as_ref() {
             process.args(["--input-file", &input_path.display().to_string()]);
         }
