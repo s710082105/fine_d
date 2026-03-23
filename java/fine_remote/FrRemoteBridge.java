@@ -139,12 +139,24 @@ public final class FrRemoteBridge {
     for (int index = 0; index < value.length(); index += 1) {
       char current = value.charAt(index);
       switch (current) {
-        case '\\' -> builder.append("\\\\");
-        case '"' -> builder.append("\\\"");
-        case '\n' -> builder.append("\\n");
-        case '\r' -> builder.append("\\r");
-        case '\t' -> builder.append("\\t");
-        default -> builder.append(current);
+        case '\\':
+          builder.append("\\\\");
+          break;
+        case '"':
+          builder.append("\\\"");
+          break;
+        case '\n':
+          builder.append("\\n");
+          break;
+        case '\r':
+          builder.append("\\r");
+          break;
+        case '\t':
+          builder.append("\\t");
+          break;
+        default:
+          builder.append(current);
+          break;
       }
     }
     builder.append('"');
