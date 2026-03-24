@@ -33,3 +33,36 @@ it('uses camelCase designerRoot when testing remote sync connection', async () =
     }
   })
 })
+
+it('invokes remote pull command with projectDir and relativePath', async () => {
+  invoke.mockResolvedValue({
+    ok: true,
+    command: 'prepare-edit',
+    localPath: '/tmp/demo/reportlets/sales/report.cpt',
+    remotePath: 'reportlets/sales/report.cpt',
+    message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
+  })
+  const { tauriServices } = await import('../components/config/project-config-services')
+
+  await tauriServices.pullRemoteReportletFile(
+    '/tmp/demo',
+    'reportlets/sales/report.cpt'
+  )
+
+  expect(invoke).toHaveBeenCalledWith('pull_remote_reportlet_file', {
+    projectDir: '/tmp/demo',
+    relativePath: 'reportlets/sales/report.cpt'
+  })
+})
+
+it('passes relativePath when listing local reportlet directory entries', async () => {
+  invoke.mockResolvedValue([])
+  const { tauriServices } = await import('../components/config/project-config-services')
+
+  await tauriServices.listReportletEntries('/tmp/demo', 'sales')
+
+  expect(invoke).toHaveBeenCalledWith('list_reportlet_entries', {
+    projectDir: '/tmp/demo',
+    relativePath: 'sales'
+  })
+})

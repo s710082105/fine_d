@@ -1,5 +1,5 @@
 use crate::domain::project_config::{DataConnectionProfile, DbType, ProjectConfig, PROJECT_SOURCE_SUBDIR};
-use crate::domain::project_initializer::{EmbeddedProjectInitializer, ProjectInitializer};
+use crate::domain::project_initializer::EmbeddedProjectInitializer;
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::fs;
@@ -86,7 +86,7 @@ pub fn save_project_config(
         config.workspace.name = project_name(project_path);
     }
     save_project_config_to_path(path.as_path(), &config)?;
-    EmbeddedProjectInitializer::default().initialize(project_path, &config)
+    EmbeddedProjectInitializer::default().refresh_project_context(project_path, &config)
 }
 
 pub fn load_project_config_from_project_dir(
@@ -116,18 +116,20 @@ pub fn load_project_config_from_project_dir(
 
 pub fn list_reportlet_entries_from_project_dir(
     project_dir: &Path,
+    relative_path: Option<&str>,
 ) -> Result<Vec<ReportletEntry>, String> {
     let source_dir = project_dir.join(PROJECT_SOURCE_SUBDIR);
     if !source_dir.exists() {
         return Ok(Vec::new());
     }
-    if !source_dir.is_dir() {
+    let target_dir = resolve_reportlet_directory(source_dir.as_path(), relative_path)?;
+    if !target_dir.is_dir() {
         return Err(format!(
             "reportlets path is not a directory: {}",
-            source_dir.display()
+            target_dir.display()
         ));
     }
-    read_reportlet_entries(source_dir.as_path(), source_dir.as_path())
+    read_reportlet_entries(target_dir.as_path(), source_dir.as_path())
 }
 
 #[tauri::command]
@@ -142,8 +144,9 @@ pub fn load_project_config(
 pub fn list_reportlet_entries(
     _app: AppHandle,
     project_dir: String,
+    relative_path: Option<String>,
 ) -> Result<Vec<ReportletEntry>, String> {
-    list_reportlet_entries_from_project_dir(Path::new(&project_dir))
+    list_reportlet_entries_from_project_dir(Path::new(&project_dir), relative_path.as_deref())
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -298,6 +301,30 @@ fn read_reportlet_entries(root: &Path, base: &Path) -> Result<Vec<ReportletEntry
         .into_iter()
         .map(|entry| build_reportlet_entry(entry.path().as_path(), base))
         .collect()
+}
+
+fn resolve_reportlet_directory(
+    source_dir: &Path,
+    relative_path: Option<&str>,
+) -> Result<PathBuf, String> {
+    let Some(relative_path) = relative_path.map(str::trim).filter(|path| !path.is_empty()) else {
+        return Ok(source_dir.to_path_buf());
+    };
+    let relative = Path::new(relative_path);
+    if relative.is_absolute() {
+        return Err("relative_path must stay inside reportlets".into());
+    }
+    if relative.components().any(|component| {
+        matches!(
+            component,
+            std::path::Component::ParentDir
+                | std::path::Component::RootDir
+                | std::path::Component::Prefix(_)
+        )
+    }) {
+        return Err("relative_path must stay inside reportlets".into());
+    }
+    Ok(source_dir.join(relative))
 }
 
 fn normalize_legacy_data_connections(mut value: Value) -> Value {
@@ -489,11 +516,6 @@ fn build_reportlet_entry(path: &Path, base: &Path) -> Result<ReportletEntry, Str
     let relative_path = path
         .strip_prefix(base)
         .map_err(|error| format!("failed to resolve reportlet relative path: {error}"))?;
-    let children = if metadata.is_dir() {
-        read_reportlet_entries(path, base)?
-    } else {
-        Vec::new()
-    };
     Ok(ReportletEntry {
         name: path
             .file_name()
@@ -506,6 +528,6 @@ fn build_reportlet_entry(path: &Path, base: &Path) -> Result<ReportletEntry, Str
             "file"
         }
         .into(),
-        children,
+        children: Vec::new(),
     })
 }

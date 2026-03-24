@@ -40,7 +40,7 @@ pub struct TestRemoteSyncConnectionResponse {
 
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
-struct PrepareSyncResponse {
+pub struct PrepareSyncResponse {
     ok: bool,
     command: String,
     local_path: String,
@@ -62,8 +62,18 @@ pub fn list_remote_reportlet_entries(
     _app: AppHandle,
     request: ListRemoteDirectoriesRequest,
 ) -> Result<Vec<RemoteReportletEntry>, String> {
+    let path = normalize_browser_path(&request.path);
     let profile = request.into_sync_profile();
-    RemoteReportletBrowser::default().list_reportlets(&profile)
+    RemoteReportletBrowser::default().list_reportlets(&profile, &path)
+}
+
+#[tauri::command]
+pub fn pull_remote_reportlet_file(
+    _app: AppHandle,
+    project_dir: String,
+    relative_path: String,
+) -> Result<PrepareSyncResponse, String> {
+    prepare_remote_edit_for_project(Path::new(&project_dir), &relative_path)
 }
 
 #[tauri::command]
@@ -136,20 +146,45 @@ fn run_prepare_create(args: &[OsString]) -> Result<(), String> {
 }
 
 fn run_prepare_edit(args: &[OsString]) -> Result<(), String> {
-    let (local_path, remote_path, profile) =
-        resolve_cli_sync_target(args, PROJECT_SYNC_PREPARE_EDIT_FLAG)?;
-    let factory: Arc<dyn RemoteRuntimeClientFactory> = ProtocolRemoteRuntimeFactory::shared();
-    let mut client = factory.connect(&profile)?;
-    prepare_remote_edit(client.as_mut(), local_path.as_path(), &remote_path)?;
+    if args.len() != 3 {
+        return Err(format!("{PROJECT_SYNC_PREPARE_EDIT_FLAG} expects project dir and relative path"));
+    }
+    let project_dir = Path::new(args[1].to_str().ok_or("project dir is not valid utf-8")?);
+    let relative_path = args[2].to_str().ok_or("relative path is not valid utf-8")?;
+    let response = prepare_remote_edit_for_project(project_dir, relative_path)?;
     println!(
         "{}",
-        prepare_sync_success_stdout(
-            "prepare-edit",
-            local_path.display().to_string().as_str(),
-            remote_path.as_str(),
-        )
+        serde_json::to_string(&response).map_err(|error| error.to_string())?
     );
     Ok(())
+}
+
+fn prepare_remote_edit_for_project(
+    project_dir: &Path,
+    relative_path: &str,
+) -> Result<PrepareSyncResponse, String> {
+    let local_path = project_dir.join(relative_path);
+    let response = load_project_config_from_project_dir(project_dir)?;
+    if !response.exists {
+        return Err("project-config.json is required for sync preparation".into());
+    }
+    let task = resolve_sync_task(
+        POST_COMMIT_SESSION_ID,
+        &response.config,
+        local_path.as_path(),
+        SyncAction::Update,
+    )?;
+    let profile = response.config.fine_remote_profile()?;
+    let factory: Arc<dyn RemoteRuntimeClientFactory> = ProtocolRemoteRuntimeFactory::shared();
+    let mut client = factory.connect(&profile)?;
+    prepare_remote_edit(client.as_mut(), local_path.as_path(), &task.remote_path)?;
+    Ok(PrepareSyncResponse {
+        ok: true,
+        command: "prepare-edit".into(),
+        local_path: local_path.display().to_string(),
+        remote_path: task.remote_path,
+        message: prepare_sync_success_message("prepare-edit").into(),
+    })
 }
 
 fn resolve_cli_sync_target(

@@ -7,9 +7,49 @@ import {
 } from '../components/config/project-config-form'
 import type { ReportletEntry } from '../lib/types/project-config'
 
+function clickFirstTreeSwitcher(title: string) {
+  const panel = screen.getByText(title).closest('section')
+  if (!panel) {
+    throw new Error(`panel not found for ${title}`)
+  }
+  const switcher = panel.querySelector<HTMLElement>('.ant-tree-switcher')
+  if (!switcher) {
+    throw new Error(`switcher not found for ${title}`)
+  }
+  fireEvent.click(switcher)
+}
+
 it(
   'renders project tab by default and switches to style tab',
   async () => {
+  const listReportletEntries = vi
+    .fn<(projectDir: string, relativePath?: string) => Promise<ReportletEntry[]>>()
+    .mockImplementation(async (_projectDir, relativePath) => {
+      if (relativePath === 'sales') {
+        return [
+          {
+            name: 'report.cpt',
+            path: 'sales/report.cpt',
+            kind: 'file',
+            children: []
+          }
+        ]
+      }
+      return [
+        {
+          name: 'sales',
+          path: 'sales',
+          kind: 'directory',
+          children: []
+        },
+        {
+          name: '.gitkeep',
+          path: '.gitkeep',
+          kind: 'file',
+          children: []
+        }
+      ]
+    })
   await act(async () => {
     render(
       <ProjectConfigForm
@@ -19,29 +59,16 @@ it(
             exists: false,
             config: createDefaultProjectConfig()
           }),
-          listReportletEntries: async () => [
-            {
-              name: 'sales',
-              path: 'sales',
-              kind: 'directory',
-              children: [
-                {
-                  name: 'report.cpt',
-                  path: 'sales/report.cpt',
-                  kind: 'file',
-                  children: []
-                }
-              ]
-            },
-            {
-              name: '.gitkeep',
-              path: '.gitkeep',
-              kind: 'file',
-              children: []
-            }
-          ],
+          listReportletEntries,
           listRemoteReportletEntries: async () => [],
           listRemoteDirectories: async () => [],
+          pullRemoteReportletFile: async () => ({
+            ok: true,
+            command: 'prepare-edit',
+            localPath: '/tmp/demo/reportlets/sales/report.cpt',
+            remotePath: 'reportlets/sales/report.cpt',
+            message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
+          }),
           saveConfig: async () => undefined,
           testDataConnection: async () => ({ ok: true, message: '连接成功' }),
           testRemoteSyncConnection: async () => ({ ok: true, message: '远程设计连接成功' })
@@ -97,12 +124,22 @@ it(
 
   fireEvent.click(screen.getByRole('tab', { name: '文件管理' }))
 
-  await waitFor(() => expect(screen.getByText('reportlets 目录')).toBeInTheDocument())
+  await waitFor(() => expect(screen.getByText('本地 reportlets')).toBeInTheDocument())
+  expect(screen.getByText('远端 reportlets')).toBeInTheDocument()
   expect(screen.getByRole('tree')).toBeInTheDocument()
-  expect(screen.getAllByRole('treeitem')).toHaveLength(2)
   expect(screen.getByText('sales')).toBeInTheDocument()
-  expect(screen.getByText('report.cpt')).toBeInTheDocument()
+  expect(screen.queryByText('report.cpt')).not.toBeInTheDocument()
   expect(screen.queryByText('.gitkeep')).not.toBeInTheDocument()
+  expect(screen.queryByText('目录')).not.toBeInTheDocument()
+  expect(screen.queryByText('文件')).not.toBeInTheDocument()
+  expect(screen.getByText('点击刷新列表读取远端文件清单')).toBeInTheDocument()
+
+  clickFirstTreeSwitcher('本地 reportlets')
+
+  await waitFor(() =>
+    expect(listReportletEntries).toHaveBeenCalledWith('/tmp/demo', 'sales')
+  )
+  expect(screen.getByText('report.cpt')).toBeInTheDocument()
   },
   10000
 )
@@ -134,7 +171,21 @@ it('loads config from project directory and saves back to project config file', 
     exists: projectDir === '/tmp/existing',
     config: loaded
   }))
-  const listReportletEntries = vi.fn(async () => [])
+  const listReportletEntries = vi
+    .fn<(projectDir: string, relativePath?: string) => Promise<ReportletEntry[]>>()
+    .mockImplementation(async (_projectDir, relativePath) => {
+      if (relativePath === 'sales') {
+        return [
+          {
+            name: 'remote.cpt',
+            path: 'sales/remote.cpt',
+            kind: 'file',
+            children: []
+          }
+        ]
+      }
+      return []
+    })
   const listRemoteReportletEntries = vi.fn<
     (request: {
       designerRoot: string
@@ -143,21 +194,32 @@ it('loads config from project directory and saves back to project config file', 
       password: string
       path: string
     }) => Promise<ReportletEntry[]>
-  >(async () => [
-    {
-      name: 'sales',
-      path: 'reportlets/sales',
-      kind: 'directory' as const,
-      children: [
-        {
-          name: 'remote.cpt',
-          path: 'reportlets/sales/remote.cpt',
-          kind: 'file' as const,
-          children: []
-        }
-      ]
-    }
-  ])
+  >(async (request) =>
+    request.path === 'reportlets/sales'
+      ? [
+          {
+            name: 'remote.cpt',
+            path: 'reportlets/sales/remote.cpt',
+            kind: 'file' as const,
+            children: []
+          }
+        ]
+      : [
+          {
+            name: 'sales',
+            path: 'reportlets/sales',
+            kind: 'directory' as const,
+            children: []
+          }
+        ]
+  )
+  const pullRemoteReportletFile = vi.fn(async () => ({
+    ok: true,
+    command: 'prepare-edit',
+    localPath: '/tmp/existing/reportlets/sales/remote.cpt',
+    remotePath: 'reportlets/sales/remote.cpt',
+    message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
+  }))
   const saveConfig = vi.fn(async () => undefined)
   const testDataConnection = vi.fn(async () => ({ ok: true, message: '连接成功' }))
   const testRemoteSyncConnection = vi.fn(async () => ({ ok: true, message: '远程设计连接成功' }))
@@ -174,6 +236,7 @@ it('loads config from project directory and saves back to project config file', 
           listReportletEntries,
           listRemoteReportletEntries,
           listRemoteDirectories: async () => [],
+          pullRemoteReportletFile,
           saveConfig,
           testDataConnection,
           testRemoteSyncConnection
@@ -185,7 +248,7 @@ it('loads config from project directory and saves back to project config file', 
   fireEvent.click(screen.getByRole('button', { name: '选择项目目录' }))
 
   await waitFor(() => expect(loadConfig).toHaveBeenCalledWith('/tmp/existing'))
-  expect(listReportletEntries).toHaveBeenCalledWith('/tmp/existing')
+  expect(listReportletEntries).toHaveBeenCalledWith('/tmp/existing', undefined)
   expect(browseDirectory).toHaveBeenCalledTimes(1)
   expect(screen.getByDisplayValue('demo-project')).toBeInTheDocument()
   expect(
@@ -272,6 +335,7 @@ it('loads config from project directory and saves back to project config file', 
     expect(screen.getByRole('button', { name: '刷新列表' })).toBeInTheDocument()
   )
   expect(screen.queryByRole('button', { name: '保存配置' })).not.toBeInTheDocument()
+  expect(screen.getByText('本地 reportlets 目录为空')).toBeInTheDocument()
 
   fireEvent.click(screen.getByRole('button', { name: '刷新列表' }))
 
@@ -284,5 +348,88 @@ it('loads config from project directory and saves back to project config file', 
       path: 'reportlets'
     })
   )
+  expect(screen.queryByText('remote.cpt')).not.toBeInTheDocument()
+
+  clickFirstTreeSwitcher('远端 reportlets')
+
+  await waitFor(() =>
+    expect(listRemoteReportletEntries).toHaveBeenCalledWith({
+      designerRoot: '/Applications/FineReport',
+      url: 'http://127.0.0.1:8075/webroot/decision',
+      username: 'preview-user',
+      password: 'preview-pass',
+      path: 'reportlets/sales'
+    })
+  )
   expect(screen.getByText('remote.cpt')).toBeInTheDocument()
+
+  fireEvent.click(screen.getByText('remote.cpt'))
+  fireEvent.click(screen.getByRole('button', { name: '拉取选中文件' }))
+
+  await waitFor(() =>
+    expect(pullRemoteReportletFile).toHaveBeenCalledWith(
+      '/tmp/existing',
+      'reportlets/sales/remote.cpt'
+    )
+  )
+  await waitFor(() =>
+    expect(listReportletEntries).toHaveBeenLastCalledWith('/tmp/existing', undefined)
+  )
+})
+
+it('shows saving state while saving project config', async () => {
+  const loaded = createDefaultProjectConfig()
+  loaded.workspace.name = 'demo-project'
+  loaded.sync.designer_root = '/Applications/FineReport'
+  loaded.preview.account = 'preview-user'
+  loaded.preview.password = 'preview-pass'
+
+  let resolveSave: (() => void) | undefined
+  const saveConfig = vi.fn(
+    () =>
+      new Promise<void>((resolve) => {
+        resolveSave = resolve
+      })
+  )
+
+  await act(async () => {
+    render(
+      <ProjectConfigForm
+        services={{
+          browseDirectory: async () => '/tmp/existing',
+          loadConfig: async () => ({ exists: true, config: loaded }),
+          listReportletEntries: async () => [],
+          listRemoteReportletEntries: async () => [],
+          listRemoteDirectories: async () => [],
+          pullRemoteReportletFile: async () => ({
+            ok: true,
+            command: 'prepare-edit',
+            localPath: '/tmp/existing/reportlets/demo.cpt',
+            remotePath: 'reportlets/demo.cpt',
+            message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
+          }),
+          saveConfig,
+          testDataConnection: async () => ({ ok: true, message: '连接成功' }),
+          testRemoteSyncConnection: async () => ({ ok: true, message: '远程设计连接成功' })
+        }}
+      />
+    )
+  })
+
+  fireEvent.click(screen.getByRole('button', { name: '选择项目目录' }))
+  await waitFor(() => expect(screen.getByDisplayValue('demo-project')).toBeInTheDocument())
+
+  fireEvent.click(screen.getByRole('button', { name: '保存配置' }))
+
+  expect(saveConfig).toHaveBeenCalledTimes(1)
+  await waitFor(() =>
+    expect(screen.getByRole('button', { name: /保存/ })).toBeDisabled()
+  )
+  expect(screen.getByText('正在保存项目配置...')).toBeInTheDocument()
+
+  await act(async () => resolveSave?.())
+
+  await waitFor(() =>
+    expect(screen.getByRole('button', { name: '保存配置' })).toBeEnabled()
+  )
 })

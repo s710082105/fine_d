@@ -9,12 +9,18 @@ import type { TerminalServices } from './terminal-services'
 import type { TerminalAdapterFactory } from './xterm-adapter'
 import { useTerminalPanelController } from './use-terminal-panel-controller'
 
+export interface TerminalInputBridge {
+  canWriteInput: boolean
+  writeInput: (payload: string) => void
+}
+
 export interface TerminalPanelProps {
   projectId: string
   projectName: string
   config: ProjectConfig
   configVersion: string
   isConfigStale: boolean
+  onInputBridgeChange?: (bridge: TerminalInputBridge) => void
   services?: TerminalServices
   createAdapter?: TerminalAdapterFactory
 }
@@ -34,6 +40,13 @@ export function TerminalPanel(props: TerminalPanelProps) {
     controller.installMessage,
     controller.status
   ])
+
+  useEffect(() => {
+    props.onInputBridgeChange?.({
+      canWriteInput: controller.canWriteInput,
+      writeInput: controller.writeInput
+    })
+  }, [controller.canWriteInput, controller.writeInput, props.onInputBridgeChange])
 
   return (
     <section className="terminal-panel session-card" data-project-id={props.projectId}>

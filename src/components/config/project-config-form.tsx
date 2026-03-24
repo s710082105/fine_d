@@ -17,6 +17,8 @@ type ConfigTab = 'project' | 'style' | 'data' | 'files'
 
 interface ProjectConfigFormProps {
   services?: ProjectConfigServices
+  canInsertLocalPath?: boolean
+  onInsertLocalPath?: (path: string) => void
   onSnapshotChange?: (snapshot: ProjectConfigSnapshot) => void
 }
 
@@ -29,14 +31,29 @@ interface ProjectConfigTabContext {
   remoteConnectionStatus: ReturnType<
     typeof useProjectConfigState
   >['remoteConnectionStatus']
-  reportletEntries: ReturnType<typeof useProjectConfigState>['reportletEntries']
-  reportletEntriesLoading: ReturnType<
+  localReportletEntries: ReturnType<typeof useProjectConfigState>['localReportletEntries']
+  remoteReportletEntries: ReturnType<typeof useProjectConfigState>['remoteReportletEntries']
+  remoteReportletEntriesLoading: ReturnType<
     typeof useProjectConfigState
-  >['reportletEntriesLoading']
+  >['remoteReportletEntriesLoading']
+  remoteReportletPulling: ReturnType<
+    typeof useProjectConfigState
+  >['remoteReportletPulling']
+  canInsertLocalPath: boolean
   chooseDesignerRoot: ReturnType<typeof useProjectConfigState>['chooseDesignerRoot']
+  loadLocalReportletChildren: ReturnType<
+    typeof useProjectConfigState
+  >['loadLocalReportletChildren']
+  loadRemoteReportletChildren: ReturnType<
+    typeof useProjectConfigState
+  >['loadRemoteReportletChildren']
   refreshRemoteReportletEntries: ReturnType<
     typeof useProjectConfigState
   >['refreshRemoteReportletEntries']
+  onInsertLocalPath?: (path: string) => void
+  pullRemoteReportletFile: ReturnType<
+    typeof useProjectConfigState
+  >['pullRemoteReportletFile']
   testRemoteSyncConnection: ReturnType<
     typeof useProjectConfigState
   >['testRemoteSyncConnection']
@@ -129,10 +146,17 @@ function buildProjectConfigTabItems({
   projectReady,
   remoteConnectionMessage,
   remoteConnectionStatus,
-  reportletEntries,
-  reportletEntriesLoading,
+  localReportletEntries,
+  remoteReportletEntries,
+  remoteReportletEntriesLoading,
+  remoteReportletPulling,
+  canInsertLocalPath,
   chooseDesignerRoot,
+  loadLocalReportletChildren,
+  loadRemoteReportletChildren,
   refreshRemoteReportletEntries,
+  onInsertLocalPath,
+  pullRemoteReportletFile,
   testRemoteSyncConnection,
   testDataConnection,
   addDataConnection,
@@ -186,13 +210,21 @@ function buildProjectConfigTabItems({
     ),
     createTabItem(
       'files',
-        '文件管理',
-        projectReady,
+      '文件管理',
+      projectReady,
       renderLazyTab(
         <LazyFileManagementFields
-          entries={reportletEntries}
-          loading={reportletEntriesLoading}
+          canInsertLocalPath={canInsertLocalPath}
+          localEntries={localReportletEntries}
+          localRootDir={config.workspace.root_dir}
+          onInsertLocalPath={onInsertLocalPath}
+          onLoadLocalChildren={loadLocalReportletChildren}
+          onLoadRemoteChildren={loadRemoteReportletChildren}
+          remoteEntries={remoteReportletEntries}
+          remoteLoading={remoteReportletEntriesLoading}
+          remotePulling={remoteReportletPulling}
           onRefresh={refreshRemoteReportletEntries}
+          onPullRemoteFile={pullRemoteReportletFile}
         />
       )
     )
@@ -201,6 +233,8 @@ function buildProjectConfigTabItems({
 
 function useProjectConfigFormViewModel(
   services: ProjectConfigServices,
+  canInsertLocalPath = false,
+  onInsertLocalPath?: (path: string) => void,
   onSnapshotChange?: (snapshot: ProjectConfigSnapshot) => void
 ) {
   const [activeTab, setActiveTab] = useState<ConfigTab>('project')
@@ -212,10 +246,17 @@ function useProjectConfigFormViewModel(
         projectReady: projectState.projectReady,
         remoteConnectionMessage: projectState.remoteConnectionMessage,
         remoteConnectionStatus: projectState.remoteConnectionStatus,
-        reportletEntries: projectState.reportletEntries,
-        reportletEntriesLoading: projectState.reportletEntriesLoading,
+        localReportletEntries: projectState.localReportletEntries,
+        remoteReportletEntries: projectState.remoteReportletEntries,
+        remoteReportletEntriesLoading: projectState.remoteReportletEntriesLoading,
+        remoteReportletPulling: projectState.remoteReportletPulling,
+        canInsertLocalPath,
         chooseDesignerRoot: projectState.chooseDesignerRoot,
+        loadLocalReportletChildren: projectState.loadLocalReportletChildren,
+        loadRemoteReportletChildren: projectState.loadRemoteReportletChildren,
         refreshRemoteReportletEntries: projectState.refreshRemoteReportletEntries,
+        onInsertLocalPath,
+        pullRemoteReportletFile: projectState.pullRemoteReportletFile,
         testRemoteSyncConnection: projectState.testRemoteSyncConnection,
         testDataConnection: projectState.testDataConnection,
         addDataConnection: projectState.addDataConnection,
@@ -227,7 +268,7 @@ function useProjectConfigFormViewModel(
         updateSync: projectState.updateSync,
         updateWorkspace: projectState.updateWorkspace
       }),
-    [projectState]
+    [canInsertLocalPath, onInsertLocalPath, projectState]
   )
 
   return { activeTab, setActiveTab, tabItems, ...projectState }
@@ -235,6 +276,8 @@ function useProjectConfigFormViewModel(
 
 export function ProjectConfigForm({
   services = tauriServices,
+  canInsertLocalPath = false,
+  onInsertLocalPath,
   onSnapshotChange
 }: ProjectConfigFormProps) {
   const {
@@ -243,11 +286,17 @@ export function ProjectConfigForm({
     tabItems,
     config,
     error,
+    isSaving,
     status,
     projectReady,
     chooseProjectDir,
     onSubmit
-  } = useProjectConfigFormViewModel(services, onSnapshotChange)
+  } = useProjectConfigFormViewModel(
+    services,
+    canInsertLocalPath,
+    onInsertLocalPath,
+    onSnapshotChange
+  )
 
   return (
     <form className="project-config-form" onSubmit={onSubmit}>
@@ -265,8 +314,8 @@ export function ProjectConfigForm({
         items={tabItems}
       />
       {activeTab !== 'files' ? (
-        <Button htmlType="submit" type="primary" disabled={!projectReady}>
-          保存配置
+        <Button htmlType="submit" type="primary" disabled={!projectReady || isSaving} loading={isSaving}>
+          {isSaving ? '保存中...' : '保存配置'}
         </Button>
       ) : null}
       <ProjectConfigMessages error={error} status={status} />

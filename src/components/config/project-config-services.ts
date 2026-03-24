@@ -2,6 +2,7 @@ import { invoke } from '@tauri-apps/api/core'
 import type {
   DataConnectionProfile,
   ListRemoteDirectoriesRequest,
+  PrepareRemoteFileResult,
   ProjectConfig,
   RemoteDirectoryEntry,
   ReportletEntry,
@@ -16,13 +17,20 @@ export type TestConnectionResult = { ok: boolean; message: string }
 export type ProjectConfigServices = {
   browseDirectory: () => Promise<string | null>
   loadConfig: (projectDir: string) => Promise<LoadResult>
-  listReportletEntries: (projectDir: string) => Promise<ReportletEntry[]>
+  listReportletEntries: (
+    projectDir: string,
+    relativePath?: string
+  ) => Promise<ReportletEntry[]>
   listRemoteReportletEntries: (
     request: TestRemoteSyncConnectionRequest
   ) => Promise<ReportletEntry[]>
   listRemoteDirectories: (
     request: ListRemoteDirectoriesRequest
   ) => Promise<RemoteDirectoryEntry[]>
+  pullRemoteReportletFile: (
+    projectDir: string,
+    relativePath: string
+  ) => Promise<PrepareRemoteFileResult>
   saveConfig: (projectDir: string, config: ProjectConfig) => Promise<void>
   testDataConnection: (connection: DataConnectionProfile) => Promise<TestConnectionResult>
   testRemoteSyncConnection: (
@@ -44,8 +52,12 @@ async function browseDirectory(): Promise<string | null> {
   return typeof selected === 'string' ? selected : null
 }
 
-async function listReportletEntries(projectDir: string): Promise<ReportletEntry[]> {
-  return resolveInvoke()<ReportletEntry[]>('list_reportlet_entries', { projectDir })
+async function listReportletEntries(
+  projectDir: string,
+  relativePath?: string
+): Promise<ReportletEntry[]> {
+  const args = relativePath ? { projectDir, relativePath } : { projectDir }
+  return resolveInvoke()<ReportletEntry[]>('list_reportlet_entries', args)
 }
 
 async function listRemoteReportletEntries(
@@ -58,6 +70,16 @@ async function listRemoteDirectories(
   request: ListRemoteDirectoriesRequest
 ): Promise<RemoteDirectoryEntry[]> {
   return resolveInvoke()<RemoteDirectoryEntry[]>('list_remote_directories', { request })
+}
+
+async function pullRemoteReportletFile(
+  projectDir: string,
+  relativePath: string
+): Promise<PrepareRemoteFileResult> {
+  return resolveInvoke()<PrepareRemoteFileResult>('pull_remote_reportlet_file', {
+    projectDir,
+    relativePath
+  })
 }
 
 async function saveConfig(projectDir: string, config: ProjectConfig): Promise<void> {
@@ -82,6 +104,7 @@ export const tauriServices: ProjectConfigServices = {
   listReportletEntries,
   listRemoteReportletEntries,
   listRemoteDirectories,
+  pullRemoteReportletFile,
   saveConfig,
   testDataConnection,
   testRemoteSyncConnection

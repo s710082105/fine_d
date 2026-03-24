@@ -62,6 +62,7 @@ interface TerminalControllerActions {
   refreshTerminal: () => void
   restartTerminal: () => void
   startTerminal: () => void
+  writeInput: (payload: string) => void
 }
 
 export function pushTerminalError(
@@ -194,6 +195,8 @@ export function buildTerminalPanelState(
       !runtime.startPendingRef.current &&
       runtime.sessionIdRef.current.length === 0,
     closeTerminal: actions.closeTerminal,
+    canWriteInput:
+      runtime.status === 'running' && runtime.sessionIdRef.current.length > 0,
     codexReady: runtime.codexReady,
     errorMessage: runtime.errorMessage,
     hostRef: runtime.hostRef,
@@ -204,6 +207,7 @@ export function buildTerminalPanelState(
     restartTerminal: actions.restartTerminal,
     startTerminal: actions.startTerminal,
     status: runtime.status,
+    writeInput: actions.writeInput,
     workspaceRoot: config.workspace.root_dir || '未配置项目目录'
   }
 }

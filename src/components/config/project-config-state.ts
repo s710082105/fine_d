@@ -15,7 +15,9 @@ import { ProjectConfigServices } from './project-config-services'
 import {
   createDefaultProjectConfig,
   createProjectHint,
+  initializeReportletEntries,
   mergeConfig,
+  mergeReportletChildren,
   mergeRemoteDirectoryChildren,
   validateConfig,
   withProjectDir
@@ -46,11 +48,14 @@ export function useProjectConfigState(
   const [config, setConfig] = useState<ProjectConfig>(createDefaultProjectConfig())
   const [error, setError] = useState('')
   const [status, setStatus] = useState('')
+  const [isSaving, setIsSaving] = useState(false)
   const [isDirty, setIsDirty] = useState(false)
   const [revision, setRevision] = useState(INITIAL_CONFIG_REVISION)
   const [projectReady, setProjectReady] = useState(false)
-  const [reportletEntries, setReportletEntries] = useState<ReportletEntry[]>([])
-  const [reportletEntriesLoading, setReportletEntriesLoading] = useState(false)
+  const [localReportletEntries, setLocalReportletEntries] = useState<ReportletEntry[]>([])
+  const [remoteReportletEntries, setRemoteReportletEntries] = useState<ReportletEntry[]>([])
+  const [remoteReportletEntriesLoading, setRemoteReportletEntriesLoading] = useState(false)
+  const [remoteReportletPulling, setRemoteReportletPulling] = useState(false)
   const [remoteDirectoryPickerOpen, setRemoteDirectoryPickerOpen] = useState(false)
   const [remoteDirectoryLoading, setRemoteDirectoryLoading] = useState(false)
   const [remoteDirectoryEntries, setRemoteDirectoryEntries] = useState<
@@ -70,14 +75,24 @@ export function useProjectConfigState(
     })
   }, [config, isDirty, onSnapshotChange, revision])
 
-  const loadReportletEntries = (projectDir: string) => {
+  const loadReportletEntries = (projectDir: string, relativePath?: string) => {
     return services
-      .listReportletEntries(projectDir)
+      .listReportletEntries(projectDir, relativePath)
       .then((entries) => {
-        setReportletEntries(entries)
+        const normalized = initializeReportletEntries(entries)
+        if (relativePath && relativePath.trim().length > 0) {
+          setLocalReportletEntries((current) =>
+            mergeReportletChildren(current, relativePath, normalized)
+          )
+          return normalized
+        }
+        setLocalReportletEntries(normalized)
+        return normalized
       })
       .catch((loadError) => {
-        setReportletEntries([])
+        if (!relativePath) {
+          setLocalReportletEntries([])
+        }
         throw new Error(`读取 reportlets 目录失败：${getErrorMessage(loadError)}`)
       })
   }
@@ -85,7 +100,7 @@ export function useProjectConfigState(
   const refreshRemoteReportletEntries = () => {
     setError('')
     setStatus('')
-    setReportletEntriesLoading(true)
+    setRemoteReportletEntriesLoading(true)
     return services
       .listRemoteReportletEntries({
         designerRoot: config.sync.designer_root.trim(),
@@ -95,15 +110,36 @@ export function useProjectConfigState(
         path: FIXED_REMOTE_RUNTIME_DIR
       })
       .then((entries) => {
-        setReportletEntries(entries)
-        setStatus('已从远程刷新 reportlets 列表')
+        setRemoteReportletEntries(initializeReportletEntries(entries))
+        setStatus('已读取远程 reportlets 文件清单')
         return entries
       })
       .catch((loadError) => {
         setError(`读取远程 reportlets 失败：${getErrorMessage(loadError)}`)
         throw loadError
       })
-      .finally(() => setReportletEntriesLoading(false))
+      .finally(() => setRemoteReportletEntriesLoading(false))
+  }
+
+  const pullRemoteReportletFile = (relativePath: string) => {
+    const projectDir = config.workspace.root_dir.trim()
+    if (projectDir.length === 0) {
+      return Promise.reject(new Error('请先选择项目目录'))
+    }
+    setError('')
+    setStatus('')
+    setRemoteReportletPulling(true)
+    return services
+      .pullRemoteReportletFile(projectDir, relativePath)
+      .then((result) => {
+        setStatus(result.message)
+        return loadReportletEntries(projectDir).then(() => result)
+      })
+      .catch((pullError) => {
+        setError(`拉取远端文件失败：${getErrorMessage(pullError)}`)
+        throw pullError
+      })
+      .finally(() => setRemoteReportletPulling(false))
   }
 
   const updateConfig = (next: ProjectConfig) => {
@@ -118,7 +154,8 @@ export function useProjectConfigState(
   const commitProjectDir = (projectDir: string) => {
     const trimmed = projectDir.trim()
     setConfig((current) => withProjectDir(current, trimmed))
-    setReportletEntries([])
+    setLocalReportletEntries([])
+    setRemoteReportletEntries([])
     setError('')
     if (trimmed.length === 0) {
       setProjectReady(false)
@@ -168,6 +205,14 @@ export function useProjectConfigState(
       .catch((browseError) =>
         setError(`选择本地设计器目录失败：${getErrorMessage(browseError)}`)
       )
+  }
+
+  const loadLocalReportletChildren = (relativePath: string) => {
+    const projectDir = config.workspace.root_dir.trim()
+    if (projectDir.length === 0) {
+      return Promise.reject(new Error('请先选择项目目录'))
+    }
+    return loadReportletEntries(projectDir, relativePath)
   }
 
   const loadRemoteDirectories = (path: string) => {
@@ -248,6 +293,28 @@ export function useProjectConfigState(
     setRemoteDirectoryPickerOpen(false)
   }
 
+  const loadRemoteReportletChildren = (path: string) => {
+    return services
+      .listRemoteReportletEntries({
+        designerRoot: config.sync.designer_root.trim(),
+        url: config.preview.url.trim(),
+        username: config.preview.account.trim(),
+        password: config.preview.password,
+        path
+      })
+      .then((entries) => {
+        const normalized = initializeReportletEntries(entries)
+        setRemoteReportletEntries((current) =>
+          mergeReportletChildren(current, path, normalized)
+        )
+        return normalized
+      })
+      .catch((loadError) => {
+        setError(`读取远程 reportlets 失败：${getErrorMessage(loadError)}`)
+        throw loadError
+      })
+  }
+
   const updateWorkspace = (patch: Partial<WorkspaceProfile>) =>
     updateConfig(mergeConfig(config, 'workspace', patch))
   const updateDataConnection = (
@@ -279,6 +346,9 @@ export function useProjectConfigState(
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (isSaving) {
+      return
+    }
     setError('')
     setStatus('')
     const errors = validateConfig(config)
@@ -287,6 +357,8 @@ export function useProjectConfigState(
       return
     }
     const projectDir = config.workspace.root_dir.trim()
+    setIsSaving(true)
+    setStatus('正在保存项目配置...')
     void services
       .saveConfig(projectDir, config)
       .then(() => {
@@ -296,20 +368,25 @@ export function useProjectConfigState(
         setStatus('项目配置已保存')
         return loadReportletEntries(projectDir)
       })
-      .catch((saveError) =>
+      .catch((saveError) => {
+        setStatus('')
         setError(`保存项目配置失败：${getErrorMessage(saveError)}`)
-      )
+      })
+      .finally(() => setIsSaving(false))
   }
 
   return {
     config,
     error,
+    isSaving,
     status,
     remoteConnectionStatus,
     remoteConnectionMessage,
     projectReady,
-    reportletEntries,
-    reportletEntriesLoading,
+    localReportletEntries,
+    remoteReportletEntries,
+    remoteReportletEntriesLoading,
+    remoteReportletPulling,
     remoteDirectoryPickerOpen,
     remoteDirectoryLoading,
     remoteDirectoryEntries,
@@ -317,6 +394,9 @@ export function useProjectConfigState(
     chooseProjectDir,
     chooseDesignerRoot,
     refreshRemoteReportletEntries,
+    pullRemoteReportletFile,
+    loadLocalReportletChildren,
+    loadRemoteReportletChildren,
     testRemoteSyncConnection,
     openRemoteDirectoryPicker,
     closeRemoteDirectoryPicker,

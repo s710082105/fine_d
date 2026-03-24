@@ -246,7 +246,7 @@ fn remote_runtime_bootstrap_downloads_tree_via_factory() {
 }
 
 #[test]
-fn remote_reportlet_browser_lists_remote_tree_via_factory() {
+fn remote_reportlet_browser_lists_requested_directory_via_factory() {
     let factory = FakeFactory {
         state: Arc::new(Mutex::new(FakeState {
             entries: seed_remote_entries(),
@@ -256,15 +256,20 @@ fn remote_reportlet_browser_lists_remote_tree_via_factory() {
     let browser = RemoteReportletBrowser::with_factory(Arc::new(factory.clone()));
 
     let entries = browser
-        .list_reportlets(&build_remote_profile())
+        .list_reportlets(&build_remote_profile(), "/srv/runtime/reportlets")
         .expect("list remote reportlets");
 
     assert_eq!(entries.len(), 1);
     assert_eq!(entries[0].name, "sales");
     assert_eq!(entries[0].kind, "directory");
-    assert_eq!(entries[0].children.len(), 1);
-    assert_eq!(entries[0].children[0].name, "report.cpt");
-    assert_eq!(entries[0].children[0].kind, "file");
+
+    let child_entries = browser
+        .list_reportlets(&build_remote_profile(), "/srv/runtime/reportlets/sales")
+        .expect("list remote child reportlets");
+
+    assert_eq!(child_entries.len(), 1);
+    assert_eq!(child_entries[0].name, "report.cpt");
+    assert_eq!(child_entries[0].kind, "file");
     let state = factory.state.lock().expect("lock fake state");
     assert_eq!(
         state.listed_entry_paths,

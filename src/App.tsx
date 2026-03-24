@@ -9,7 +9,10 @@ import {
   ProjectConfigSnapshot,
   createDefaultProjectConfig
 } from './components/config/project-config-form'
-import { TerminalPanel } from './components/terminal/terminal-panel'
+import {
+  TerminalInputBridge,
+  TerminalPanel
+} from './components/terminal/terminal-panel'
 import type { TerminalServices } from './components/terminal/terminal-services'
 import type { TerminalAdapterFactory } from './components/terminal/xterm-adapter'
 
@@ -61,6 +64,10 @@ function AppShellLayout({
   terminalAdapterFactory
 }: Omit<AppShellProps, 'environmentServices'>) {
   const [snapshot, setSnapshot] = useState<ProjectConfigSnapshot>(createInitialSnapshot)
+  const [terminalInputBridge, setTerminalInputBridge] = useState<TerminalInputBridge>({
+    canWriteInput: false,
+    writeInput: () => undefined
+  })
 
   return (
     <div className="app-shell">
@@ -69,6 +76,8 @@ function AppShellLayout({
           <h1>项目配置</h1>
           <p>在左侧切换项目、样式、数据连接和文件管理，Codex 改动完成后由系统自动同步到运行目录。</p>
           <ProjectConfigForm
+            canInsertLocalPath={terminalInputBridge.canWriteInput}
+            onInsertLocalPath={terminalInputBridge.writeInput}
             services={projectConfigServices}
             onSnapshotChange={setSnapshot}
           />
@@ -81,6 +90,7 @@ function AppShellLayout({
           config={snapshot.config}
           configVersion={snapshot.configVersion}
           isConfigStale={snapshot.isDirty}
+          onInputBridgeChange={setTerminalInputBridge}
           services={terminalServices}
           createAdapter={terminalAdapterFactory}
         />

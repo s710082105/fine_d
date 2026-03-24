@@ -194,7 +194,8 @@ function useTerminalActions(context: TerminalRuntimeContext, codexReady: boolean
     onResize,
     refreshTerminal,
     restartTerminal,
-    startTerminal
+    startTerminal,
+    writeInput: onInput
   }
 }
 

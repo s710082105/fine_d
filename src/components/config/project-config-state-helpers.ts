@@ -1,6 +1,7 @@
 import type {
   ProjectConfig,
   RemoteDirectoryEntry,
+  ReportletEntry,
   SyncProtocol
 } from '../../lib/types/project-config'
 import { FIXED_REMOTE_RUNTIME_DIR } from '../../lib/types/project-config'
@@ -75,4 +76,32 @@ export function mergeRemoteDirectoryChildren(
         ? children
         : mergeRemoteDirectoryChildren(entry.children, targetPath, children)
   }))
+}
+
+export function initializeReportletEntries(entries: ReportletEntry[]): ReportletEntry[] {
+  return entries.map((entry) => ({
+    ...entry,
+    loaded: entry.kind === 'file' || entry.children.length > 0,
+    children: initializeReportletEntries(entry.children)
+  }))
+}
+
+export function mergeReportletChildren(
+  entries: ReportletEntry[],
+  targetPath: string,
+  children: ReportletEntry[]
+): ReportletEntry[] {
+  return entries.map((entry) => {
+    if (entry.path === targetPath) {
+      return {
+        ...entry,
+        loaded: true,
+        children: initializeReportletEntries(children)
+      }
+    }
+    return {
+      ...entry,
+      children: mergeReportletChildren(entry.children, targetPath, children)
+    }
+  })
 }

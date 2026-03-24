@@ -54,6 +54,7 @@ export interface ReportletEntry {
   name: string
   path: string
   kind: 'file' | 'directory'
+  loaded?: boolean
   children: ReportletEntry[]
 }
 
@@ -61,6 +62,14 @@ export interface RemoteDirectoryEntry {
   name: string
   path: string
   children: RemoteDirectoryEntry[]
+}
+
+export interface PrepareRemoteFileResult {
+  ok: boolean
+  command: string
+  localPath: string
+  remotePath: string
+  message: string
 }
 
 export interface ListRemoteDirectoriesRequest {

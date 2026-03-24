@@ -51,6 +51,16 @@ impl ProjectInitializer for EmbeddedProjectInitializer {
         let profile = config.fine_remote_profile()?;
         self.sync_bootstrapper
             .replace_project_tree(source_root.as_path(), &profile)?;
+        self.refresh_project_context(project_dir, config)
+    }
+}
+
+impl EmbeddedProjectInitializer {
+    pub fn refresh_project_context(
+        &self,
+        project_dir: &Path,
+        config: &ProjectConfig,
+    ) -> Result<(), String> {
         ensure_project_git_sync(project_dir, config)?;
         write_project_codex_context(project_dir, config)
     }

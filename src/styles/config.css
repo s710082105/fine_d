@@ -71,6 +71,7 @@
 
 .config-list-actions {
   display: flex;
+  gap: 10px;
   justify-content: flex-end;
 }
 
@@ -94,6 +95,18 @@
   padding: 10px;
 }
 
+.file-management-layout {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.file-tree-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .file-tree-node {
   display: inline-flex;
   align-items: center;
@@ -101,9 +114,12 @@
   font-size: 13px;
 }
 
-.file-tree-kind {
-  min-width: 30px;
+.file-tree-icon {
   color: var(--text-subtle);
+}
+
+.file-tree-node .ant-btn-link {
+  padding-inline: 4px;
 }
 
 .terminal-panel__header-actions {

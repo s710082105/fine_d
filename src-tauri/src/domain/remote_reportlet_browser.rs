@@ -31,35 +31,30 @@ impl RemoteReportletBrowser {
     pub fn list_reportlets(
         &self,
         profile: &FineRemoteProfile,
+        path: &str,
     ) -> Result<Vec<RemoteReportletEntry>, String> {
         let mut client = self.factory.connect(profile)?;
-        list_reportlet_tree(client.as_mut(), &profile.remote_runtime_dir)
+        list_reportlet_entries(client.as_mut(), path)
     }
 }
 
-fn list_reportlet_tree(
+fn list_reportlet_entries(
     client: &mut dyn super::remote_runtime::RemoteRuntimeClient,
     path: &str,
 ) -> Result<Vec<RemoteReportletEntry>, String> {
-    client
+    let entries = client
         .list_entries(path)?
         .into_iter()
-        .map(|entry| {
-            let children = if entry.directory {
-                list_reportlet_tree(client, &entry.path)?
+        .map(|entry| RemoteReportletEntry {
+            name: entry.name,
+            path: entry.path,
+            kind: if entry.directory {
+                "directory".into()
             } else {
-                Vec::new()
-            };
-            Ok(RemoteReportletEntry {
-                name: entry.name,
-                path: entry.path,
-                kind: if entry.directory {
-                    "directory".into()
-                } else {
-                    "file".into()
-                },
-                children,
-            })
+                "file".into()
+            },
+            children: Vec::new(),
         })
-        .collect()
+        .collect();
+    Ok(entries)
 }

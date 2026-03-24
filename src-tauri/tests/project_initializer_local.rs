@@ -112,3 +112,41 @@ fn embedded_project_initializer_creates_missing_source_directory() {
         "seed-template"
     );
 }
+
+#[derive(Clone, Default)]
+struct PanicBootstrapper;
+
+impl RuntimeSyncBootstrapper for PanicBootstrapper {
+    fn replace_project_tree(
+        &self,
+        _: &Path,
+        _: &finereport_tauri_shell_lib::domain::project_config::FineRemoteProfile,
+    ) -> Result<(), String> {
+        panic!("replace_project_tree should not be called when only refreshing project context")
+    }
+}
+
+#[test]
+fn refresh_project_context_skips_remote_bootstrap() {
+    let project_dir = temp_dir("project_initializer_refresh_only");
+    let source_dir = project_dir.join("reportlets");
+    fs::create_dir_all(&source_dir).expect("create source dir");
+    fs::write(source_dir.join("local-only.cpt"), "keep-local").expect("write local file");
+
+    let runtime_dir = temp_dir("project_initializer_refresh_runtime");
+    fs::create_dir_all(&runtime_dir).expect("create runtime dir");
+
+    EmbeddedProjectInitializer::with_bootstrapper(Arc::new(PanicBootstrapper))
+        .refresh_project_context(project_dir.as_path(), &build_config(&project_dir, &runtime_dir))
+        .expect("refresh project context");
+
+    assert_eq!(
+        fs::read_to_string(source_dir.join("local-only.cpt")).expect("read local file"),
+        "keep-local"
+    );
+    assert!(project_dir.join("AGENTS.md").exists());
+    assert!(project_dir.join(".codex/project-context.md").exists());
+    assert!(project_dir.join(".codex/project-rules.md").exists());
+    assert!(project_dir.join(".codex/mappings.json").exists());
+    assert!(project_dir.join(".codex/project-sync.sh").exists());
+}
