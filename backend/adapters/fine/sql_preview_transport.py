@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import binascii
 import json
 import secrets
 from dataclasses import dataclass
@@ -30,11 +31,12 @@ def build_sql_preview_transport(
     sql: str,
 ) -> SqlPreviewTransport:
     system = _parse_system_config(landing_page)
-    if system["encryptionType"] != SUPPORTED_RSA_ENCRYPTION_TYPE:
+    encryption_type = _read_encryption_type(system)
+    if encryption_type != SUPPORTED_RSA_ENCRYPTION_TYPE:
         raise AppError(
             code="datasource.unsupported_encryption",
             message="FineReport SQL 预览加密类型暂不支持",
-            detail={"encryptionType": system["encryptionType"]},
+            detail={"encryptionType": encryption_type},
             source="datasource",
         )
     modulus, exponent, key_size = _parse_public_key(system.get("encryptionKey"))
@@ -50,6 +52,18 @@ def build_sql_preview_transport(
         "parameters": [],
     }
     return SqlPreviewTransport(body=body, headers={"transEncryptLevel": "1"})
+
+
+def _read_encryption_type(system: dict[str, Any]) -> int:
+    value = system.get("encryptionType")
+    if isinstance(value, int):
+        return value
+    raise AppError(
+        code="datasource.invalid_landing_page",
+        message="FineReport 落地页缺少有效的 encryptionType",
+        detail={"payload": system},
+        source="datasource",
+    )
 
 
 def _parse_system_config(landing_page: str) -> dict[str, Any]:
@@ -96,11 +110,30 @@ def _parse_public_key(raw_key: Any) -> tuple[int, int, int]:
             message="FineReport 落地页缺少 encryptionKey",
             source="datasource",
         )
-    der = base64.b64decode(_normalize_pem_body(raw_key))
+    try:
+        der = base64.b64decode(_normalize_pem_body(raw_key), validate=True)
+    except binascii.Error as error:
+        raise AppError(
+            code="datasource.invalid_landing_page",
+            message="FineReport encryptionKey 不是合法的 Base64 公钥",
+            detail={"encryptionKey": raw_key},
+            source="datasource",
+        ) from error
     try:
         return _parse_spki_key(der)
-    except ValueError:
-        return _parse_pkcs1_key(der)
+    except ValueError as spki_error:
+        try:
+            return _parse_pkcs1_key(der)
+        except ValueError as pkcs1_error:
+            raise AppError(
+                code="datasource.invalid_landing_page",
+                message="FineReport encryptionKey 不是合法的 RSA 公钥",
+                detail={
+                    "spki_error": str(spki_error),
+                    "pkcs1_error": str(pkcs1_error),
+                },
+                source="datasource",
+            ) from pkcs1_error
 
 
 def _normalize_pem_body(raw_key: str) -> str:

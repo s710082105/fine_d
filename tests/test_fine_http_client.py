@@ -9,6 +9,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import pytest
 
 from backend.adapters.fine.http_client import FineHttpClient
+from backend.adapters.fine.sql_preview_transport import build_sql_preview_transport
+from backend.domain.project.errors import AppError
 
 
 LANDING_PAGE = (
@@ -30,14 +32,20 @@ class RecordedRequest:
 
 class FineTestHandler(BaseHTTPRequestHandler):
     requests: list[RecordedRequest] = []
+    landing_page: str = LANDING_PAGE
+    connections_payload: dict[str, object] = {"data": [{"name": "qzcs"}]}
 
     def do_GET(self) -> None:  # noqa: N802
         self._record_request()
         if self.path == "/webroot/decision":
-            self._write_response(200, LANDING_PAGE, "text/html; charset=utf-8")
+            self._write_response(
+                200,
+                FineTestHandler.landing_page,
+                "text/html; charset=utf-8",
+            )
             return
         if self.path == "/webroot/decision/v10/config/connection/list/0":
-            self._write_response(200, {"data": [{"name": "qzcs"}]})
+            self._write_response(200, FineTestHandler.connections_payload)
             return
         self._write_response(404, {"error": "not found"})
 
@@ -93,6 +101,8 @@ class FineTestHandler(BaseHTTPRequestHandler):
 @pytest.fixture
 def fine_server() -> Iterator[tuple[str, list[RecordedRequest]]]:
     FineTestHandler.requests = []
+    FineTestHandler.landing_page = LANDING_PAGE
+    FineTestHandler.connections_payload = {"data": [{"name": "qzcs"}]}
     server = ThreadingHTTPServer(("127.0.0.1", 0), FineTestHandler)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
@@ -134,3 +144,35 @@ def test_preview_sql_encrypts_request_after_loading_landing_page(
         if request.path == "/webroot/decision/v10/dataset/preview?rowCount=10"
     )
     assert preview_request.headers["transencryptlevel"] == "1"
+
+
+def test_list_connections_rejects_non_object_items(
+    fine_server: tuple[str, list[RecordedRequest]],
+) -> None:
+    base_url, _ = fine_server
+    FineTestHandler.connections_payload = {"data": [{"name": "qzcs"}, "bad-item"]}
+    client = FineHttpClient(base_url=base_url, username="admin", password="admin")
+
+    with pytest.raises(AppError) as exc_info:
+        client.list_connections()
+
+    assert exc_info.value.code == "datasource.invalid_response"
+    assert exc_info.value.detail == {"item": "bad-item"}
+
+
+def test_preview_sql_rejects_missing_encryption_type() -> None:
+    landing_page = "<!DOCTYPE html><script>Dec.system = JSON.parse('{\\\"encryptionKey\\\":\\\"abc\\\"}');</script>"
+
+    with pytest.raises(AppError) as exc_info:
+        build_sql_preview_transport(landing_page, "qzcs", "select 1 as ok")
+
+    assert exc_info.value.code == "datasource.invalid_landing_page"
+
+
+def test_preview_sql_rejects_invalid_encryption_key() -> None:
+    landing_page = "<!DOCTYPE html><script>Dec.system = JSON.parse('{\\\"encryptionType\\\":0,\\\"encryptionKey\\\":\\\"%%%\\\"}');</script>"
+
+    with pytest.raises(AppError) as exc_info:
+        build_sql_preview_transport(landing_page, "qzcs", "select 1 as ok")
+
+    assert exc_info.value.code == "datasource.invalid_landing_page"

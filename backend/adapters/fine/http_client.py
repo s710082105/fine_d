@@ -182,7 +182,17 @@ def _data_items(payload: dict[str, Any]) -> list[dict[str, Any]]:
             detail={"response": payload},
             source="datasource",
         )
-    return [item for item in data if isinstance(item, dict)]
+    items: list[dict[str, Any]] = []
+    for item in data:
+        if not isinstance(item, dict):
+            raise AppError(
+                code="datasource.invalid_response",
+                message="FineReport 连接列表项不是对象",
+                detail={"item": item},
+                source="datasource",
+            )
+        items.append(item)
+    return items
 
 
 def _parse_connection(item: dict[str, Any]) -> ConnectionSummary:
