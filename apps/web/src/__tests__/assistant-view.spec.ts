@@ -3,14 +3,19 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/vue'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import AssistantView from '../views/AssistantView.vue'
+import { ApiError } from '../lib/api'
 
 const { routeAssistantPrompt } = vi.hoisted(() => ({
   routeAssistantPrompt: vi.fn()
 }))
 
-vi.mock('../lib/api', () => ({
-  routeAssistantPrompt
-}))
+vi.mock('../lib/api', async () => {
+  const actual = await vi.importActual<typeof import('../lib/api')>('../lib/api')
+  return {
+    ...actual,
+    routeAssistantPrompt
+  }
+})
 
 afterEach(() => {
   routeAssistantPrompt.mockReset()
@@ -47,7 +52,17 @@ describe('AssistantView', () => {
 
   it('shows request errors without hiding the backend failure', async () => {
     routeAssistantPrompt.mockRejectedValue(
-      new Error('API request failed: 400 Bad Request')
+      new ApiError(
+        400,
+        {
+          code: 'assistant.invalid_prompt',
+          message: 'assistant prompt must not be blank',
+          detail: { prompt: '   ' },
+          source: 'assistant',
+          retryable: false
+        },
+        'API request failed: 400 Bad Request'
+      )
     )
 
     render(AssistantView)
@@ -57,8 +72,13 @@ describe('AssistantView', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('API request failed: 400 Bad Request')
+        screen.getByText('assistant.invalid_prompt: assistant prompt must not be blank')
       ).toBeInTheDocument()
     })
+    expect(
+      screen.getByText((_, element) => {
+        return element?.textContent === '{\n  "prompt": "   "\n}'
+      })
+    ).toBeInTheDocument()
   })
 })

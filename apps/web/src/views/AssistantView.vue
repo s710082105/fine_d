@@ -1,26 +1,42 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { routeAssistantPrompt } from '../lib/api'
+import { ApiError, routeAssistantPrompt } from '../lib/api'
 import type { AssistantRouteResponse } from '../lib/types'
 
 const prompt = ref('')
 const loading = ref(false)
 const result = ref<AssistantRouteResponse | null>(null)
 const errorMessage = ref('')
+const errorDetail = ref('')
 
 async function handleSubmit(): Promise<void> {
   loading.value = true
   errorMessage.value = ''
+  errorDetail.value = ''
   result.value = null
   try {
     result.value = await routeAssistantPrompt(prompt.value)
   } catch (error) {
-    errorMessage.value =
-      error instanceof Error ? error.message : 'Assistant 请求失败'
+    if (error instanceof ApiError) {
+      errorMessage.value = error.code
+        ? `${error.code}: ${error.message}`
+        : error.message
+      errorDetail.value = formatErrorDetail(error.detail)
+    } else {
+      errorMessage.value =
+        error instanceof Error ? error.message : 'Assistant 请求失败'
+    }
   } finally {
     loading.value = false
   }
+}
+
+function formatErrorDetail(detail: unknown): string {
+  if (!detail) {
+    return ''
+  }
+  return JSON.stringify(detail, null, 2)
 }
 </script>
 
@@ -53,6 +69,7 @@ async function handleSubmit(): Promise<void> {
     <p v-if="errorMessage" class="assistant-view__error" role="alert">
       {{ errorMessage }}
     </p>
+    <pre v-if="errorDetail" class="assistant-view__error-detail">{{ errorDetail }}</pre>
 
     <section v-if="result" class="assistant-view__result">
       <h3>推荐模块</h3>
@@ -174,6 +191,17 @@ async function handleSubmit(): Promise<void> {
   border-radius: 16px;
   background: #fff1f0;
   color: #a12d2d;
+}
+
+.assistant-view__error-detail {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #fff;
+  color: #7d2430;
+  box-shadow: inset 0 0 0 1px rgba(161, 45, 45, 0.12);
+  font-size: 13px;
+  white-space: pre-wrap;
 }
 
 .assistant-view__result h3 {

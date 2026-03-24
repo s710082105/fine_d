@@ -2,6 +2,32 @@ import type { AssistantRouteResponse, HealthResponse } from './types'
 
 const API_PREFIX = '/api'
 
+interface ApiErrorPayload {
+  code?: string
+  message?: string
+  detail?: unknown
+  source?: string
+  retryable?: boolean
+}
+
+export class ApiError extends Error {
+  readonly status: number
+  readonly code?: string
+  readonly detail?: unknown
+  readonly source?: string
+  readonly retryable?: boolean
+
+  constructor(status: number, payload: ApiErrorPayload, fallbackMessage: string) {
+    super(payload.message ?? fallbackMessage)
+    this.name = 'ApiError'
+    this.status = status
+    this.code = payload.code
+    this.detail = payload.detail
+    this.source = payload.source
+    this.retryable = payload.retryable
+  }
+}
+
 function createHeaders(init?: RequestInit): Headers {
   const headers = new Headers(init?.headers)
   headers.set('Accept', 'application/json')
@@ -18,9 +44,7 @@ export async function apiRequest<T>(
   })
 
   if (!response.ok) {
-    throw new Error(
-      `API request failed: ${response.status} ${response.statusText}`.trim()
-    )
+    throw await buildApiError(response)
   }
 
   return (await response.json()) as T
@@ -40,4 +64,29 @@ export function routeAssistantPrompt(
     },
     body: JSON.stringify({ prompt })
   })
+}
+
+async function buildApiError(response: Response): Promise<Error> {
+  const fallbackMessage = `API request failed: ${response.status} ${response.statusText}`.trim()
+  const payload = await parseErrorPayload(response)
+  if (!payload) {
+    return new Error(fallbackMessage)
+  }
+  return new ApiError(response.status, payload, fallbackMessage)
+}
+
+async function parseErrorPayload(response: Response): Promise<ApiErrorPayload | null> {
+  const body = await response.text()
+  if (!body.trim()) {
+    return null
+  }
+  try {
+    const payload = JSON.parse(body) as ApiErrorPayload
+    if (typeof payload.message === 'string') {
+      return payload
+    }
+  } catch {
+    return null
+  }
+  return null
 }
