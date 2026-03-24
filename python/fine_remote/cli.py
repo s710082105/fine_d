@@ -4,6 +4,7 @@ import argparse
 import base64
 import json
 import sys
+from io import TextIOBase
 from pathlib import Path
 
 from .client import FineRemoteClient
@@ -76,12 +77,23 @@ def write_payload(
     return {"path": path, "bytesWritten": len(content)}
 
 
+def write_text(stream: TextIOBase, content: str) -> None:
+    payload = f"{content}\n".encode("utf-8", errors="backslashreplace")
+    buffer = getattr(stream, "buffer", None)
+    if buffer is not None:
+        buffer.write(payload)
+        buffer.flush()
+        return
+    stream.write(payload.decode("utf-8"))
+    stream.flush()
+
+
 def main() -> None:
     args = build_parser().parse_args()
     try:
-        print(json.dumps(run_command(args), ensure_ascii=False))
+        write_text(sys.stdout, json.dumps(run_command(args), ensure_ascii=False))
     except Exception as error:
-        print(str(error), file=sys.stderr)
+        write_text(sys.stderr, str(error))
         raise SystemExit(1) from error
 
 
