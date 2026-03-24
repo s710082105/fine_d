@@ -1,4 +1,4 @@
-from typing import Callable, Protocol
+from typing import Any, Callable, Protocol
 
 from backend.domain.project.errors import AppError
 from backend.domain.sync.models import SyncAction, SyncResult
@@ -69,10 +69,21 @@ class SyncUseCases:
         target_path: str | None,
     ) -> SyncResult:
         machine = SyncStateMachine()
-        machine.transition("pending", "syncing")
+        machine.transition("pending", "running")
         operation = self._resolve_operation(action, target_path)
-        operation()
-        status = machine.transition("syncing", "verified")
+        try:
+            operation()
+        except AppError as error:
+            failed_status = machine.transition("running", "failed")
+            raise AppError(
+                code=error.code,
+                message=error.message,
+                detail=self._merge_error_detail(error.detail, failed_status),
+                source=error.source,
+                retryable=error.retryable,
+            ) from error
+        success_status = machine.transition("running", "success")
+        status = machine.transition(success_status, "verified")
         return SyncResult(
             action=action,
             status=status,
@@ -116,3 +127,10 @@ class SyncUseCases:
             detail={"action": action, "allowed_actions": sorted(SYNC_ALLOWED_ACTIONS)},
             source="sync",
         )
+
+    @staticmethod
+    def _merge_error_detail(
+        detail: dict[str, Any] | None,
+        status: str,
+    ) -> dict[str, Any]:
+        return {**(detail or {}), "status": status}

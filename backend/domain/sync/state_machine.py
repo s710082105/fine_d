@@ -2,8 +2,10 @@ from backend.domain.project.errors import AppError
 from backend.domain.sync.models import SyncStatus
 
 ALLOWED_TRANSITIONS: dict[SyncStatus, set[SyncStatus]] = {
-    "pending": {"syncing"},
-    "syncing": {"verified"},
+    "pending": {"running"},
+    "running": {"success", "failed"},
+    "success": {"verified"},
+    "failed": set(),
     "verified": set(),
 }
 

@@ -1,6 +1,14 @@
 from dataclasses import dataclass
 from typing import Literal
 
+SYNC_STATUSES = (
+    "pending",
+    "running",
+    "success",
+    "failed",
+    "verified",
+)
+
 SyncAction = Literal[
     "sync_file",
     "sync_directory",
@@ -8,7 +16,7 @@ SyncAction = Literal[
     "publish_project",
     "verify_remote_state",
 ]
-SyncStatus = Literal["pending", "syncing", "verified"]
+SyncStatus = Literal["pending", "running", "success", "failed", "verified"]
 
 
 @dataclass(frozen=True, slots=True)
