@@ -52,3 +52,20 @@ def test_create_copy_read_and_write_reportlet(tmp_path: Path) -> None:
     assert updated.content == "updated"
     assert copied.name == "copy-report.cpt"
     assert loaded.content == "updated"
+
+
+def test_copy_and_create_from_template_reject_directory_target(tmp_path: Path) -> None:
+    root = tmp_path / "workspace" / "reportlets"
+    root.mkdir(parents=True)
+    (root / "template.cpt").write_text("seed", encoding="utf-8")
+    (root / "sales").mkdir()
+    use_case = ReportletUseCases(FileGateway(root))
+
+    with pytest.raises(AppError) as copy_error:
+        use_case.copy(Path("template.cpt"), Path("sales"))
+
+    with pytest.raises(AppError) as template_error:
+        use_case.create_from_template(Path("sales"), Path("template.cpt"))
+
+    assert copy_error.value.code == "reportlet.invalid_file"
+    assert template_error.value.code == "reportlet.invalid_file"

@@ -1,7 +1,11 @@
 from pathlib import Path
 from typing import Protocol
 
-from backend.domain.reportlet.models import ReportletEntry, ReportletFile
+from backend.domain.reportlet.models import (
+    ReportletEncoding,
+    ReportletEntry,
+    ReportletFile,
+)
 
 
 class ReportletGateway(Protocol):
@@ -11,7 +15,12 @@ class ReportletGateway(Protocol):
     def read(self, path: Path) -> ReportletFile:
         ...
 
-    def write(self, path: Path, content: str) -> ReportletFile:
+    def write(
+        self,
+        path: Path,
+        content: str,
+        encoding: ReportletEncoding = "utf-8",
+    ) -> ReportletFile:
         ...
 
     def copy(self, source: Path, target: Path) -> ReportletFile:
@@ -31,8 +40,13 @@ class ReportletUseCases:
     def read(self, path: Path) -> ReportletFile:
         return self._gateway.read(path)
 
-    def write(self, path: Path, content: str) -> ReportletFile:
-        return self._gateway.write(path, content)
+    def write(
+        self,
+        path: Path,
+        content: str,
+        encoding: ReportletEncoding = "utf-8",
+    ) -> ReportletFile:
+        return self._gateway.write(path, content, encoding)
 
     def copy(self, source: Path, target: Path) -> ReportletFile:
         return self._gateway.copy(source, target)

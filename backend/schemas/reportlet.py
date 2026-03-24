@@ -2,7 +2,11 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
-from backend.domain.reportlet.models import ReportletEntry, ReportletFile
+from backend.domain.reportlet.models import (
+    ReportletEncoding,
+    ReportletEntry,
+    ReportletFile,
+)
 
 
 class ReportletEntryResponse(BaseModel):
@@ -29,10 +33,16 @@ class ReportletFileResponse(BaseModel):
     name: str
     path: str
     content: str
+    encoding: ReportletEncoding
 
     @classmethod
     def from_domain(cls, item: ReportletFile) -> "ReportletFileResponse":
-        return cls(name=item.name, path=item.path, content=item.content)
+        return cls(
+            name=item.name,
+            path=item.path,
+            content=item.content,
+            encoding=item.encoding,
+        )
 
 
 class ReportletWriteRequest(BaseModel):
@@ -40,6 +50,7 @@ class ReportletWriteRequest(BaseModel):
 
     path: str
     content: str
+    encoding: ReportletEncoding = "utf-8"
 
 
 class ReportletCopyRequest(BaseModel):

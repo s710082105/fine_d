@@ -46,7 +46,7 @@ def write_reportlet(
     request: ReportletWriteRequest,
     service: ReportletUseCases = Depends(get_reportlet_service),
 ) -> ReportletFileResponse:
-    item = service.write(Path(request.path), request.content)
+    item = service.write(Path(request.path), request.content, request.encoding)
     return ReportletFileResponse.from_domain(item)
 
 
