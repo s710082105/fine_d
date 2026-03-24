@@ -77,6 +77,15 @@ pub fn pull_remote_reportlet_file(
 }
 
 #[tauri::command]
+pub fn push_local_reportlet_file(
+    _app: AppHandle,
+    project_dir: String,
+    relative_path: String,
+) -> Result<PrepareSyncResponse, String> {
+    push_local_file_for_project(Path::new(&project_dir), &relative_path)
+}
+
+#[tauri::command]
 pub fn test_remote_sync_connection(
     _app: AppHandle,
     request: ListRemoteDirectoriesRequest,
@@ -187,6 +196,32 @@ fn prepare_remote_edit_for_project(
     })
 }
 
+fn push_local_file_for_project(
+    project_dir: &Path,
+    relative_path: &str,
+) -> Result<PrepareSyncResponse, String> {
+    let local_path = project_dir.join(relative_path);
+    let response = load_project_config_from_project_dir(project_dir)?;
+    if !response.exists {
+        return Err("project-config.json is required for local file sync".into());
+    }
+    let task = resolve_sync_task(
+        POST_COMMIT_SESSION_ID,
+        &response.config,
+        local_path.as_path(),
+        SyncAction::Update,
+    )?;
+    let profile = response.config.fine_remote_profile()?;
+    ProtocolSyncTransport::default().apply(&task, &profile)?;
+    Ok(PrepareSyncResponse {
+        ok: true,
+        command: "push-local".into(),
+        local_path: local_path.display().to_string(),
+        remote_path: task.remote_path,
+        message: prepare_sync_success_message("push-local").into(),
+    })
+}
+
 fn resolve_cli_sync_target(
     args: &[OsString],
     flag: &str,
@@ -260,6 +295,7 @@ fn prepare_sync_success_message(command: &str) -> &'static str {
     match command {
         "prepare-create" => "远端检查通过，已创建远端占位文件并同步到本地，可继续创建模板。",
         "prepare-edit" => "远端检查通过，已拉取远端最新内容到本地，可继续修改模板。",
+        "push-local" => "本地文件已上传到远端。",
         _ => "远端检查通过。",
     }
 }

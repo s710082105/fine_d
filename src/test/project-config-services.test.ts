@@ -74,6 +74,27 @@ it('invokes remote pull command with projectDir and relativePath', async () => {
   })
 })
 
+it('invokes local upload command with projectDir and relativePath', async () => {
+  invoke.mockResolvedValue({
+    ok: true,
+    command: 'push-local',
+    localPath: '/tmp/demo/reportlets/sales/report.cpt',
+    remotePath: 'reportlets/sales/report.cpt',
+    message: '本地文件已上传到远端。'
+  })
+  const { tauriServices } = await import('../components/config/project-config-services')
+
+  await tauriServices.pushLocalReportletFile(
+    '/tmp/demo',
+    'reportlets/sales/report.cpt'
+  )
+
+  expect(invoke).toHaveBeenCalledWith('push_local_reportlet_file', {
+    projectDir: '/tmp/demo',
+    relativePath: 'reportlets/sales/report.cpt'
+  })
+})
+
 it('passes relativePath when listing local reportlet directory entries', async () => {
   invoke.mockResolvedValue([])
   const { tauriServices } = await import('../components/config/project-config-services')

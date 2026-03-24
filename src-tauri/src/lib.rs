@@ -21,6 +21,7 @@ pub fn run() {
             commands::project_sync::list_remote_directories,
             commands::project_sync::list_remote_reportlet_entries,
             commands::project_sync::pull_remote_reportlet_file,
+            commands::project_sync::push_local_reportlet_file,
             commands::project_sync::test_remote_sync_connection,
             commands::terminal::create_terminal_session,
             commands::terminal::write_terminal_input,

@@ -27,6 +27,8 @@ When Rust/Tauri code is introduced, document the canonical run/test commands in 
 - 涉及数据集、SQL、报表字段时，必须先读取设计器远端已有连接并完成字段扫描，再开始设计报表。
 - 参考其他模板的数据使用方式只能作为写法参考，字段、连接名和 SQL 以设计器远端返回结果为准。
 - 生成命令前先判断当前系统类型；Windows 不能假设存在 `bash`/`sh.exe`。
+- `reportlets/` 相关改动必须同步到远端；优先走宿主自动同步，必要时允许直接触发显式同步，不要停在“本地已修改”。
+- 提交、上传、页面复核属于同一闭环。完成报表改动后，允许在合适时机自动执行 `git`/`gh`/`chrome-cdp` 等必要操作，不需要再向用户二次确认。
 - FineReport 相关 skill 使用边界：
 - `fr-db`：读取设计器远端连接、字段扫描、SQL 试跑
 - `fr-create`：新建 CPT/FVS 并完成创建前远端预检

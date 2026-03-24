@@ -1,5 +1,8 @@
 use crate::domain::codex_auth::{append_runtime_config_args, build_codex_environment};
+use crate::domain::event_bridge::EventBridge;
 use crate::domain::project_config::ProjectConfig;
+use crate::domain::project_git::uses_git_post_commit_sync;
+use crate::domain::sync_dispatcher::SyncManager;
 use crate::domain::terminal_event_bridge::TerminalEventBridge;
 use crate::domain::terminal_manager::{
     TerminalLaunchConfig, TerminalManager, TerminalSessionMetadata,
@@ -8,7 +11,9 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::Mutex;
+use std::thread;
 use std::time::{SystemTime, UNIX_EPOCH};
+use std::time::Duration;
 use tauri::{AppHandle, State};
 
 const TERM_ENV: &str = "TERM";
@@ -19,13 +24,23 @@ const NO_COLOR_ENV: &str = "NO_COLOR";
 const FORCE_COLOR_ENV: &str = "FORCE_COLOR";
 const FORCE_COLOR_VALUE: &str = "1";
 const SYSTEM_CODEX_COMMAND: &str = "codex";
+const TERMINAL_SYNC_EXIT_POLL_INTERVAL_MS: u64 = 50;
 
 #[cfg(test)]
 mod tests;
 
-#[derive(Default)]
 pub struct TerminalCommandState {
     manager: Mutex<Option<TerminalManager>>,
+    sync_manager: SyncManager,
+}
+
+impl Default for TerminalCommandState {
+    fn default() -> Self {
+        Self {
+            manager: Mutex::new(None),
+            sync_manager: SyncManager::default(),
+        }
+    }
 }
 
 impl TerminalCommandState {
@@ -127,10 +142,13 @@ pub fn create_terminal_session(
     request: CreateTerminalSessionRequest,
 ) -> Result<CreateTerminalSessionResponse, String> {
     let manager = state.manager_for_app(&app)?;
+    let bridge = EventBridge::from_app(app.clone());
     create_terminal_session_with_options(
         &manager,
         &request,
         &CreateTerminalSessionOptions::codex_default(&app, &request.config)?,
+        Some(&state.sync_manager),
+        Some(&bridge),
     )
 }
 
@@ -138,6 +156,8 @@ fn create_terminal_session_with_options(
     manager: &TerminalManager,
     request: &CreateTerminalSessionRequest,
     options: &CreateTerminalSessionOptions,
+    sync_manager: Option<&SyncManager>,
+    bridge: Option<&EventBridge>,
 ) -> Result<CreateTerminalSessionResponse, String> {
     let working_dir = validate_workspace_dir(request.workspace_dir.as_str())?;
     let session_id = generate_terminal_session_id()?;
@@ -145,11 +165,51 @@ fn create_terminal_session_with_options(
         session_id.as_str(),
         &build_terminal_launch_config(request, options, working_dir)?,
     )?;
+    start_terminal_sync(manager, &session_id, request, sync_manager, bridge)?;
     Ok(CreateTerminalSessionResponse {
         session_id,
         process,
         created_at: unix_timestamp()?,
     })
+}
+
+fn start_terminal_sync(
+    manager: &TerminalManager,
+    session_id: &str,
+    request: &CreateTerminalSessionRequest,
+    sync_manager: Option<&SyncManager>,
+    bridge: Option<&EventBridge>,
+) -> Result<(), String> {
+    let (Some(sync_manager), Some(bridge)) = (sync_manager, bridge) else {
+        return Ok(());
+    };
+    let project_dir = validate_workspace_dir(request.workspace_dir.as_str())?;
+    if uses_git_post_commit_sync(project_dir.as_path())? {
+        bridge.emit_status(session_id, "git post-commit sync enabled")?;
+        return Ok(());
+    }
+    bridge.emit_status(session_id, "starting sync watcher")?;
+    sync_manager.watch_session(session_id, &request.config, bridge)?;
+    spawn_terminal_sync_cleanup(manager.clone(), sync_manager.clone(), session_id.to_string());
+    Ok(())
+}
+
+fn spawn_terminal_sync_cleanup(
+    manager: TerminalManager,
+    sync_manager: SyncManager,
+    session_id: String,
+) {
+    thread::spawn(move || {
+        loop {
+            match manager.contains_session(session_id.as_str()) {
+                Ok(true) => thread::sleep(Duration::from_millis(TERMINAL_SYNC_EXIT_POLL_INTERVAL_MS)),
+                Ok(false) | Err(_) => {
+                    sync_manager.stop_session(session_id.as_str());
+                    return;
+                }
+            }
+        }
+    });
 }
 
 #[tauri::command]

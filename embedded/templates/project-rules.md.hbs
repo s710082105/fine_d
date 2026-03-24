@@ -31,6 +31,8 @@
 - 新建 `reportlets/*.cpt|*.fvs` 前，必须先在项目目录执行对应系统 helper 的 `prepare-create reportlets/<name>.cpt|fvs`，先检查远端重名并创建远端占位文件。
 - 修改现有 `reportlets/*.cpt|*.fvs` 前，必须先在项目目录执行对应系统 helper 的 `prepare-edit reportlets/<name>.cpt|fvs`，先检查远端是否存在、是否锁定，并把远端最新内容拉回项目目录。
 - 如果 `prepare-create` / `prepare-edit` 明确报错，必须立即停止，不允许绕过远端检查继续开发。
+- `reportlets/` 相关改动必须完成远端同步；优先依赖宿主自动同步，若宿主未触发则直接执行显式上传或 helper，不能停在“本地已修改”。
+- 为完成当前需求所必需的 `git`、`gh`、`chrome-cdp` 等操作允许直接执行，不需要再次征求用户确认。
 - `reportlets/` 相关改动提交并同步完成后，必须使用 `chrome-cdp` skill 打开 `preview_url` 做页面复核。
 - 如果预览页需要登录，优先使用 `preview_account` 和 `preview_password` 完成登录，再继续复核。
 - 同步完成后必须自动开始浏览器复核，不需要再次征求用户确认。

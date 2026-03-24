@@ -60,6 +60,8 @@ fn terminal_commands_create_terminal_session_rejects_missing_project_directory()
         &manager,
         &build_request(missing_dir.to_string_lossy().as_ref()),
         &CreateTerminalSessionOptions::test_command(command.as_str(), args),
+        None,
+        None,
     )
     .expect_err("missing directory should be rejected");
 
@@ -77,6 +79,8 @@ fn terminal_commands_create_terminal_session_returns_metadata_on_success() {
         &manager,
         &build_request(project_dir.to_string_lossy().as_ref()),
         &CreateTerminalSessionOptions::test_command(command.as_str(), args),
+        None,
+        None,
     )
     .expect("create terminal session");
 

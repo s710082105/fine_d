@@ -69,6 +69,13 @@ it(
             remotePath: 'reportlets/sales/report.cpt',
             message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
           }),
+          pushLocalReportletFile: async () => ({
+            ok: true,
+            command: 'push-local',
+            localPath: '/tmp/demo/reportlets/sales/report.cpt',
+            remotePath: 'reportlets/sales/report.cpt',
+            message: '本地文件已上传到远端。'
+          }),
           saveConfig: async () => undefined,
           listDesignerConnections: async () => [],
           testRemoteSyncConnection: async () => ({ ok: true, message: '远程设计连接成功' })
@@ -144,7 +151,9 @@ it(
   10000
 )
 
-it('loads config from project directory and saves back to project config file', async () => {
+it(
+  'loads config from project directory and saves back to project config file',
+  async () => {
   const loaded = createDefaultProjectConfig()
   loaded.workspace.name = 'demo-project'
   loaded.sync.protocol = 'fine'
@@ -156,6 +165,7 @@ it('loads config from project directory and saves back to project config file', 
   loaded.ai.provider = 'openai'
   loaded.ai.model = 'gpt-5'
   loaded.ai.api_key = 'sk-demo'
+  let pulledRemoteFile = false
   const loadConfig = vi.fn(async (projectDir: string) => ({
     exists: projectDir === '/tmp/existing',
     config: loaded
@@ -164,6 +174,16 @@ it('loads config from project directory and saves back to project config file', 
   const listReportletEntries = vi
     .fn<(projectDir: string, relativePath?: string) => Promise<ReportletEntry[]>>()
     .mockImplementation(async (_projectDir, relativePath) => {
+      if (pulledRemoteFile && !relativePath) {
+        return [
+          {
+            name: 'sales',
+            path: 'sales',
+            kind: 'directory',
+            children: []
+          }
+        ]
+      }
       if (relativePath === 'sales') {
         return [
           {
@@ -203,12 +223,22 @@ it('loads config from project directory and saves back to project config file', 
           }
         ]
   )
-  const pullRemoteReportletFile = vi.fn(async () => ({
+  const pullRemoteReportletFile = vi.fn(async () => {
+    pulledRemoteFile = true
+    return {
+      ok: true,
+      command: 'prepare-edit',
+      localPath: '/tmp/existing/reportlets/sales/remote.cpt',
+      remotePath: 'reportlets/sales/remote.cpt',
+      message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
+    }
+  })
+  const pushLocalReportletFile = vi.fn(async () => ({
     ok: true,
-    command: 'prepare-edit',
+    command: 'push-local',
     localPath: '/tmp/existing/reportlets/sales/remote.cpt',
     remotePath: 'reportlets/sales/remote.cpt',
-    message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
+    message: '本地文件已上传到远端。'
   }))
   const saveConfig = vi.fn(async () => undefined)
   const testRemoteSyncConnection = vi.fn(async () => ({ ok: true, message: '远程设计连接成功' }))
@@ -226,6 +256,7 @@ it('loads config from project directory and saves back to project config file', 
           listRemoteReportletEntries,
           listRemoteDirectories: async () => [],
           pullRemoteReportletFile,
+          pushLocalReportletFile,
           saveConfig,
           listDesignerConnections,
           testRemoteSyncConnection
@@ -360,7 +391,22 @@ it('loads config from project directory and saves back to project config file', 
   await waitFor(() =>
     expect(listReportletEntries).toHaveBeenLastCalledWith('/tmp/existing', undefined)
   )
-})
+  clickFirstTreeSwitcher('本地 reportlets')
+  await waitFor(() =>
+    expect(listReportletEntries).toHaveBeenLastCalledWith('/tmp/existing', 'sales')
+  )
+
+  fireEvent.click(screen.getByRole('button', { name: '上传 remote.cpt' }))
+
+  await waitFor(() =>
+    expect(pushLocalReportletFile).toHaveBeenCalledWith(
+      '/tmp/existing',
+      'reportlets/sales/remote.cpt'
+    )
+  )
+  },
+  10000
+)
 
 it('shows saving state while saving project config', async () => {
   const loaded = createDefaultProjectConfig()
@@ -392,6 +438,13 @@ it('shows saving state while saving project config', async () => {
             localPath: '/tmp/existing/reportlets/demo.cpt',
             remotePath: 'reportlets/demo.cpt',
             message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
+          }),
+          pushLocalReportletFile: async () => ({
+            ok: true,
+            command: 'push-local',
+            localPath: '/tmp/existing/reportlets/demo.cpt',
+            remotePath: 'reportlets/demo.cpt',
+            message: '本地文件已上传到远端。'
           }),
           saveConfig,
           listDesignerConnections: async () => [],

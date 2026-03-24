@@ -43,6 +43,9 @@ interface ProjectConfigTabContext {
   remoteReportletPulling: ReturnType<
     typeof useProjectConfigState
   >['remoteReportletPulling']
+  localReportletPushing: ReturnType<
+    typeof useProjectConfigState
+  >['localReportletPushing']
   canInsertLocalPath: boolean
   chooseDesignerRoot: ReturnType<typeof useProjectConfigState>['chooseDesignerRoot']
   refreshDesignerConnections: ReturnType<
@@ -61,6 +64,9 @@ interface ProjectConfigTabContext {
   pullRemoteReportletFile: ReturnType<
     typeof useProjectConfigState
   >['pullRemoteReportletFile']
+  pushLocalReportletFile: ReturnType<
+    typeof useProjectConfigState
+  >['pushLocalReportletFile']
   testRemoteSyncConnection: ReturnType<
     typeof useProjectConfigState
   >['testRemoteSyncConnection']
@@ -155,6 +161,7 @@ function buildProjectConfigTabItems({
   remoteReportletEntries,
   remoteReportletEntriesLoading,
   remoteReportletPulling,
+  localReportletPushing,
   canInsertLocalPath,
   chooseDesignerRoot,
   refreshDesignerConnections,
@@ -163,6 +170,7 @@ function buildProjectConfigTabItems({
   refreshRemoteReportletEntries,
   onInsertLocalPath,
   pullRemoteReportletFile,
+  pushLocalReportletFile,
   testRemoteSyncConnection,
   updateAi,
   updatePreview,
@@ -217,15 +225,16 @@ function buildProjectConfigTabItems({
         <LazyFileManagementFields
           canInsertLocalPath={canInsertLocalPath}
           localEntries={localReportletEntries}
-          localRootDir={config.workspace.root_dir}
           onInsertLocalPath={onInsertLocalPath}
           onLoadLocalChildren={loadLocalReportletChildren}
           onLoadRemoteChildren={loadRemoteReportletChildren}
           remoteEntries={remoteReportletEntries}
+          localPushing={localReportletPushing}
           remoteLoading={remoteReportletEntriesLoading}
           remotePulling={remoteReportletPulling}
           onRefresh={refreshRemoteReportletEntries}
           onPullRemoteFile={pullRemoteReportletFile}
+          onPushLocalFile={pushLocalReportletFile}
         />
       )
     )
@@ -253,6 +262,7 @@ function useProjectConfigFormViewModel(
         remoteReportletEntries: projectState.remoteReportletEntries,
         remoteReportletEntriesLoading: projectState.remoteReportletEntriesLoading,
         remoteReportletPulling: projectState.remoteReportletPulling,
+        localReportletPushing: projectState.localReportletPushing,
         canInsertLocalPath,
         chooseDesignerRoot: projectState.chooseDesignerRoot,
         refreshDesignerConnections: projectState.refreshDesignerConnections,
@@ -261,6 +271,7 @@ function useProjectConfigFormViewModel(
         refreshRemoteReportletEntries: projectState.refreshRemoteReportletEntries,
         onInsertLocalPath,
         pullRemoteReportletFile: projectState.pullRemoteReportletFile,
+        pushLocalReportletFile: projectState.pushLocalReportletFile,
         testRemoteSyncConnection: projectState.testRemoteSyncConnection,
         updateAi: projectState.updateAi,
         updatePreview: projectState.updatePreview,

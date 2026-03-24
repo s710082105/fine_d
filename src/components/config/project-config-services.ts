@@ -35,6 +35,10 @@ export type ProjectConfigServices = {
     projectDir: string,
     relativePath: string
   ) => Promise<PrepareRemoteFileResult>
+  pushLocalReportletFile: (
+    projectDir: string,
+    relativePath: string
+  ) => Promise<PrepareRemoteFileResult>
   saveConfig: (projectDir: string, config: ProjectConfig) => Promise<void>
   testRemoteSyncConnection: (
     request: TestRemoteSyncConnectionRequest
@@ -91,6 +95,16 @@ async function pullRemoteReportletFile(
   })
 }
 
+async function pushLocalReportletFile(
+  projectDir: string,
+  relativePath: string
+): Promise<PrepareRemoteFileResult> {
+  return resolveInvoke()<PrepareRemoteFileResult>('push_local_reportlet_file', {
+    projectDir,
+    relativePath
+  })
+}
+
 async function saveConfig(projectDir: string, config: ProjectConfig): Promise<void> {
   await resolveInvoke()<void>('save_project_config', { projectDir, config })
 }
@@ -109,6 +123,7 @@ export const tauriServices: ProjectConfigServices = {
   listRemoteReportletEntries,
   listRemoteDirectories,
   pullRemoteReportletFile,
+  pushLocalReportletFile,
   saveConfig,
   testRemoteSyncConnection
 }

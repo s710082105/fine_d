@@ -58,6 +58,7 @@ export function useProjectConfigState(
   const [remoteReportletEntries, setRemoteReportletEntries] = useState<ReportletEntry[]>([])
   const [remoteReportletEntriesLoading, setRemoteReportletEntriesLoading] = useState(false)
   const [remoteReportletPulling, setRemoteReportletPulling] = useState(false)
+  const [localReportletPushing, setLocalReportletPushing] = useState(false)
   const [remoteDirectoryPickerOpen, setRemoteDirectoryPickerOpen] = useState(false)
   const [remoteDirectoryLoading, setRemoteDirectoryLoading] = useState(false)
   const [remoteDirectoryEntries, setRemoteDirectoryEntries] = useState<
@@ -142,6 +143,27 @@ export function useProjectConfigState(
         throw pullError
       })
       .finally(() => setRemoteReportletPulling(false))
+  }
+
+  const pushLocalReportletFile = (relativePath: string) => {
+    const projectDir = config.workspace.root_dir.trim()
+    if (projectDir.length === 0) {
+      return Promise.reject(new Error('请先选择项目目录'))
+    }
+    setError('')
+    setStatus('')
+    setLocalReportletPushing(true)
+    return services
+      .pushLocalReportletFile(projectDir, relativePath)
+      .then((result) => {
+        setStatus(result.message)
+        return result
+      })
+      .catch((pushError) => {
+        setError(`上传本地文件失败：${getErrorMessage(pushError)}`)
+        throw pushError
+      })
+      .finally(() => setLocalReportletPushing(false))
   }
 
   const refreshDesignerConnections = () => {
@@ -397,6 +419,7 @@ export function useProjectConfigState(
     remoteReportletEntries,
     remoteReportletEntriesLoading,
     remoteReportletPulling,
+    localReportletPushing,
     remoteDirectoryPickerOpen,
     remoteDirectoryLoading,
     remoteDirectoryEntries,
@@ -406,6 +429,7 @@ export function useProjectConfigState(
     refreshDesignerConnections,
     refreshRemoteReportletEntries,
     pullRemoteReportletFile,
+    pushLocalReportletFile,
     loadLocalReportletChildren,
     loadRemoteReportletChildren,
     testRemoteSyncConnection,

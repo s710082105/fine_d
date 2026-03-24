@@ -2,13 +2,13 @@ import { Button, Tree } from 'antd'
 import type { DataNode, EventDataNode } from 'antd/es/tree'
 import type { ReactNode } from 'react'
 import { useMemo, useState } from 'react'
-import { resolveProjectSourceDir } from '../../lib/types/project-config'
 import type { ReportletEntry } from '../../lib/types/project-config'
+import { PROJECT_SOURCE_SUBDIR } from '../../lib/types/project-config'
 
 interface FileManagementFieldsProps {
   canInsertLocalPath: boolean
   localEntries: ReportletEntry[]
-  localRootDir: string
+  localPushing: boolean
   remoteEntries: ReportletEntry[]
   remoteLoading: boolean
   remotePulling: boolean
@@ -17,6 +17,7 @@ interface FileManagementFieldsProps {
   onLoadRemoteChildren: (path: string) => Promise<unknown>
   onRefresh: () => Promise<unknown>
   onPullRemoteFile: (relativePath: string) => Promise<unknown>
+  onPushLocalFile: (relativePath: string) => Promise<unknown>
 }
 
 interface TreeNodeMeta extends DataNode {
@@ -28,7 +29,7 @@ interface TreeNodeMeta extends DataNode {
 export function FileManagementFields({
   canInsertLocalPath,
   localEntries,
-  localRootDir,
+  localPushing,
   remoteEntries,
   remoteLoading,
   remotePulling,
@@ -36,17 +37,18 @@ export function FileManagementFields({
   onLoadLocalChildren,
   onLoadRemoteChildren,
   onRefresh,
-  onPullRemoteFile
+  onPullRemoteFile,
+  onPushLocalFile
 }: FileManagementFieldsProps) {
-  const localSourceDir = resolveProjectSourceDir(localRootDir)
   const localTree = useMemo(
     () =>
       buildTreeData(filterHiddenEntries(localEntries), {
         canInsertLocalPath,
-        localSourceDir,
-        onInsertLocalPath
+        localPushing,
+        onInsertLocalPath,
+        onPushLocalFile
       }),
-    [canInsertLocalPath, localEntries, localSourceDir, onInsertLocalPath]
+    [canInsertLocalPath, localEntries, localPushing, onInsertLocalPath, onPushLocalFile]
   )
   const remoteTree = useMemo(
     () => buildTreeData(filterHiddenEntries(remoteEntries)),
@@ -152,8 +154,9 @@ function buildTreeData(
   entries: ReportletEntry[],
   options?: {
     canInsertLocalPath: boolean
-    localSourceDir: string
+    localPushing: boolean
     onInsertLocalPath?: (path: string) => void
+    onPushLocalFile?: (path: string) => void
   }
 ): TreeNodeMeta[] {
   return entries.map((entry) => {
@@ -175,13 +178,14 @@ function renderTreeNode(
   entry: ReportletEntry,
   options?: {
     canInsertLocalPath: boolean
-    localSourceDir: string
+    localPushing: boolean
     onInsertLocalPath?: (path: string) => void
+    onPushLocalFile?: (path: string) => void
   }
 ) {
-  const localPath =
+  const relativePath =
     options && entry.kind === 'file'
-      ? `${options.localSourceDir}/${entry.path}`.replace(/\/+/g, '/')
+      ? `${PROJECT_SOURCE_SUBDIR}/${entry.path}`.replace(/\/+/g, '/')
       : null
 
   return (
@@ -190,19 +194,33 @@ function renderTreeNode(
         {entry.kind === 'directory' ? '📁' : '📄'}
       </span>
       <span>{entry.name}</span>
-      {localPath ? (
-        <Button
-          size="small"
-          type="link"
-          disabled={!options?.canInsertLocalPath}
-          aria-label={`插入 ${entry.name}`}
-          onClick={(event) => {
-            event.stopPropagation()
-            options?.onInsertLocalPath?.(quoteTerminalPath(localPath))
-          }}
-        >
-          插入
-        </Button>
+      {relativePath ? (
+        <>
+          <Button
+            size="small"
+            type="link"
+            disabled={!options?.canInsertLocalPath}
+            aria-label={`插入 ${entry.name}`}
+            onClick={(event) => {
+              event.stopPropagation()
+              options?.onInsertLocalPath?.(quoteTerminalPath(relativePath))
+            }}
+          >
+            插入
+          </Button>
+          <Button
+            size="small"
+            type="link"
+            loading={options?.localPushing}
+            aria-label={`上传 ${entry.name}`}
+            onClick={(event) => {
+              event.stopPropagation()
+              void options?.onPushLocalFile?.(relativePath)
+            }}
+          >
+            上传
+          </Button>
+        </>
       ) : null}
     </span>
   )
