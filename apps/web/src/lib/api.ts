@@ -1,4 +1,4 @@
-import type { HealthResponse } from './types'
+import type { AssistantRouteResponse, HealthResponse } from './types'
 
 const API_PREFIX = '/api'
 
@@ -28,4 +28,16 @@ export async function apiRequest<T>(
 
 export function getHealth(): Promise<HealthResponse> {
   return apiRequest<HealthResponse>('/health')
+}
+
+export function routeAssistantPrompt(
+  prompt: string
+): Promise<AssistantRouteResponse> {
+  return apiRequest<AssistantRouteResponse>('/assistant/route', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ prompt })
+  })
 }
