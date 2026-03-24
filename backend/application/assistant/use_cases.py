@@ -11,7 +11,7 @@ ROUTE_RULES = (
     (
         "reportlet",
         ("报表", "template", "cpt", "fvs", "文件树"),
-        ("list_tree", "read_reportlet"),
+        ("list_tree", "read"),
         "推荐走报表模块。",
     ),
     (

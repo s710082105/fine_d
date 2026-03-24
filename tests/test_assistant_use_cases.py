@@ -35,6 +35,28 @@ def test_route_prompt_routes_to_preview() -> None:
     assert result.actions == ("open_preview",)
 
 
+def test_route_prompt_routes_to_datasource() -> None:
+    module = _load_assistant_use_cases_module()
+    use_case = module.AssistantUseCases()
+
+    result = use_case.route_prompt("帮我看一下这个 SQL 和数据集")
+
+    assert result.status == "routed"
+    assert result.module == "datasource"
+    assert result.actions == ("list_connections", "preview_sql")
+
+
+def test_route_prompt_routes_to_reportlet() -> None:
+    module = _load_assistant_use_cases_module()
+    use_case = module.AssistantUseCases()
+
+    result = use_case.route_prompt("读取这个 cpt 报表文件树")
+
+    assert result.status == "routed"
+    assert result.module == "reportlet"
+    assert result.actions == ("list_tree", "read")
+
+
 def test_route_prompt_returns_needs_clarification_for_unknown_prompt() -> None:
     module = _load_assistant_use_cases_module()
     use_case = module.AssistantUseCases()
