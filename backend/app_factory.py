@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 
 from apps.api.routes.datasource import router as datasource_router
 from apps.api.routes.reportlet import router as reportlet_router
+from apps.api.routes.sync import router as sync_router
 from backend.domain.project.errors import AppError
 from backend.schemas.health import HealthResponse
 from backend.schemas.common import DEFAULT_ERROR_STATUS_CODE, ErrorResponse
@@ -25,5 +26,6 @@ def create_app() -> FastAPI:
 
     app.include_router(datasource_router)
     app.include_router(reportlet_router)
+    app.include_router(sync_router)
 
     return app
