@@ -1,52 +1,55 @@
 ---
 name: fr-db
-description: 探测数据库结构并生成 SQL 查询语句，用于 FineReport 模板数据源配置。支持 MySQL、PostgreSQL、Oracle、SQL Server 等主流数据库。
+description: 使用 FineReport 设计器远端能力读取已有数据连接、做字段扫描和 SQL 试跑，并生成适用于模板的数据集 SQL。
 ---
 
-# FineReport 数据库探测与 SQL 生成
+# FineReport 设计器远端数据探测与 SQL 生成
 
-探测数据库结构并生成适用于 FineReport 数据源的 SQL 查询。
+通过 FineReport 设计器远端能力读取已有数据连接、扫描字段，并生成适用于模板的数据集 SQL。
 
 ## 工作流程
 
-### 步骤 1：获取数据库连接信息
+### 步骤 1：先判断系统并选择 helper
 
-优先从项目配置 `data_connections` 读取连接信息（通过 `project-config.json` 的 `data_connections` 数组）。如果项目配置中无可用连接，则向用户确认：数据库类型（MySQL/PostgreSQL/Oracle/SQL Server）、主机地址(host:port)、数据库名称、用户名和密码、FineReport 中的数据连接名称。
+优先使用项目目录下的 helper，不要直接假设 `bash`/`sh` 可用：
 
-### 步骤 2：连接并探测结构
+```bash
+# macOS / Linux
+./.codex/fr-data.sh list-connections
+./.codex/fr-data.sh list-datasets
+./.codex/fr-data.sh preview-dataset <数据集名称>
+./.codex/fr-data.sh preview-sql <连接名称> "<SQL>"
 
-所有数据库类型统一使用 Python + SQLAlchemy 方案：
-
-```python
-from sqlalchemy import create_engine, inspect, text
-
-# 根据数据库类型选择连接 URL
-# MySQL: mysql+pymysql://user:pass@host:port/db
-# PostgreSQL: postgresql+psycopg2://user:pass@host:port/db
-# Oracle: oracle+oracledb://user:pass@host:port/service
-# SQL Server: mssql+pymssql://user:pass@host:port/db
-
-engine = create_engine('<connection_url>')
-inspector = inspect(engine)
-tables = inspector.get_table_names()
-for table in tables:
-    columns = inspector.get_columns(table)
+# Windows
+.\.codex\fr-data.cmd list-connections
+.\.codex\fr-data.cmd list-datasets
+.\.codex\fr-data.cmd preview-dataset <数据集名称>
+.\.codex\fr-data.cmd preview-sql <连接名称> "<SQL>"
 ```
 
-查看表字段详情：
-```python
-from sqlalchemy import create_engine, inspect
+### 步骤 2：读取设计器远端已有连接
 
-engine = create_engine('<connection_url>')
-inspector = inspect(engine)
-columns = inspector.get_columns('<table_name>')
-for col in columns:
-    print(f"{col['name']} | {col['type']} | nullable={col['nullable']}")
-```
+- 先执行 `list-connections`
+- 连接名直接以设计器远端返回结果为准
+- 不再从 `project-config.json` 读取或维护本地数据库连接
 
-> **执行权限**：执行 SQL 查询时自动提权（Bash `dangerouslyDisableSandbox=true` 或 Agent `mode=bypassPermissions`），不再要求用户逐步确认。
+### 步骤 3：先做字段扫描
 
-### 步骤 3：根据用户需求生成 SQL
+字段扫描优先级：
+
+1. 如果已有可复用数据集，执行 `list-datasets` 后再用 `preview-dataset <数据集名称>`
+2. 如果需要新 SQL，执行 `preview-sql <连接名称> "<SQL>"`
+3. 参考其他模板的数据使用方式只作为样式/命名参考，最终字段以设计器远端返回结果为准
+
+### 步骤 4：根据字段结果生成 SQL
+
+生成 SQL 前必须先根据 `preview-dataset` 或 `preview-sql` 的列名、类型、样例值确认：
+
+- 真实字段名
+- 是否需要参数
+- 哪些字段需要格式化、状态翻译、金额换算
+
+再根据用户需求生成 SQL。
 
 **FineReport 参数语法**：
 
@@ -56,7 +59,7 @@ for col in columns:
 | 多值参数 | `IN (${参数名})` | `WHERE category IN (${category})` |
 | 动态条件 | `${if(...)}` | `${if(len(dept) > 0, "AND dept = '" + dept + "'", "")}` |
 
-### 步骤 4：输出数据源配置 XML
+### 步骤 5：输出数据源配置 XML
 
 生成可直接插入 CPT/FVS 模板的 `<TableData>` XML 片段：
 
@@ -78,12 +81,12 @@ for col in columns:
 </TableData>
 ```
 
-### 步骤 5：汇报结果
+### 步骤 6：汇报结果
 
-向用户展示：探测到的表结构摘要、生成的 SQL 查询（带注释）、可直接使用的 XML 数据源配置、建议的参数名称和默认值。
+向用户展示：设计器远端连接名、字段扫描摘要、生成的 SQL 查询、可直接使用的 XML 数据源配置、建议的参数名称和默认值。
 
 ## 注意事项
 
-- 密码等敏感信息不写入文件，只在命令行中使用
-- 探测完成后建议用户验证 SQL 正确性
-- 大表建议加 LIMIT 或分页
+- 先扫字段，再设计；不能跳过字段扫描直接猜列名
+- 密码等敏感信息不写入文件，只通过项目 helper 和宿主配置使用
+- 大表试跑建议先限制返回行数，再逐步放开

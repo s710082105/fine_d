@@ -50,16 +50,43 @@ fn project_initializer_creates_git_repo_hook_and_commit_rule() {
         .initialize(project_dir.as_path(), &config)
         .expect("initialize git-managed project");
 
-    assert!(uses_git_post_commit_sync(project_dir.as_path()).expect("inspect git hook"));
     assert!(project_dir.join(".git").exists());
-    let hook = fs::read_to_string(project_dir.join(".git/hooks/post-commit"))
-        .expect("read post-commit hook");
     let agents = fs::read_to_string(project_dir.join("AGENTS.md")).expect("read agents");
-
-    assert!(hook.contains("FINEREPORT_POST_COMMIT_SYNC"));
-    assert!(hook.contains("fine"));
-    assert!(hook.contains("fine)"));
-    assert!(hook.contains("\"$SYNC_BIN\" --project-sync-hook \"$PROJECT_DIR\" \"$action\" \"$path\""));
     assert!(agents.contains("必须在项目目录执行 `git add` 和 `git commit`"));
-    assert!(agents.contains("`.cpt`、`.fvs` 的变更"));
+    assert!(agents.contains("根据系统类型选择"));
+
+    if cfg!(windows) {
+        assert!(!uses_git_post_commit_sync(project_dir.as_path()).expect("inspect git hook"));
+        assert!(!project_dir.join(".git/hooks/post-commit").exists());
+    } else {
+        assert!(uses_git_post_commit_sync(project_dir.as_path()).expect("inspect git hook"));
+        let hook = fs::read_to_string(project_dir.join(".git/hooks/post-commit"))
+            .expect("read post-commit hook");
+        assert!(hook.contains("FINEREPORT_POST_COMMIT_SYNC"));
+        assert!(hook.contains("fine"));
+        assert!(hook.contains("fine)"));
+        assert!(hook.contains(
+            "\"$SYNC_BIN\" --project-sync-hook \"$PROJECT_DIR\" \"$action\" \"$path\""
+        ));
+    }
+}
+
+#[test]
+fn project_initializer_writes_platform_specific_sync_helper() {
+    let project_dir = temp_dir("project_git_helper");
+    let config = build_config(project_dir.as_path());
+
+    EmbeddedProjectInitializer::with_bootstrapper(Arc::new(NoopBootstrapper))
+        .initialize(project_dir.as_path(), &config)
+        .expect("initialize git-managed project");
+
+    if cfg!(windows) {
+        assert!(project_dir.join(".codex/project-sync.cmd").exists());
+        assert!(project_dir.join(".codex/fr-data.cmd").exists());
+        assert!(!project_dir.join(".codex/project-sync.sh").exists());
+    } else {
+        assert!(project_dir.join(".codex/project-sync.sh").exists());
+        assert!(project_dir.join(".codex/fr-data.sh").exists());
+        assert!(!project_dir.join(".codex/project-sync.cmd").exists());
+    }
 }

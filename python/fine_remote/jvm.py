@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import os
 import subprocess
 import tempfile
@@ -12,54 +11,56 @@ from typing import Any
 BRIDGE_CLASS = "fine_remote.FrRemoteBridge"
 CLASSPATH_SEPARATOR = os.pathsep
 WINDOWS_EXECUTABLE_SUFFIX = ".exe"
-JAVA_COMPATIBILITY_RELEASE = "8"
-BUILD_METADATA_VERSION = 1
+REQUIRED_BRIDGE_FILES = (
+    "FrRemoteBridge.class",
+    "FrRemoteBridge$Arguments.class",
+)
 
 
 @dataclass(frozen=True)
 class JvmBridgeConfig:
     fine_home: Path
     java_bin: str = "java"
-    javac_bin: str = "javac"
 
 
 class JvmBridgeRunner:
     def __init__(self, config: JvmBridgeConfig) -> None:
         self._config = config
         self._repo_root = Path(__file__).resolve().parents[2]
-        self._source_file = self._repo_root / "java" / "fine_remote" / "FrRemoteBridge.java"
-        self._build_dir = Path(tempfile.gettempdir()) / "fine_remote_bridge"
+        self._class_root = self._repo_root / "java"
+        self._bridge_dir = self._class_root / "fine_remote"
 
-    def invoke(self, command: str, *, options: dict[str, str], input_bytes: bytes | None = None) -> dict[str, Any]:
-        self._compile_if_needed()
-        with tempfile.NamedTemporaryFile(dir=self._build_dir, suffix=".json", delete=False) as output_file:
+    def invoke(
+        self,
+        command: str,
+        *,
+        options: dict[str, str],
+        input_bytes: bytes | None = None,
+    ) -> dict[str, Any]:
+        self._ensure_bridge_class()
+        with tempfile.NamedTemporaryFile(
+            dir=self._repo_root, suffix=".json", delete=False
+        ) as output_file:
             output_path = Path(output_file.name)
         input_path = self._write_input_file(input_bytes)
         try:
             arguments = self._build_java_command(command, options, output_path, input_path)
-            completed = run_subprocess(arguments, cwd=self._build_dir)
+            completed = run_subprocess(arguments, cwd=self._repo_root)
             if completed.returncode != 0:
                 details = completed.stderr.strip() or completed.stdout.strip()
                 raise RuntimeError(details or f"Bridge exited with code {completed.returncode}")
             if not output_path.exists():
                 raise RuntimeError("Bridge did not produce an output file")
-            return json.loads(output_path.read_text(encoding="utf-8"))
+            return read_json(output_path)
         finally:
-            if input_path is not None and input_path.exists():
-                input_path.unlink()
-            if output_path.exists():
-                output_path.unlink()
+            delete_if_exists(input_path)
+            delete_if_exists(output_path)
 
-    def _compile_if_needed(self) -> None:
-        class_file = self._build_dir / "fine_remote" / "FrRemoteBridge.class"
-        if self._is_current_build(class_file):
-            return
-        self._build_dir.mkdir(parents=True, exist_ok=True)
-        completed = self._compile_bridge()
-        if completed.returncode != 0:
-            details = completed.stderr.strip() or completed.stdout.strip()
-            raise RuntimeError(details or f"javac exited with code {completed.returncode}")
-        self._write_build_metadata()
+    def _ensure_bridge_class(self) -> None:
+        for file_name in REQUIRED_BRIDGE_FILES:
+            class_file = self._bridge_dir / file_name
+            if not class_file.exists():
+                raise RuntimeError(f"Embedded bridge class is missing: {class_file}")
 
     def _build_java_command(
         self,
@@ -71,7 +72,7 @@ class JvmBridgeRunner:
         arguments = [
             self._config.java_bin,
             "-cp",
-            f"{self._build_dir}{CLASSPATH_SEPARATOR}{self._classpath()}",
+            f"{self._class_root}{CLASSPATH_SEPARATOR}{self._classpath()}",
             BRIDGE_CLASS,
             command,
         ]
@@ -83,66 +84,15 @@ class JvmBridgeRunner:
         return arguments
 
     def _classpath(self) -> str:
-        jars = list(self._collect_jars(self._config.fine_home / "webapps" / "webroot" / "WEB-INF" / "lib"))
+        jars = list(
+            self._collect_jars(
+                self._config.fine_home / "webapps" / "webroot" / "WEB-INF" / "lib"
+            )
+        )
         jars.extend(self._collect_jars(self._config.fine_home / "lib"))
         if not jars:
             raise FileNotFoundError(f"No FineReport jars found under {self._config.fine_home}")
         return CLASSPATH_SEPARATOR.join(jars)
-
-    def _is_current_build(self, class_file: Path) -> bool:
-        if not class_file.exists():
-            return False
-        if class_file.stat().st_mtime_ns < self._source_file.stat().st_mtime_ns:
-            return False
-        metadata = self._read_build_metadata()
-        return metadata == self._expected_build_metadata()
-
-    def _compile_bridge(self) -> subprocess.CompletedProcess[str]:
-        release_arguments = self._javac_arguments("--release", JAVA_COMPATIBILITY_RELEASE)
-        completed = run_subprocess(release_arguments, cwd=self._build_dir)
-        if completed.returncode == 0 or not is_unsupported_release_error(completed.stderr):
-            return completed
-        return run_subprocess(
-            self._javac_arguments("-source", JAVA_COMPATIBILITY_RELEASE, "-target", JAVA_COMPATIBILITY_RELEASE),
-            cwd=self._build_dir,
-        )
-
-    def _javac_arguments(self, *compatibility_arguments: str) -> list[str]:
-        return [
-            self._config.javac_bin,
-            *compatibility_arguments,
-            "-cp",
-            self._classpath(),
-            "-d",
-            str(self._build_dir),
-            str(self._source_file),
-        ]
-
-    def _build_metadata_file(self) -> Path:
-        return self._build_dir / "fine_remote_bridge_build.json"
-
-    def _read_build_metadata(self) -> dict[str, Any] | None:
-        metadata_file = self._build_metadata_file()
-        if not metadata_file.exists():
-            return None
-        try:
-            return json.loads(metadata_file.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
-            return None
-
-    def _write_build_metadata(self) -> None:
-        metadata_file = self._build_metadata_file()
-        metadata_file.write_text(
-            json.dumps(self._expected_build_metadata(), sort_keys=True),
-            encoding="utf-8",
-        )
-
-    def _expected_build_metadata(self) -> dict[str, Any]:
-        return {
-            "sourceMtimeNs": self._source_file.stat().st_mtime_ns,
-            "compatibilityRelease": JAVA_COMPATIBILITY_RELEASE,
-            "metadataVersion": BUILD_METADATA_VERSION,
-        }
 
     def _collect_jars(self, directory: Path) -> list[str]:
         if not directory.exists():
@@ -152,7 +102,9 @@ class JvmBridgeRunner:
     def _write_input_file(self, input_bytes: bytes | None) -> Path | None:
         if input_bytes is None:
             return None
-        with tempfile.NamedTemporaryFile(dir=self._build_dir, suffix=".bin", delete=False) as input_file:
+        with tempfile.NamedTemporaryFile(
+            dir=self._repo_root, suffix=".bin", delete=False
+        ) as input_file:
             input_file.write(input_bytes)
             return Path(input_file.name)
 
@@ -171,14 +123,11 @@ def command_candidates(command: str) -> tuple[str, ...]:
     return (command, f"{command}{WINDOWS_EXECUTABLE_SUFFIX}")
 
 
-def bundled_command_candidates(fine_home: Path, executable_names: tuple[str, ...]) -> list[Path]:
+def bundled_command_candidates(
+    fine_home: Path, executable_names: tuple[str, ...]
+) -> list[Path]:
     candidates: list[Path] = []
-    for relative_dir in (
-        ("bin",),
-        ("jre", "bin"),
-        ("jdk", "bin"),
-        ("java", "bin"),
-    ):
+    for relative_dir in (("bin",), ("jre", "bin"), ("jdk", "bin"), ("java", "bin")):
         directory = fine_home.joinpath(*relative_dir)
         for executable_name in executable_names:
             candidates.append(directory / executable_name)
@@ -195,11 +144,15 @@ def run_subprocess(arguments: list[str], *, cwd: Path) -> subprocess.CompletedPr
             check=False,
         )
     except FileNotFoundError as error:
-        raise RuntimeError(
-            f"required executable not found: {arguments[0]}"
-        ) from error
+        raise RuntimeError(f"required executable not found: {arguments[0]}") from error
 
 
-def is_unsupported_release_error(stderr: str) -> bool:
-    normalized = stderr.lower()
-    return "invalid flag: --release" in normalized or "source release 8 requires target release 8" in normalized
+def read_json(path: Path) -> dict[str, Any]:
+    import json
+
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def delete_if_exists(path: Path | None) -> None:
+    if path is not None and path.exists():
+        path.unlink()

@@ -25,6 +25,10 @@ interface ProjectConfigFormProps {
 interface ProjectConfigTabContext {
   config: ReturnType<typeof useProjectConfigState>['config']
   projectReady: boolean
+  designerConnections: ReturnType<typeof useProjectConfigState>['designerConnections']
+  designerConnectionsLoading: ReturnType<
+    typeof useProjectConfigState
+  >['designerConnectionsLoading']
   remoteConnectionMessage: ReturnType<
     typeof useProjectConfigState
   >['remoteConnectionMessage']
@@ -41,6 +45,9 @@ interface ProjectConfigTabContext {
   >['remoteReportletPulling']
   canInsertLocalPath: boolean
   chooseDesignerRoot: ReturnType<typeof useProjectConfigState>['chooseDesignerRoot']
+  refreshDesignerConnections: ReturnType<
+    typeof useProjectConfigState
+  >['refreshDesignerConnections']
   loadLocalReportletChildren: ReturnType<
     typeof useProjectConfigState
   >['loadLocalReportletChildren']
@@ -57,10 +64,6 @@ interface ProjectConfigTabContext {
   testRemoteSyncConnection: ReturnType<
     typeof useProjectConfigState
   >['testRemoteSyncConnection']
-  testDataConnection: ReturnType<typeof useProjectConfigState>['testDataConnection']
-  addDataConnection: ReturnType<typeof useProjectConfigState>['addDataConnection']
-  removeDataConnection: ReturnType<typeof useProjectConfigState>['removeDataConnection']
-  updateDataConnection: ReturnType<typeof useProjectConfigState>['updateDataConnection']
   updateAi: ReturnType<typeof useProjectConfigState>['updateAi']
   updatePreview: ReturnType<typeof useProjectConfigState>['updatePreview']
   updateStyle: ReturnType<typeof useProjectConfigState>['updateStyle']
@@ -144,6 +147,8 @@ function renderLazyTab(children: ReactNode) {
 function buildProjectConfigTabItems({
   config,
   projectReady,
+  designerConnections,
+  designerConnectionsLoading,
   remoteConnectionMessage,
   remoteConnectionStatus,
   localReportletEntries,
@@ -152,16 +157,13 @@ function buildProjectConfigTabItems({
   remoteReportletPulling,
   canInsertLocalPath,
   chooseDesignerRoot,
+  refreshDesignerConnections,
   loadLocalReportletChildren,
   loadRemoteReportletChildren,
   refreshRemoteReportletEntries,
   onInsertLocalPath,
   pullRemoteReportletFile,
   testRemoteSyncConnection,
-  testDataConnection,
-  addDataConnection,
-  removeDataConnection,
-  updateDataConnection,
   updateAi,
   updatePreview,
   updateStyle,
@@ -201,10 +203,9 @@ function buildProjectConfigTabItems({
       renderLazyTab(
         <LazyDataConnectionFields
           config={config}
-          addDataConnection={addDataConnection}
-          removeDataConnection={removeDataConnection}
-          updateDataConnection={updateDataConnection}
-          testDataConnection={testDataConnection}
+          connections={designerConnections}
+          loading={designerConnectionsLoading}
+          refreshConnections={refreshDesignerConnections}
         />
       )
     ),
@@ -244,6 +245,8 @@ function useProjectConfigFormViewModel(
       buildProjectConfigTabItems({
         config: projectState.config,
         projectReady: projectState.projectReady,
+        designerConnections: projectState.designerConnections,
+        designerConnectionsLoading: projectState.designerConnectionsLoading,
         remoteConnectionMessage: projectState.remoteConnectionMessage,
         remoteConnectionStatus: projectState.remoteConnectionStatus,
         localReportletEntries: projectState.localReportletEntries,
@@ -252,16 +255,13 @@ function useProjectConfigFormViewModel(
         remoteReportletPulling: projectState.remoteReportletPulling,
         canInsertLocalPath,
         chooseDesignerRoot: projectState.chooseDesignerRoot,
+        refreshDesignerConnections: projectState.refreshDesignerConnections,
         loadLocalReportletChildren: projectState.loadLocalReportletChildren,
         loadRemoteReportletChildren: projectState.loadRemoteReportletChildren,
         refreshRemoteReportletEntries: projectState.refreshRemoteReportletEntries,
         onInsertLocalPath,
         pullRemoteReportletFile: projectState.pullRemoteReportletFile,
         testRemoteSyncConnection: projectState.testRemoteSyncConnection,
-        testDataConnection: projectState.testDataConnection,
-        addDataConnection: projectState.addDataConnection,
-        removeDataConnection: projectState.removeDataConnection,
-        updateDataConnection: projectState.updateDataConnection,
         updateAi: projectState.updateAi,
         updatePreview: projectState.updatePreview,
         updateStyle: projectState.updateStyle,

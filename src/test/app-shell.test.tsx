@@ -96,7 +96,7 @@ it('renders config and terminal regions', async () => {
             message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
           }),
           saveConfig: async () => undefined,
-          testDataConnection: async () => ({ ok: true, message: '连接成功' }),
+          listDesignerConnections: async () => [],
           testRemoteSyncConnection: async () => ({ ok: true, message: '远程设计连接成功' })
         }}
         environmentServices={createEnvironmentServices()}
@@ -136,7 +136,7 @@ it('shows terminal stale notice when config changes', async () => {
             message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
           }),
           saveConfig: async () => undefined,
-          testDataConnection: async () => ({ ok: true, message: '连接成功' }),
+          listDesignerConnections: async () => [],
           testRemoteSyncConnection: async () => ({ ok: true, message: '远程设计连接成功' })
         }}
         environmentServices={createEnvironmentServices()}
@@ -178,7 +178,7 @@ it('resets terminal status after project context changes', async () => {
             message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
           }),
           saveConfig: async () => undefined,
-          testDataConnection: async () => ({ ok: true, message: '连接成功' }),
+          listDesignerConnections: async () => [],
           testRemoteSyncConnection: async () => ({ ok: true, message: '远程设计连接成功' })
         }}
         environmentServices={createEnvironmentServices()}
@@ -261,7 +261,7 @@ it('inserts local file path into active terminal session', async () => {
             message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
           }),
           saveConfig: async () => undefined,
-          testDataConnection: async () => ({ ok: true, message: '连接成功' }),
+          listDesignerConnections: async () => [],
           testRemoteSyncConnection: async () => ({ ok: true, message: '远程设计连接成功' })
         }}
         environmentServices={createEnvironmentServices()}
@@ -330,7 +330,7 @@ it('blocks the app when startup prerequisites fail', async () => {
             message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
           }),
           saveConfig: async () => undefined,
-          testDataConnection: async () => ({ ok: true, message: '连接成功' }),
+          listDesignerConnections: async () => [],
           testRemoteSyncConnection: async () => ({ ok: true, message: '远程设计连接成功' })
         }}
         terminalServices={createTerminalServices()}

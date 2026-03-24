@@ -1,39 +1,23 @@
-use super::project_config::{DbType, ProjectConfig};
+use super::project_config::ProjectConfig;
 use std::io;
 
-fn db_type_label(db_type: &DbType) -> &'static str {
-    match db_type {
-        DbType::Mysql => "mysql",
-        DbType::Postgresql => "postgresql",
-        DbType::Oracle => "oracle",
-        DbType::Sqlserver => "sqlserver",
-    }
+pub fn markdown_designer_data_access(_: &ProjectConfig) -> String {
+    [
+        "- 先读取设计器远端已有数据连接，不再使用项目内本地连接配置。",
+        "- 先做真实字段扫描，再设计报表；参考其他模板只看样式和命名，字段以设计器远端返回结果为准。",
+        "- 需要验证 SQL 时，优先使用设计器远端数据集预览或 SQL 试跑能力。",
+    ]
+    .join("\n")
 }
 
-pub fn markdown_data_connections(config: &ProjectConfig) -> String {
-    if config.data_connections.is_empty() {
-        return "- (none)".into();
-    }
-
-    config
-        .data_connections
-        .iter()
-        .map(|connection| {
-            format!(
-                "- name: {}\n  db_type: {}\n  host: {}\n  port: {}\n  database: {}\n  username: {}\n  password: {}",
-                connection.connection_name,
-                db_type_label(&connection.db_type),
-                connection.host,
-                connection.port,
-                connection.database,
-                connection.username,
-                connection.password
-            )
-        })
-        .collect::<Vec<_>>()
-        .join("\n")
-}
-
-pub fn data_connections_json(config: &ProjectConfig) -> io::Result<String> {
-    serde_json::to_string_pretty(&config.data_connections).map_err(io::Error::other)
+pub fn designer_data_access_json(_: &ProjectConfig) -> io::Result<String> {
+    serde_json::to_string_pretty(&serde_json::json!({
+        "mode": "designer-remote",
+        "rules": [
+            "先读取设计器远端已有数据连接",
+            "先扫字段再设计",
+            "字段和 SQL 以设计器远端返回为准"
+        ]
+    }))
+    .map_err(io::Error::other)
 }

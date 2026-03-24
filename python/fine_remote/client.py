@@ -23,7 +23,6 @@ class FineRemoteClient:
         password: str,
         fine_home: Path,
         java_bin: str = "java",
-        javac_bin: str = "javac",
     ) -> None:
         self._base_options = {
             "--url": base_url,
@@ -34,7 +33,6 @@ class FineRemoteClient:
         config = JvmBridgeConfig(
             fine_home=fine_home,
             java_bin=resolve_jvm_command(fine_home, java_bin),
-            javac_bin=resolve_jvm_command(fine_home, javac_bin),
         )
         self._bridge = JvmBridgeRunner(config)
 

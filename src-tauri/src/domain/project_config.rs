@@ -8,7 +8,6 @@ pub const PROJECT_SOURCE_SUBDIR: &str = "reportlets";
 pub struct ProjectConfig {
     pub style: StyleProfile,
     pub workspace: WorkspaceProfile,
-    pub data_connections: Vec<DataConnectionProfile>,
     pub preview: PreviewProfile,
     pub sync: SyncProfile,
     pub ai: AiProfile,
@@ -26,33 +25,6 @@ pub struct StyleProfile {
 pub struct WorkspaceProfile {
     pub name: String,
     pub root_dir: String,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
-#[serde(rename_all = "lowercase")]
-pub enum DbType {
-    Mysql,
-    Postgresql,
-    Oracle,
-    Sqlserver,
-}
-
-impl Default for DbType {
-    fn default() -> Self {
-        Self::Mysql
-    }
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
-#[serde(default)]
-pub struct DataConnectionProfile {
-    pub connection_name: String,
-    pub db_type: DbType,
-    pub host: String,
-    pub port: u16,
-    pub database: String,
-    pub username: String,
-    pub password: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -196,7 +168,6 @@ impl Default for ProjectConfig {
         Self {
             style: StyleProfile::default(),
             workspace: WorkspaceProfile::default(),
-            data_connections: Vec::new(),
             preview: PreviewProfile::default(),
             sync: SyncProfile::default(),
             ai: AiProfile::default(),
@@ -218,20 +189,6 @@ impl Default for WorkspaceProfile {
         Self {
             name: "default".into(),
             root_dir: String::new(),
-        }
-    }
-}
-
-impl Default for DataConnectionProfile {
-    fn default() -> Self {
-        Self {
-            connection_name: String::new(),
-            db_type: DbType::default(),
-            host: String::new(),
-            port: 3306,
-            database: String::new(),
-            username: String::new(),
-            password: String::new(),
         }
     }
 }

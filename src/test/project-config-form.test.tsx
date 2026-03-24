@@ -70,7 +70,7 @@ it(
             message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
           }),
           saveConfig: async () => undefined,
-          testDataConnection: async () => ({ ok: true, message: '连接成功' }),
+          listDesignerConnections: async () => [],
           testRemoteSyncConnection: async () => ({ ok: true, message: '远程设计连接成功' })
         }}
       />
@@ -117,10 +117,10 @@ it(
   fireEvent.click(screen.getByRole('tab', { name: '数据连接' }))
 
   await waitFor(() =>
-    expect(screen.getByRole('button', { name: '新增数据连接' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '读取远端连接' })).toBeInTheDocument()
   )
-  // 表格应显示空状态
-  expect(screen.getByText('暂无数据连接')).toBeInTheDocument()
+  expect(screen.getByText('只读取设计器远端已有数据连接')).toBeInTheDocument()
+  expect(screen.getByText('暂无远端连接')).toBeInTheDocument()
 
   fireEvent.click(screen.getByRole('tab', { name: '文件管理' }))
 
@@ -156,21 +156,11 @@ it('loads config from project directory and saves back to project config file', 
   loaded.ai.provider = 'openai'
   loaded.ai.model = 'gpt-5'
   loaded.ai.api_key = 'sk-demo'
-  loaded.data_connections = [
-    {
-      connection_name: 'FR Demo',
-      db_type: 'mysql',
-      host: '127.0.0.1',
-      port: 3306,
-      database: 'demo',
-      username: 'report',
-      password: 'secret'
-    }
-  ]
   const loadConfig = vi.fn(async (projectDir: string) => ({
     exists: projectDir === '/tmp/existing',
     config: loaded
   }))
+  const listDesignerConnections = vi.fn(async () => [{ name: 'test' }, { name: 'FRDemo' }])
   const listReportletEntries = vi
     .fn<(projectDir: string, relativePath?: string) => Promise<ReportletEntry[]>>()
     .mockImplementation(async (_projectDir, relativePath) => {
@@ -221,7 +211,6 @@ it('loads config from project directory and saves back to project config file', 
     message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
   }))
   const saveConfig = vi.fn(async () => undefined)
-  const testDataConnection = vi.fn(async () => ({ ok: true, message: '连接成功' }))
   const testRemoteSyncConnection = vi.fn(async () => ({ ok: true, message: '远程设计连接成功' }))
   const browseDirectory = vi
     .fn<() => Promise<string | null>>()
@@ -238,7 +227,7 @@ it('loads config from project directory and saves back to project config file', 
           listRemoteDirectories: async () => [],
           pullRemoteReportletFile,
           saveConfig,
-          testDataConnection,
+          listDesignerConnections,
           testRemoteSyncConnection
         }}
       />
@@ -279,14 +268,21 @@ it('loads config from project directory and saves back to project config file', 
   )
   expect(screen.getByText('远程设计连接成功')).toBeInTheDocument()
 
-  // 切换到数据连接页签验证 Table 行
+  // 切换到数据连接页签验证远端连接读取
   fireEvent.click(screen.getByRole('tab', { name: '数据连接' }))
   await waitFor(() =>
-    expect(screen.getByText('FR Demo')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '读取远端连接' })).toBeInTheDocument()
   )
-  expect(screen.getByText('127.0.0.1:3306')).toBeInTheDocument()
-  expect(screen.getByText('demo')).toBeInTheDocument()
-  expect(screen.getByText('report')).toBeInTheDocument()
+  fireEvent.click(screen.getByRole('button', { name: '读取远端连接' }))
+  await waitFor(() =>
+    expect(listDesignerConnections).toHaveBeenCalledWith({
+      url: 'http://127.0.0.1:8075/webroot/decision',
+      username: 'preview-user',
+      password: 'preview-pass'
+    })
+  )
+  expect(screen.getByText('test')).toBeInTheDocument()
+  expect(screen.getByText('FRDemo')).toBeInTheDocument()
 
   // 切换回项目页签再保存
   fireEvent.click(screen.getByRole('tab', { name: '项目' }))
@@ -313,18 +309,7 @@ it('loads config from project directory and saves back to project config file', 
           provider: 'openai',
           model: 'gpt-5',
           api_key: 'sk-demo'
-        }),
-        data_connections: [
-          expect.objectContaining({
-            connection_name: 'FR Demo',
-            db_type: 'mysql',
-            host: '127.0.0.1',
-            port: 3306,
-            database: 'demo',
-            username: 'report',
-            password: 'secret'
-          })
-        ]
+        })
       })
     )
   )
@@ -409,7 +394,7 @@ it('shows saving state while saving project config', async () => {
             message: '远端检查通过，已拉取远端最新内容到本地，可继续修改模板。'
           }),
           saveConfig,
-          testDataConnection: async () => ({ ok: true, message: '连接成功' }),
+          listDesignerConnections: async () => [],
           testRemoteSyncConnection: async () => ({ ok: true, message: '远程设计连接成功' })
         }}
       />

@@ -11,13 +11,23 @@ description: 编辑 FineReport FVS 决策报表（数据大屏）模板。支持
 
 FVS 是 ZIP 包，所有编辑必须遵循 **解压 → 修改 → 重新打包** 流程。
 
-在开始编辑前，必须先在项目目录执行：
+在开始编辑前，必须先判断系统类型，再在项目目录执行对应 helper：
 
 ```bash
+# macOS / Linux
 ./.codex/project-sync.sh prepare-edit reportlets/<名称>.fvs
+
+# Windows
+.\.codex\project-sync.cmd prepare-edit reportlets\<名称>.fvs
 ```
 
 这个步骤会先检查远端文件是否存在、是否锁定，并把远端最新内容拉回项目目录。失败时必须立即停止，不能跳过。
+
+如果 FVS 组件绑定了数据集：
+
+- 先用 `fr-db` 读取设计器远端已有连接
+- 先做真实字段扫描，再调整组件配置
+- 参考其他大屏只看布局和交互，字段与 SQL 以设计器远端返回结果为准
 
 使用 `scripts/fvs_helper.py` 提供的辅助函数简化操作：
 

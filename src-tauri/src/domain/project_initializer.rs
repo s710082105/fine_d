@@ -12,7 +12,6 @@ const CODEX_PROJECT_CONTEXT_PATH: &str = ".codex/project-context.md";
 const CODEX_PROJECT_RULES_PATH: &str = ".codex/project-rules.md";
 const CODEX_MAPPINGS_PATH: &str = ".codex/mappings.json";
 const CODEX_SKILLS_PATH: &str = ".codex/skills/";
-const CODEX_PROJECT_SYNC_HELPER_PATH: &str = ".codex/project-sync.sh";
 const DEFAULT_SKILLS: [&str; 6] = [
     "fr-create",
     "fr-cpt",
@@ -74,7 +73,7 @@ fn write_project_codex_context(project_dir: &Path, config: &ProjectConfig) -> Re
     let codex_dir = project_dir.join(PROJECT_CODEX_DIR);
     build_runtime_context(codex_dir.as_path(), config, &skills)
         .map_err(|error| format!("failed to build project codex context: {error}"))?;
-    write_project_sync_helper(project_dir)?;
+    write_project_helpers(project_dir)?;
     relocate_project_agents_file(project_dir)
 }
 
@@ -106,20 +105,85 @@ fn rewrite_project_agents_content(content: &str) -> String {
         .replace("`skills/`", &format!("`{CODEX_SKILLS_PATH}`"))
 }
 
-fn write_project_sync_helper(project_dir: &Path) -> Result<(), String> {
-    let helper_path = project_dir.join(CODEX_PROJECT_SYNC_HELPER_PATH);
-    let helper = render_project_sync_helper(project_dir);
-    fs::write(&helper_path, helper)
-        .map_err(|error| format!("failed to write project sync helper: {error}"))?;
-    set_executable(&helper_path)
+fn write_project_helpers(project_dir: &Path) -> Result<(), String> {
+    write_project_helper(
+        project_dir,
+        project_sync_helper_relative_path(),
+        render_project_sync_helper(project_dir),
+        "project sync",
+    )?;
+    write_project_helper(
+        project_dir,
+        project_data_helper_relative_path(),
+        render_project_data_helper(project_dir),
+        "project data",
+    )
 }
 
 fn render_project_sync_helper(project_dir: &Path) -> String {
+    if cfg!(windows) {
+        return render_windows_sync_helper(project_dir);
+    }
     format!(
         "#!/bin/sh\nset -eu\nPROJECT_DIR='{project_dir}'\nSYNC_BIN='{sync_bin}'\ncommand=\"${{1-}}\"\nrelative_path=\"${{2-}}\"\ncase \"$command\" in\n  prepare-create)\n    exec \"$SYNC_BIN\" --project-sync-prepare-create \"$PROJECT_DIR\" \"$relative_path\"\n    ;;\n  prepare-edit)\n    exec \"$SYNC_BIN\" --project-sync-prepare-edit \"$PROJECT_DIR\" \"$relative_path\"\n    ;;\n  *)\n    printf '%s\\n' 'usage: ./.codex/project-sync.sh prepare-create|prepare-edit reportlets/<name>.cpt' >&2\n    exit 1\n    ;;\nesac\n",
         project_dir = to_posix_path(project_dir.to_string_lossy().as_ref()),
         sync_bin = to_posix_path(resolve_sync_binary_path().to_string_lossy().as_ref())
     )
+}
+
+fn render_project_data_helper(project_dir: &Path) -> String {
+    if cfg!(windows) {
+        return render_windows_data_helper(project_dir);
+    }
+    format!(
+        "#!/bin/sh\nset -eu\nPROJECT_DIR='{project_dir}'\nSYNC_BIN='{sync_bin}'\ncommand=\"${{1-}}\"\ncase \"$command\" in\n  list-connections)\n    exec \"$SYNC_BIN\" --project-data-list-connections \"$PROJECT_DIR\"\n    ;;\n  list-datasets)\n    exec \"$SYNC_BIN\" --project-data-list-datasets \"$PROJECT_DIR\"\n    ;;\n  preview-dataset)\n    exec \"$SYNC_BIN\" --project-data-preview-dataset \"$PROJECT_DIR\" \"${{2-}}\"\n    ;;\n  preview-sql)\n    exec \"$SYNC_BIN\" --project-data-preview-sql \"$PROJECT_DIR\" \"${{2-}}\" \"${{3-}}\"\n    ;;\n  *)\n    printf '%s\\n' 'usage: ./.codex/fr-data.sh list-connections|list-datasets|preview-dataset <dataset>|preview-sql <connection> <sql>' >&2\n    exit 1\n    ;;\nesac\n",
+        project_dir = to_posix_path(project_dir.to_string_lossy().as_ref()),
+        sync_bin = to_posix_path(resolve_sync_binary_path().to_string_lossy().as_ref())
+    )
+}
+
+fn render_windows_sync_helper(project_dir: &Path) -> String {
+    format!(
+        "@echo off\r\nsetlocal\r\nset \"PROJECT_DIR={project_dir}\"\r\nset \"SYNC_BIN={sync_bin}\"\r\nset \"COMMAND=%~1\"\r\nset \"RELATIVE_PATH=%~2\"\r\nif \"%COMMAND%\"==\"prepare-create\" goto prepare_create\r\nif \"%COMMAND%\"==\"prepare-edit\" goto prepare_edit\r\necho usage: .\\.codex\\project-sync.cmd prepare-create^|prepare-edit reportlets\\^<name^>.cpt 1>&2\r\nexit /b 1\r\n:prepare_create\r\n\"%SYNC_BIN%\" --project-sync-prepare-create \"%PROJECT_DIR%\" \"%RELATIVE_PATH%\"\r\nexit /b %errorlevel%\r\n:prepare_edit\r\n\"%SYNC_BIN%\" --project-sync-prepare-edit \"%PROJECT_DIR%\" \"%RELATIVE_PATH%\"\r\nexit /b %errorlevel%\r\n",
+        project_dir = project_dir.display(),
+        sync_bin = resolve_sync_binary_path().display(),
+    )
+}
+
+fn render_windows_data_helper(project_dir: &Path) -> String {
+    format!(
+        "@echo off\r\nsetlocal\r\nset \"PROJECT_DIR={project_dir}\"\r\nset \"SYNC_BIN={sync_bin}\"\r\nset \"COMMAND=%~1\"\r\nif \"%COMMAND%\"==\"list-connections\" goto list_connections\r\nif \"%COMMAND%\"==\"list-datasets\" goto list_datasets\r\nif \"%COMMAND%\"==\"preview-dataset\" goto preview_dataset\r\nif \"%COMMAND%\"==\"preview-sql\" goto preview_sql\r\necho usage: .\\.codex\\fr-data.cmd list-connections^|list-datasets^|preview-dataset ^<dataset^>^|preview-sql ^<connection^> ^<sql^> 1>&2\r\nexit /b 1\r\n:list_connections\r\n\"%SYNC_BIN%\" --project-data-list-connections \"%PROJECT_DIR%\"\r\nexit /b %errorlevel%\r\n:list_datasets\r\n\"%SYNC_BIN%\" --project-data-list-datasets \"%PROJECT_DIR%\"\r\nexit /b %errorlevel%\r\n:preview_dataset\r\n\"%SYNC_BIN%\" --project-data-preview-dataset \"%PROJECT_DIR%\" \"%~2\"\r\nexit /b %errorlevel%\r\n:preview_sql\r\n\"%SYNC_BIN%\" --project-data-preview-sql \"%PROJECT_DIR%\" \"%~2\" \"%~3\"\r\nexit /b %errorlevel%\r\n",
+        project_dir = project_dir.display(),
+        sync_bin = resolve_sync_binary_path().display(),
+    )
+}
+
+fn write_project_helper(
+    project_dir: &Path,
+    relative_path: &str,
+    content: String,
+    label: &str,
+) -> Result<(), String> {
+    let helper_path = project_dir.join(relative_path);
+    fs::write(&helper_path, content)
+        .map_err(|error| format!("failed to write {label} helper: {error}"))?;
+    set_executable(&helper_path)
+}
+
+fn project_sync_helper_relative_path() -> &'static str {
+    if cfg!(windows) {
+        ".codex/project-sync.cmd"
+    } else {
+        ".codex/project-sync.sh"
+    }
+}
+
+fn project_data_helper_relative_path() -> &'static str {
+    if cfg!(windows) {
+        ".codex/fr-data.cmd"
+    } else {
+        ".codex/fr-data.sh"
+    }
 }
 
 fn set_executable(path: &Path) -> Result<(), String> {

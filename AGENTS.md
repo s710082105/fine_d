@@ -22,6 +22,17 @@ There is no committed build pipeline yet. Until the Tauri scaffold lands, use re
 
 When Rust/Tauri code is introduced, document the canonical run/test commands in `README.md` and keep them consistent with this file.
 
+## FineReport Workflow
+
+- 涉及数据集、SQL、报表字段时，必须先读取设计器远端已有连接并完成字段扫描，再开始设计报表。
+- 参考其他模板的数据使用方式只能作为写法参考，字段、连接名和 SQL 以设计器远端返回结果为准。
+- 生成命令前先判断当前系统类型；Windows 不能假设存在 `bash`/`sh.exe`。
+- FineReport 相关 skill 使用边界：
+- `fr-db`：读取设计器远端连接、字段扫描、SQL 试跑
+- `fr-create`：新建 CPT/FVS 并完成创建前远端预检
+- `fr-cpt`：编辑 CPT
+- `fr-fvs`：编辑 FVS
+
 ## Coding Style & Naming Conventions
 
 - Markdown: use clear headings, short sections, and repository-specific instructions.

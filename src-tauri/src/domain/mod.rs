@@ -4,6 +4,8 @@ pub mod codex_process_manager;
 pub mod context_builder;
 pub mod context_builder_data;
 pub mod event_bridge;
+pub mod fine_decision_client;
+pub mod fine_decision_encryption;
 pub mod fine_remote_bridge;
 pub mod fine_remote_bridge_runtime;
 pub mod project_config;

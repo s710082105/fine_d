@@ -24,11 +24,16 @@ description: 创建新的 FineReport 模板（CPT 普通报表 或 FVS 决策报
 
 ### 步骤 2：先执行远端创建预检
 
-在项目目录先执行：
+先判断当前系统类型，再在项目目录执行对应 helper：
 
 ```bash
+# macOS / Linux
 ./.codex/project-sync.sh prepare-create reportlets/<名称>.cpt
 ./.codex/project-sync.sh prepare-create reportlets/<名称>.fvs
+
+# Windows
+.\.codex\project-sync.cmd prepare-create reportlets\<名称>.cpt
+.\.codex\project-sync.cmd prepare-create reportlets\<名称>.fvs
 ```
 
 这个步骤会负责：
@@ -49,7 +54,9 @@ cp ./.codex/skills/fr-create/assets/blank.cpt ./reportlets/<名称>.cpt
 cp ./.codex/skills/fr-create/assets/blank.fvs ./reportlets/<名称>.fvs
 ```
 
-### 步骤 4：配置数据源（如果用户提供了数据库信息）
+### 步骤 4：配置数据源
+
+先使用 `fr-db` 读取设计器远端已有连接并完成字段扫描、SQL 试跑，再写入数据源 XML。参考其他模板只看样式和命名，字段与 SQL 以设计器远端返回结果为准。
 
 **CPT 数据源**（插入到 `<TableDataMap>` 内）：
 ```xml
@@ -98,4 +105,4 @@ cp ./.codex/skills/fr-create/assets/blank.fvs ./reportlets/<名称>.fvs
 
 - 文件名支持中文
 - FVS 模板修改后必须重新打包为 ZIP
-- 数据库连接名必须是 FineReport 服务器中已配置的连接名称
+- 数据库连接名必须是 FineReport 设计器远端中已存在的连接名称

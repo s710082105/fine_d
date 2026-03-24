@@ -90,7 +90,8 @@ fn embedded_project_initializer_pulls_runtime_tree_and_builds_codex_context() {
     assert!(project_dir.join(".codex/project-context.md").exists());
     assert!(project_dir.join(".codex/project-rules.md").exists());
     assert!(project_dir.join(".codex/mappings.json").exists());
-    assert!(project_dir.join(".codex/project-sync.sh").exists());
+    assert!(project_sync_helper_path(&project_dir).exists());
+    assert!(project_data_helper_path(&project_dir).exists());
 }
 
 #[test]
@@ -148,5 +149,22 @@ fn refresh_project_context_skips_remote_bootstrap() {
     assert!(project_dir.join(".codex/project-context.md").exists());
     assert!(project_dir.join(".codex/project-rules.md").exists());
     assert!(project_dir.join(".codex/mappings.json").exists());
-    assert!(project_dir.join(".codex/project-sync.sh").exists());
+    assert!(project_sync_helper_path(&project_dir).exists());
+    assert!(project_data_helper_path(&project_dir).exists());
+}
+
+fn project_sync_helper_path(project_dir: &Path) -> PathBuf {
+    if cfg!(windows) {
+        project_dir.join(".codex/project-sync.cmd")
+    } else {
+        project_dir.join(".codex/project-sync.sh")
+    }
+}
+
+fn project_data_helper_path(project_dir: &Path) -> PathBuf {
+    if cfg!(windows) {
+        project_dir.join(".codex/fr-data.cmd")
+    } else {
+        project_dir.join(".codex/fr-data.sh")
+    }
 }

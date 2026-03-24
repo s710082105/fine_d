@@ -54,11 +54,11 @@ fn runtime_prerequisites_report_git_install_hint_for_windows() {
     assert!(git.fix_hint.contains("安装脚本"));
     assert_eq!(git.script_path, "scripts/install-runtime-windows.cmd");
     assert_eq!(platform.status, "blocked");
-    assert!(platform.message.contains("Git Bash"));
+    assert!(platform.message.contains("依赖 Git"));
 }
 
 #[test]
-fn runtime_prerequisites_report_windows_shell_gap_explicitly() {
+fn runtime_prerequisites_report_windows_sync_ready_without_shell() {
     let report = inspect_runtime_prerequisites_with(
         RuntimePlatform::Windows,
         RuntimeInspectionStatus {
@@ -92,9 +92,10 @@ fn runtime_prerequisites_report_windows_shell_gap_explicitly() {
         .find(|item| item.key == "platform-sync")
         .expect("platform item");
 
-    assert!(!report.ready);
-    assert_eq!(platform.status, "blocked");
-    assert!(platform.message.contains("sh.exe"));
+    assert!(report.ready);
+    assert_eq!(platform.status, "ready");
+    assert!(platform.message.contains(".cmd helper"));
+    assert!(platform.message.contains("不依赖 sh.exe"));
 }
 
 #[test]

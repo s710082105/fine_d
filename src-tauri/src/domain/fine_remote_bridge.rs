@@ -191,9 +191,9 @@ fn summarize_bridge_error(url: &str, designer_root: &str, raw: &str) -> String {
     if raw.contains("sync.designer_root does not exist") {
         return format!("本地设计器目录不存在：`{designer_root}`。");
     }
-    if raw.contains("required executable not found: javac") {
+    if raw.contains("Embedded bridge class is missing") {
         return format!(
-            "本地 Java 编译器不可用：未找到 `javac`。已尝试复用设计器目录 `{designer_root}` 下的 Java 环境，但该目录只包含运行时。请安装 JDK，或把 `javac` 加入 PATH 后重试。"
+            "内置桥接类缺失：软件运行目录中的 `FrRemoteBridge.class` 未成功释放。请重新安装或重新打包应用后再试。设计器目录：`{designer_root}`。"
         );
     }
     if raw.contains("required executable not found: java") {
@@ -203,7 +203,7 @@ fn summarize_bridge_error(url: &str, designer_root: &str, raw: &str) -> String {
     }
     if raw.contains("UnsupportedClassVersionError") || raw.contains("class file version") {
         return format!(
-            "本地 Java 版本不兼容：设计器目录 `{designer_root}` 下的运行时版本过低，无法加载桥接类。当前版本已改为优先编译 Java 8 兼容字节码；请重试一次，让桥接重新编译后再连接。"
+            "本地 Java 版本不兼容：设计器目录 `{designer_root}` 下的运行时版本过低，无法加载内置桥接类。请确认设计器自带 Java 至少支持 Java 8。"
         );
     }
     format!("远程设计连接失败：{raw}")
@@ -250,15 +250,15 @@ mod tests {
     }
 
     #[test]
-    fn summarize_bridge_error_translates_missing_javac() {
+    fn summarize_bridge_error_translates_missing_embedded_class() {
         let message = summarize_bridge_error(
             "http://demo",
             "C:/FineReport",
-            "required executable not found: javac",
+            "Embedded bridge class is missing: /tmp/fine_remote_bridge_runtime/java/fine_remote/FrRemoteBridge.class",
         );
 
-        assert!(message.contains("Java"));
-        assert!(message.contains("javac"));
+        assert!(message.contains("内置桥接类缺失"));
+        assert!(message.contains("FrRemoteBridge.class"));
     }
 
     #[test]
@@ -271,7 +271,7 @@ mod tests {
 
         assert!(message.contains("Java 版本不兼容"));
         assert!(message.contains("C:/FineReport"));
-        assert!(message.contains("重新编译"));
+        assert!(message.contains("Java 8"));
     }
 
     #[test]

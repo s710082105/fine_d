@@ -7,29 +7,33 @@ const PYTHON_ROOT: &str = "python";
 
 struct EmbeddedFile {
     relative_path: &'static str,
-    content: &'static str,
+    content: &'static [u8],
 }
 
-const EMBEDDED_FILES: [EmbeddedFile; 5] = [
+const EMBEDDED_FILES: [EmbeddedFile; 6] = [
     EmbeddedFile {
         relative_path: "python/fine_remote/__init__.py",
-        content: include_str!("../../../python/fine_remote/__init__.py"),
+        content: include_bytes!("../../../python/fine_remote/__init__.py"),
     },
     EmbeddedFile {
         relative_path: "python/fine_remote/cli.py",
-        content: include_str!("../../../python/fine_remote/cli.py"),
+        content: include_bytes!("../../../python/fine_remote/cli.py"),
     },
     EmbeddedFile {
         relative_path: "python/fine_remote/client.py",
-        content: include_str!("../../../python/fine_remote/client.py"),
+        content: include_bytes!("../../../python/fine_remote/client.py"),
     },
     EmbeddedFile {
         relative_path: "python/fine_remote/jvm.py",
-        content: include_str!("../../../python/fine_remote/jvm.py"),
+        content: include_bytes!("../../../python/fine_remote/jvm.py"),
     },
     EmbeddedFile {
-        relative_path: "java/fine_remote/FrRemoteBridge.java",
-        content: include_str!("../../../java/fine_remote/FrRemoteBridge.java"),
+        relative_path: "java/fine_remote/FrRemoteBridge.class",
+        content: include_bytes!("../../../java/fine_remote/FrRemoteBridge.class"),
+    },
+    EmbeddedFile {
+        relative_path: "java/fine_remote/FrRemoteBridge$Arguments.class",
+        content: include_bytes!("../../../java/fine_remote/FrRemoteBridge$Arguments.class"),
     },
 ];
 
@@ -83,7 +87,7 @@ mod tests {
     }
 
     #[test]
-    fn stage_bridge_runtime_writes_python_package_and_java_source() {
+    fn stage_bridge_runtime_writes_python_package_and_java_class() {
         let root = temp_dir("fine_remote_bridge_runtime");
         stage_bridge_runtime(root.as_path()).expect("stage bridge runtime");
 
@@ -92,7 +96,10 @@ mod tests {
             .join(PYTHON_PACKAGE)
             .join("cli.py")
             .exists());
-        assert!(root.join("java/fine_remote/FrRemoteBridge.java").exists());
+        assert!(root.join("java/fine_remote/FrRemoteBridge.class").exists());
+        assert!(root
+            .join("java/fine_remote/FrRemoteBridge$Arguments.class")
+            .exists());
 
         let jvm_source =
             fs::read_to_string(root.join("python").join(PYTHON_PACKAGE).join("jvm.py"))

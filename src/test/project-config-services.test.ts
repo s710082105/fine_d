@@ -34,6 +34,25 @@ it('uses camelCase designerRoot when testing remote sync connection', async () =
   })
 })
 
+it('invokes designer connection list command with preview credentials', async () => {
+  invoke.mockResolvedValue([{ name: 'test' }])
+  const { tauriServices } = await import('../components/config/project-config-services')
+
+  await tauriServices.listDesignerConnections({
+    url: 'http://127.0.0.1:8075/webroot/decision',
+    username: 'admin',
+    password: 'admin'
+  })
+
+  expect(invoke).toHaveBeenCalledWith('list_designer_connections', {
+    request: {
+      url: 'http://127.0.0.1:8075/webroot/decision',
+      username: 'admin',
+      password: 'admin'
+    }
+  })
+})
+
 it('invokes remote pull command with projectDir and relativePath', async () => {
   invoke.mockResolvedValue({
     ok: true,

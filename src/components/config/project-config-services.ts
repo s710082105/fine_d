@@ -1,6 +1,7 @@
 import { invoke } from '@tauri-apps/api/core'
 import type {
-  DataConnectionProfile,
+  DesignerConnectionSummary,
+  FineDecisionRequest,
   ListRemoteDirectoriesRequest,
   PrepareRemoteFileResult,
   ProjectConfig,
@@ -17,6 +18,9 @@ export type TestConnectionResult = { ok: boolean; message: string }
 export type ProjectConfigServices = {
   browseDirectory: () => Promise<string | null>
   loadConfig: (projectDir: string) => Promise<LoadResult>
+  listDesignerConnections: (
+    request: FineDecisionRequest
+  ) => Promise<DesignerConnectionSummary[]>
   listReportletEntries: (
     projectDir: string,
     relativePath?: string
@@ -32,7 +36,6 @@ export type ProjectConfigServices = {
     relativePath: string
   ) => Promise<PrepareRemoteFileResult>
   saveConfig: (projectDir: string, config: ProjectConfig) => Promise<void>
-  testDataConnection: (connection: DataConnectionProfile) => Promise<TestConnectionResult>
   testRemoteSyncConnection: (
     request: TestRemoteSyncConnectionRequest
   ) => Promise<TestConnectionResult>
@@ -44,6 +47,12 @@ function resolveInvoke(): InvokeFn {
 
 async function loadConfig(projectDir: string): Promise<LoadResult> {
   return resolveInvoke()<LoadResult>('load_project_config', { projectDir })
+}
+
+async function listDesignerConnections(
+  request: FineDecisionRequest
+): Promise<DesignerConnectionSummary[]> {
+  return resolveInvoke()<DesignerConnectionSummary[]>('list_designer_connections', { request })
 }
 
 async function browseDirectory(): Promise<string | null> {
@@ -86,12 +95,6 @@ async function saveConfig(projectDir: string, config: ProjectConfig): Promise<vo
   await resolveInvoke()<void>('save_project_config', { projectDir, config })
 }
 
-async function testDataConnection(
-  connection: DataConnectionProfile
-): Promise<TestConnectionResult> {
-  return resolveInvoke()<TestConnectionResult>('test_data_connection', { connection })
-}
-
 async function testRemoteSyncConnection(
   request: TestRemoteSyncConnectionRequest
 ): Promise<TestConnectionResult> {
@@ -101,11 +104,11 @@ async function testRemoteSyncConnection(
 export const tauriServices: ProjectConfigServices = {
   browseDirectory,
   loadConfig,
+  listDesignerConnections,
   listReportletEntries,
   listRemoteReportletEntries,
   listRemoteDirectories,
   pullRemoteReportletFile,
   saveConfig,
-  testDataConnection,
   testRemoteSyncConnection
 }

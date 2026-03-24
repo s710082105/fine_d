@@ -9,7 +9,7 @@ description: 编辑 FineReport CPT 普通报表模板。支持设置筛选参数
 
 ## 编辑工作流
 
-0. 先在项目目录执行 `./.codex/project-sync.sh prepare-edit reportlets/<名称>.cpt`
+0. 先判断系统类型，再在项目目录执行对应 helper 的 `prepare-edit reportlets/<名称>.cpt`
 1. 用 `Read` 工具读取目标 CPT 文件（XML 纯文本）
 2. 分析当前结构，定位需要修改的节点
 3. 用 `Edit` 工具进行精确的 XML 修改
@@ -18,6 +18,12 @@ description: 编辑 FineReport CPT 普通报表模板。支持设置筛选参数
 6. 修改完成后汇报变更内容
 
 `prepare-edit` 会先检查远端文件是否存在、是否锁定，并把远端最新内容拉回项目目录。这个步骤失败时必须立即停止，不能跳过。
+
+如果这次修改涉及数据集或 SQL：
+
+- 先使用 `fr-db` 读取设计器远端已有数据连接
+- 先做真实字段扫描，再改模板
+- 参考其他 CPT 只看版式和写法，字段和 SQL 以设计器远端返回结果为准
 
 ## 浏览器复核要求
 

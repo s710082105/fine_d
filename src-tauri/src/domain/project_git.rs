@@ -58,6 +58,9 @@ fn is_git_repository(project_dir: &Path) -> Result<bool, String> {
 }
 
 fn install_post_commit_hook(project_dir: &Path, config: &ProjectConfig) -> Result<(), String> {
+    if cfg!(windows) {
+        return Ok(());
+    }
     let hook_path = resolve_git_path(project_dir, "hooks/post-commit")?;
     if hook_path.exists() {
         let existing = fs::read_to_string(&hook_path)

@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react'
 import {
   AiProfile,
-  DataConnectionProfile,
+  DesignerConnectionSummary,
   FIXED_REMOTE_RUNTIME_DIR,
   PreviewProfile,
   ProjectConfig,
@@ -52,6 +52,8 @@ export function useProjectConfigState(
   const [isDirty, setIsDirty] = useState(false)
   const [revision, setRevision] = useState(INITIAL_CONFIG_REVISION)
   const [projectReady, setProjectReady] = useState(false)
+  const [designerConnections, setDesignerConnections] = useState<DesignerConnectionSummary[]>([])
+  const [designerConnectionsLoading, setDesignerConnectionsLoading] = useState(false)
   const [localReportletEntries, setLocalReportletEntries] = useState<ReportletEntry[]>([])
   const [remoteReportletEntries, setRemoteReportletEntries] = useState<ReportletEntry[]>([])
   const [remoteReportletEntriesLoading, setRemoteReportletEntriesLoading] = useState(false)
@@ -142,11 +144,34 @@ export function useProjectConfigState(
       .finally(() => setRemoteReportletPulling(false))
   }
 
+  const refreshDesignerConnections = () => {
+    setError('')
+    setStatus('')
+    setDesignerConnectionsLoading(true)
+    return services
+      .listDesignerConnections({
+        url: config.preview.url.trim(),
+        username: config.preview.account.trim(),
+        password: config.preview.password
+      })
+      .then((connections) => {
+        setDesignerConnections(connections)
+        setStatus('已读取设计器远端数据连接')
+        return connections
+      })
+      .catch((loadError) => {
+        setError(`读取设计器远端数据连接失败：${getErrorMessage(loadError)}`)
+        throw loadError
+      })
+      .finally(() => setDesignerConnectionsLoading(false))
+  }
+
   const updateConfig = (next: ProjectConfig) => {
     setConfig(next)
     setIsDirty(true)
     setError('')
     setStatus('')
+    setDesignerConnections([])
     setRemoteConnectionStatus('idle')
     setRemoteConnectionMessage('')
   }
@@ -154,6 +179,7 @@ export function useProjectConfigState(
   const commitProjectDir = (projectDir: string) => {
     const trimmed = projectDir.trim()
     setConfig((current) => withProjectDir(current, trimmed))
+    setDesignerConnections([])
     setLocalReportletEntries([])
     setRemoteReportletEntries([])
     setError('')
@@ -317,22 +343,6 @@ export function useProjectConfigState(
 
   const updateWorkspace = (patch: Partial<WorkspaceProfile>) =>
     updateConfig(mergeConfig(config, 'workspace', patch))
-  const updateDataConnection = (
-    index: number,
-    conn: DataConnectionProfile
-  ) => {
-    const nextConnections = [...config.data_connections]
-    nextConnections[index] = conn
-    updateConfig({ ...config, data_connections: nextConnections })
-  }
-  const addDataConnection = (conn: DataConnectionProfile) => {
-    updateConfig({ ...config, data_connections: [...config.data_connections, conn] })
-  }
-  const removeDataConnection = (index: number) =>
-    updateConfig({
-      ...config,
-      data_connections: config.data_connections.filter((_, itemIndex) => itemIndex !== index)
-    })
   const updatePreview = (patch: Partial<PreviewProfile>) =>
     updateConfig(mergeConfig(config, 'preview', patch))
   const updateAi = (patch: Partial<AiProfile>) =>
@@ -341,8 +351,6 @@ export function useProjectConfigState(
     updateConfig(mergeConfig(config, 'sync', patch))
   const updateStyle = (patch: Partial<StyleProfile>) =>
     updateConfig(mergeConfig(config, 'style', patch))
-  const testDataConnection = (conn: DataConnectionProfile) =>
-    services.testDataConnection(conn)
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -383,6 +391,8 @@ export function useProjectConfigState(
     remoteConnectionStatus,
     remoteConnectionMessage,
     projectReady,
+    designerConnections,
+    designerConnectionsLoading,
     localReportletEntries,
     remoteReportletEntries,
     remoteReportletEntriesLoading,
@@ -393,6 +403,7 @@ export function useProjectConfigState(
     selectedRemoteDirectory,
     chooseProjectDir,
     chooseDesignerRoot,
+    refreshDesignerConnections,
     refreshRemoteReportletEntries,
     pullRemoteReportletFile,
     loadLocalReportletChildren,
@@ -403,15 +414,11 @@ export function useProjectConfigState(
     loadRemoteDirectoryChildren,
     selectRemoteDirectory: setSelectedRemoteDirectory,
     confirmRemoteDirectory,
-    addDataConnection,
-    removeDataConnection,
-    updateDataConnection,
     updateWorkspace,
     updatePreview,
     updateAi,
     updateSync,
     updateStyle,
-    testDataConnection,
     onSubmit
   }
 }

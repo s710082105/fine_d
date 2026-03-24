@@ -12,18 +12,6 @@ export interface WorkspaceProfile {
   root_dir: string
 }
 
-export type DbType = 'mysql' | 'postgresql' | 'oracle' | 'sqlserver'
-
-export interface DataConnectionProfile {
-  connection_name: string
-  db_type: DbType
-  host: string
-  port: number
-  database: string
-  username: string
-  password: string
-}
-
 export interface PreviewProfile {
   url: string
   mode: PreviewMode
@@ -88,10 +76,19 @@ export interface TestRemoteSyncConnectionRequest {
   path: string
 }
 
+export interface FineDecisionRequest {
+  url: string
+  username: string
+  password: string
+}
+
+export interface DesignerConnectionSummary {
+  name: string
+}
+
 export interface ProjectConfig {
   style: StyleProfile
   workspace: WorkspaceProfile
-  data_connections: DataConnectionProfile[]
   preview: PreviewProfile
   sync: SyncProfile
   ai: AiProfile

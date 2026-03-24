@@ -11,7 +11,7 @@ const NODE_KEY: &str = "node";
 const PYTHON_KEY: &str = "python";
 const CODEX_KEY: &str = "codex";
 const PLATFORM_SYNC_KEY: &str = "platform-sync";
-const WINDOWS_GIT_SHELL_HINT: &str = "Windows 请先执行安装脚本安装 Git，并确保 Git Bash 可用。";
+const WINDOWS_GIT_HINT: &str = "Windows 请先执行安装脚本安装 Git。";
 const MACOS_GIT_HINT: &str = "请执行 macOS 安装脚本，或手动安装 Homebrew 后执行 brew install git。";
 const MACOS_RUNTIME_HINT: &str = "请执行 macOS 安装脚本，并按提示选择官方源或国内源完成环境安装。";
 const WINDOWS_RUNTIME_HINT: &str =
@@ -109,6 +109,7 @@ pub fn inspect_runtime_prerequisites_with(
         ),
         platform_sync_item(
             platform,
+            &inspection.git,
             inspection.hook_shell.as_ref(),
             installer_path.as_str(),
         ),
@@ -149,34 +150,40 @@ fn command_item(
 
 fn platform_sync_item(
     platform: RuntimePlatform,
+    git: &CommandInstallationStatus,
     hook_shell: Option<&PathBuf>,
     script_path: &str,
 ) -> RuntimePrerequisiteItem {
     match platform {
-        RuntimePlatform::Windows => windows_sync_item(hook_shell, script_path),
+        RuntimePlatform::Windows => windows_sync_item(git, hook_shell, script_path),
         RuntimePlatform::Macos => unix_sync_item("当前发行配置支持 macOS 同步链路", script_path),
         RuntimePlatform::Linux => unix_sync_item("当前发行配置支持 Linux 同步链路", script_path),
     }
 }
 
-fn windows_sync_item(hook_shell: Option<&PathBuf>, script_path: &str) -> RuntimePrerequisiteItem {
-    match hook_shell {
-        Some(shell) => ready_item(
+fn windows_sync_item(
+    git: &CommandInstallationStatus,
+    hook_shell: Option<&PathBuf>,
+    script_path: &str,
+) -> RuntimePrerequisiteItem {
+    if !git.installed {
+        return blocked_item(
             PLATFORM_SYNC_KEY,
             "同步链路",
-            format!("Windows 已检测到 Git hook shell：{}", shell.display()),
+            "Windows 同步链路依赖 Git".into(),
+            WINDOWS_GIT_HINT,
             "",
             script_path,
-        ),
-        None => blocked_item(
-            PLATFORM_SYNC_KEY,
-            "同步链路",
-            "Windows 同步链路依赖 Git Bash/sh.exe".into(),
-            WINDOWS_GIT_SHELL_HINT,
-            "",
-            script_path,
-        ),
+        );
     }
+    let message = match hook_shell {
+        Some(shell) => format!(
+            "Windows 同步链路使用 .cmd helper；已检测到 Git shell：{}",
+            shell.display()
+        ),
+        None => "Windows 同步链路使用 .cmd helper，不依赖 sh.exe。".into(),
+    };
+    ready_item(PLATFORM_SYNC_KEY, "同步链路", message, "", script_path)
 }
 
 fn unix_sync_item(message: &str, script_path: &str) -> RuntimePrerequisiteItem {
@@ -232,7 +239,7 @@ fn blocked_item(
 
 fn git_install_hint(platform: RuntimePlatform) -> &'static str {
     match platform {
-        RuntimePlatform::Windows => WINDOWS_GIT_SHELL_HINT,
+        RuntimePlatform::Windows => WINDOWS_GIT_HINT,
         RuntimePlatform::Macos => MACOS_GIT_HINT,
         RuntimePlatform::Linux => LINUX_RUNTIME_HINT,
     }

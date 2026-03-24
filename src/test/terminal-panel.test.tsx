@@ -244,6 +244,7 @@ it('builds create requests from the current project config', () => {
   expect(request.project_id).toBe('project-a')
   expect(request.config_version).toBe('v2')
   expect(request.workspace_dir).toBe('/tmp/demo')
+  expect(request.shell).toBe('system')
 })
 
 it('throws when create request has no workspace root', () => {

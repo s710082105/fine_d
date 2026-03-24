@@ -12,7 +12,6 @@ export function createDefaultProjectConfig(): ProjectConfig {
   return {
     style: { instructions: '' },
     workspace: { name: 'default', root_dir: '' },
-    data_connections: [],
     preview: {
       url: 'http://127.0.0.1:8075/webroot/decision',
       mode: 'embedded',

@@ -1,6 +1,6 @@
 use finereport_tauri_shell_lib::domain::context_builder::build_runtime_context;
 use finereport_tauri_shell_lib::domain::project_config::{
-    DataConnectionProfile, DbType, ProjectConfig, ProjectMapping, WorkspaceProfile,
+    ProjectConfig, ProjectMapping, WorkspaceProfile,
 };
 use std::path::PathBuf;
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -32,26 +32,6 @@ fn context_builder_generates_sync_rules() {
     config.preview.account = "preview-user".into();
     config.preview.password = "preview-pass".into();
     config.ai.api_key = "sk-demo".into();
-    config.data_connections = vec![
-        DataConnectionProfile {
-            connection_name: "FR Demo".into(),
-            db_type: DbType::Mysql,
-            host: "127.0.0.1".into(),
-            port: 3306,
-            database: "demo".into(),
-            username: "report".into(),
-            password: "secret-1".into(),
-        },
-        DataConnectionProfile {
-            connection_name: "Analytics".into(),
-            db_type: DbType::Mysql,
-            host: "127.0.0.1".into(),
-            port: 3306,
-            database: "analytics".into(),
-            username: "analytics".into(),
-            password: "secret-2".into(),
-        },
-    ];
     config.mappings = vec![
         ProjectMapping {
             local: "reportlets".into(),
@@ -99,23 +79,19 @@ fn context_builder_generates_sync_rules() {
     assert!(project_context.contains("sk-demo"));
     assert!(project_context.contains("style_instructions"));
     assert!(project_context.contains("蓝灰配色"));
-    assert!(project_context.contains("FR Demo"));
-    assert!(project_context.contains("db_type: mysql"));
-    assert!(project_context.contains("host: 127.0.0.1"));
-    assert!(project_context.contains("database: demo"));
-    assert!(project_context.contains("secret-1"));
+    assert!(project_context.contains("设计器远端"));
+    assert!(project_context.contains("真实字段"));
     assert!(project_rules.contains("delete_propagation"));
     assert!(project_rules.contains("designer_root"));
     assert!(project_rules.contains("auto_sync_on_change"));
     assert!(project_rules.contains("系统负责执行同步"));
+    assert!(project_rules.contains("先读取设计器远端已有数据连接"));
     assert!(project_rules.contains("chrome-cdp"));
     assert!(project_rules.contains("页面复核"));
     assert!(project_rules.contains("客户指出问题并提供学习样本"));
     assert!(project_rules.contains("必须更新相关 skill"));
     assert!(project_rules.contains("op=view"));
     assert!(!project_rules.contains("op=write"));
-    assert!(project_rules.contains("Analytics"));
-    assert!(project_rules.contains("secret-2"));
     assert!(mappings.contains("protocol"));
     assert!(mappings.contains("designer_root"));
     assert!(mappings.contains("preview_account"));
@@ -127,8 +103,6 @@ fn context_builder_generates_sync_rules() {
     assert!(mappings.contains("auto_sync_on_change"));
     assert!(mappings.contains("op=view"));
     assert!(!mappings.contains("op=write"));
-    assert!(mappings.contains("data_connections"));
-    assert!(mappings.contains("analytics"));
     assert!(mappings.contains("reportlets"));
     assert!(mappings.contains("templates"));
     assert!(!project_context.contains("preview_mode"));
@@ -140,6 +114,9 @@ fn context_builder_generates_sync_rules() {
     assert!(!project_rules.contains("codex_model"));
     assert!(!project_rules.contains("codex_base_url"));
     assert!(!mappings.contains("\"preview_mode\""));
+    assert!(!project_context.contains("data_connections"));
+    assert!(!project_rules.contains("data_connections"));
+    assert!(!mappings.contains("\"data_connections\""));
     assert!(!mappings.contains("\"codex_provider\""));
     assert!(!mappings.contains("\"codex_model\""));
     assert!(!mappings.contains("codex_base_url"));

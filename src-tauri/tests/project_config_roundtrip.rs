@@ -3,7 +3,7 @@ use finereport_tauri_shell_lib::commands::project_config::{
     save_project_config_to_path,
 };
 use finereport_tauri_shell_lib::domain::project_config::{
-    DbType, ProjectConfig, ProjectMapping, SyncProtocol, WorkspaceProfile,
+    ProjectConfig, ProjectMapping, SyncProtocol, WorkspaceProfile,
 };
 use serde_json::json;
 use std::path::PathBuf;
@@ -32,26 +32,6 @@ fn project_config_roundtrip_preserves_sync_fields() {
         name: "default".into(),
         root_dir: test_project_root().display().to_string(),
     };
-    config.data_connections = vec![
-        finereport_tauri_shell_lib::domain::project_config::DataConnectionProfile {
-            connection_name: "FR Demo".into(),
-            db_type: DbType::Mysql,
-            host: "127.0.0.1".into(),
-            port: 3306,
-            database: "demo".into(),
-            username: "report".into(),
-            password: "secret".into(),
-        },
-        finereport_tauri_shell_lib::domain::project_config::DataConnectionProfile {
-            connection_name: "FR Analytics".into(),
-            db_type: DbType::Mysql,
-            host: "127.0.0.1".into(),
-            port: 3306,
-            database: "analytics".into(),
-            username: "analytics".into(),
-            password: "secret-2".into(),
-        },
-    ];
     config.sync.designer_root = "/Applications/FineReport".into();
     config.sync.remote_runtime_dir = "/srv/tomcat/webapps/webroot/WEB-INF".into();
     config.sync.delete_propagation = true;
@@ -70,13 +50,6 @@ fn project_config_roundtrip_preserves_sync_fields() {
 
     assert_eq!(loaded.sync.protocol, SyncProtocol::Fine);
     assert_eq!(loaded.sync.designer_root, "/Applications/FineReport");
-    assert_eq!(loaded.data_connections.len(), 2);
-    assert_eq!(loaded.data_connections[0].connection_name, "FR Demo");
-    assert_eq!(loaded.data_connections[0].db_type, DbType::Mysql);
-    assert_eq!(loaded.data_connections[0].host, "127.0.0.1");
-    assert_eq!(loaded.data_connections[0].port, 3306);
-    assert_eq!(loaded.data_connections[0].database, "demo");
-    assert_eq!(loaded.data_connections[1].username, "analytics");
     assert_eq!(
         loaded.local_source_dir(),
         test_project_root().join("reportlets")
@@ -189,11 +162,7 @@ fn load_project_config_supports_local_sync_preview_and_style_fields() {
         value["style"]["instructions"],
         "表头使用深色粗体，数据列右对齐，金额保留两位小数。"
     );
-    assert_eq!(value["data_connections"][0]["connection_name"], "FR Demo");
-    assert_eq!(value["data_connections"][0]["db_type"], "mysql");
-    assert_eq!(value["data_connections"][0]["host"], "127.0.0.1");
-    assert_eq!(value["data_connections"][0]["port"], 3306);
-    assert_eq!(value["data_connections"][0]["database"], "demo");
+    assert!(value.get("data_connections").is_none());
 }
 
 #[test]
@@ -233,7 +202,7 @@ fn load_project_config_converts_legacy_style_fields_into_text_instructions() {
 }
 
 #[test]
-fn load_project_config_supports_legacy_single_data_connection_field() {
+fn load_project_config_ignores_legacy_single_data_connection_field() {
     let path = test_config_path();
     std::fs::write(
         &path,
@@ -257,9 +226,10 @@ fn load_project_config_supports_legacy_single_data_connection_field() {
     .expect("write legacy project config");
 
     let loaded = load_project_config_from_path(path.as_path()).expect("load legacy project config");
+    let value = serde_json::to_value(&loaded).expect("serialize legacy config");
 
-    assert_eq!(loaded.data_connections.len(), 1);
-    assert_eq!(loaded.data_connections[0].connection_name, "Legacy");
+    assert!(value.get("data_connections").is_none());
+    assert_eq!(loaded.sync.protocol, SyncProtocol::Fine);
 }
 
 #[test]

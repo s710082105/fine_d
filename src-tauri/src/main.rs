@@ -10,5 +10,13 @@ fn main() {
             std::process::exit(1);
         }
     }
+    match finereport_tauri_shell_lib::commands::fine_decision::try_run_cli() {
+        Ok(true) => return,
+        Ok(false) => {}
+        Err(error) => {
+            eprintln!("{error}");
+            std::process::exit(1);
+        }
+    }
     finereport_tauri_shell_lib::run()
 }

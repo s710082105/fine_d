@@ -12,15 +12,12 @@ from fine_remote.jvm import JvmBridgeConfig, JvmBridgeRunner
 
 
 class FineRemoteClientJvmResolutionTest(unittest.TestCase):
-    def test_prefers_bundled_java_tools_under_fine_home(self) -> None:
+    def test_prefers_bundled_java_runtime_under_fine_home(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             fine_home = Path(temp_dir)
             java_bin = fine_home / "jre" / "bin" / "java"
-            javac_bin = fine_home / "jdk" / "bin" / "javac"
             java_bin.parent.mkdir(parents=True, exist_ok=True)
-            javac_bin.parent.mkdir(parents=True, exist_ok=True)
             java_bin.write_text("", encoding="utf-8")
-            javac_bin.write_text("", encoding="utf-8")
 
             client = FineRemoteClient(
                 base_url="http://demo",
@@ -30,9 +27,8 @@ class FineRemoteClientJvmResolutionTest(unittest.TestCase):
             )
 
             self.assertEqual(client._bridge._config.java_bin, str(java_bin))
-            self.assertEqual(client._bridge._config.javac_bin, str(javac_bin))
 
-    def test_keeps_default_commands_when_bundled_java_tools_are_missing(self) -> None:
+    def test_keeps_default_java_command_when_bundled_runtime_is_missing(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             client = FineRemoteClient(
                 base_url="http://demo",
@@ -42,101 +38,47 @@ class FineRemoteClientJvmResolutionTest(unittest.TestCase):
             )
 
             self.assertEqual(client._bridge._config.java_bin, "java")
-            self.assertEqual(client._bridge._config.javac_bin, "javac")
 
-    def test_prefers_bundled_java_and_falls_back_to_path_javac(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            fine_home = Path(temp_dir)
-            java_bin = fine_home / "jre" / "bin" / "java"
-            java_bin.parent.mkdir(parents=True, exist_ok=True)
-            java_bin.write_text("", encoding="utf-8")
-
-            client = FineRemoteClient(
-                base_url="http://demo",
-                username="user",
-                password="pass",
-                fine_home=fine_home,
-            )
-
-            self.assertEqual(client._bridge._config.java_bin, str(java_bin))
-            self.assertEqual(client._bridge._config.javac_bin, "javac")
-
-
-class JvmBridgeRunnerCompileCompatibilityTest(unittest.TestCase):
-    def test_compile_targets_java8_by_default(self) -> None:
+class JvmBridgeRunnerEmbeddedClassTest(unittest.TestCase):
+    def test_invoke_uses_embedded_bridge_class_without_compiling(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             runner = build_runner(Path(temp_dir))
-            calls: list[list[str]] = []
+            output_payload = '{"items":[]}'
 
             def fake_run(arguments: list[str], *, cwd: Path) -> subprocess.CompletedProcess[str]:
-                calls.append(arguments)
-                write_class_file(runner)
+                output_index = arguments.index("--output-file") + 1
+                Path(arguments[output_index]).write_text(output_payload, encoding="utf-8")
                 return subprocess.CompletedProcess(arguments, 0, "", "")
 
             with patch("fine_remote.jvm.run_subprocess", side_effect=fake_run):
-                runner._compile_if_needed()
+                payload = runner.invoke("list", options={"--path": "reportlets"})
 
-            self.assertEqual(len(calls), 1)
-            self.assertIn("--release", calls[0])
-            self.assertIn("8", calls[0])
+            self.assertEqual(payload, {"items": []})
 
-    def test_compile_falls_back_to_source_target_when_release_flag_is_unsupported(self) -> None:
+    def test_invoke_fails_when_embedded_bridge_class_is_missing(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             runner = build_runner(Path(temp_dir))
-            calls: list[list[str]] = []
+            (runner._bridge_dir / "FrRemoteBridge$Arguments.class").unlink()
 
-            def fake_run(arguments: list[str], *, cwd: Path) -> subprocess.CompletedProcess[str]:
-                calls.append(arguments)
-                if len(calls) == 1:
-                    return subprocess.CompletedProcess(arguments, 2, "", "invalid flag: --release")
-                write_class_file(runner)
-                return subprocess.CompletedProcess(arguments, 0, "", "")
-
-            with patch("fine_remote.jvm.run_subprocess", side_effect=fake_run):
-                runner._compile_if_needed()
-
-            self.assertEqual(len(calls), 2)
-            self.assertEqual(calls[0][1:3], ["--release", "8"])
-            self.assertEqual(calls[1][1:5], ["-source", "8", "-target", "8"])
-
-    def test_compile_rebuilds_when_stale_class_has_no_metadata(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            runner = build_runner(Path(temp_dir))
-            class_file = runner._build_dir / "fine_remote" / "FrRemoteBridge.class"
-            class_file.parent.mkdir(parents=True, exist_ok=True)
-            class_file.write_bytes(b"old")
-            future_time = runner._source_file.stat().st_mtime + 60
-            os.utime(class_file, (future_time, future_time))
-
-            with patch("fine_remote.jvm.run_subprocess") as mocked_run:
-                mocked_run.side_effect = lambda arguments, *, cwd: (
-                    write_class_file(runner),
-                    subprocess.CompletedProcess(arguments, 0, "", ""),
-                )[1]
-                runner._compile_if_needed()
-
-            mocked_run.assert_called_once()
+            with self.assertRaisesRegex(RuntimeError, "Embedded bridge class is missing"):
+                runner.invoke("list", options={"--path": "reportlets"})
 
 
 def build_runner(temp_dir: Path) -> JvmBridgeRunner:
     fine_home = temp_dir / "FineReport"
     (fine_home / "lib").mkdir(parents=True, exist_ok=True)
     (fine_home / "lib" / "core.jar").write_text("", encoding="utf-8")
-    source_file = temp_dir / "FrRemoteBridge.java"
-    source_file.write_text("class FrRemoteBridge {}", encoding="utf-8")
+    class_root = temp_dir / "java" / "fine_remote"
+    class_root.mkdir(parents=True, exist_ok=True)
+    (class_root / "FrRemoteBridge.class").write_bytes(b"class")
+    (class_root / "FrRemoteBridge$Arguments.class").write_bytes(b"class")
     runner = JvmBridgeRunner(
         JvmBridgeConfig(
             fine_home=fine_home,
             java_bin="java",
-            javac_bin="javac",
         )
     )
-    runner._source_file = source_file
-    runner._build_dir = temp_dir / "build"
+    runner._repo_root = temp_dir
+    runner._class_root = temp_dir / "java"
+    runner._bridge_dir = class_root
     return runner
-
-
-def write_class_file(runner: JvmBridgeRunner) -> None:
-    class_file = runner._build_dir / "fine_remote" / "FrRemoteBridge.class"
-    class_file.parent.mkdir(parents=True, exist_ok=True)
-    class_file.write_bytes(b"class")

@@ -1,4 +1,5 @@
 pub mod environment;
+pub mod fine_decision;
 pub mod project_config;
 pub mod project_sync;
 pub mod session;

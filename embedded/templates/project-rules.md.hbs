@@ -14,8 +14,8 @@
 ## style_instructions
 {{style_instructions}}
 
-## data_connections
-{{data_connections}}
+## designer_data_access
+{{designer_data_access}}
 
 ## source_target_mappings
 {{source_target_mappings}}
@@ -25,8 +25,11 @@
 - Sync failures must be exposed.
 - Do not add silent fallback sync behaviors.
 - 系统负责执行同步，不依赖 skill。
-- 新建 `reportlets/*.cpt|*.fvs` 前，必须先在项目目录执行 `./.codex/project-sync.sh prepare-create reportlets/<name>.cpt|fvs`，先检查远端重名并创建远端占位文件。
-- 修改现有 `reportlets/*.cpt|*.fvs` 前，必须先在项目目录执行 `./.codex/project-sync.sh prepare-edit reportlets/<name>.cpt|fvs`，先检查远端是否存在、是否锁定，并把远端最新内容拉回项目目录。
+- 设计数据集或 SQL 前，必须先读取设计器远端已有数据连接，再决定使用现有数据集预览还是 SQL 试跑。
+- 设计报表时必须先做字段扫描，再开始布局和样式调整；字段和 SQL 以设计器远端返回结果为准。
+- 执行 helper 前先判断系统类型：Windows 使用 `.cmd`，macOS/Linux 使用 `.sh`。
+- 新建 `reportlets/*.cpt|*.fvs` 前，必须先在项目目录执行对应系统 helper 的 `prepare-create reportlets/<name>.cpt|fvs`，先检查远端重名并创建远端占位文件。
+- 修改现有 `reportlets/*.cpt|*.fvs` 前，必须先在项目目录执行对应系统 helper 的 `prepare-edit reportlets/<name>.cpt|fvs`，先检查远端是否存在、是否锁定，并把远端最新内容拉回项目目录。
 - 如果 `prepare-create` / `prepare-edit` 明确报错，必须立即停止，不允许绕过远端检查继续开发。
 - `reportlets/` 相关改动提交并同步完成后，必须使用 `chrome-cdp` skill 打开 `preview_url` 做页面复核。
 - 如果预览页需要登录，优先使用 `preview_account` 和 `preview_password` 完成登录，再继续复核。

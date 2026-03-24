@@ -35,7 +35,7 @@ export function buildCreateTerminalSessionRequest(
     project_id: projectId,
     config_version: configVersion,
     workspace_dir: workspaceRoot,
-    shell: 'bash',
+    shell: 'system',
     env: {
       REPORTLET_SOURCE_DIR: resolveProjectSourceDir(workspaceRoot)
     },
