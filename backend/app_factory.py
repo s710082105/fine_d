@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
+from apps.api.routes.assistant import router as assistant_router
 from apps.api.routes.datasource import router as datasource_router
 from apps.api.routes.preview import router as preview_router
 from apps.api.routes.reportlet import router as reportlet_router
@@ -25,6 +26,7 @@ def create_app() -> FastAPI:
     def health() -> HealthResponse:
         return HealthResponse(status="ok")
 
+    app.include_router(assistant_router)
     app.include_router(datasource_router)
     app.include_router(preview_router)
     app.include_router(reportlet_router)
