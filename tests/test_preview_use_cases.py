@@ -63,3 +63,22 @@ def test_open_preview_propagates_explicit_gateway_error() -> None:
 
     assert exc_info.value == error
     assert gateway.opened_urls == ["http://127.0.0.1:8075/webroot/decision"]
+
+
+@pytest.mark.parametrize("url", ["", "   "])
+def test_open_preview_rejects_blank_url(
+    fake_preview_gateway: FakePreviewGateway,
+    url: str,
+) -> None:
+    module = _load_preview_use_cases_module()
+    use_case = module.PreviewUseCases(
+        fake_preview_gateway,
+        session_id_factory=lambda: "preview-session-1",
+    )
+
+    with pytest.raises(AppError) as exc_info:
+        use_case.open_preview(url)
+
+    assert exc_info.value.code == "preview.invalid_url"
+    assert exc_info.value.detail == {"url": url}
+    assert fake_preview_gateway.opened_urls == []

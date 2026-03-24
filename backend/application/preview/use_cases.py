@@ -1,6 +1,7 @@
 from typing import Callable, Protocol
 from uuid import uuid4
 
+from backend.domain.project.errors import AppError
 from backend.domain.preview.models import PreviewSession
 
 
@@ -23,9 +24,21 @@ class PreviewUseCases:
         self._session_id_factory = session_id_factory
 
     def open_preview(self, url: str) -> PreviewSession:
+        self._validate_url(url)
         self._gateway.open_url(url)
         return PreviewSession(
             session_id=self._session_id_factory(),
             url=url,
             status="opened",
+        )
+
+    @staticmethod
+    def _validate_url(url: str) -> None:
+        if url.strip():
+            return
+        raise AppError(
+            code="preview.invalid_url",
+            message="preview url must not be blank",
+            detail={"url": url},
+            source="preview",
         )
