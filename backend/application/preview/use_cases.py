@@ -1,4 +1,5 @@
 from typing import Callable, Protocol
+from urllib.parse import urlparse
 from uuid import uuid4
 
 from backend.domain.project.errors import AppError
@@ -34,11 +35,18 @@ class PreviewUseCases:
 
     @staticmethod
     def _validate_url(url: str) -> None:
-        if url.strip():
+        if not url.strip():
+            raise AppError(
+                code="preview.invalid_url",
+                message="preview url must not be blank",
+                detail={"url": url},
+                source="preview",
+            )
+        if urlparse(url).scheme in {"http", "https"}:
             return
         raise AppError(
             code="preview.invalid_url",
-            message="preview url must not be blank",
+            message="preview url must use http or https",
             detail={"url": url},
             source="preview",
         )

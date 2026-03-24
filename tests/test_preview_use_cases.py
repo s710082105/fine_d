@@ -82,3 +82,29 @@ def test_open_preview_rejects_blank_url(
     assert exc_info.value.code == "preview.invalid_url"
     assert exc_info.value.detail == {"url": url}
     assert fake_preview_gateway.opened_urls == []
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        "file:///tmp/demo.cpt",
+        "mailto:test@example.com",
+        "custom-scheme://preview/session-1",
+    ],
+)
+def test_open_preview_rejects_unsupported_scheme(
+    fake_preview_gateway: FakePreviewGateway,
+    url: str,
+) -> None:
+    module = _load_preview_use_cases_module()
+    use_case = module.PreviewUseCases(
+        fake_preview_gateway,
+        session_id_factory=lambda: "preview-session-1",
+    )
+
+    with pytest.raises(AppError) as exc_info:
+        use_case.open_preview(url)
+
+    assert exc_info.value.code == "preview.invalid_url"
+    assert exc_info.value.detail == {"url": url}
+    assert fake_preview_gateway.opened_urls == []

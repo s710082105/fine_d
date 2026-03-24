@@ -101,3 +101,32 @@ def test_open_preview_endpoint_rejects_blank_url(url: str) -> None:
         "source": "preview",
         "retryable": False,
     }
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        "file:///tmp/demo.cpt",
+        "mailto:test@example.com",
+        "custom-scheme://preview/session-1",
+    ],
+)
+def test_open_preview_endpoint_rejects_unsupported_scheme(url: str) -> None:
+    route_module = _load_preview_route_module()
+    use_cases_module = importlib.import_module("backend.application.preview.use_cases")
+    app = create_app()
+    app.dependency_overrides[route_module.get_preview_service] = lambda: (
+        use_cases_module.PreviewUseCases(FakePreviewGateway())
+    )
+    client = TestClient(app)
+
+    response = client.post("/api/preview/open", json={"url": url})
+
+    assert response.status_code == 400
+    assert response.json() == {
+        "code": "preview.invalid_url",
+        "message": "preview url must use http or https",
+        "detail": {"url": url},
+        "source": "preview",
+        "retryable": False,
+    }
