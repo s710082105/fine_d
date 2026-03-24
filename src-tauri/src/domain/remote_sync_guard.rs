@@ -61,10 +61,12 @@ pub fn inspect_remote_file(
     remote_path: &str,
 ) -> Result<Option<RemoteFileEntry>, String> {
     let parent_path = remote_parent_path(remote_path);
+    let target_path = normalize_remote_path(remote_path);
+    let target_name = remote_leaf_name(target_path.as_str());
     Ok(client
         .list_entries(parent_path.as_str())?
         .into_iter()
-        .find(|entry| entry.path == remote_path))
+        .find(|entry| listed_entry_matches(entry, target_path.as_str(), target_name)))
 }
 
 fn sync_remote_to_local(
@@ -109,12 +111,35 @@ fn require_remote_file_ready(
 }
 
 fn remote_parent_path(remote_path: &str) -> String {
-    let trimmed = remote_path.trim_end_matches('/');
+    let normalized = normalize_remote_path(remote_path);
+    let trimmed = normalized.trim_end_matches('/');
     match trimmed.rsplit_once('/') {
         Some((parent, _)) if !parent.is_empty() => parent.into(),
         Some(_) => "/".into(),
         None => "/".into(),
     }
+}
+
+fn listed_entry_matches(entry: &RemoteFileEntry, target_path: &str, target_name: &str) -> bool {
+    let entry_path = normalize_remote_path(entry.path.as_str());
+    let entry_name = normalize_remote_path(entry.name.as_str());
+    entry_path == target_path
+        || remote_leaf_name(entry_path.as_str()) == target_name
+        || remote_leaf_name(entry_name.as_str()) == target_name
+}
+
+fn normalize_remote_path(path: &str) -> String {
+    let replaced = path.trim().replace('\\', "/");
+    let trimmed = replaced.trim_end_matches('/');
+    if trimmed.is_empty() && replaced.starts_with('/') {
+        "/".into()
+    } else {
+        trimmed.into()
+    }
+}
+
+fn remote_leaf_name(path: &str) -> &str {
+    path.rsplit('/').next().unwrap_or(path)
 }
 
 fn placeholder_template(remote_path: &str) -> Result<&'static [u8], String> {
