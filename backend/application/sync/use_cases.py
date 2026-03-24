@@ -38,6 +38,7 @@ class SyncUseCases:
     ) -> SyncResult:
         resolved_action = self._validate_action(action)
         if resolved_action == "publish_project":
+            self._reject_publish_target_path(target_path)
             return self.publish_project()
         return self._execute_action(resolved_action, target_path)
 
@@ -70,11 +71,11 @@ class SyncUseCases:
     ) -> SyncResult:
         machine = SyncStateMachine()
         machine.transition("pending", "running")
-        operation = self._resolve_operation(action, target_path)
         try:
+            operation = self._resolve_operation(action, target_path)
             operation()
         except AppError as error:
-            failed_status = machine.transition("running", "failed")
+            failed_status = self._transition_to_failed(machine)
             raise AppError(
                 code=error.code,
                 message=error.message,
@@ -107,6 +108,17 @@ class SyncUseCases:
         return lambda: self._gateway.verify_remote_state(target_path)
 
     @staticmethod
+    def _reject_publish_target_path(target_path: str | None) -> None:
+        if not target_path:
+            return
+        raise AppError(
+            code="sync.invalid_target_path",
+            message="publish_project does not accept a target path",
+            detail={"action": "publish_project", "status": "failed", "target_path": target_path},
+            source="sync",
+        )
+
+    @staticmethod
     def _require_target_path(action: SyncAction, target_path: str | None) -> str:
         if target_path:
             return target_path
@@ -134,3 +146,9 @@ class SyncUseCases:
         status: str,
     ) -> dict[str, Any]:
         return {**(detail or {}), "status": status}
+
+    @staticmethod
+    def _transition_to_failed(machine: SyncStateMachine) -> str:
+        if machine.status == "failed":
+            return "failed"
+        return machine.transition(machine.status, "failed")

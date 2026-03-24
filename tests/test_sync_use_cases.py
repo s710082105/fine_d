@@ -69,6 +69,23 @@ def test_publish_project_uses_single_entrypoint(
     assert fake_sync_gateway.operations == ["sync_directory", "verify_remote_state"]
 
 
+def test_dispatch_rejects_publish_project_target_path(
+    fake_sync_gateway: FakeSyncGateway,
+) -> None:
+    use_case = SyncUseCases(fake_sync_gateway)
+
+    with pytest.raises(AppError) as exc_info:
+        use_case.dispatch("publish_project", target_path="reportlets/demo.cpt")
+
+    assert exc_info.value.code == "sync.invalid_target_path"
+    assert exc_info.value.detail == {
+        "action": "publish_project",
+        "status": "failed",
+        "target_path": "reportlets/demo.cpt",
+    }
+    assert fake_sync_gateway.operations == []
+
+
 def test_state_machine_accepts_success_path() -> None:
     machine = SyncStateMachine()
 
@@ -88,6 +105,24 @@ def test_sync_file_failure_transitions_to_failed() -> None:
         "operation": "sync_file",
         "status": "failed",
     }
+
+
+@pytest.mark.parametrize("action", ["sync_file", "pull_remote_file"])
+def test_missing_target_path_transitions_to_failed(
+    fake_sync_gateway: FakeSyncGateway,
+    action: str,
+) -> None:
+    use_case = SyncUseCases(fake_sync_gateway)
+
+    with pytest.raises(AppError) as exc_info:
+        use_case.dispatch(action)
+
+    assert exc_info.value.code == "sync.missing_target_path"
+    assert exc_info.value.detail == {
+        "action": action,
+        "status": "failed",
+    }
+    assert fake_sync_gateway.operations == []
 
 
 def test_dispatch_rejects_unsupported_action(
