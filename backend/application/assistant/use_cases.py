@@ -5,25 +5,25 @@ ROUTE_RULES = (
     (
         "datasource",
         ("数据源", "连接", "sql", "数据集"),
-        ["list_connections", "preview_sql"],
+        ("list_connections", "preview_sql"),
         "推荐走数据源模块。",
     ),
     (
         "reportlet",
         ("报表", "template", "cpt", "fvs", "文件树"),
-        ["list_tree", "read_reportlet"],
+        ("list_tree", "read_reportlet"),
         "推荐走报表模块。",
     ),
     (
         "sync",
         ("同步", "发布", "push", "拉取", "校验远端"),
-        ["publish_project", "verify_remote_state"],
+        ("publish_project", "verify_remote_state"),
         "推荐走同步模块。",
     ),
     (
         "preview",
         ("预览", "打开浏览器", "截图", "页面检查"),
-        ["open_preview"],
+        ("open_preview",),
         "推荐走预览模块。",
     ),
 )
@@ -45,7 +45,7 @@ class AssistantUseCases:
             prompt=prompt,
             status="needs_clarification",
             module="assistant",
-            actions=[],
+            actions=(),
             message="未识别明确模块，请补充更具体的任务目标。",
         )
 

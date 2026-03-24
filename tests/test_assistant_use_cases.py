@@ -21,7 +21,7 @@ def test_route_prompt_routes_to_sync() -> None:
     assert result.prompt == "请帮我同步并发布到远端"
     assert result.status == "routed"
     assert result.module == "sync"
-    assert result.actions == ["publish_project", "verify_remote_state"]
+    assert result.actions == ("publish_project", "verify_remote_state")
 
 
 def test_route_prompt_routes_to_preview() -> None:
@@ -32,7 +32,7 @@ def test_route_prompt_routes_to_preview() -> None:
 
     assert result.status == "routed"
     assert result.module == "preview"
-    assert result.actions == ["open_preview"]
+    assert result.actions == ("open_preview",)
 
 
 def test_route_prompt_returns_needs_clarification_for_unknown_prompt() -> None:
@@ -43,7 +43,7 @@ def test_route_prompt_returns_needs_clarification_for_unknown_prompt() -> None:
 
     assert result.status == "needs_clarification"
     assert result.module == "assistant"
-    assert result.actions == []
+    assert result.actions == ()
 
 
 @pytest.mark.parametrize("prompt", ["", "   "])

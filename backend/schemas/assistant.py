@@ -28,6 +28,6 @@ class AssistantRouteResponse(BaseModel):
             prompt=result.prompt,
             status=result.status,
             module=result.module,
-            actions=result.actions,
+            actions=list(result.actions),
             message=result.message,
         )

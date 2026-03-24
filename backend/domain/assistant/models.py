@@ -16,5 +16,5 @@ class AssistantRouteResult:
     prompt: str
     status: AssistantRouteStatus
     module: AssistantModule
-    actions: list[str]
+    actions: tuple[str, ...]
     message: str
