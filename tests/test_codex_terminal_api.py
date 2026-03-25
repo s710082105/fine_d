@@ -65,6 +65,24 @@ class FakeCodexTerminalService:
         )
 
 
+class FakeStoredRuntime:
+    def __init__(self, session_id: str, working_directory: str) -> None:
+        self.session_id = session_id
+        self.working_directory = Path(working_directory)
+        self.status = "running"
+        self.close_calls = 0
+
+    def read(self, cursor: int):
+        return "", cursor, False
+
+    def write(self, data: str) -> None:
+        return None
+
+    def close(self) -> None:
+        self.close_calls += 1
+        self.status = "closed"
+
+
 class InvalidDirectoryService:
     def create_session(self, working_directory: str):
         raise AppError(
@@ -165,6 +183,42 @@ def test_terminal_endpoints_cover_minimum_lifecycle(working_directory: str) -> N
         "status": "closed",
         "working_directory": working_directory,
     }
+
+
+def test_get_session_endpoint_reads_runtime_from_app_scoped_store(
+    working_directory: str,
+) -> None:
+    app = create_app()
+    runtime = FakeStoredRuntime(
+        session_id="terminal-session-1",
+        working_directory=working_directory,
+    )
+
+    with TestClient(app) as client:
+        app.state.codex_terminal_session_store.save("terminal-session-1", runtime)
+        response = client.get("/api/codex/terminal/sessions/terminal-session-1")
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "session_id": "terminal-session-1",
+        "status": "running",
+        "working_directory": working_directory,
+    }
+
+
+def test_app_shutdown_closes_active_terminal_runtimes(
+    working_directory: str,
+) -> None:
+    app = create_app()
+    runtime = FakeStoredRuntime(
+        session_id="terminal-session-1",
+        working_directory=working_directory,
+    )
+
+    with TestClient(app):
+        app.state.codex_terminal_session_store.save("terminal-session-1", runtime)
+
+    assert runtime.close_calls == 1
 
 
 def test_create_session_endpoint_returns_unified_error_response(

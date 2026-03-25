@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Request
 
 from backend.adapters.system.terminal_gateway import CodexTerminalGateway
 from backend.application.codex_terminal.use_cases import CodexTerminalUseCases
@@ -12,13 +12,18 @@ from backend.schemas.codex_terminal import (
 )
 
 router = APIRouter()
-SESSION_STORE = TerminalSessionStore()
 
 
-def get_codex_terminal_service() -> CodexTerminalUseCases:
+def get_terminal_session_store(request: Request) -> TerminalSessionStore:
+    return request.app.state.codex_terminal_session_store
+
+
+def get_codex_terminal_service(
+    session_store: TerminalSessionStore = Depends(get_terminal_session_store),
+) -> CodexTerminalUseCases:
     return CodexTerminalUseCases(
         gateway=CodexTerminalGateway(),
-        session_store=SESSION_STORE,
+        session_store=session_store,
     )
 
 

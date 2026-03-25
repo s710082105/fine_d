@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
@@ -10,12 +12,20 @@ from apps.api.routes.remote import router as remote_router
 from apps.api.routes.reportlet import router as reportlet_router
 from apps.api.routes.sync import router as sync_router
 from backend.domain.project.errors import AppError
-from backend.schemas.health import HealthResponse
+from backend.infra.terminal_session_store import TerminalSessionStore
 from backend.schemas.common import DEFAULT_ERROR_STATUS_CODE, ErrorResponse
+from backend.schemas.health import HealthResponse
+
+
+@asynccontextmanager
+async def app_lifespan(app: FastAPI):
+    app.state.codex_terminal_session_store = TerminalSessionStore()
+    yield
+    app.state.codex_terminal_session_store.close_all()
 
 
 def create_app() -> FastAPI:
-    app = FastAPI()
+    app = FastAPI(lifespan=app_lifespan)
 
     @app.exception_handler(AppError)
     async def handle_app_error(_: Request, exc: AppError) -> JSONResponse:

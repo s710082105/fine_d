@@ -33,7 +33,9 @@ class CodexTerminalUseCases:
 
     def get_session(self, session_id: str) -> CodexTerminalSession:
         runtime = self._get_runtime(session_id)
-        return self._build_session(runtime)
+        session = self._build_session(runtime)
+        self._delete_if_inactive(runtime)
+        return session
 
     def get_stream_chunk(
         self,
@@ -42,13 +44,15 @@ class CodexTerminalUseCases:
     ) -> CodexTerminalStreamChunk:
         runtime = self._get_runtime(session_id)
         output, next_cursor, completed = runtime.read(cursor)
-        return CodexTerminalStreamChunk(
+        chunk = CodexTerminalStreamChunk(
             session_id=runtime.session_id,
             status=runtime.status,
             output=output,
             next_cursor=next_cursor,
             completed=completed,
         )
+        self._delete_if_inactive(runtime)
+        return chunk
 
     def write_input(
         self,
@@ -77,6 +81,11 @@ class CodexTerminalUseCases:
         if runtime is None:
             raise terminal_session_not_found_error(session_id)
         return runtime
+
+    def _delete_if_inactive(self, runtime: CodexTerminalRuntime) -> None:
+        if runtime.status == "running":
+            return
+        self._session_store.delete(runtime.session_id)
 
     @staticmethod
     def _build_session(runtime: CodexTerminalRuntime) -> CodexTerminalSession:

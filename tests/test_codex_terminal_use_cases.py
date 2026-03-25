@@ -16,6 +16,7 @@ class FakeTerminalRuntime:
     raise_on_read: AppError | None = None
     raise_on_write: AppError | None = None
     written_inputs: list[str] | None = None
+    close_calls: int = 0
 
     def __post_init__(self) -> None:
         if self.written_inputs is None:
@@ -33,6 +34,7 @@ class FakeTerminalRuntime:
         self.written_inputs.append(data)
 
     def close(self) -> None:
+        self.close_calls += 1
         self.status = "closed"
 
 
@@ -195,4 +197,53 @@ def test_close_session_marks_session_closed_and_removes_it(tmp_path: Path) -> No
     assert result.session_id == "terminal-session-1"
     assert result.status == "closed"
     assert result.working_directory == str(tmp_path)
+    assert store.get("terminal-session-1") is None
+
+
+def test_get_session_removes_finished_runtime_after_returning_once(
+    tmp_path: Path,
+) -> None:
+    module = _load_terminal_use_cases_module()
+    runtime = FakeTerminalRuntime(
+        session_id="terminal-session-1",
+        working_directory=tmp_path,
+        status="closed",
+    )
+    store = FakeTerminalSessionStore()
+    store.save("terminal-session-1", runtime)
+    use_case = module.CodexTerminalUseCases(
+        gateway=FakeTerminalGateway(),
+        session_store=store,
+        session_id_factory=lambda: "ignored",
+    )
+
+    result = use_case.get_session("terminal-session-1")
+
+    assert result.status == "closed"
+    assert store.get("terminal-session-1") is None
+
+
+def test_stream_removes_finished_runtime_after_final_chunk(
+    tmp_path: Path,
+) -> None:
+    module = _load_terminal_use_cases_module()
+    runtime = FakeTerminalRuntime(
+        session_id="terminal-session-1",
+        working_directory=tmp_path,
+        status="closed",
+        output="bye",
+    )
+    store = FakeTerminalSessionStore()
+    store.save("terminal-session-1", runtime)
+    use_case = module.CodexTerminalUseCases(
+        gateway=FakeTerminalGateway(),
+        session_store=store,
+        session_id_factory=lambda: "ignored",
+    )
+
+    result = use_case.get_stream_chunk("terminal-session-1", cursor=0)
+
+    assert result.status == "closed"
+    assert result.output == "bye"
+    assert result.completed is True
     assert store.get("terminal-session-1") is None

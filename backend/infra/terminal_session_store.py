@@ -13,3 +13,20 @@ class TerminalSessionStore:
 
     def delete(self, session_id: str) -> CodexTerminalRuntime | None:
         return self._sessions.pop(session_id, None)
+
+    def close_all(self) -> None:
+        errors: list[str] = []
+        session_ids = list(self._sessions.keys())
+        for session_id in session_ids:
+            runtime = self.delete(session_id)
+            if runtime is None:
+                continue
+            try:
+                runtime.close()
+            except Exception as exc:
+                errors.append(f"{session_id}: {exc}")
+        if errors:
+            joined_errors = "; ".join(errors)
+            raise RuntimeError(
+                f"failed to close terminal sessions during shutdown: {joined_errors}"
+            )
