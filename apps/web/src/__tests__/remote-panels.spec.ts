@@ -24,11 +24,16 @@ describe('Remote Panels', () => {
   it('renders data connections', () => {
     render(DataConnectionPanel, {
       props: {
-        connections: [{ name: 'qzcs' }, { name: 'tickets' }]
+        connections: [
+          { name: 'qzcs', database_type: 'MYSQL' },
+          { name: 'tickets', database_type: 'POSTGRESQL' }
+        ]
       }
     })
 
     expect(screen.getByText('qzcs')).toBeInTheDocument()
     expect(screen.getByText('tickets')).toBeInTheDocument()
+    expect(screen.getByText('MYSQL')).toBeInTheDocument()
+    expect(screen.getByText('POSTGRESQL')).toBeInTheDocument()
   })
 })

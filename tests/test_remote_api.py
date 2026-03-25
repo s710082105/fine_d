@@ -28,13 +28,7 @@ class FakeRemoteOverviewService:
                     lock=None,
                 )
             ],
-            data_connections=[
-                ConnectionSummary(
-                    name="qzcs",
-                    database_type="MYSQL",
-                    host_or_url="jdbc:mysql://127.0.0.1:3306/demo",
-                )
-            ],
+            data_connections=[ConnectionSummary(name="qzcs", database_type="MYSQL")],
             last_loaded_at=datetime(2026, 3, 25, 12, 0, tzinfo=UTC),
         )
 
@@ -85,7 +79,6 @@ def test_remote_overview_endpoint_returns_directory_connections_and_timestamp() 
             {
                 "name": "qzcs",
                 "database_type": "MYSQL",
-                "host_or_url": "jdbc:mysql://127.0.0.1:3306/demo",
             }
         ],
         "last_loaded_at": "2026-03-25T12:00:00Z",
@@ -106,7 +99,6 @@ def test_remote_overview_response_includes_connection_metadata() -> None:
         {
             "name": "qzcs",
             "database_type": "MYSQL",
-            "host_or_url": "jdbc:mysql://127.0.0.1:3306/demo",
         }
     ]
 

@@ -8,11 +8,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import pytest
 
-from backend.adapters.fine.http_client import (
-    FineHttpClient,
-    _data_items,
-    _parse_connection,
-)
+from backend.adapters.fine.http_client import FineHttpClient, _data_items, _parse_connection
 from backend.adapters.fine.sql_preview_transport import build_sql_preview_transport
 from backend.domain.datasource.models import ConnectionSummary
 from backend.domain.project.errors import AppError
@@ -128,18 +124,17 @@ def test_list_connections_reads_remote_items(
 
     result = client.list_connections()
 
-    assert result[0].name == "qzcs"
+    assert result == [ConnectionSummary(name="qzcs", database_type="")]
     assert requests[0].path == "/webroot/decision/login"
     assert requests[1].path == "/webroot/decision/v10/config/connection/list/0"
 
 
-def test_list_connections_extracts_type_and_host_url() -> None:
+def test_list_connections_extracts_database_type() -> None:
     payload = {
         "data": [
             {
                 "name": "qzcs",
                 "databaseType": "MYSQL",
-                "url": "jdbc:mysql://127.0.0.1:3306/demo",
             }
         ]
     }
@@ -149,7 +144,6 @@ def test_list_connections_extracts_type_and_host_url() -> None:
     assert _parse_connection(result[0]) == ConnectionSummary(
         name="qzcs",
         database_type="MYSQL",
-        host_or_url="jdbc:mysql://127.0.0.1:3306/demo",
     )
 
 
@@ -157,13 +151,11 @@ def test_list_connections_falls_back_to_type_for_database_type() -> None:
     item = {
         "name": "qzcs",
         "type": "POSTGRESQL",
-        "url": "jdbc:postgresql://127.0.0.1:5432/demo",
     }
 
     assert _parse_connection(item) == ConnectionSummary(
         name="qzcs",
         database_type="POSTGRESQL",
-        host_or_url="jdbc:postgresql://127.0.0.1:5432/demo",
     )
 
 
@@ -171,112 +163,21 @@ def test_list_connections_falls_back_to_driver_for_database_type() -> None:
     item = {
         "name": "qzcs",
         "driver": "com.mysql.cj.jdbc.Driver",
-        "url": "jdbc:mysql://127.0.0.1:3306/demo",
     }
 
     assert _parse_connection(item) == ConnectionSummary(
         name="qzcs",
         database_type="com.mysql.cj.jdbc.Driver",
-        host_or_url="jdbc:mysql://127.0.0.1:3306/demo",
     )
 
 
-def test_list_connections_falls_back_to_jdbc_url() -> None:
-    item = {
-        "name": "qzcs",
-        "databaseType": "MYSQL",
-        "jdbcUrl": "jdbc:mysql://127.0.0.1:3306/demo",
-    }
+def test_list_connections_uses_empty_database_type_when_missing() -> None:
+    item = {"name": "qzcs"}
 
     assert _parse_connection(item) == ConnectionSummary(
         name="qzcs",
-        database_type="MYSQL",
-        host_or_url="jdbc:mysql://127.0.0.1:3306/demo",
+        database_type="",
     )
-
-
-def test_list_connections_builds_host_summary_when_url_missing() -> None:
-    item = {
-        "name": "qzcs",
-        "databaseType": "MYSQL",
-        "host": "127.0.0.1",
-        "port": 3306,
-        "database": "demo",
-    }
-
-    assert _parse_connection(item) == ConnectionSummary(
-        name="qzcs",
-        database_type="MYSQL",
-        host_or_url="127.0.0.1:3306/demo",
-    )
-
-
-def test_list_connections_masks_credentials_in_jdbc_url() -> None:
-    item = {
-        "name": "qzcs",
-        "databaseType": "MYSQL",
-        "jdbcUrl": "jdbc:mysql://demo-user:secret@127.0.0.1:3306/demo?password=secret&ssl=true",
-    }
-
-    result = _parse_connection(item)
-
-    assert result.database_type == "MYSQL"
-    assert result.host_or_url == "jdbc:mysql://127.0.0.1:3306/demo?password=%2A%2A%2A&ssl=true"
-    assert "secret" not in result.host_or_url
-    assert "demo-user" not in result.host_or_url
-
-
-def test_list_connections_masks_credentials_in_oracle_thin_jdbc_url() -> None:
-    item = {
-        "name": "qzcs",
-        "databaseType": "ORACLE",
-        "jdbcUrl": "jdbc:oracle:thin:scott/tiger@//127.0.0.1:1521/orclpdb1",
-    }
-
-    result = _parse_connection(item)
-
-    assert result.database_type == "ORACLE"
-    assert result.host_or_url == "jdbc:oracle:thin:@//127.0.0.1:1521/orclpdb1"
-    assert "scott" not in result.host_or_url
-    assert "tiger" not in result.host_or_url
-
-
-def test_list_connections_masks_credentials_in_sqlserver_jdbc_url() -> None:
-    item = {
-        "name": "qzcs",
-        "databaseType": "SQLSERVER",
-        "jdbcUrl": "jdbc:sqlserver://127.0.0.1:1433;databaseName=test;user=sa;password=secret",
-    }
-
-    result = _parse_connection(item)
-
-    assert result.database_type == "SQLSERVER"
-    assert (
-        result.host_or_url
-        == "jdbc:sqlserver://127.0.0.1:1433;databaseName=test;user=***;password=***"
-    )
-    assert "secret" not in result.host_or_url
-    assert "user=sa" not in result.host_or_url
-
-
-def test_list_connections_masks_braced_sqlserver_password_with_semicolon() -> None:
-    item = {
-        "name": "qzcs",
-        "databaseType": "SQLSERVER",
-        "jdbcUrl": "jdbc:sqlserver://127.0.0.1:1433;user=sa;password={se;cret};databaseName=test",
-    }
-
-    result = _parse_connection(item)
-
-    assert result.database_type == "SQLSERVER"
-    assert (
-        result.host_or_url
-        == "jdbc:sqlserver://127.0.0.1:1433;user=***;password=***;databaseName=test"
-    )
-    assert "password={se;cret}" not in result.host_or_url
-    assert "{se;cret}" not in result.host_or_url
-    assert "cret}" not in result.host_or_url
-    assert "user=sa" not in result.host_or_url
 
 
 def test_preview_sql_encrypts_request_after_loading_landing_page(

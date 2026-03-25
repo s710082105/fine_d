@@ -10,14 +10,12 @@ class ConnectionSummaryResponse(BaseModel):
 
     name: str
     database_type: str
-    host_or_url: str
 
     @classmethod
     def from_domain(cls, item: ConnectionSummary) -> "ConnectionSummaryResponse":
         return cls(
             name=item.name,
             database_type=item.database_type,
-            host_or_url=item.host_or_url,
         )
 
 

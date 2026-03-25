@@ -12,7 +12,6 @@ class FakeDatasourceService:
             ConnectionSummary(
                 name="qzcs",
                 database_type="MYSQL",
-                host_or_url="jdbc:mysql://127.0.0.1:3306/demo",
             )
         ]
 
@@ -47,7 +46,6 @@ def test_connections_endpoint_returns_expected_schema() -> None:
         {
             "name": "qzcs",
             "database_type": "MYSQL",
-            "host_or_url": "jdbc:mysql://127.0.0.1:3306/demo",
         }
     ]
 

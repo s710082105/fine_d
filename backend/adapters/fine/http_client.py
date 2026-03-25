@@ -6,7 +6,6 @@ from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-from backend.adapters.fine.connection_summary_parser import parse_connection
 from backend.adapters.fine.sql_preview_transport import build_sql_preview_transport
 from backend.domain.datasource.models import ConnectionSummary, SqlPreviewResult
 from backend.domain.project.errors import AppError
@@ -197,7 +196,28 @@ def _data_items(payload: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def _parse_connection(item: dict[str, Any]) -> ConnectionSummary:
-    return parse_connection(item)
+    name = item.get("name") or item.get("connectionName")
+    if not isinstance(name, str) or not name.strip():
+        raise AppError(
+            code="datasource.invalid_response",
+            message="FineReport 连接项缺少名称",
+            detail={"item": item},
+            source="datasource",
+        )
+    return ConnectionSummary(
+        name=name,
+        database_type=_first_text(item, "databaseType", "type", "driver"),
+    )
+
+
+def _first_text(item: dict[str, Any], *keys: str) -> str:
+    for key in keys:
+        value = item.get(key)
+        if isinstance(value, str):
+            stripped = value.strip()
+            if stripped:
+                return stripped
+    return ""
 
 
 def _parse_preview_result(payload: dict[str, Any]) -> SqlPreviewResult:

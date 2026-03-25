@@ -56,7 +56,7 @@ describe('ProjectWorkbenchView', () => {
       directory_entries: [
         { path: 'reportlets/demo', is_directory: true, lock: null }
       ],
-      data_connections: [{ name: 'qzcs' }],
+      data_connections: [{ name: 'qzcs', database_type: 'MYSQL' }],
       last_loaded_at: '2026-03-25T12:00:00Z'
     })
 
@@ -70,6 +70,7 @@ describe('ProjectWorkbenchView', () => {
     expect(await screen.findByText('/tmp/project-alpha')).toBeInTheDocument()
     expect(await screen.findByText('reportlets/demo')).toBeInTheDocument()
     expect(await screen.findByText('qzcs')).toBeInTheDocument()
+    expect(await screen.findByText('MYSQL')).toBeInTheDocument()
   })
 
   it('selects project through directory dialog and refreshes the form', async () => {

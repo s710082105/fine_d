@@ -74,6 +74,7 @@ export interface CodexTerminalInputAcceptedResponse {
 
 export interface DatasourceConnectionResponse {
   readonly name: string
+  readonly database_type: string
 }
 
 export interface DatasourceSqlPreviewResponse {

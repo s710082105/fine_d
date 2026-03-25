@@ -19,7 +19,8 @@ defineProps<{
         :key="connection.name"
         class="connection-panel__item"
       >
-        {{ connection.name }}
+        <strong>{{ connection.name }}</strong>
+        <span>{{ connection.database_type || '未标注类型' }}</span>
       </li>
     </ul>
   </section>
@@ -56,9 +57,16 @@ defineProps<{
 }
 
 .connection-panel__item {
+  display: grid;
+  gap: 6px;
   padding: 10px 14px;
   border-radius: 14px;
   background: #ffffff;
   box-shadow: inset 0 0 0 1px rgba(35, 65, 95, 0.08);
+}
+
+.connection-panel__item span {
+  color: #5e738c;
+  font-size: 13px;
 }
 </style>

@@ -39,13 +39,7 @@ class FakeRemoteGateway:
                     lock=None,
                 )
             ],
-            data_connections=[
-                ConnectionSummary(
-                    name="qzcs",
-                    database_type="MYSQL",
-                    host_or_url="jdbc:mysql://127.0.0.1:3306/demo",
-                )
-            ],
+            data_connections=[ConnectionSummary(name="qzcs", database_type="MYSQL")],
             last_loaded_at=datetime(2026, 3, 25, 12, 0, tzinfo=UTC),
         )
 
@@ -124,7 +118,6 @@ def test_load_remote_overview_use_case_returns_directory_and_connections() -> No
         ConnectionSummary(
             name="qzcs",
             database_type="MYSQL",
-            host_or_url="jdbc:mysql://127.0.0.1:3306/demo",
         )
     ]
     assert result.last_loaded_at == datetime(2026, 3, 25, 12, 0, tzinfo=UTC)
