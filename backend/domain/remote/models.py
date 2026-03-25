@@ -6,6 +6,7 @@ from backend.domain.datasource.models import ConnectionSummary
 
 @dataclass(frozen=True, slots=True)
 class RemoteDirectoryEntry:
+    name: str
     path: str
     is_directory: bool
     lock: str | None

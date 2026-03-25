@@ -1,7 +1,7 @@
 import os
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Callable, TypeVar
+from typing import Callable, Protocol, TypeVar
 
 from backend.adapters.fine.http_client import FineHttpClient
 from backend.domain.project.errors import AppError
@@ -19,6 +19,12 @@ ERROR_SOURCE = "remote"
 T = TypeVar("T")
 
 
+class RemoteFileEntryLike(Protocol):
+    path: str
+    is_directory: bool
+    lock: str | None
+
+
 class FineRemoteOverviewGateway:
     def __init__(
         self,
@@ -33,7 +39,7 @@ class FineRemoteOverviewGateway:
         profile: RemoteProfile,
         current_project: CurrentProject,
     ) -> RemoteOverview:
-        directory_entries = self._list_directory_entries(profile, current_project)
+        directory_entries = self.list_directories(profile, current_project, None)
         data_connections = self._list_data_connections(profile)
         return RemoteOverview(
             directory_entries=directory_entries,
@@ -49,22 +55,26 @@ class FineRemoteOverviewGateway:
         self.load_overview(profile, current_project)
         return RemoteProfileTestResult(status="ok", message="连接成功")
 
+    def list_directories(
+        self,
+        profile: RemoteProfile,
+        current_project: CurrentProject,
+        path: str | None,
+    ) -> list[RemoteDirectoryEntry]:
+        return self._list_directory_entries(profile, current_project, path)
+
     def _list_directory_entries(
         self,
         profile: RemoteProfile,
         current_project: CurrentProject,
+        path: str | None = None,
     ) -> list[RemoteDirectoryEntry]:
         def load_entries() -> list[RemoteDirectoryEntry]:
             client = self._build_remote_client(profile, current_project)
-            entries = client.list_files(self._remote_root)
-            return [
-                RemoteDirectoryEntry(
-                    path=entry.path,
-                    is_directory=entry.is_directory,
-                    lock=entry.lock,
-                )
-                for entry in entries
-            ]
+            entries = client.list_files(
+                _resolve_remote_directory_path(path, self._remote_root),
+            )
+            return [_build_remote_directory_entry(entry) for entry in entries]
 
         return _run_remote_operation("directory_entries", load_entries)
 
@@ -152,4 +162,30 @@ def _has_runtime_jars(fine_home: Path) -> bool:
         fine_home / "webapps" / "webroot" / "WEB-INF" / "lib",
         fine_home / "lib",
     )
-    return any(directory.exists() and any(directory.glob("*.jar")) for directory in jar_directories)
+    return any(
+        directory.exists() and any(directory.glob("*.jar"))
+        for directory in jar_directories
+    )
+
+
+def _build_remote_directory_entry(entry: RemoteFileEntryLike) -> RemoteDirectoryEntry:
+    path = _normalize_remote_entry_path(entry.path)
+    return RemoteDirectoryEntry(
+        name=Path(path).name,
+        path=path,
+        is_directory=entry.is_directory,
+        lock=entry.lock,
+    )
+
+
+def _normalize_remote_entry_path(path: str) -> str:
+    normalized = path.strip()
+    if normalized.startswith("/"):
+        return normalized
+    return f"/{normalized}"
+
+
+def _resolve_remote_directory_path(path: str | None, remote_root: str) -> str:
+    if path is None or path.strip() in {"", "/"}:
+        return remote_root
+    return path.strip().strip("/")

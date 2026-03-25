@@ -7,6 +7,7 @@ import fine_remote.client as fine_remote_client_module
 from backend.adapters.fine.remote_overview_gateway import FineRemoteOverviewGateway
 from backend.adapters.fine.http_client import FineHttpClient
 from backend.application.remote.use_cases import (
+    ListRemoteDirectoriesUseCase,
     LoadRemoteOverviewUseCase,
     TestRemoteProfileUseCase,
 )
@@ -24,6 +25,7 @@ from backend.domain.remote.models import (
 class FakeRemoteGateway:
     def __init__(self) -> None:
         self.calls: list[tuple[RemoteProfile, CurrentProject | None]] = []
+        self.directory_calls: list[tuple[RemoteProfile, CurrentProject, str | None]] = []
 
     def load_overview(
         self,
@@ -34,6 +36,7 @@ class FakeRemoteGateway:
         return RemoteOverview(
             directory_entries=[
                 RemoteDirectoryEntry(
+                    name="demo.cpt",
                     path="reportlets/demo.cpt",
                     is_directory=False,
                     lock=None,
@@ -50,6 +53,31 @@ class FakeRemoteGateway:
     ) -> RemoteProfileTestResult:
         self.calls.append((profile, current_project))
         return RemoteProfileTestResult(status="ok", message="连接成功")
+
+    def list_directories(
+        self,
+        profile: RemoteProfile,
+        current_project: CurrentProject,
+        path: str | None,
+    ) -> list[RemoteDirectoryEntry]:
+        self.directory_calls.append((profile, current_project, path))
+        if path is None:
+            return [
+                RemoteDirectoryEntry(
+                    name="reportlets",
+                    path="/reportlets",
+                    is_directory=True,
+                    lock=None,
+                )
+            ]
+        return [
+            RemoteDirectoryEntry(
+                name="demo.cpt",
+                path="/reportlets/demo.cpt",
+                is_directory=False,
+                lock=None,
+            )
+        ]
 
 
 class FakeProjectConfigService:
@@ -109,6 +137,7 @@ def test_load_remote_overview_use_case_returns_directory_and_connections() -> No
 
     assert result.directory_entries == [
         RemoteDirectoryEntry(
+            name="demo.cpt",
             path="reportlets/demo.cpt",
             is_directory=False,
             lock=None,
@@ -129,6 +158,76 @@ def test_load_remote_overview_use_case_returns_directory_and_connections() -> No
                 password="admin",
             ),
             current_project,
+        )
+    ]
+
+
+def test_list_remote_directories_returns_root_entries() -> None:
+    gateway = FakeRemoteGateway()
+    current_project = CurrentProject(path=Path("/tmp/project"), name="project")
+    service = FakeProjectConfigService(
+        ProjectState(
+            current_project=current_project,
+            remote_profile=RemoteProfile(
+                base_url="http://localhost:8075/webroot/decision",
+                username="admin",
+                password="admin",
+            ),
+        )
+    )
+    use_case = ListRemoteDirectoriesUseCase(service, gateway)
+
+    result = use_case.list_directories(path=None)
+
+    assert result[0].path == "/reportlets"
+    assert result[0].name == "reportlets"
+    assert gateway.directory_calls == [
+        (
+            RemoteProfile(
+                base_url="http://localhost:8075/webroot/decision",
+                username="admin",
+                password="admin",
+            ),
+            current_project,
+            None,
+        )
+    ]
+
+
+def test_list_remote_directories_returns_children_of_requested_path() -> None:
+    gateway = FakeRemoteGateway()
+    current_project = CurrentProject(path=Path("/tmp/project"), name="project")
+    service = FakeProjectConfigService(
+        ProjectState(
+            current_project=current_project,
+            remote_profile=RemoteProfile(
+                base_url="http://localhost:8075/webroot/decision",
+                username="admin",
+                password="admin",
+            ),
+        )
+    )
+    use_case = ListRemoteDirectoriesUseCase(service, gateway)
+
+    result = use_case.list_directories(path="/reportlets")
+
+    assert result == [
+        RemoteDirectoryEntry(
+            name="demo.cpt",
+            path="/reportlets/demo.cpt",
+            is_directory=False,
+            lock=None,
+        )
+    ]
+    assert gateway.directory_calls == [
+        (
+            RemoteProfile(
+                base_url="http://localhost:8075/webroot/decision",
+                username="admin",
+                password="admin",
+            ),
+            current_project,
+            "/reportlets",
         )
     ]
 

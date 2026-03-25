@@ -6,7 +6,11 @@ from backend.domain.project.errors import (
 )
 from backend.domain.project.models import CurrentProject, ProjectState
 from backend.domain.project.remote_models import RemoteProfile
-from backend.domain.remote.models import RemoteOverview, RemoteProfileTestResult
+from backend.domain.remote.models import (
+    RemoteDirectoryEntry,
+    RemoteOverview,
+    RemoteProfileTestResult,
+)
 
 
 class ProjectStateReader(Protocol):
@@ -27,6 +31,14 @@ class RemoteOverviewGateway(Protocol):
         profile: RemoteProfile,
         current_project: CurrentProject,
     ) -> RemoteProfileTestResult:
+        ...
+
+    def list_directories(
+        self,
+        profile: RemoteProfile,
+        current_project: CurrentProject,
+        path: str | None,
+    ) -> list[RemoteDirectoryEntry]:
         ...
 
 
@@ -89,6 +101,25 @@ class LoadRemoteOverviewUseCase:
 
     def load(self) -> RemoteOverview:
         return self.execute()
+
+
+class ListRemoteDirectoriesUseCase:
+    def __init__(
+        self,
+        project_state_reader: ProjectStateReader,
+        gateway: RemoteOverviewGateway,
+    ) -> None:
+        self._project_state_reader = project_state_reader
+        self._gateway = gateway
+
+    def execute(self, *, path: str | None) -> list[RemoteDirectoryEntry]:
+        state = self._project_state_reader.get_current()
+        current_project = _require_current_project(state)
+        profile = _require_remote_profile(state.remote_profile)
+        return self._gateway.list_directories(profile, current_project, path)
+
+    def list_directories(self, *, path: str | None) -> list[RemoteDirectoryEntry]:
+        return self.execute(path=path)
 
 
 def _build_remote_profile(

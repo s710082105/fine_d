@@ -18,11 +18,17 @@ from backend.domain.remote.models import (
 from backend.infra.project_store import STATE_DIR_NAME, STATE_FILE_NAME
 
 
+@pytest.fixture
+def client() -> TestClient:
+    return TestClient(create_app())
+
+
 class FakeRemoteOverviewService:
     def load(self) -> RemoteOverview:
         return RemoteOverview(
             directory_entries=[
                 RemoteDirectoryEntry(
+                    name="reportlets",
                     path="reportlets",
                     is_directory=True,
                     lock=None,
@@ -45,6 +51,19 @@ class FakeRemoteProfileTestService:
         assert username == "admin"
         assert password == "admin"
         return RemoteProfileTestResult(status="ok", message="连接成功")
+
+
+class FakeRemoteDirectoriesService:
+    def list_directories(self, *, path: str | None) -> list[RemoteDirectoryEntry]:
+        assert path == "/reportlets"
+        return [
+            RemoteDirectoryEntry(
+                name="demo.cpt",
+                path="/reportlets/demo.cpt",
+                is_directory=False,
+                lock=None,
+            )
+        ]
 
 
 class FailingRemoteOverviewService:
@@ -70,6 +89,7 @@ def test_remote_overview_endpoint_returns_directory_connections_and_timestamp() 
     assert response.json() == {
         "directory_entries": [
             {
+                "name": "reportlets",
                 "path": "reportlets",
                 "is_directory": True,
                 "lock": None,
@@ -124,6 +144,28 @@ def test_project_remote_profile_test_endpoint_returns_status_and_message() -> No
         "status": "ok",
         "message": "连接成功",
     }
+
+
+def test_get_remote_directories_endpoint_accepts_optional_path(
+    client: TestClient,
+) -> None:
+    app = create_app()
+    app.dependency_overrides[remote_routes.get_remote_directories_service] = (
+        lambda: FakeRemoteDirectoriesService()
+    )
+    client = TestClient(app)
+
+    response = client.get("/api/remote/directories", params={"path": "/reportlets"})
+
+    assert response.status_code == 200
+    assert response.json() == [
+        {
+            "name": "demo.cpt",
+            "path": "/reportlets/demo.cpt",
+            "is_directory": False,
+            "lock": None,
+        }
+    ]
 
 
 def test_remote_overview_endpoint_uses_unified_app_error_response() -> None:

@@ -13,6 +13,7 @@ from backend.schemas.datasource import ConnectionSummaryResponse
 class RemoteDirectoryEntryResponse(BaseModel):
     model_config = ConfigDict(frozen=True)
 
+    name: str
     path: str
     is_directory: bool
     lock: str | None
@@ -20,6 +21,7 @@ class RemoteDirectoryEntryResponse(BaseModel):
     @classmethod
     def from_domain(cls, item: RemoteDirectoryEntry) -> "RemoteDirectoryEntryResponse":
         return cls(
+            name=item.name,
             path=item.path,
             is_directory=item.is_directory,
             lock=item.lock,
