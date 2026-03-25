@@ -2,9 +2,9 @@
 
 ## 项目定位
 
-`finereport-ai` 是一个面向帆软自动化开发的桌面工程平台，目标不是单纯生成某个模板文件，而是把帆软开发过程中分散的样式配置、目录约定、同步方式、AI 上下文和校验动作统一收敛到一个可界面操作、可重复执行的工作流中。
+`finereport-ai` 当前定位为一个面向帆软自动化开发的单机本地工具。目标不是单纯生成某个模板文件，而是把帆软开发过程中分散的目录约定、数据探测、报表文件浏览、同步动作、预览入口和 AI 路由统一收敛到一个可浏览器访问、可重复执行的工作流中。
 
-项目计划基于 `Rust + Tauri` 实现界面化软件，由界面负责收集报表开发参数、工程目录和同步信息，再由系统生成 `Claude Code`、`Codex` 等 AI 编码工具可直接消费的配置与上下文，最终通过自然语言交互结合专用 `skill` 和浏览器自动化能力，完成从编写到校验的全流程处理。
+当前主链路已经切到 `Python + Vue` 前后端分离架构：后端以本地 `FastAPI` 服务承载业务能力，前端以 `Vue` 浏览器界面承载交互；历史 `Rust/Tauri/Java` 资产保留在仓库中作为迁移参考和底层协议素材，不再作为首版主运行时。
 
 ## 要解决的问题
 
@@ -20,14 +20,14 @@
 
 ## 系统目标
 
-本项目负责以下几类核心能力：
+本项目当前负责以下几类核心能力：
 
-- 通过桌面界面维护帆软开发的基础参数。
-- 统一管理运行目录、版本管理目录、模板目录和产物目录。
-- 抽象文件同步方式，如 `SFTP`、`FTP` 等。
-- 生成适用于 `Claude Code`、`Codex` 等工具的项目说明、配置和技能入口。
-- 提供面向帆软开发的专用 `skill`，约束 AI 的开发步骤和产出格式。
-- 结合浏览器操作能力，实现模板编写后的自动打开、检查和校验。
+- 通过浏览器界面展示本地工程目录和运行配置。
+- 统一提供数据源连接列表与最小 SQL 预览入口。
+- 提供 `reportlets` 文件树浏览与文件内容读取能力。
+- 提供同步动作的统一手动入口和结果回显。
+- 提供预览地址打开能力，并保留显式会话结果。
+- 提供自然语言任务路由，把请求收敛到正式业务模块。
 
 ## 界面化配置范围
 
@@ -113,24 +113,24 @@
 
 ## 技术架构
 
-### 桌面层
+### 浏览器界面层
 
-- `Tauri` 负责界面承载、窗口管理和系统交互。
-- 前端界面负责参数录入、模板规则配置、同步配置编辑和任务发起。
+- `Vue` 负责界面承载、状态展示和用户操作发起。
+- 前端界面只通过 HTTP API 与本地后端通信，不直接操作本地文件和系统命令。
 
 ### 核心能力层
 
-- `Rust` 负责配置模型定义、任务编排、文件处理、配置生成和同步执行。
-- 核心逻辑以配置驱动，不依赖人工临时修改脚本。
+- `Python` 负责配置读取、任务编排、文件处理、同步执行和预览调度。
+- 核心逻辑按 `project`、`datasource`、`reportlet`、`sync`、`preview`、`assistant` 六个模块拆分。
 
 ### 运行时依赖
 
-当前产品方向已切换为“系统环境安装 + 启动预检阻断”：
+当前产品方向已切换为“系统环境安装 + 启动脚本预检”：
 
-- 软件不再内置 `Node`、`Codex`、`Python 3`
-- 软件启动时统一检查系统 `git`、`node`、`python3`、`codex`
-- 若缺失任一基础环境，则阻断进入主界面
-- 用户手动执行平台安装脚本完成安装
+- 工具不再内置 `Node`、`Codex`、`Python 3`
+- 安装脚本和启动脚本统一检查系统 `git`、`node`、`python3`、`codex`
+- 若缺失基础环境，则脚本显式失败并给出诊断结果
+- 用户通过平台脚本完成依赖安装和本地启动
 
 安装脚本：
 
@@ -156,11 +156,11 @@ Windows 推荐执行方式：
 - 首选：`.\scripts\install-runtime-windows.cmd`
 - 备选：`powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install-runtime-windows.ps1`
 
-为保证 `macOS` 和 `Windows` 的实际可运行性，启动预检不是只看平台名，而是直接检查同步链路依赖：
+为保证 `macOS` 和 `Windows` 的实际可运行性，预检不是只看平台名，而是直接检查同步链路依赖：
 
 - `macOS/Linux` 必须存在 `/bin/sh`，因为项目同步 hook 依赖标准 shell 执行。
 - `Windows` 必须安装带 `Git Bash` 的 `Git for Windows`，预检会显式验证 hook 所需的 `sh.exe` 是否可定位。
-- 只要系统 `git/node/python3/codex` 或同步 shell 缺失，界面会停留在阻断页，不做静默降级。
+- 只要系统 `git/node/python3/codex` 或同步 shell 缺失，启动脚本就应显式失败，不做静默降级。
 
 ### AI 协作层
 
@@ -170,23 +170,48 @@ Windows 推荐执行方式：
 
 ## 推荐目录结构
 
-当前仓库后续建议收敛为如下结构：
+当前主链路围绕如下目录组织：
 
 ```text
 .
 ├── README.md
+├── apps/
+│   ├── api/                  # FastAPI 路由入口
+│   └── web/                  # Vue 浏览器界面
+├── backend/
+│   ├── application/          # 用例编排
+│   ├── domain/               # 领域模型
+│   ├── adapters/             # 外部系统适配
+│   ├── infra/                # 运行基础设施
+│   └── schemas/              # API 请求/响应模型
 ├── templates/                 # 基础模板资源
 ├── reportlets/               # 报表示例、模板片段、演示产物
-├── skills/                   # 帆软开发与浏览器操作相关 skill
 ├── generated/                # 由界面配置生成的 AI 配置与上下文文件
 ├── workspace/                # AI 实际工作的本地工程目录
-├── sync/                     # 同步规则和同步任务配置
+├── scripts/                  # 安装、诊断、启动脚本
 └── docs/                     # 项目设计、协议和开发文档
 ```
 
 ## 当前仓库状态
 
-当前仓库已经存在一些基础资源，可作为后续自动化流程的初始素材：
+当前仓库已经具备可运行的 `Python + Vue` 本地主链路，并保留了迁移参考资产：
+
+- `apps/api`：本地 API 入口
+- `backend`：领域模块与用例实现
+- `apps/web`：浏览器交互界面
+- `scripts/install-runtime-*`、`scripts/doctor-*`、`scripts/start-*`：安装、诊断、启动脚本
+- `templates/`、`reportlets/`、`docs/`：模板、样例和协议文档
+
+当前已接通的功能模块：
+
+- `project`：只读展示工程目录配置
+- `datasource`：查看连接列表并执行最小 SQL 预览
+- `reportlet`：浏览文件树并读取模板内容
+- `sync`：手动执行同步动作并展示结果
+- `preview`：输入 URL 打开预览并返回会话信息
+- `assistant`：对自然语言任务做模块路由分析
+
+同时仓库仍保留以下历史资源，作为迁移和协议研究参考：
 
 - [templates/blank.cpt](/Users/wj/data/mcp/finereport/templates/blank.cpt)
 - [templates/blank.fvs](/Users/wj/data/mcp/finereport/templates/blank.fvs)
@@ -194,7 +219,7 @@ Windows 推荐执行方式：
 - [reportlets/第一张FVS模板.fvs](/Users/wj/data/mcp/finereport/reportlets/第一张FVS模板.fvs)
 - [docs/fine-remote-design-protocol.md](/Users/wj/data/mcp/finereport/docs/fine-remote-design-protocol.md)
 
-这些文件说明仓库已经具备基础模板和示例报表资源，后续应围绕“配置生成 + AI 协作 + 自动校验 + 文件同步”逐步补齐完整能力。
+这些文件说明仓库已经具备模板、样例和远程协议基础，可以继续作为新架构下的能力素材来源。
 
 ## 设计原则
 

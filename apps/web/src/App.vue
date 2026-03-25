@@ -20,27 +20,27 @@ const sections: ReadonlyArray<AppSection> = [
   {
     id: 'datasource',
     label: 'Datasource',
-    summary: '统一承载数据源读取与连接配置。'
+    summary: '查看连接列表，并执行最小 SQL 预览。'
   },
   {
     id: 'reportlet',
     label: 'Reportlet',
-    summary: '汇总报表模板、生成结果与编辑入口。'
+    summary: '浏览报表文件树，并读取选中文件内容。'
   },
   {
     id: 'sync',
     label: 'Sync',
-    summary: '展示同步状态，并作为后续远端同步入口。'
+    summary: '手动执行单次同步动作，并查看返回结果。'
   },
   {
     id: 'preview',
     label: 'Preview',
-    summary: '为报表预览和结果查看预留稳定区域。'
+    summary: '输入预览地址，调用后端打开并返回会话信息。'
   },
   {
     id: 'assistant',
     label: 'Assistant',
-    summary: '为后续内嵌助手面板保留统一入口。'
+    summary: '分析自然语言任务，并推荐应走的正式模块。'
   }
 ]
 
