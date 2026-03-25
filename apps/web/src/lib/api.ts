@@ -1,4 +1,8 @@
-import type { AssistantRouteResponse, HealthResponse } from './types'
+import type {
+  AssistantRouteResponse,
+  HealthResponse,
+  ProjectConfigResponse
+} from './types'
 
 const API_PREFIX = '/api'
 
@@ -52,6 +56,10 @@ export async function apiRequest<T>(
 
 export function getHealth(): Promise<HealthResponse> {
   return apiRequest<HealthResponse>('/health')
+}
+
+export function getProjectConfig(): Promise<ProjectConfigResponse> {
+  return apiRequest<ProjectConfigResponse>('/project/config')
 }
 
 export function routeAssistantPrompt(

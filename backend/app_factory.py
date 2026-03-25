@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from apps.api.routes.assistant import router as assistant_router
 from apps.api.routes.datasource import router as datasource_router
 from apps.api.routes.preview import router as preview_router
+from apps.api.routes.project import router as project_router
 from apps.api.routes.reportlet import router as reportlet_router
 from apps.api.routes.sync import router as sync_router
 from backend.domain.project.errors import AppError
@@ -29,6 +30,7 @@ def create_app() -> FastAPI:
     app.include_router(assistant_router)
     app.include_router(datasource_router)
     app.include_router(preview_router)
+    app.include_router(project_router)
     app.include_router(reportlet_router)
     app.include_router(sync_router)
 

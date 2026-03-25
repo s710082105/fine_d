@@ -16,6 +16,11 @@ export interface HealthResponse {
   readonly status: 'ok'
 }
 
+export interface ProjectConfigResponse {
+  readonly workspace_dir: string
+  readonly generated_dir: string
+}
+
 export type AssistantRouteStatus = 'routed' | 'needs_clarification'
 
 export type AssistantModule =
