@@ -1,6 +1,6 @@
 import os
 from datetime import UTC, datetime
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Callable, Protocol, TypeVar
 
 from backend.adapters.fine.http_client import FineHttpClient
@@ -16,6 +16,8 @@ from backend.domain.remote.models import (
 DEFAULT_REMOTE_ROOT = "reportlets"
 REMOTE_HOME_ENV = "FINE_REMOTE_HOME"
 ERROR_SOURCE = "remote"
+INVALID_REMOTE_PATH_CODE = "remote.invalid_path"
+INVALID_REMOTE_PATH_MESSAGE = "远程目录路径不合法"
 T = TypeVar("T")
 
 
@@ -171,7 +173,7 @@ def _has_runtime_jars(fine_home: Path) -> bool:
 def _build_remote_directory_entry(entry: RemoteFileEntryLike) -> RemoteDirectoryEntry:
     path = _normalize_remote_entry_path(entry.path)
     return RemoteDirectoryEntry(
-        name=Path(path).name,
+        name=PurePosixPath(path).name,
         path=path,
         is_directory=entry.is_directory,
         lock=entry.lock,
@@ -179,13 +181,32 @@ def _build_remote_directory_entry(entry: RemoteFileEntryLike) -> RemoteDirectory
 
 
 def _normalize_remote_entry_path(path: str) -> str:
-    normalized = path.strip()
-    if normalized.startswith("/"):
-        return normalized
-    return f"/{normalized}"
+    normalized = path.strip().lstrip("/")
+    return str(PurePosixPath("/") / normalized)
 
 
 def _resolve_remote_directory_path(path: str | None, remote_root: str) -> str:
+    root = remote_root.strip("/")
     if path is None or path.strip() in {"", "/"}:
-        return remote_root
-    return path.strip().strip("/")
+        return root
+    raw_path = path.strip()
+    if "\\" in raw_path:
+        raise _invalid_remote_path_error(path, root)
+    segments = [segment for segment in raw_path.split("/") if segment != ""]
+    if not segments or segments[0] != root:
+        raise _invalid_remote_path_error(path, root)
+    if any(segment in {".", ".."} for segment in segments):
+        raise _invalid_remote_path_error(path, root)
+    return str(PurePosixPath(*segments))
+
+
+def _invalid_remote_path_error(path: str, remote_root: str) -> AppError:
+    return AppError(
+        code=INVALID_REMOTE_PATH_CODE,
+        message=INVALID_REMOTE_PATH_MESSAGE,
+        detail={
+            "path": path,
+            "root": f"/{remote_root}",
+        },
+        source=ERROR_SOURCE,
+    )

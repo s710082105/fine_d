@@ -2,6 +2,7 @@ import json
 from datetime import UTC, datetime
 from pathlib import Path
 
+import fine_remote.client as fine_remote_client_module
 import pytest
 from fastapi.testclient import TestClient
 
@@ -244,6 +245,64 @@ def test_remote_overview_endpoint_rejects_missing_runtime_configuration(
         "code": "remote.runtime_missing",
         "message": "缺少 FineReport 运行时目录配置",
         "detail": {"env": "FINE_REMOTE_HOME"},
+        "source": "remote",
+        "retryable": False,
+    }
+
+
+def test_remote_directories_endpoint_rejects_path_outside_reportlets_root(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    project_dir = tmp_path / "project-alpha"
+    project_dir.mkdir()
+    state_file = tmp_path / STATE_DIR_NAME / STATE_FILE_NAME
+    state_file.parent.mkdir(parents=True, exist_ok=True)
+    state_file.write_text(
+        json.dumps(
+            {
+                "current_project": {
+                    "path": str(project_dir),
+                    "name": "project-alpha",
+                },
+                "remote_profiles": {
+                    str(project_dir): {
+                        "base_url": "http://localhost:8075/webroot/decision",
+                        "username": "admin",
+                        "password": "admin",
+                    }
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+    fine_home = tmp_path / "FineReport"
+    (fine_home / "lib").mkdir(parents=True)
+    (fine_home / "lib" / "core.jar").write_text("", encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("FINE_REMOTE_HOME", str(fine_home))
+
+    class FakeFineRemoteClient:
+        def __init__(self, **_: object) -> None:
+            return None
+
+        def list_files(self, path: str) -> list[object]:
+            raise AssertionError(f"unexpected remote list for {path}")
+
+    monkeypatch.setattr(
+        fine_remote_client_module,
+        "FineRemoteClient",
+        FakeFineRemoteClient,
+    )
+    client = TestClient(create_app())
+
+    response = client.get("/api/remote/directories", params={"path": "/other"})
+
+    assert response.status_code == 400
+    assert response.json() == {
+        "code": "remote.invalid_path",
+        "message": "远程目录路径不合法",
+        "detail": {"path": "/other", "root": "/reportlets"},
         "source": "remote",
         "retryable": False,
     }

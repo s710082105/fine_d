@@ -1,4 +1,5 @@
 from datetime import UTC, datetime
+from dataclasses import dataclass
 from pathlib import Path
 
 import pytest
@@ -501,3 +502,154 @@ def test_remote_overview_gateway_rejects_invalid_runtime_directory(
         "path": str(invalid_runtime.resolve()),
         "project_path": str(current_project.path),
     }
+
+
+def test_remote_overview_gateway_lists_root_directory_from_configured_root(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    fine_home = tmp_path / "FineReport"
+    (fine_home / "lib").mkdir(parents=True)
+    (fine_home / "lib" / "core.jar").write_text("", encoding="utf-8")
+    current_project = CurrentProject(path=tmp_path / "project", name="project")
+    current_project.path.mkdir()
+    profile = RemoteProfile(
+        base_url="http://localhost:8075/webroot/decision",
+        username="admin",
+        password="admin",
+    )
+    requested_paths: list[str] = []
+
+    @dataclass(frozen=True)
+    class FakeRemoteFileEntry:
+        path: str
+        is_directory: bool
+        lock: str | None
+
+    class FakeFineRemoteClient:
+        def __init__(self, **_: object) -> None:
+            return None
+
+        def list_files(self, path: str) -> list[FakeRemoteFileEntry]:
+            requested_paths.append(path)
+            return [
+                FakeRemoteFileEntry(
+                    path="reportlets/demo.cpt",
+                    is_directory=False,
+                    lock=None,
+                )
+            ]
+
+    monkeypatch.setattr(
+        fine_remote_client_module,
+        "FineRemoteClient",
+        FakeFineRemoteClient,
+    )
+    gateway = FineRemoteOverviewGateway(fine_home=fine_home)
+
+    result = gateway._list_directory_entries(profile, current_project, None)
+
+    assert requested_paths == ["reportlets"]
+    assert result == [
+        RemoteDirectoryEntry(
+            name="demo.cpt",
+            path="/reportlets/demo.cpt",
+            is_directory=False,
+            lock=None,
+        )
+    ]
+
+
+def test_remote_overview_gateway_lists_children_within_configured_root(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    fine_home = tmp_path / "FineReport"
+    (fine_home / "lib").mkdir(parents=True)
+    (fine_home / "lib" / "core.jar").write_text("", encoding="utf-8")
+    current_project = CurrentProject(path=tmp_path / "project", name="project")
+    current_project.path.mkdir()
+    profile = RemoteProfile(
+        base_url="http://localhost:8075/webroot/decision",
+        username="admin",
+        password="admin",
+    )
+    requested_paths: list[str] = []
+
+    @dataclass(frozen=True)
+    class FakeRemoteFileEntry:
+        path: str
+        is_directory: bool
+        lock: str | None
+
+    class FakeFineRemoteClient:
+        def __init__(self, **_: object) -> None:
+            return None
+
+        def list_files(self, path: str) -> list[FakeRemoteFileEntry]:
+            requested_paths.append(path)
+            return [
+                FakeRemoteFileEntry(
+                    path="reportlets/folder",
+                    is_directory=True,
+                    lock="alice",
+                )
+            ]
+
+    monkeypatch.setattr(
+        fine_remote_client_module,
+        "FineRemoteClient",
+        FakeFineRemoteClient,
+    )
+    gateway = FineRemoteOverviewGateway(fine_home=fine_home)
+
+    result = gateway._list_directory_entries(
+        profile,
+        current_project,
+        "/reportlets/nested",
+    )
+
+    assert requested_paths == ["reportlets/nested"]
+    assert result == [
+        RemoteDirectoryEntry(
+            name="folder",
+            path="/reportlets/folder",
+            is_directory=True,
+            lock="alice",
+        )
+    ]
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        "/other",
+        "/reportlets/../secret",
+    ],
+)
+def test_remote_overview_gateway_rejects_paths_outside_configured_root(
+    path: str,
+    tmp_path: Path,
+) -> None:
+    fine_home = tmp_path / "FineReport"
+    (fine_home / "lib").mkdir(parents=True)
+    (fine_home / "lib" / "core.jar").write_text("", encoding="utf-8")
+    current_project = CurrentProject(path=tmp_path / "project", name="project")
+    current_project.path.mkdir()
+    profile = RemoteProfile(
+        base_url="http://localhost:8075/webroot/decision",
+        username="admin",
+        password="admin",
+    )
+    gateway = FineRemoteOverviewGateway(fine_home=fine_home)
+
+    with pytest.raises(AppError) as error_info:
+        gateway._list_directory_entries(profile, current_project, path)
+
+    assert error_info.value.code == "remote.invalid_path"
+    assert error_info.value.message == "远程目录路径不合法"
+    assert error_info.value.detail == {
+        "path": path,
+        "root": "/reportlets",
+    }
+    assert error_info.value.source == "remote"
