@@ -11,3 +11,6 @@ src-tauri/target/
 src-tauri/gen/
 .ace-tool/
 .tmp
+.finereport/
+.superpowers/
+logs/
