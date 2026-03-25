@@ -21,3 +21,32 @@ class AppError(Exception):
             "source": self.source,
             "retryable": self.retryable,
         }
+
+
+PROJECT_ERROR_SOURCE = "project"
+
+
+def current_project_required_error() -> AppError:
+    return AppError(
+        code="project.current_required",
+        message="请先选择项目目录",
+        source=PROJECT_ERROR_SOURCE,
+    )
+
+
+def invalid_project_path_error(path: str) -> AppError:
+    return AppError(
+        code="project.path_invalid",
+        message="项目目录不存在或不是目录",
+        detail={"path": path},
+        source=PROJECT_ERROR_SOURCE,
+    )
+
+
+def invalid_remote_profile_error(field: str) -> AppError:
+    return AppError(
+        code="project.remote_profile_invalid",
+        message="远程参数不合法",
+        detail={"field": field},
+        source=PROJECT_ERROR_SOURCE,
+    )
