@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from apps.api.routes.assistant import router as assistant_router
+from apps.api.routes.codex_terminal import router as codex_terminal_router
 from apps.api.routes.datasource import router as datasource_router
 from apps.api.routes.preview import router as preview_router
 from apps.api.routes.project import router as project_router
@@ -29,6 +30,7 @@ def create_app() -> FastAPI:
         return HealthResponse(status="ok")
 
     app.include_router(assistant_router)
+    app.include_router(codex_terminal_router)
     app.include_router(datasource_router)
     app.include_router(preview_router)
     app.include_router(project_router)
