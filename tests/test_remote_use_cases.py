@@ -2,6 +2,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
+import fine_remote.client as fine_remote_client_module
 
 from backend.adapters.fine.remote_overview_gateway import FineRemoteOverviewGateway
 from backend.adapters.fine.http_client import FineHttpClient
@@ -311,3 +312,88 @@ def test_remote_overview_gateway_wraps_data_connection_errors(
     }
     assert error_info.value.source == "remote"
     assert error_info.value.retryable is True
+
+
+def test_remote_overview_gateway_uses_explicit_fine_runtime(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    fine_home = tmp_path / "FineReport"
+    (fine_home / "lib").mkdir(parents=True)
+    (fine_home / "lib" / "core.jar").write_text("", encoding="utf-8")
+    current_project = CurrentProject(path=tmp_path / "project", name="project")
+    current_project.path.mkdir()
+    profile = RemoteProfile(
+        base_url="http://localhost:8075/webroot/decision",
+        username="admin",
+        password="admin",
+    )
+    captured: dict[str, object] = {}
+
+    class FakeFineRemoteClient:
+        def __init__(self, **kwargs: object) -> None:
+            captured.update(kwargs)
+
+        def list_files(self, path: str) -> list[object]:
+            assert path == "reportlets"
+            return []
+
+    monkeypatch.setattr(
+        fine_remote_client_module,
+        "FineRemoteClient",
+        FakeFineRemoteClient,
+    )
+    gateway = FineRemoteOverviewGateway(fine_home=fine_home)
+
+    result = gateway._list_directory_entries(profile, current_project)
+
+    assert result == []
+    assert captured["fine_home"] == fine_home.resolve()
+    assert captured["fine_home"] != current_project.path
+
+
+def test_remote_overview_gateway_rejects_missing_runtime_configuration(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.delenv("FINE_REMOTE_HOME", raising=False)
+    gateway = FineRemoteOverviewGateway()
+    profile = RemoteProfile(
+        base_url="http://localhost:8075/webroot/decision",
+        username="admin",
+        password="admin",
+    )
+    current_project = CurrentProject(path=tmp_path / "project", name="project")
+    current_project.path.mkdir()
+
+    with pytest.raises(AppError) as error_info:
+        gateway._list_directory_entries(profile, current_project)
+
+    assert error_info.value.code == "remote.runtime_missing"
+    assert error_info.value.detail == {"env": "FINE_REMOTE_HOME"}
+
+
+def test_remote_overview_gateway_rejects_invalid_runtime_directory(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    invalid_runtime = tmp_path / "project-runtime"
+    invalid_runtime.mkdir()
+    monkeypatch.setenv("FINE_REMOTE_HOME", str(invalid_runtime))
+    gateway = FineRemoteOverviewGateway()
+    profile = RemoteProfile(
+        base_url="http://localhost:8075/webroot/decision",
+        username="admin",
+        password="admin",
+    )
+    current_project = CurrentProject(path=tmp_path / "project", name="project")
+    current_project.path.mkdir()
+
+    with pytest.raises(AppError) as error_info:
+        gateway._list_directory_entries(profile, current_project)
+
+    assert error_info.value.code == "remote.runtime_invalid"
+    assert error_info.value.detail == {
+        "path": str(invalid_runtime.resolve()),
+        "project_path": str(current_project.path),
+    }

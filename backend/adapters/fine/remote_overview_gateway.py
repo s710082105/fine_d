@@ -1,4 +1,7 @@
+import os
 from datetime import UTC, datetime
+from pathlib import Path
+from typing import Callable, TypeVar
 
 from backend.adapters.fine.http_client import FineHttpClient
 from backend.domain.project.errors import AppError
@@ -11,12 +14,19 @@ from backend.domain.remote.models import (
 )
 
 DEFAULT_REMOTE_ROOT = "reportlets"
+REMOTE_HOME_ENV = "FINE_REMOTE_HOME"
 ERROR_SOURCE = "remote"
+T = TypeVar("T")
 
 
 class FineRemoteOverviewGateway:
-    def __init__(self, remote_root: str = DEFAULT_REMOTE_ROOT) -> None:
+    def __init__(
+        self,
+        remote_root: str = DEFAULT_REMOTE_ROOT,
+        fine_home: Path | None = None,
+    ) -> None:
         self._remote_root = remote_root.strip("/\\") or DEFAULT_REMOTE_ROOT
+        self._fine_home = None if fine_home is None else Path(fine_home)
 
     def load_overview(
         self,
@@ -70,8 +80,8 @@ class FineRemoteOverviewGateway:
 
         return _run_remote_operation("data_connections", load_connections)
 
-    @staticmethod
     def _build_remote_client(
+        self,
         profile: RemoteProfile,
         current_project: CurrentProject,
     ):
@@ -81,7 +91,7 @@ class FineRemoteOverviewGateway:
             base_url=profile.base_url,
             username=profile.username,
             password=profile.password,
-            fine_home=current_project.path,
+            fine_home=_resolve_fine_home(current_project, self._fine_home),
         )
 
 
@@ -95,10 +105,51 @@ def _remote_request_failed_error(operation: str, error: Exception) -> AppError:
     )
 
 
-def _run_remote_operation(operation: str, action):
+def _run_remote_operation(operation: str, action: Callable[[], T]) -> T:
     try:
         return action()
     except AppError:
         raise
     except Exception as error:
         raise _remote_request_failed_error(operation, error) from error
+
+
+def _resolve_fine_home(
+    current_project: CurrentProject,
+    configured_path: Path | None,
+) -> Path:
+    if configured_path is not None:
+        fine_home = configured_path.expanduser().resolve()
+    else:
+        fine_home = _load_fine_home_from_env()
+    if _has_runtime_jars(fine_home):
+        return fine_home
+    raise AppError(
+        code="remote.runtime_invalid",
+        message="FineReport 运行时目录无效",
+        detail={
+            "path": str(fine_home),
+            "project_path": str(current_project.path),
+        },
+        source=ERROR_SOURCE,
+    )
+
+
+def _load_fine_home_from_env() -> Path:
+    value = os.environ.get(REMOTE_HOME_ENV, "").strip()
+    if value:
+        return Path(value).expanduser().resolve()
+    raise AppError(
+        code="remote.runtime_missing",
+        message="缺少 FineReport 运行时目录配置",
+        detail={"env": REMOTE_HOME_ENV},
+        source=ERROR_SOURCE,
+    )
+
+
+def _has_runtime_jars(fine_home: Path) -> bool:
+    jar_directories = (
+        fine_home / "webapps" / "webroot" / "WEB-INF" / "lib",
+        fine_home / "lib",
+    )
+    return any(directory.exists() and any(directory.glob("*.jar")) for directory in jar_directories)
