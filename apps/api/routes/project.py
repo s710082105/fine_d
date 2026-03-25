@@ -16,5 +16,5 @@ def get_project_service() -> ProjectConfigService:
 def get_project_config(
     service: ProjectConfigService = Depends(get_project_service),
 ) -> ProjectConfigResponse:
-    config = service.load_or_create()
+    config = service.load()
     return ProjectConfigResponse.from_domain(config)

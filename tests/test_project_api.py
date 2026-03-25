@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import pytest
 from fastapi.testclient import TestClient
 
 from backend.app_factory import create_app
@@ -8,7 +9,7 @@ from backend.domain.project.models import ProjectConfig
 
 
 class FakeProjectService:
-    def load_or_create(self) -> ProjectConfig:
+    def load(self) -> ProjectConfig:
         return ProjectConfig(
             workspace_dir=Path("/tmp/finereport/workspace"),
             generated_dir=Path("/tmp/finereport/generated"),
@@ -16,7 +17,7 @@ class FakeProjectService:
 
 
 class FailingProjectService:
-    def load_or_create(self) -> ProjectConfig:
+    def load(self) -> ProjectConfig:
         raise AppError(
             code="project.invalid_config",
             message="project config is invalid",
@@ -58,3 +59,17 @@ def test_project_config_endpoint_uses_unified_error_response() -> None:
         "source": "project",
         "retryable": False,
     }
+
+
+def test_project_config_endpoint_does_not_create_directories(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    client = TestClient(create_app())
+
+    response = client.get("/api/project/config")
+
+    assert response.status_code == 200
+    assert not (tmp_path / "workspace").exists()
+    assert not (tmp_path / "generated").exists()
