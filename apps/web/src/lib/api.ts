@@ -1,5 +1,8 @@
 import type {
   AssistantRouteResponse,
+  CodexTerminalInputAcceptedResponse,
+  CodexTerminalSessionResponse,
+  CodexTerminalStreamResponse,
   DatasourceConnectionResponse,
   DatasourceSqlPreviewResponse,
   HealthResponse,
@@ -120,6 +123,55 @@ export function testRemoteProfile(
 
 export function getRemoteOverview(): Promise<RemoteOverviewResponse> {
   return apiRequest<RemoteOverviewResponse>('/remote/overview')
+}
+
+export function createCodexTerminalSession(
+  workingDirectory: string
+): Promise<CodexTerminalSessionResponse> {
+  return apiRequest<CodexTerminalSessionResponse>('/codex/terminal/sessions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ working_directory: workingDirectory })
+  })
+}
+
+export function streamCodexTerminalSession(
+  sessionId: string,
+  cursor: number
+): Promise<CodexTerminalStreamResponse> {
+  const query = new URLSearchParams({ cursor: String(cursor) }).toString()
+  return apiRequest<CodexTerminalStreamResponse>(
+    `/codex/terminal/sessions/${sessionId}/stream?${query}`
+  )
+}
+
+export function writeCodexTerminalInput(
+  sessionId: string,
+  data: string
+): Promise<CodexTerminalInputAcceptedResponse> {
+  return apiRequest<CodexTerminalInputAcceptedResponse>(
+    `/codex/terminal/sessions/${sessionId}/input`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ data })
+    }
+  )
+}
+
+export function closeCodexTerminalSession(
+  sessionId: string
+): Promise<CodexTerminalSessionResponse> {
+  return apiRequest<CodexTerminalSessionResponse>(
+    `/codex/terminal/sessions/${sessionId}`,
+    {
+      method: 'DELETE'
+    }
+  )
 }
 
 export function listDatasourceConnections(): Promise<DatasourceConnectionResponse[]> {

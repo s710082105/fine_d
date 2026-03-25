@@ -4,6 +4,7 @@ import { computed, ref } from 'vue'
 import AppLayout from './components/AppLayout.vue'
 import SideNav from './components/SideNav.vue'
 import type { AppSection, SectionId } from './lib/types'
+import CodexTerminalView from './views/CodexTerminalView.vue'
 import ProjectWorkbenchView from './views/ProjectWorkbenchView.vue'
 
 const sections: ReadonlyArray<AppSection> = [
@@ -15,7 +16,7 @@ const sections: ReadonlyArray<AppSection> = [
   {
     id: 'codex',
     label: 'Codex',
-    summary: '终端工作台将在下一步接入，本页暂时只保留入口。'
+    summary: '直接承载 Codex 终端会话，并在页面内桥接输入输出。'
   }
 ]
 
@@ -52,10 +53,7 @@ function handleSectionSelect(sectionId: SectionId): void {
       v-if="activeSection === 'workbench'"
       class="app-shell__view"
     />
-    <section v-else class="codex-placeholder app-shell__view">
-      <h2>Codex</h2>
-      <p>终端工作台将在下一步接入。</p>
-    </section>
+    <CodexTerminalView v-else class="app-shell__view" />
   </AppLayout>
 </template>
 
@@ -91,16 +89,6 @@ h1 {
   padding: 32px;
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 20px 45px rgba(16, 32, 51, 0.08);
-}
-
-.codex-placeholder {
-  display: grid;
-  gap: 12px;
-}
-
-.codex-placeholder h2,
-.codex-placeholder p {
-  margin: 0;
 }
 
 @media (max-width: 960px) {

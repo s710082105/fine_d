@@ -52,6 +52,26 @@ export interface RemoteOverviewResponse {
   readonly last_loaded_at: string
 }
 
+export type CodexTerminalStatus = 'running' | 'closed' | 'failed'
+
+export interface CodexTerminalSessionResponse {
+  readonly session_id: string
+  readonly status: CodexTerminalStatus
+  readonly working_directory: string
+}
+
+export interface CodexTerminalStreamResponse {
+  readonly session_id: string
+  readonly status: CodexTerminalStatus
+  readonly output: string
+  readonly next_cursor: number
+  readonly completed: boolean
+}
+
+export interface CodexTerminalInputAcceptedResponse {
+  readonly accepted: boolean
+}
+
 export interface DatasourceConnectionResponse {
   readonly name: string
 }
