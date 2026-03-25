@@ -2,8 +2,8 @@ from datetime import UTC, datetime
 
 from fastapi.testclient import TestClient
 
-from apps.api.routes.project import get_project_remote_test_service
-from apps.api.routes.remote import get_remote_overview_service
+from apps.api.routes import project as project_routes
+from apps.api.routes import remote as remote_routes
 from backend.app_factory import create_app
 from backend.domain.datasource.models import ConnectionSummary
 from backend.domain.project.errors import AppError
@@ -55,7 +55,7 @@ class FailingRemoteOverviewService:
 
 def test_remote_overview_endpoint_returns_directory_connections_and_timestamp() -> None:
     app = create_app()
-    app.dependency_overrides[get_remote_overview_service] = (
+    app.dependency_overrides[remote_routes.get_remote_overview_service] = (
         lambda: FakeRemoteOverviewService()
     )
     client = TestClient(app)
@@ -78,7 +78,7 @@ def test_remote_overview_endpoint_returns_directory_connections_and_timestamp() 
 
 def test_project_remote_profile_test_endpoint_returns_status_and_message() -> None:
     app = create_app()
-    app.dependency_overrides[get_project_remote_test_service] = (
+    app.dependency_overrides[remote_routes.get_project_remote_test_service] = (
         lambda: FakeRemoteProfileTestService()
     )
     client = TestClient(app)
@@ -101,7 +101,7 @@ def test_project_remote_profile_test_endpoint_returns_status_and_message() -> No
 
 def test_remote_overview_endpoint_uses_unified_app_error_response() -> None:
     app = create_app()
-    app.dependency_overrides[get_remote_overview_service] = (
+    app.dependency_overrides[remote_routes.get_remote_overview_service] = (
         lambda: FailingRemoteOverviewService()
     )
     client = TestClient(app)
@@ -116,3 +116,23 @@ def test_remote_overview_endpoint_uses_unified_app_error_response() -> None:
         "source": "project",
         "retryable": False,
     }
+
+
+def test_remote_profile_test_route_is_registered_on_remote_router_only() -> None:
+    remote_route_paths = {
+        (route.path, tuple(sorted(route.methods or set())))
+        for route in remote_routes.router.routes
+    }
+    project_route_paths = {
+        (route.path, tuple(sorted(route.methods or set())))
+        for route in project_routes.router.routes
+    }
+
+    assert (
+        "/api/project/remote-profile/test",
+        ("POST",),
+    ) in remote_route_paths
+    assert (
+        "/api/project/remote-profile/test",
+        ("POST",),
+    ) not in project_route_paths

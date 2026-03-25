@@ -3,6 +3,8 @@ from pathlib import Path
 
 import pytest
 
+from backend.adapters.fine.remote_overview_gateway import FineRemoteOverviewGateway
+from backend.adapters.fine.http_client import FineHttpClient
 from backend.application.remote.use_cases import (
     LoadRemoteOverviewUseCase,
     TestRemoteProfileUseCase,
@@ -219,3 +221,93 @@ def test_test_remote_profile_use_case_rejects_missing_current_project() -> None:
 
     assert error_info.value.code == "project.current_required"
     assert gateway.calls == []
+
+
+def test_remote_overview_gateway_wraps_directory_client_build_errors() -> None:
+    gateway = FineRemoteOverviewGateway()
+    profile = RemoteProfile(
+        base_url="http://localhost:8075/webroot/decision",
+        username="admin",
+        password="admin",
+    )
+    current_project = CurrentProject(path=Path("/tmp/project"), name="project")
+
+    def raise_runtime_error(
+        _profile: RemoteProfile,
+        _current_project: CurrentProject,
+    ) -> object:
+        raise RuntimeError("boom-client")
+
+    gateway._build_remote_client = raise_runtime_error  # type: ignore[method-assign]
+
+    with pytest.raises(AppError) as error_info:
+        gateway._list_directory_entries(profile, current_project)
+
+    assert error_info.value.code == "remote.request_failed"
+    assert error_info.value.message == "远程请求失败"
+    assert error_info.value.detail == {
+        "operation": "directory_entries",
+        "reason": "boom-client",
+    }
+    assert error_info.value.source == "remote"
+    assert error_info.value.retryable is True
+
+
+def test_remote_overview_gateway_preserves_existing_app_error_from_directory_client_build() -> None:
+    gateway = FineRemoteOverviewGateway()
+    profile = RemoteProfile(
+        base_url="http://localhost:8075/webroot/decision",
+        username="admin",
+        password="admin",
+    )
+    current_project = CurrentProject(path=Path("/tmp/project"), name="project")
+    expected_error = AppError(
+        code="remote.invalid_profile",
+        message="远程参数不合法",
+        detail={"field": "base_url"},
+        source="remote",
+    )
+
+    def raise_app_error(
+        _profile: RemoteProfile,
+        _current_project: CurrentProject,
+    ) -> object:
+        raise expected_error
+
+    gateway._build_remote_client = raise_app_error  # type: ignore[method-assign]
+
+    with pytest.raises(AppError) as error_info:
+        gateway._list_directory_entries(profile, current_project)
+
+    assert error_info.value is expected_error
+
+
+def test_remote_overview_gateway_wraps_data_connection_errors(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    profile = RemoteProfile(
+        base_url="http://localhost:8075/webroot/decision",
+        username="admin",
+        password="admin",
+    )
+
+    def raise_runtime_error(self: FineHttpClient) -> list[ConnectionSummary]:
+        raise RuntimeError("boom-connections")
+
+    monkeypatch.setattr(
+        FineHttpClient,
+        "list_connections",
+        raise_runtime_error,
+    )
+
+    with pytest.raises(AppError) as error_info:
+        FineRemoteOverviewGateway._list_data_connections(profile)
+
+    assert error_info.value.code == "remote.request_failed"
+    assert error_info.value.message == "远程请求失败"
+    assert error_info.value.detail == {
+        "operation": "data_connections",
+        "reason": "boom-connections",
+    }
+    assert error_info.value.source == "remote"
+    assert error_info.value.retryable is True

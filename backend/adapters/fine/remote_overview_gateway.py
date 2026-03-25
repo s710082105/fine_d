@@ -44,30 +44,31 @@ class FineRemoteOverviewGateway:
         profile: RemoteProfile,
         current_project: CurrentProject,
     ) -> list[RemoteDirectoryEntry]:
-        client = self._build_remote_client(profile, current_project)
-        try:
+        def load_entries() -> list[RemoteDirectoryEntry]:
+            client = self._build_remote_client(profile, current_project)
             entries = client.list_files(self._remote_root)
-        except AppError:
-            raise
-        except Exception as error:
-            raise _remote_request_failed_error("directory_entries", error) from error
-        return [
-            RemoteDirectoryEntry(
-                path=entry.path,
-                is_directory=entry.is_directory,
-                lock=entry.lock,
-            )
-            for entry in entries
-        ]
+            return [
+                RemoteDirectoryEntry(
+                    path=entry.path,
+                    is_directory=entry.is_directory,
+                    lock=entry.lock,
+                )
+                for entry in entries
+            ]
+
+        return _run_remote_operation("directory_entries", load_entries)
 
     @staticmethod
     def _list_data_connections(profile: RemoteProfile) -> list:
-        client = FineHttpClient(
-            base_url=profile.base_url,
-            username=profile.username,
-            password=profile.password,
-        )
-        return client.list_connections()
+        def load_connections() -> list:
+            client = FineHttpClient(
+                base_url=profile.base_url,
+                username=profile.username,
+                password=profile.password,
+            )
+            return client.list_connections()
+
+        return _run_remote_operation("data_connections", load_connections)
 
     @staticmethod
     def _build_remote_client(
@@ -92,3 +93,12 @@ def _remote_request_failed_error(operation: str, error: Exception) -> AppError:
         source=ERROR_SOURCE,
         retryable=True,
     )
+
+
+def _run_remote_operation(operation: str, action):
+    try:
+        return action()
+    except AppError:
+        raise
+    except Exception as error:
+        raise _remote_request_failed_error(operation, error) from error
