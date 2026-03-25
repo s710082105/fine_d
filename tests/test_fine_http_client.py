@@ -8,8 +8,13 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import pytest
 
-from backend.adapters.fine.http_client import FineHttpClient
+from backend.adapters.fine.http_client import (
+    FineHttpClient,
+    _data_items,
+    _parse_connection,
+)
 from backend.adapters.fine.sql_preview_transport import build_sql_preview_transport
+from backend.domain.datasource.models import ConnectionSummary
 from backend.domain.project.errors import AppError
 
 
@@ -126,6 +131,26 @@ def test_list_connections_reads_remote_items(
     assert result[0].name == "qzcs"
     assert requests[0].path == "/webroot/decision/login"
     assert requests[1].path == "/webroot/decision/v10/config/connection/list/0"
+
+
+def test_list_connections_extracts_type_and_host_url() -> None:
+    payload = {
+        "data": [
+            {
+                "name": "qzcs",
+                "databaseType": "MYSQL",
+                "url": "jdbc:mysql://127.0.0.1:3306/demo",
+            }
+        ]
+    }
+
+    result = _data_items(payload)
+
+    assert _parse_connection(result[0]) == ConnectionSummary(
+        name="qzcs",
+        database_type="MYSQL",
+        host_or_url="jdbc:mysql://127.0.0.1:3306/demo",
+    )
 
 
 def test_preview_sql_encrypts_request_after_loading_landing_page(

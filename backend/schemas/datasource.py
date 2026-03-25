@@ -9,10 +9,16 @@ class ConnectionSummaryResponse(BaseModel):
     model_config = ConfigDict(frozen=True)
 
     name: str
+    database_type: str
+    host_or_url: str
 
     @classmethod
     def from_domain(cls, item: ConnectionSummary) -> "ConnectionSummaryResponse":
-        return cls(name=item.name)
+        return cls(
+            name=item.name,
+            database_type=item.database_type,
+            host_or_url=item.host_or_url,
+        )
 
 
 class SqlPreviewRequest(BaseModel):

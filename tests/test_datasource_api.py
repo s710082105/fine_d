@@ -8,7 +8,13 @@ from backend.domain.project.errors import AppError
 
 class FakeDatasourceService:
     def list_connections(self) -> list[ConnectionSummary]:
-        return [ConnectionSummary(name="qzcs")]
+        return [
+            ConnectionSummary(
+                name="qzcs",
+                database_type="MYSQL",
+                host_or_url="jdbc:mysql://127.0.0.1:3306/demo",
+            )
+        ]
 
     def preview_sql(self, connection_name: str, sql: str) -> SqlPreviewResult:
         assert connection_name == "qzcs"
@@ -37,7 +43,13 @@ def test_connections_endpoint_returns_expected_schema() -> None:
     response = client.get("/api/datasource/connections")
 
     assert response.status_code == 200
-    assert response.json() == [{"name": "qzcs"}]
+    assert response.json() == [
+        {
+            "name": "qzcs",
+            "database_type": "MYSQL",
+            "host_or_url": "jdbc:mysql://127.0.0.1:3306/demo",
+        }
+    ]
 
 
 def test_preview_sql_endpoint_returns_expected_schema() -> None:

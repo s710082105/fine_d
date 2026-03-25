@@ -28,7 +28,13 @@ class FakeRemoteOverviewService:
                     lock=None,
                 )
             ],
-            data_connections=[ConnectionSummary(name="qzcs")],
+            data_connections=[
+                ConnectionSummary(
+                    name="qzcs",
+                    database_type="MYSQL",
+                    host_or_url="jdbc:mysql://127.0.0.1:3306/demo",
+                )
+            ],
             last_loaded_at=datetime(2026, 3, 25, 12, 0, tzinfo=UTC),
         )
 
@@ -75,9 +81,34 @@ def test_remote_overview_endpoint_returns_directory_connections_and_timestamp() 
                 "lock": None,
             }
         ],
-        "data_connections": [{"name": "qzcs"}],
+        "data_connections": [
+            {
+                "name": "qzcs",
+                "database_type": "MYSQL",
+                "host_or_url": "jdbc:mysql://127.0.0.1:3306/demo",
+            }
+        ],
         "last_loaded_at": "2026-03-25T12:00:00Z",
     }
+
+
+def test_remote_overview_response_includes_connection_metadata() -> None:
+    app = create_app()
+    app.dependency_overrides[remote_routes.get_remote_overview_service] = (
+        lambda: FakeRemoteOverviewService()
+    )
+    client = TestClient(app)
+
+    response = client.get("/api/remote/overview")
+
+    assert response.status_code == 200
+    assert response.json()["data_connections"] == [
+        {
+            "name": "qzcs",
+            "database_type": "MYSQL",
+            "host_or_url": "jdbc:mysql://127.0.0.1:3306/demo",
+        }
+    ]
 
 
 def test_project_remote_profile_test_endpoint_returns_status_and_message() -> None:
