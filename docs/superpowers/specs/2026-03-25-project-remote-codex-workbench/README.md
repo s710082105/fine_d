@@ -2,10 +2,10 @@
 
 ## 文档索引
 
-1. [01-overview-and-phasing.md](/Users/wj/data/mcp/finereport/docs/superpowers/specs/2026-03-25-project-remote-codex-workbench/01-overview-and-phasing.md)
-2. [02-project-and-remote-overview.md](/Users/wj/data/mcp/finereport/docs/superpowers/specs/2026-03-25-project-remote-codex-workbench/02-project-and-remote-overview.md)
-3. [03-codex-terminal-page.md](/Users/wj/data/mcp/finereport/docs/superpowers/specs/2026-03-25-project-remote-codex-workbench/03-codex-terminal-page.md)
-4. [04-api-and-state-model.md](/Users/wj/data/mcp/finereport/docs/superpowers/specs/2026-03-25-project-remote-codex-workbench/04-api-and-state-model.md)
+1. [01-overview-and-phasing.md](./01-overview-and-phasing.md)
+2. [02-project-and-remote-overview.md](./02-project-and-remote-overview.md)
+3. [03-codex-terminal-page.md](./03-codex-terminal-page.md)
+4. [04-api-and-state-model.md](./04-api-and-state-model.md)
 
 ## 目标
 
@@ -30,3 +30,12 @@
 - 多远程 profile 切换
 - Codex 自定义消息协议
 - 页面内模拟终端或聊天气泡
+
+## 当前落地状态
+
+当前实现已经与本组规格对齐：
+
+- 中文导航已收敛为 `项目与远程概览` 和 `Codex`
+- 项目目录通过本地系统目录选择器桥接选择，不再要求手输路径
+- 工作台页已合并项目目录、远程参数、远程目录、数据连接四块内容
+- Codex 页已接入真实终端会话 API，页面只负责承载终端和桥接输入输出
