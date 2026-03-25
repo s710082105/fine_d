@@ -4,6 +4,8 @@ import type {
   DatasourceSqlPreviewResponse,
   HealthResponse,
   PreviewSessionResponse,
+  ReportletFileResponse,
+  ReportletTreeNodeResponse,
   ProjectConfigResponse
 } from './types'
 
@@ -93,6 +95,15 @@ export function openPreview(url: string): Promise<PreviewSessionResponse> {
     },
     body: JSON.stringify({ url })
   })
+}
+
+export function listReportletTree(): Promise<ReportletTreeNodeResponse[]> {
+  return apiRequest<ReportletTreeNodeResponse[]>('/reportlets/tree')
+}
+
+export function readReportletContent(path: string): Promise<ReportletFileResponse> {
+  const query = new URLSearchParams({ path }).toString()
+  return apiRequest<ReportletFileResponse>(`/reportlets/content?${query}`)
 }
 
 export function routeAssistantPrompt(

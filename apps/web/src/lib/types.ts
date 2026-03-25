@@ -36,6 +36,20 @@ export interface PreviewSessionResponse {
   readonly status: 'opened'
 }
 
+export interface ReportletTreeNodeResponse {
+  readonly name: string
+  readonly path: string
+  readonly kind: 'file' | 'directory'
+  readonly children: readonly ReportletTreeNodeResponse[]
+}
+
+export interface ReportletFileResponse {
+  readonly name: string
+  readonly path: string
+  readonly content: string
+  readonly encoding: 'utf-8' | 'base64'
+}
+
 export type AssistantRouteStatus = 'routed' | 'needs_clarification'
 
 export type AssistantModule =
