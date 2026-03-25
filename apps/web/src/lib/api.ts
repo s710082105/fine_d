@@ -1,5 +1,7 @@
 import type {
   AssistantRouteResponse,
+  DatasourceConnectionResponse,
+  DatasourceSqlPreviewResponse,
   HealthResponse,
   ProjectConfigResponse
 } from './types'
@@ -60,6 +62,26 @@ export function getHealth(): Promise<HealthResponse> {
 
 export function getProjectConfig(): Promise<ProjectConfigResponse> {
   return apiRequest<ProjectConfigResponse>('/project/config')
+}
+
+export function listDatasourceConnections(): Promise<DatasourceConnectionResponse[]> {
+  return apiRequest<DatasourceConnectionResponse[]>('/datasource/connections')
+}
+
+export function previewDatasourceSql(
+  connectionName: string,
+  sql: string
+): Promise<DatasourceSqlPreviewResponse> {
+  return apiRequest<DatasourceSqlPreviewResponse>('/datasource/preview-sql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      connection_name: connectionName,
+      sql
+    })
+  })
 }
 
 export function routeAssistantPrompt(

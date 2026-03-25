@@ -21,6 +21,15 @@ export interface ProjectConfigResponse {
   readonly generated_dir: string
 }
 
+export interface DatasourceConnectionResponse {
+  readonly name: string
+}
+
+export interface DatasourceSqlPreviewResponse {
+  readonly columns: readonly string[]
+  readonly rows: readonly (readonly unknown[])[]
+}
+
 export type AssistantRouteStatus = 'routed' | 'needs_clarification'
 
 export type AssistantModule =
