@@ -2,6 +2,7 @@ from datetime import UTC, datetime
 from dataclasses import dataclass
 from pathlib import Path
 
+import backend.adapters.fine.remote_overview_gateway as remote_overview_gateway_module
 import pytest
 import fine_remote.client as fine_remote_client_module
 
@@ -560,6 +561,64 @@ def test_remote_overview_gateway_lists_root_directory_from_configured_root(
     ]
 
 
+@pytest.mark.parametrize("path", ["", "/"])
+def test_remote_overview_gateway_treats_empty_and_slash_as_root_directory(
+    path: str,
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    fine_home = tmp_path / "FineReport"
+    (fine_home / "lib").mkdir(parents=True)
+    (fine_home / "lib" / "core.jar").write_text("", encoding="utf-8")
+    current_project = CurrentProject(path=tmp_path / "project", name="project")
+    current_project.path.mkdir()
+    profile = RemoteProfile(
+        base_url="http://localhost:8075/webroot/decision",
+        username="admin",
+        password="admin",
+    )
+    requested_paths: list[str] = []
+
+    @dataclass(frozen=True)
+    class FakeRemoteFileEntry:
+        path: str
+        is_directory: bool
+        lock: str | None
+
+    class FakeFineRemoteClient:
+        def __init__(self, **_: object) -> None:
+            return None
+
+        def list_files(self, remote_path: str) -> list[FakeRemoteFileEntry]:
+            requested_paths.append(remote_path)
+            return [
+                FakeRemoteFileEntry(
+                    path="reportlets",
+                    is_directory=True,
+                    lock=None,
+                )
+            ]
+
+    monkeypatch.setattr(
+        fine_remote_client_module,
+        "FineRemoteClient",
+        FakeFineRemoteClient,
+    )
+    gateway = FineRemoteOverviewGateway(fine_home=fine_home)
+
+    result = gateway._list_directory_entries(profile, current_project, path)
+
+    assert requested_paths == ["reportlets"]
+    assert result == [
+        RemoteDirectoryEntry(
+            name="reportlets",
+            path="/reportlets",
+            is_directory=True,
+            lock=None,
+        )
+    ]
+
+
 def test_remote_overview_gateway_lists_children_within_configured_root(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
@@ -625,6 +684,7 @@ def test_remote_overview_gateway_lists_children_within_configured_root(
     [
         "/other",
         "/reportlets/../secret",
+        r"\reportlets\secret",
     ],
 )
 def test_remote_overview_gateway_rejects_paths_outside_configured_root(
@@ -653,3 +713,42 @@ def test_remote_overview_gateway_rejects_paths_outside_configured_root(
         "root": "/reportlets",
     }
     assert error_info.value.source == "remote"
+
+
+def test_remote_directory_entry_name_uses_posix_rules_even_if_path_symbol_changes(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    @dataclass(frozen=True)
+    class FakeRemoteFileEntry:
+        path: str
+        is_directory: bool
+        lock: str | None
+
+    class FakeWindowsPath:
+        def __init__(self, value: str) -> None:
+            self._value = value
+
+        @property
+        def name(self) -> str:
+            return self._value
+
+    monkeypatch.setattr(
+        remote_overview_gateway_module,
+        "Path",
+        FakeWindowsPath,
+    )
+
+    result = remote_overview_gateway_module._build_remote_directory_entry(
+        FakeRemoteFileEntry(
+            path="reportlets/demo/test.cpt",
+            is_directory=False,
+            lock=None,
+        )
+    )
+
+    assert result == RemoteDirectoryEntry(
+        name="test.cpt",
+        path="/reportlets/demo/test.cpt",
+        is_directory=False,
+        lock=None,
+    )
