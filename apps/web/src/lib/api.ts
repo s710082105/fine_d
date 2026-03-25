@@ -3,6 +3,7 @@ import type {
   DatasourceConnectionResponse,
   DatasourceSqlPreviewResponse,
   HealthResponse,
+  PreviewSessionResponse,
   ProjectConfigResponse
 } from './types'
 
@@ -81,6 +82,16 @@ export function previewDatasourceSql(
       connection_name: connectionName,
       sql
     })
+  })
+}
+
+export function openPreview(url: string): Promise<PreviewSessionResponse> {
+  return apiRequest<PreviewSessionResponse>('/preview/open', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ url })
   })
 }
 

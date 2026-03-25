@@ -30,6 +30,12 @@ export interface DatasourceSqlPreviewResponse {
   readonly rows: readonly (readonly unknown[])[]
 }
 
+export interface PreviewSessionResponse {
+  readonly session_id: string
+  readonly url: string
+  readonly status: 'opened'
+}
+
 export type AssistantRouteStatus = 'routed' | 'needs_clarification'
 
 export type AssistantModule =
