@@ -27,14 +27,7 @@ def client() -> TestClient:
 class FakeRemoteOverviewService:
     def load(self) -> RemoteOverview:
         return RemoteOverview(
-            directory_entries=[
-                RemoteDirectoryEntry(
-                    name="reportlets",
-                    path="reportlets",
-                    is_directory=True,
-                    lock=None,
-                )
-            ],
+            directory_entries=[],
             data_connections=[ConnectionSummary(name="qzcs", database_type="MYSQL")],
             last_loaded_at=datetime(2026, 3, 25, 12, 0, tzinfo=UTC),
         )
@@ -88,14 +81,7 @@ def test_remote_overview_endpoint_returns_directory_connections_and_timestamp() 
 
     assert response.status_code == 200
     assert response.json() == {
-        "directory_entries": [
-            {
-                "name": "reportlets",
-                "path": "reportlets",
-                "is_directory": True,
-                "lock": None,
-            }
-        ],
+        "directory_entries": [],
         "data_connections": [
             {
                 "name": "qzcs",
@@ -206,48 +192,6 @@ def test_remote_profile_test_route_is_registered_on_remote_router_only() -> None
         "/api/project/remote-profile/test",
         ("POST",),
     ) not in project_route_paths
-
-
-def test_remote_overview_endpoint_rejects_missing_runtime_configuration(
-    tmp_path: Path,
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    project_dir = tmp_path / "project-alpha"
-    project_dir.mkdir()
-    state_file = tmp_path / STATE_DIR_NAME / STATE_FILE_NAME
-    state_file.parent.mkdir(parents=True, exist_ok=True)
-    state_file.write_text(
-        json.dumps(
-            {
-                "current_project": {
-                    "path": str(project_dir),
-                    "name": "project-alpha",
-                },
-                "remote_profiles": {
-                    str(project_dir): {
-                        "base_url": "http://localhost:8075/webroot/decision",
-                        "username": "admin",
-                        "password": "admin",
-                    }
-                },
-            }
-        ),
-        encoding="utf-8",
-    )
-    monkeypatch.chdir(tmp_path)
-    monkeypatch.delenv("FINE_REMOTE_HOME", raising=False)
-    client = TestClient(create_app())
-
-    response = client.get("/api/remote/overview")
-
-    assert response.status_code == 400
-    assert response.json() == {
-        "code": "remote.runtime_missing",
-        "message": "缺少 FineReport 运行时目录配置",
-        "detail": {"env": "FINE_REMOTE_HOME"},
-        "source": "remote",
-        "retryable": False,
-    }
 
 
 def test_remote_directories_endpoint_rejects_path_outside_reportlets_root(

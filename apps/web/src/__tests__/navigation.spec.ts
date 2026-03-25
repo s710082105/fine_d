@@ -19,7 +19,7 @@ it('renders the top-level navigation and switches sections', async () => {
   }
 
   expect(
-    screen.getByRole('heading', { level: 2, name: '项目与远程概览' })
+    screen.getByRole('heading', { level: 2, name: '项目与远程工作台' })
   ).toBeInTheDocument()
 
   await fireEvent.click(screen.getByRole('button', { name: 'Codex' }))

@@ -196,14 +196,23 @@ function buildErrorMessage(error: unknown, fallbackMessage: string): string {
           <ElButton plain :disabled="!canUseRemoteProfile" @click="refreshOverview">刷新概览</ElButton>
         </div>
       </template>
-      <ElSkeleton v-if="overviewLoading" animated :rows="6" />
-      <ElAlert v-else-if="overviewErrorMessage" :closable="false" show-icon title="远程概览加载失败" type="error" :description="overviewErrorMessage" />
-      <ElEmpty v-else-if="!canUseRemoteProfile" description="请先选择项目目录并填写远程参数" />
-      <div v-else-if="overview" class="workbench-view__overview">
+      <ElEmpty v-if="!canUseRemoteProfile" description="请先选择项目目录并填写远程参数" />
+      <div v-else class="workbench-view__overview">
         <RemoteDirectoryPanel :key="remoteTreeVersion" :load-entries="getRemoteDirectories" />
-        <DataConnectionPanel :connections="overview.data_connections" />
+        <div class="workbench-view__overview-side">
+          <ElSkeleton v-if="overviewLoading" animated :rows="6" />
+          <ElAlert
+            v-else-if="overviewErrorMessage"
+            :closable="false"
+            show-icon
+            title="远程概览加载失败"
+            type="error"
+            :description="overviewErrorMessage"
+          />
+          <DataConnectionPanel v-else-if="overview" :connections="overview.data_connections" />
+          <ElEmpty v-else description="请刷新远程概览" />
+        </div>
       </div>
-      <ElEmpty v-else description="请刷新远程概览" />
     </ElCard>
   </section>
 </template>
@@ -234,6 +243,7 @@ function buildErrorMessage(error: unknown, fallbackMessage: string): string {
 .workbench-view__card { border: 1px solid #d8e1ef; border-radius: 24px; }
 .workbench-view__form { display: grid; gap: 8px; }
 .workbench-view__overview { display: grid; gap: 20px; }
+.workbench-view__overview-side { display: grid; }
 
 @media (min-width: 980px) {
   .workbench-view__overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }

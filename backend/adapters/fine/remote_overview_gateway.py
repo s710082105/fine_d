@@ -41,10 +41,9 @@ class FineRemoteOverviewGateway:
         profile: RemoteProfile,
         current_project: CurrentProject,
     ) -> RemoteOverview:
-        directory_entries = self.list_directories(profile, current_project, None)
         data_connections = self._list_data_connections(profile)
         return RemoteOverview(
-            directory_entries=directory_entries,
+            directory_entries=[],
             data_connections=data_connections,
             last_loaded_at=datetime.now(UTC),
         )

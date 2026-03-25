@@ -78,16 +78,53 @@ describe('ProjectWorkbenchView', () => {
     expect(await screen.findByText('MYSQL')).toBeInTheDocument()
   })
 
+  it('keeps the directory tree available when remote overview fails', async () => {
+    getCurrentProject.mockResolvedValue({
+      current_project: {
+        path: '/tmp/project-alpha',
+        name: 'project-alpha'
+      },
+      remote_profile: {
+        base_url: 'http://localhost:8075/webroot/decision',
+        username: 'admin',
+        password: 'admin'
+      }
+    })
+    getRemoteOverview.mockRejectedValue(
+      new ApiError(
+        400,
+        {
+          code: 'remote.request_failed',
+          message: '远程请求失败',
+          detail: { operation: 'data_connections' },
+          source: 'remote',
+          retryable: true
+        },
+        'API request failed: 400 Bad Request'
+      )
+    )
+    getRemoteDirectories.mockResolvedValue([
+      { name: 'reportlets', path: '/reportlets', is_directory: true, lock: null }
+    ])
+
+    render(ProjectWorkbenchView)
+
+    expect(await screen.findByText('reportlets')).toBeInTheDocument()
+    expect(
+      await screen.findByText('remote.request_failed: 远程请求失败')
+    ).toBeInTheDocument()
+  })
+
   it('selects project through directory dialog and refreshes the form', async () => {
     getCurrentProject.mockResolvedValue({
       current_project: null,
       remote_profile: null
     })
     getRemoteOverview.mockResolvedValue({
-      directory_entries: [],
       data_connections: [],
       last_loaded_at: '2026-03-25T12:00:00Z'
     })
+    getRemoteDirectories.mockResolvedValue([])
     selectProjectWithDialog.mockResolvedValue({
       current_project: {
         path: '/tmp/project-beta',

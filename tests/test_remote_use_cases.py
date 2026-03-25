@@ -36,14 +36,7 @@ class FakeRemoteGateway:
     ) -> RemoteOverview:
         self.calls.append((profile, current_project))
         return RemoteOverview(
-            directory_entries=[
-                RemoteDirectoryEntry(
-                    name="demo.cpt",
-                    path="reportlets/demo.cpt",
-                    is_directory=False,
-                    lock=None,
-                )
-            ],
+            directory_entries=[],
             data_connections=[ConnectionSummary(name="qzcs", database_type="MYSQL")],
             last_loaded_at=datetime(2026, 3, 25, 12, 0, tzinfo=UTC),
         )
@@ -137,14 +130,7 @@ def test_load_remote_overview_use_case_returns_directory_and_connections() -> No
 
     result = use_case.execute()
 
-    assert result.directory_entries == [
-        RemoteDirectoryEntry(
-            name="demo.cpt",
-            path="reportlets/demo.cpt",
-            is_directory=False,
-            lock=None,
-        )
-    ]
+    assert result.directory_entries == []
     assert result.data_connections == [
         ConnectionSummary(
             name="qzcs",
