@@ -4,14 +4,7 @@ import { afterEach, expect, it, vi } from 'vitest'
 
 import App from '../App.vue'
 
-const SECTION_LABELS = [
-  'Project',
-  'Datasource',
-  'Reportlet',
-  'Sync',
-  'Preview',
-  'Assistant'
-]
+const SECTION_LABELS = ['项目与远程概览', 'Codex']
 
 afterEach(() => {
   vi.unstubAllGlobals()
@@ -26,13 +19,13 @@ it('renders the top-level navigation and switches sections', async () => {
   }
 
   expect(
-    screen.getByRole('heading', { level: 2, name: 'Project' })
+    screen.getByRole('heading', { level: 2, name: '项目与远程概览' })
   ).toBeInTheDocument()
 
-  await fireEvent.click(screen.getByRole('button', { name: 'Assistant' }))
+  await fireEvent.click(screen.getByRole('button', { name: 'Codex' }))
 
   expect(
-    screen.getByRole('heading', { level: 2, name: 'Assistant' })
+    screen.getByRole('heading', { level: 2, name: 'Codex' })
   ).toBeInTheDocument()
 })
 

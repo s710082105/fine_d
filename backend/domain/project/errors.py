@@ -68,3 +68,20 @@ def invalid_current_project_error(path: str) -> AppError:
         detail={"path": path},
         source=PROJECT_ERROR_SOURCE,
     )
+
+
+def directory_selection_cancelled_error() -> AppError:
+    return AppError(
+        code="project.directory_selection_cancelled",
+        message="未选择项目目录",
+        source=PROJECT_ERROR_SOURCE,
+    )
+
+
+def directory_selection_failed_error(reason: str) -> AppError:
+    return AppError(
+        code="project.directory_selection_failed",
+        message="项目目录选择失败",
+        detail={"reason": reason},
+        source=PROJECT_ERROR_SOURCE,
+    )

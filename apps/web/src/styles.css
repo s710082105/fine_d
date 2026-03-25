@@ -1,7 +1,10 @@
 :root {
-  font-family: "SF Pro Display", "Helvetica Neue", sans-serif;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   color: #102033;
-  background: #f4f7fb;
+  background:
+    radial-gradient(circle at top left, rgba(72, 155, 255, 0.18), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(19, 99, 223, 0.14), transparent 22%),
+    #eef4fb;
 }
 
 body {

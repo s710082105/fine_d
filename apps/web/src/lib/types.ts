@@ -1,10 +1,4 @@
-export type SectionId =
-  | 'project'
-  | 'datasource'
-  | 'reportlet'
-  | 'sync'
-  | 'preview'
-  | 'assistant'
+export type SectionId = 'workbench' | 'codex'
 
 export interface AppSection {
   readonly id: SectionId
@@ -19,6 +13,43 @@ export interface HealthResponse {
 export interface ProjectConfigResponse {
   readonly workspace_dir: string
   readonly generated_dir: string
+}
+
+export interface CurrentProjectResponse {
+  readonly path: string
+  readonly name: string
+}
+
+export interface RemoteProfileResponse {
+  readonly base_url: string
+  readonly username: string
+  readonly password: string
+}
+
+export interface ProjectCurrentStateResponse {
+  readonly current_project: CurrentProjectResponse | null
+  readonly remote_profile: RemoteProfileResponse | null
+}
+
+export interface ProjectRemoteProfileStateResponse {
+  readonly remote_profile: RemoteProfileResponse
+}
+
+export interface RemoteDirectoryEntryResponse {
+  readonly path: string
+  readonly is_directory: boolean
+  readonly lock: string | null
+}
+
+export interface RemoteProfileTestResponse {
+  readonly status: string
+  readonly message: string
+}
+
+export interface RemoteOverviewResponse {
+  readonly directory_entries: readonly RemoteDirectoryEntryResponse[]
+  readonly data_connections: readonly DatasourceConnectionResponse[]
+  readonly last_loaded_at: string
 }
 
 export interface DatasourceConnectionResponse {

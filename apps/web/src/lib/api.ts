@@ -3,9 +3,14 @@ import type {
   DatasourceConnectionResponse,
   DatasourceSqlPreviewResponse,
   HealthResponse,
+  ProjectCurrentStateResponse,
+  ProjectRemoteProfileStateResponse,
   PreviewSessionResponse,
   ReportletFileResponse,
   ReportletTreeNodeResponse,
+  RemoteOverviewResponse,
+  RemoteProfileResponse,
+  RemoteProfileTestResponse,
   SyncAction,
   SyncResultResponse,
   ProjectConfigResponse
@@ -67,6 +72,54 @@ export function getHealth(): Promise<HealthResponse> {
 
 export function getProjectConfig(): Promise<ProjectConfigResponse> {
   return apiRequest<ProjectConfigResponse>('/project/config')
+}
+
+export function getCurrentProject(): Promise<ProjectCurrentStateResponse> {
+  return apiRequest<ProjectCurrentStateResponse>('/project/current')
+}
+
+export function selectProject(path: string): Promise<ProjectCurrentStateResponse> {
+  return apiRequest<ProjectCurrentStateResponse>('/project/select', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ path })
+  })
+}
+
+export function selectProjectWithDialog(): Promise<ProjectCurrentStateResponse> {
+  return apiRequest<ProjectCurrentStateResponse>('/project/select-dialog', {
+    method: 'POST'
+  })
+}
+
+export function saveRemoteProfile(
+  profile: RemoteProfileResponse
+): Promise<ProjectRemoteProfileStateResponse> {
+  return apiRequest<ProjectRemoteProfileStateResponse>('/project/remote-profile', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(profile)
+  })
+}
+
+export function testRemoteProfile(
+  profile: RemoteProfileResponse
+): Promise<RemoteProfileTestResponse> {
+  return apiRequest<RemoteProfileTestResponse>('/project/remote-profile/test', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(profile)
+  })
+}
+
+export function getRemoteOverview(): Promise<RemoteOverviewResponse> {
+  return apiRequest<RemoteOverviewResponse>('/remote/overview')
 }
 
 export function listDatasourceConnections(): Promise<DatasourceConnectionResponse[]> {

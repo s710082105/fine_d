@@ -1,3 +1,4 @@
+import importlib
 from pathlib import Path
 
 import pytest
@@ -14,6 +15,10 @@ def project_client(
 ) -> TestClient:
     monkeypatch.chdir(tmp_path)
     return TestClient(create_app())
+
+
+def _load_project_route_module():
+    return importlib.import_module("apps.api.routes.project")
 
 
 def test_get_current_project_returns_empty_state_by_default(
@@ -106,6 +111,64 @@ def test_select_project_and_remote_profile_flow(
             "username": "admin",
             "password": "admin",
         },
+    }
+
+
+def test_select_project_via_directory_dialog(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    class StubDirectoryPicker:
+        def choose_directory(self) -> Path:
+            return project_dir
+
+    project_dir = tmp_path / "project-alpha"
+    project_dir.mkdir()
+    monkeypatch.chdir(tmp_path)
+    route_module = _load_project_route_module()
+    app = create_app()
+    app.dependency_overrides[route_module.get_directory_picker] = (
+        lambda: StubDirectoryPicker()
+    )
+    client = TestClient(app)
+
+    response = client.post("/api/project/select-dialog")
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "current_project": {
+            "path": str(project_dir),
+            "name": "project-alpha",
+        },
+        "remote_profile": None,
+    }
+
+
+def test_select_project_via_directory_dialog_surfaces_cancel_error(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    class CancelledDirectoryPicker:
+        def choose_directory(self) -> Path:
+            raise route_module.directory_selection_cancelled_error()
+
+    monkeypatch.chdir(tmp_path)
+    route_module = _load_project_route_module()
+    app = create_app()
+    app.dependency_overrides[route_module.get_directory_picker] = (
+        lambda: CancelledDirectoryPicker()
+    )
+    client = TestClient(app)
+
+    response = client.post("/api/project/select-dialog")
+
+    assert response.status_code == 400
+    assert response.json() == {
+        "code": "project.directory_selection_cancelled",
+        "message": "未选择项目目录",
+        "detail": None,
+        "source": "project",
+        "retryable": False,
     }
 
 

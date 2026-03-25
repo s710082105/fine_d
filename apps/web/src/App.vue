@@ -1,65 +1,29 @@
 <script setup lang="ts">
-import { computed, ref, type Component } from 'vue'
+import { computed, ref } from 'vue'
 
 import AppLayout from './components/AppLayout.vue'
 import SideNav from './components/SideNav.vue'
 import type { AppSection, SectionId } from './lib/types'
-import AssistantView from './views/AssistantView.vue'
-import DatasourceView from './views/DatasourceView.vue'
-import PreviewView from './views/PreviewView.vue'
-import ProjectView from './views/ProjectView.vue'
-import ReportletView from './views/ReportletView.vue'
-import SyncView from './views/SyncView.vue'
+import ProjectWorkbenchView from './views/ProjectWorkbenchView.vue'
 
 const sections: ReadonlyArray<AppSection> = [
   {
-    id: 'project',
-    label: 'Project',
-    summary: '查看当前工程、诊断结果与运行环境。'
+    id: 'workbench',
+    label: '项目与远程概览',
+    summary: '选择本机项目目录，维护远程参数，并查看远程目录和数据连接。'
   },
   {
-    id: 'datasource',
-    label: 'Datasource',
-    summary: '查看连接列表，并执行最小 SQL 预览。'
-  },
-  {
-    id: 'reportlet',
-    label: 'Reportlet',
-    summary: '浏览报表文件树，并读取选中文件内容。'
-  },
-  {
-    id: 'sync',
-    label: 'Sync',
-    summary: '手动执行单次同步动作，并查看返回结果。'
-  },
-  {
-    id: 'preview',
-    label: 'Preview',
-    summary: '输入预览地址，调用后端打开并返回会话信息。'
-  },
-  {
-    id: 'assistant',
-    label: 'Assistant',
-    summary: '分析自然语言任务，并推荐应走的正式模块。'
+    id: 'codex',
+    label: 'Codex',
+    summary: '终端工作台将在下一步接入，本页暂时只保留入口。'
   }
 ]
 
-const sectionViews: Record<SectionId, Component> = {
-  project: ProjectView,
-  datasource: DatasourceView,
-  reportlet: ReportletView,
-  sync: SyncView,
-  preview: PreviewView,
-  assistant: AssistantView
-}
-
-const activeSection = ref<SectionId>('project')
+const activeSection = ref<SectionId>('workbench')
 
 const currentSection = computed(() => {
   return sections.find((section) => section.id === activeSection.value) ?? sections[0]
 })
-
-const currentView = computed(() => sectionViews[activeSection.value])
 
 function handleSectionSelect(sectionId: SectionId): void {
   activeSection.value = sectionId
@@ -78,13 +42,20 @@ function handleSectionSelect(sectionId: SectionId): void {
     <template #header>
       <div class="app-shell__header">
         <div>
-          <p class="app-shell__eyebrow">Workspace Shell</p>
-          <h1>FineReport Local Tool</h1>
+          <p class="app-shell__eyebrow">本地工作台</p>
+          <h1>FineReport 项目工作台</h1>
         </div>
         <p class="app-shell__summary">{{ currentSection.summary }}</p>
       </div>
     </template>
-    <component :is="currentView" class="app-shell__view" />
+    <ProjectWorkbenchView
+      v-if="activeSection === 'workbench'"
+      class="app-shell__view"
+    />
+    <section v-else class="codex-placeholder app-shell__view">
+      <h2>Codex</h2>
+      <p>终端工作台将在下一步接入。</p>
+    </section>
   </AppLayout>
 </template>
 
@@ -101,7 +72,6 @@ function handleSectionSelect(sectionId: SectionId): void {
   margin: 0 0 6px;
   font-size: 12px;
   letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: #5e738c;
 }
 
@@ -119,8 +89,18 @@ h1 {
 .app-shell__view {
   border-radius: 24px;
   padding: 32px;
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 20px 45px rgba(16, 32, 51, 0.08);
+}
+
+.codex-placeholder {
+  display: grid;
+  gap: 12px;
+}
+
+.codex-placeholder h2,
+.codex-placeholder p {
+  margin: 0;
 }
 
 @media (max-width: 960px) {

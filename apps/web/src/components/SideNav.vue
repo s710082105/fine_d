@@ -16,10 +16,10 @@ function handleSelect(sectionId: SectionId): void {
 </script>
 
 <template>
-  <nav class="side-nav" aria-label="Primary">
+  <nav class="side-nav" aria-label="主导航">
     <div class="side-nav__brand">
       <span class="side-nav__eyebrow">FineReport</span>
-      <strong>Local Tool</strong>
+      <strong>本地工作台</strong>
     </div>
     <ul class="side-nav__list">
       <li v-for="section in sections" :key="section.id">
