@@ -141,6 +141,19 @@ def test_get_current_rejects_invalid_json_state_file(tmp_path: Path) -> None:
     assert exc_info.value.detail == {"field": "state_file"}
 
 
+def test_get_current_rejects_non_utf8_state_file(tmp_path: Path) -> None:
+    service = ProjectConfigService(base_dir=tmp_path)
+    state_file = tmp_path / STATE_DIR_NAME / STATE_FILE_NAME
+    state_file.parent.mkdir(parents=True, exist_ok=True)
+    state_file.write_bytes(b"\xff\xfe\xfd")
+
+    with pytest.raises(AppError) as exc_info:
+        service.get_current()
+
+    assert exc_info.value.code == "project.state_invalid"
+    assert exc_info.value.detail == {"field": "state_file"}
+
+
 @pytest.mark.parametrize(
     ("payload", "field"),
     [

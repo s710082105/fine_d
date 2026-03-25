@@ -64,7 +64,7 @@ class ProjectStore:
             return {}
         try:
             payload = json.loads(self._state_file.read_text(encoding="utf-8"))
-        except JSONDecodeError as exc:
+        except (JSONDecodeError, UnicodeDecodeError) as exc:
             raise invalid_project_state_error("state_file") from exc
         if not isinstance(payload, dict):
             raise invalid_project_state_error("state_file")
