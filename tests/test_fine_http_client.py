@@ -153,6 +153,79 @@ def test_list_connections_extracts_type_and_host_url() -> None:
     )
 
 
+def test_list_connections_falls_back_to_type_for_database_type() -> None:
+    item = {
+        "name": "qzcs",
+        "type": "POSTGRESQL",
+        "url": "jdbc:postgresql://127.0.0.1:5432/demo",
+    }
+
+    assert _parse_connection(item) == ConnectionSummary(
+        name="qzcs",
+        database_type="POSTGRESQL",
+        host_or_url="jdbc:postgresql://127.0.0.1:5432/demo",
+    )
+
+
+def test_list_connections_falls_back_to_driver_for_database_type() -> None:
+    item = {
+        "name": "qzcs",
+        "driver": "com.mysql.cj.jdbc.Driver",
+        "url": "jdbc:mysql://127.0.0.1:3306/demo",
+    }
+
+    assert _parse_connection(item) == ConnectionSummary(
+        name="qzcs",
+        database_type="com.mysql.cj.jdbc.Driver",
+        host_or_url="jdbc:mysql://127.0.0.1:3306/demo",
+    )
+
+
+def test_list_connections_falls_back_to_jdbc_url() -> None:
+    item = {
+        "name": "qzcs",
+        "databaseType": "MYSQL",
+        "jdbcUrl": "jdbc:mysql://127.0.0.1:3306/demo",
+    }
+
+    assert _parse_connection(item) == ConnectionSummary(
+        name="qzcs",
+        database_type="MYSQL",
+        host_or_url="jdbc:mysql://127.0.0.1:3306/demo",
+    )
+
+
+def test_list_connections_builds_host_summary_when_url_missing() -> None:
+    item = {
+        "name": "qzcs",
+        "databaseType": "MYSQL",
+        "host": "127.0.0.1",
+        "port": 3306,
+        "database": "demo",
+    }
+
+    assert _parse_connection(item) == ConnectionSummary(
+        name="qzcs",
+        database_type="MYSQL",
+        host_or_url="127.0.0.1:3306/demo",
+    )
+
+
+def test_list_connections_masks_credentials_in_jdbc_url() -> None:
+    item = {
+        "name": "qzcs",
+        "databaseType": "MYSQL",
+        "jdbcUrl": "jdbc:mysql://demo-user:secret@127.0.0.1:3306/demo?password=secret&ssl=true",
+    }
+
+    result = _parse_connection(item)
+
+    assert result.database_type == "MYSQL"
+    assert result.host_or_url == "jdbc:mysql://127.0.0.1:3306/demo?password=%2A%2A%2A&ssl=true"
+    assert "secret" not in result.host_or_url
+    assert "demo-user" not in result.host_or_url
+
+
 def test_preview_sql_encrypts_request_after_loading_landing_page(
     fine_server: tuple[str, list[RecordedRequest]],
 ) -> None:
