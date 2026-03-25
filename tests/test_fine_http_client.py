@@ -259,6 +259,26 @@ def test_list_connections_masks_credentials_in_sqlserver_jdbc_url() -> None:
     assert "user=sa" not in result.host_or_url
 
 
+def test_list_connections_masks_braced_sqlserver_password_with_semicolon() -> None:
+    item = {
+        "name": "qzcs",
+        "databaseType": "SQLSERVER",
+        "jdbcUrl": "jdbc:sqlserver://127.0.0.1:1433;user=sa;password={se;cret};databaseName=test",
+    }
+
+    result = _parse_connection(item)
+
+    assert result.database_type == "SQLSERVER"
+    assert (
+        result.host_or_url
+        == "jdbc:sqlserver://127.0.0.1:1433;user=***;password=***;databaseName=test"
+    )
+    assert "password={se;cret}" not in result.host_or_url
+    assert "{se;cret}" not in result.host_or_url
+    assert "cret}" not in result.host_or_url
+    assert "user=sa" not in result.host_or_url
+
+
 def test_preview_sql_encrypts_request_after_loading_landing_page(
     fine_server: tuple[str, list[RecordedRequest]],
 ) -> None:

@@ -106,7 +106,10 @@ def _sanitize_sqlserver_url(value: str) -> str:
     safe_host = _strip_userinfo(host_part)
     if not separator:
         return f"{SQLSERVER_PREFIX}{safe_host}"
-    safe_properties = ";".join(_sanitize_sqlserver_property(item) for item in properties.split(";"))
+    safe_properties = ";".join(
+        _sanitize_sqlserver_property(item)
+        for item in _split_sqlserver_properties(properties)
+    )
     return f"{SQLSERVER_PREFIX}{safe_host};{safe_properties}"
 
 
@@ -117,6 +120,25 @@ def _sanitize_sqlserver_property(item: str) -> str:
     if key.strip().lower() not in SENSITIVE_QUERY_KEYS:
         return item
     return f"{key}{separator}{REDACTED}"
+
+
+def _split_sqlserver_properties(value: str) -> list[str]:
+    items: list[str] = []
+    current: list[str] = []
+    brace_depth = 0
+    for char in value:
+        if char == ";" and brace_depth == 0:
+            items.append("".join(current))
+            current = []
+            continue
+        current.append(char)
+        if char == "{":
+            brace_depth += 1
+            continue
+        if char == "}" and brace_depth > 0:
+            brace_depth -= 1
+    items.append("".join(current))
+    return items
 
 
 def _sanitize_standard_url(value: str) -> str:
