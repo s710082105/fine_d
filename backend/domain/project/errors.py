@@ -50,3 +50,21 @@ def invalid_remote_profile_error(field: str) -> AppError:
         detail={"field": field},
         source=PROJECT_ERROR_SOURCE,
     )
+
+
+def invalid_project_state_error(field: str) -> AppError:
+    return AppError(
+        code="project.state_invalid",
+        message="项目状态文件损坏",
+        detail={"field": field},
+        source=PROJECT_ERROR_SOURCE,
+    )
+
+
+def invalid_current_project_error(path: str) -> AppError:
+    return AppError(
+        code="project.current_invalid",
+        message="当前项目目录已失效",
+        detail={"path": path},
+        source=PROJECT_ERROR_SOURCE,
+    )

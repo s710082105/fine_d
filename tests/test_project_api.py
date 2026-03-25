@@ -4,6 +4,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from backend.app_factory import create_app
+from backend.infra.project_store import STATE_DIR_NAME, STATE_FILE_NAME
 
 
 @pytest.fixture
@@ -173,6 +174,54 @@ def test_update_remote_profile_rejects_invalid_base_url(
         "code": "project.remote_profile_invalid",
         "message": "远程参数不合法",
         "detail": {"field": "base_url"},
+        "source": "project",
+        "retryable": False,
+    }
+
+
+def test_get_current_project_rejects_invalid_state_file(
+    project_client: TestClient,
+    tmp_path: Path,
+) -> None:
+    state_file = tmp_path / STATE_DIR_NAME / STATE_FILE_NAME
+    state_file.parent.mkdir(parents=True, exist_ok=True)
+    state_file.write_text("{invalid", encoding="utf-8")
+
+    response = project_client.get("/api/project/current")
+
+    assert response.status_code == 400
+    assert response.json() == {
+        "code": "project.state_invalid",
+        "message": "项目状态文件损坏",
+        "detail": {"field": "state_file"},
+        "source": "project",
+        "retryable": False,
+    }
+
+
+def test_update_remote_profile_rejects_deleted_current_project_via_api(
+    project_client: TestClient,
+    tmp_path: Path,
+) -> None:
+    project_dir = tmp_path / "project-alpha"
+    project_dir.mkdir()
+    project_client.post("/api/project/select", json={"path": str(project_dir)})
+    project_dir.rmdir()
+
+    response = project_client.put(
+        "/api/project/remote-profile",
+        json={
+            "base_url": "http://localhost:8075/webroot/decision",
+            "username": "admin",
+            "password": "admin",
+        },
+    )
+
+    assert response.status_code == 400
+    assert response.json() == {
+        "code": "project.current_invalid",
+        "message": "当前项目目录已失效",
+        "detail": {"path": str(project_dir)},
         "source": "project",
         "retryable": False,
     }

@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 
 from backend.domain.project.errors import (
     current_project_required_error,
+    invalid_current_project_error,
     invalid_project_path_error,
     invalid_remote_profile_error,
 )
@@ -39,7 +40,7 @@ class ProjectConfigService:
         )
 
     def get_current(self) -> ProjectState:
-        current_project = self._project_store.load_current_project()
+        current_project = self._load_current_project(required=False)
         if current_project is None:
             return ProjectState(current_project=None, remote_profile=None)
         return ProjectState(
@@ -67,9 +68,7 @@ class ProjectConfigService:
         username: str,
         password: str,
     ) -> RemoteProfile:
-        current_project = self._project_store.load_current_project()
-        if current_project is None:
-            raise current_project_required_error()
+        current_project = self._load_current_project(required=True)
         profile = RemoteProfile(
             base_url=self._validate_base_url(base_url),
             username=self._validate_non_empty(username, "username"),
@@ -100,3 +99,13 @@ class ProjectConfigService:
         if value == "":
             raise invalid_remote_profile_error(field)
         return value
+
+    def _load_current_project(self, required: bool) -> CurrentProject | None:
+        current_project = self._project_store.load_current_project()
+        if current_project is None:
+            if required:
+                raise current_project_required_error()
+            return None
+        if not current_project.path.exists() or not current_project.path.is_dir():
+            raise invalid_current_project_error(str(current_project.path))
+        return current_project

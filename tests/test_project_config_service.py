@@ -1,9 +1,11 @@
+import json
 from pathlib import Path
 
 import pytest
 
 from backend.application.project.config_service import ProjectConfigService
 from backend.domain.project.errors import AppError
+from backend.infra.project_store import STATE_DIR_NAME, STATE_FILE_NAME
 
 
 def test_default_project_config_uses_workspace_and_generated_dirs(
@@ -124,6 +126,92 @@ def test_select_project_rejects_missing_directory(tmp_path: Path) -> None:
         service.select_project(tmp_path / "missing-project")
 
     assert exc_info.value.code == "project.path_invalid"
+
+
+def test_get_current_rejects_invalid_json_state_file(tmp_path: Path) -> None:
+    service = ProjectConfigService(base_dir=tmp_path)
+    state_file = tmp_path / STATE_DIR_NAME / STATE_FILE_NAME
+    state_file.parent.mkdir(parents=True, exist_ok=True)
+    state_file.write_text("{invalid", encoding="utf-8")
+
+    with pytest.raises(AppError) as exc_info:
+        service.get_current()
+
+    assert exc_info.value.code == "project.state_invalid"
+    assert exc_info.value.detail == {"field": "state_file"}
+
+
+@pytest.mark.parametrize(
+    ("payload", "field"),
+    [
+        ({"current_project": {"path": "/tmp/project"}}, "current_project"),
+        ({"remote_profiles": []}, "remote_profiles"),
+        (
+            {
+                "current_project": {
+                    "path": "/tmp/project",
+                    "name": "project",
+                },
+                "remote_profiles": {
+                    "/tmp/project": {
+                        "base_url": "http://localhost:8075/webroot/decision",
+                        "username": "admin",
+                    }
+                },
+            },
+            "remote_profiles./tmp/project",
+        ),
+    ],
+)
+def test_get_current_rejects_malformed_state_payload(
+    tmp_path: Path,
+    payload: dict[str, object],
+    field: str,
+) -> None:
+    service = ProjectConfigService(base_dir=tmp_path)
+    state_file = tmp_path / STATE_DIR_NAME / STATE_FILE_NAME
+    state_file.parent.mkdir(parents=True, exist_ok=True)
+    state_file.write_text(json.dumps(payload), encoding="utf-8")
+
+    with pytest.raises(AppError) as exc_info:
+        service.get_current()
+
+    assert exc_info.value.code == "project.state_invalid"
+    assert exc_info.value.detail == {"field": field}
+
+
+def test_get_current_rejects_deleted_current_project(tmp_path: Path) -> None:
+    service = ProjectConfigService(base_dir=tmp_path)
+    project_dir = tmp_path / "project-alpha"
+    project_dir.mkdir()
+    service.select_project(project_dir)
+    project_dir.rmdir()
+
+    with pytest.raises(AppError) as exc_info:
+        service.get_current()
+
+    assert exc_info.value.code == "project.current_invalid"
+    assert exc_info.value.detail == {"path": str(project_dir)}
+
+
+def test_update_remote_profile_rejects_deleted_current_project(
+    tmp_path: Path,
+) -> None:
+    service = ProjectConfigService(base_dir=tmp_path)
+    project_dir = tmp_path / "project-alpha"
+    project_dir.mkdir()
+    service.select_project(project_dir)
+    project_dir.rmdir()
+
+    with pytest.raises(AppError) as exc_info:
+        service.update_remote_profile(
+            base_url="http://localhost:8075/webroot/decision",
+            username="admin",
+            password="admin",
+        )
+
+    assert exc_info.value.code == "project.current_invalid"
+    assert exc_info.value.detail == {"path": str(project_dir)}
 
 
 def test_domain_error_is_serialized() -> None:
