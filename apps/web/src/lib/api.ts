@@ -6,6 +6,8 @@ import type {
   PreviewSessionResponse,
   ReportletFileResponse,
   ReportletTreeNodeResponse,
+  SyncAction,
+  SyncResultResponse,
   ProjectConfigResponse
 } from './types'
 
@@ -104,6 +106,23 @@ export function listReportletTree(): Promise<ReportletTreeNodeResponse[]> {
 export function readReportletContent(path: string): Promise<ReportletFileResponse> {
   const query = new URLSearchParams({ path }).toString()
   return apiRequest<ReportletFileResponse>(`/reportlets/content?${query}`)
+}
+
+export function runSyncAction(
+  action: SyncAction,
+  targetPath?: string
+): Promise<SyncResultResponse> {
+  const body: { action: SyncAction; target_path?: string } = { action }
+  if (targetPath) {
+    body.target_path = targetPath
+  }
+  return apiRequest<SyncResultResponse>('/sync/actions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  })
 }
 
 export function routeAssistantPrompt(
