@@ -36,10 +36,15 @@ export interface ProjectRemoteProfileStateResponse {
 }
 
 export interface RemoteDirectoryEntryResponse {
+  readonly name: string
   readonly path: string
   readonly is_directory: boolean
   readonly lock: string | null
 }
+
+export type RemoteDirectoryLoader = (
+  path?: string
+) => Promise<readonly RemoteDirectoryEntryResponse[]>
 
 export interface RemoteProfileTestResponse {
   readonly status: string

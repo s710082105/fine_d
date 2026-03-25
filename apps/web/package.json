@@ -9,6 +9,7 @@
     "test": "node -e \"const { spawnSync } = require('node:child_process'); const args = process.argv.slice(1).filter((arg) => arg !== '--runInBand'); const cmd = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm'; const result = spawnSync(cmd, ['exec', 'vitest', 'run', ...args], { stdio: 'inherit' }); process.exit(result.status ?? 1);\""
   },
   "dependencies": {
+    "element-plus": "^2.13.6",
     "vue": "^3.5.13"
   },
   "devDependencies": {

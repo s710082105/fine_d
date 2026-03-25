@@ -11,6 +11,7 @@ import type {
   PreviewSessionResponse,
   ReportletFileResponse,
   ReportletTreeNodeResponse,
+  RemoteDirectoryEntryResponse,
   RemoteOverviewResponse,
   RemoteProfileResponse,
   RemoteProfileTestResponse,
@@ -123,6 +124,15 @@ export function testRemoteProfile(
 
 export function getRemoteOverview(): Promise<RemoteOverviewResponse> {
   return apiRequest<RemoteOverviewResponse>('/remote/overview')
+}
+
+export function getRemoteDirectories(
+  path?: string
+): Promise<RemoteDirectoryEntryResponse[]> {
+  const query = path
+    ? `?${new URLSearchParams({ path }).toString()}`
+    : ''
+  return apiRequest<RemoteDirectoryEntryResponse[]>(`/remote/directories${query}`)
 }
 
 export function createCodexTerminalSession(

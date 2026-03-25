@@ -10,13 +10,15 @@ const {
   selectProjectWithDialog,
   saveRemoteProfile,
   testRemoteProfile,
-  getRemoteOverview
+  getRemoteOverview,
+  getRemoteDirectories
 } = vi.hoisted(() => ({
   getCurrentProject: vi.fn(),
   selectProjectWithDialog: vi.fn(),
   saveRemoteProfile: vi.fn(),
   testRemoteProfile: vi.fn(),
-  getRemoteOverview: vi.fn()
+  getRemoteOverview: vi.fn(),
+  getRemoteDirectories: vi.fn()
 }))
 
 vi.mock('../lib/api', async () => {
@@ -27,7 +29,8 @@ vi.mock('../lib/api', async () => {
     selectProjectWithDialog,
     saveRemoteProfile,
     testRemoteProfile,
-    getRemoteOverview
+    getRemoteOverview,
+    getRemoteDirectories
   }
 })
 
@@ -37,6 +40,7 @@ afterEach(() => {
   saveRemoteProfile.mockReset()
   testRemoteProfile.mockReset()
   getRemoteOverview.mockReset()
+  getRemoteDirectories.mockReset()
 })
 
 describe('ProjectWorkbenchView', () => {
@@ -53,22 +57,23 @@ describe('ProjectWorkbenchView', () => {
       }
     })
     getRemoteOverview.mockResolvedValue({
-      directory_entries: [
-        { path: 'reportlets/demo', is_directory: true, lock: null }
-      ],
       data_connections: [{ name: 'qzcs', database_type: 'MYSQL' }],
       last_loaded_at: '2026-03-25T12:00:00Z'
     })
+    getRemoteDirectories.mockResolvedValue([
+      { name: 'reportlets', path: '/reportlets', is_directory: true, lock: null }
+    ])
 
     render(ProjectWorkbenchView)
 
     await waitFor(() => {
       expect(getCurrentProject).toHaveBeenCalledTimes(1)
       expect(getRemoteOverview).toHaveBeenCalledTimes(1)
+      expect(getRemoteDirectories).toHaveBeenCalledTimes(1)
     })
 
     expect(await screen.findByText('/tmp/project-alpha')).toBeInTheDocument()
-    expect(await screen.findByText('reportlets/demo')).toBeInTheDocument()
+    expect(await screen.findByText('reportlets')).toBeInTheDocument()
     expect(await screen.findByText('qzcs')).toBeInTheDocument()
     expect(await screen.findByText('MYSQL')).toBeInTheDocument()
   })
@@ -106,8 +111,7 @@ describe('ProjectWorkbenchView', () => {
     expect(
       await screen.findByDisplayValue('http://localhost:8075/webroot/decision')
     ).toBeInTheDocument()
-    expect(screen.getByLabelText('用户名')).toHaveValue('admin')
-    expect(screen.getByLabelText('密码')).toHaveValue('admin')
+    expect(screen.getAllByDisplayValue('admin')).toHaveLength(2)
     expect(await screen.findByText('/tmp/project-beta')).toBeInTheDocument()
   })
 

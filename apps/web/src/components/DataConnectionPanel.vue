@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ElEmpty, ElTag } from 'element-plus'
+
 import type { DatasourceConnectionResponse } from '../lib/types'
 
 defineProps<{
@@ -9,10 +11,12 @@ defineProps<{
 <template>
   <section class="connection-panel">
     <header class="connection-panel__header">
-      <h3>数据连接</h3>
-      <p>展示远端配置中可用的数据连接。</p>
+      <div>
+        <h3>数据连接</h3>
+        <p>仅展示连接名称和数据库类型。</p>
+      </div>
     </header>
-    <p v-if="connections.length === 0" class="connection-panel__empty">暂无数据连接</p>
+    <ElEmpty v-if="connections.length === 0" description="暂无数据连接" />
     <ul v-else class="connection-panel__list">
       <li
         v-for="connection in connections"
@@ -20,7 +24,9 @@ defineProps<{
         class="connection-panel__item"
       >
         <strong>{{ connection.name }}</strong>
-        <span>{{ connection.database_type || '未标注类型' }}</span>
+        <ElTag size="small" effect="plain" type="success">
+          {{ connection.database_type || '未标注类型' }}
+        </ElTag>
       </li>
     </ul>
   </section>
@@ -30,26 +36,19 @@ defineProps<{
 .connection-panel {
   display: grid;
   gap: 16px;
-  padding: 20px;
-  border-radius: 20px;
-  background: #f7fbff;
-  box-shadow: inset 0 0 0 1px rgba(35, 65, 95, 0.08);
 }
 
 .connection-panel__header h3,
-.connection-panel__header p,
-.connection-panel__empty {
+.connection-panel__header p {
   margin: 0;
 }
 
-.connection-panel__header p,
-.connection-panel__empty {
-  color: #5e738c;
+.connection-panel__header p {
+  color: #61758a;
 }
 
 .connection-panel__list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 12px;
   margin: 0;
   padding: 0;
@@ -57,16 +56,20 @@ defineProps<{
 }
 
 .connection-panel__item {
-  display: grid;
-  gap: 6px;
-  padding: 10px 14px;
-  border-radius: 14px;
-  background: #ffffff;
-  box-shadow: inset 0 0 0 1px rgba(35, 65, 95, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid #d8e1ef;
+  border-radius: 16px;
+  background: #f8fbff;
 }
 
-.connection-panel__item span {
-  color: #5e738c;
-  font-size: 13px;
+@media (max-width: 720px) {
+  .connection-panel__item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 </style>
