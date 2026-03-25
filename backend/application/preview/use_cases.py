@@ -1,0 +1,52 @@
+from typing import Callable, Protocol
+from urllib.parse import urlparse
+from uuid import uuid4
+
+from backend.domain.project.errors import AppError
+from backend.domain.preview.models import PreviewSession
+
+
+def _default_session_id_factory() -> str:
+    return uuid4().hex
+
+
+class PreviewGateway(Protocol):
+    def open_url(self, url: str) -> None:
+        ...
+
+
+class PreviewUseCases:
+    def __init__(
+        self,
+        gateway: PreviewGateway,
+        session_id_factory: Callable[[], str] = _default_session_id_factory,
+    ) -> None:
+        self._gateway = gateway
+        self._session_id_factory = session_id_factory
+
+    def open_preview(self, url: str) -> PreviewSession:
+        self._validate_url(url)
+        self._gateway.open_url(url)
+        return PreviewSession(
+            session_id=self._session_id_factory(),
+            url=url,
+            status="opened",
+        )
+
+    @staticmethod
+    def _validate_url(url: str) -> None:
+        if not url.strip():
+            raise AppError(
+                code="preview.invalid_url",
+                message="preview url must not be blank",
+                detail={"url": url},
+                source="preview",
+            )
+        if urlparse(url).scheme in {"http", "https"}:
+            return
+        raise AppError(
+            code="preview.invalid_url",
+            message="preview url must use http or https",
+            detail={"url": url},
+            source="preview",
+        )

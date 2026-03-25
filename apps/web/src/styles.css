@@ -1,0 +1,19 @@
+:root {
+  font-family: "SF Pro Display", "Helvetica Neue", sans-serif;
+  color: #102033;
+  background: #f4f7fb;
+}
+
+body {
+  margin: 0;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.app-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+}
