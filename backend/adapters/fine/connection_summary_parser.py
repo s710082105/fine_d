@@ -8,7 +8,18 @@ from backend.domain.project.errors import AppError
 
 JDBC_PREFIX = "jdbc:"
 REDACTED = "***"
-SENSITIVE_QUERY_KEYS = {"password", "passwd", "pwd", "secret", "access_token", "token"}
+ORACLE_THIN_PREFIX = "oracle:thin:"
+SQLSERVER_PREFIX = "sqlserver://"
+SENSITIVE_QUERY_KEYS = {
+    "password",
+    "passwd",
+    "pwd",
+    "secret",
+    "access_token",
+    "token",
+    "user",
+    "username",
+}
 
 
 def parse_connection(item: dict[str, Any]) -> ConnectionSummary:
@@ -66,9 +77,46 @@ def _format_port(value: Any) -> str:
 
 def _sanitize_connection_url(value: str) -> str:
     if value.startswith(JDBC_PREFIX):
-        sanitized = _sanitize_standard_url(value[len(JDBC_PREFIX) :])
+        sanitized = _sanitize_jdbc_url(value[len(JDBC_PREFIX) :])
         return f"{JDBC_PREFIX}{sanitized}"
     return _sanitize_standard_url(value)
+
+
+def _sanitize_jdbc_url(value: str) -> str:
+    if value.startswith(ORACLE_THIN_PREFIX):
+        return _sanitize_oracle_thin_url(value)
+    if value.startswith(SQLSERVER_PREFIX):
+        return _sanitize_sqlserver_url(value)
+    return _sanitize_standard_url(value)
+
+
+def _sanitize_oracle_thin_url(value: str) -> str:
+    suffix = value[len(ORACLE_THIN_PREFIX) :]
+    if suffix.startswith("@") or "@" not in suffix:
+        return value
+    credentials, target = suffix.split("@", 1)
+    if "/" not in credentials:
+        return value
+    return f"{ORACLE_THIN_PREFIX}@{target}"
+
+
+def _sanitize_sqlserver_url(value: str) -> str:
+    suffix = value[len(SQLSERVER_PREFIX) :]
+    host_part, separator, properties = suffix.partition(";")
+    safe_host = _strip_userinfo(host_part)
+    if not separator:
+        return f"{SQLSERVER_PREFIX}{safe_host}"
+    safe_properties = ";".join(_sanitize_sqlserver_property(item) for item in properties.split(";"))
+    return f"{SQLSERVER_PREFIX}{safe_host};{safe_properties}"
+
+
+def _sanitize_sqlserver_property(item: str) -> str:
+    key, separator, property_value = item.partition("=")
+    if not separator:
+        return item
+    if key.strip().lower() not in SENSITIVE_QUERY_KEYS:
+        return item
+    return f"{key}{separator}{REDACTED}"
 
 
 def _sanitize_standard_url(value: str) -> str:
@@ -78,7 +126,7 @@ def _sanitize_standard_url(value: str) -> str:
     return urlunsplit(
         (
             parsed.scheme,
-            _safe_netloc(parsed.hostname, parsed.port, parsed.netloc),
+            _strip_userinfo(parsed.netloc),
             parsed.path,
             _sanitize_query(parsed.query),
             parsed.fragment,
@@ -86,13 +134,10 @@ def _sanitize_standard_url(value: str) -> str:
     )
 
 
-def _safe_netloc(hostname: str | None, port: int | None, netloc: str) -> str:
-    if not hostname:
+def _strip_userinfo(netloc: str) -> str:
+    if "@" not in netloc:
         return netloc
-    wrapped_host = f"[{hostname}]" if ":" in hostname and not hostname.startswith("[") else hostname
-    if port is None:
-        return wrapped_host
-    return f"{wrapped_host}:{port}"
+    return netloc.rsplit("@", 1)[1]
 
 
 def _sanitize_query(query: str) -> str:

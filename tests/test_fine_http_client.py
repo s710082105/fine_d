@@ -226,6 +226,39 @@ def test_list_connections_masks_credentials_in_jdbc_url() -> None:
     assert "demo-user" not in result.host_or_url
 
 
+def test_list_connections_masks_credentials_in_oracle_thin_jdbc_url() -> None:
+    item = {
+        "name": "qzcs",
+        "databaseType": "ORACLE",
+        "jdbcUrl": "jdbc:oracle:thin:scott/tiger@//127.0.0.1:1521/orclpdb1",
+    }
+
+    result = _parse_connection(item)
+
+    assert result.database_type == "ORACLE"
+    assert result.host_or_url == "jdbc:oracle:thin:@//127.0.0.1:1521/orclpdb1"
+    assert "scott" not in result.host_or_url
+    assert "tiger" not in result.host_or_url
+
+
+def test_list_connections_masks_credentials_in_sqlserver_jdbc_url() -> None:
+    item = {
+        "name": "qzcs",
+        "databaseType": "SQLSERVER",
+        "jdbcUrl": "jdbc:sqlserver://127.0.0.1:1433;databaseName=test;user=sa;password=secret",
+    }
+
+    result = _parse_connection(item)
+
+    assert result.database_type == "SQLSERVER"
+    assert (
+        result.host_or_url
+        == "jdbc:sqlserver://127.0.0.1:1433;databaseName=test;user=***;password=***"
+    )
+    assert "secret" not in result.host_or_url
+    assert "user=sa" not in result.host_or_url
+
+
 def test_preview_sql_encrypts_request_after_loading_landing_page(
     fine_server: tuple[str, list[RecordedRequest]],
 ) -> None:
