@@ -2,7 +2,9 @@ from pathlib import Path
 
 from fastapi import APIRouter, Depends
 
+from backend.adapters.fine.remote_overview_gateway import FineRemoteOverviewGateway
 from backend.application.project.config_service import ProjectConfigService
+from backend.application.remote.use_cases import TestRemoteProfileUseCase
 from backend.schemas.project import (
     ProjectConfigResponse,
     ProjectCurrentResponse,
@@ -10,12 +12,20 @@ from backend.schemas.project import (
     ProjectSelectRequest,
     RemoteProfileRequest,
 )
+from backend.schemas.remote import RemoteProfileTestResponse
 
 router = APIRouter()
 
 
 def get_project_service() -> ProjectConfigService:
     return ProjectConfigService(base_dir=Path.cwd())
+
+
+def get_project_remote_test_service() -> TestRemoteProfileUseCase:
+    return TestRemoteProfileUseCase(
+        get_project_service(),
+        FineRemoteOverviewGateway(),
+    )
 
 
 @router.get("/api/project/config", response_model=ProjectConfigResponse)
@@ -56,3 +66,19 @@ def update_remote_profile(
         password=request.password,
     )
     return ProjectRemoteProfileResponse.from_domain(profile)
+
+
+@router.post(
+    "/api/project/remote-profile/test",
+    response_model=RemoteProfileTestResponse,
+)
+def test_remote_profile(
+    request: RemoteProfileRequest,
+    service: TestRemoteProfileUseCase = Depends(get_project_remote_test_service),
+) -> RemoteProfileTestResponse:
+    result = service.test(
+        base_url=request.base_url,
+        username=request.username,
+        password=request.password,
+    )
+    return RemoteProfileTestResponse.from_domain(result)
