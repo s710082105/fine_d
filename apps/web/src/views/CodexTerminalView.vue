@@ -8,16 +8,23 @@ import {
   closeCodexTerminalSession,
   createCodexTerminalSession,
   generateProjectContext,
+  getCodexTerminalSession,
   getCurrentProject,
   getRemoteDirectories,
   getRemoteOverview,
   streamCodexTerminalSession,
   writeCodexTerminalInput
 } from '../lib/api'
+import {
+  clearStoredCodexSession,
+  loadStoredCodexSession,
+  saveStoredCodexSession
+} from '../lib/codex-session-storage'
 import type {
   CodexTerminalSessionResponse,
   DatasourceConnectionResponse,
-  ProjectContextResponse
+  ProjectContextResponse,
+  ProjectCurrentStateResponse
 } from '../lib/types'
 
 const currentProjectPath = ref('')
@@ -42,10 +49,9 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   stopPolling()
-  void closeActiveSession()
 })
 
-async function bootWorkbench(): Promise<void> {
+async function bootWorkbench(forceNewSession = false): Promise<void> {
   terminalLifecycleId += 1
   const lifecycleId = terminalLifecycleId
   stopPolling()
@@ -62,7 +68,20 @@ async function bootWorkbench(): Promise<void> {
     errorMessage.value = 'project.current_required: 请先选择项目目录'
     return
   }
-  currentProjectPath.value = state.current_project.path
+  applyProjectState(state)
+  if (!forceNewSession) {
+    const restored = await tryRestoreSession(
+      state.current_project.path,
+      lifecycleId
+    )
+    if (!isActiveLifecycle(lifecycleId)) {
+      return
+    }
+    if (restored) {
+      void loadSidebarData()
+      return
+    }
+  }
   contextLoading.value = true
   const generatedContext = await request(
     () => generateProjectContext(false),
@@ -91,6 +110,7 @@ async function bootWorkbench(): Promise<void> {
     return
   }
   session.value = created
+  saveSessionState(created.session_id)
   await pollOutput(created.session_id, lifecycleId)
   void loadSidebarData()
 }
@@ -121,6 +141,7 @@ async function pollOutput(
     terminalOutput.value += chunk.output
   }
   nextCursor.value = chunk.next_cursor
+  saveSessionState(sessionId)
   session.value = {
     ...session.value,
     status: chunk.status
@@ -134,7 +155,8 @@ async function pollOutput(
 
 async function handleRestart(): Promise<void> {
   await closeActiveSession()
-  await bootWorkbench()
+  clearStoredCodexSession(currentProjectPath.value)
+  await bootWorkbench(true)
 }
 
 async function handleSubmitInput(data: string): Promise<void> {
@@ -166,6 +188,7 @@ async function closeActiveSession(): Promise<void> {
   if (closed) {
     session.value = closed
   }
+  clearStoredCodexSession(currentProjectPath.value)
 }
 
 async function request<T>(
@@ -217,6 +240,7 @@ function handleMissingSession(): void {
   session.value = null
   terminalOutput.value = ''
   nextCursor.value = 0
+  clearStoredCodexSession(currentProjectPath.value)
 }
 
 function isActiveLifecycle(lifecycleId: number): boolean {
@@ -258,6 +282,64 @@ function resetSidebarState(): void {
   overviewLoading.value = false
   overviewErrorMessage.value = ''
   directoryPanelKey.value += 1
+}
+
+function applyProjectState(state: ProjectCurrentStateResponse): void {
+  currentProjectPath.value = state.current_project?.path ?? ''
+  contextState.value = toProjectContextResponse(state)
+}
+
+function toProjectContextResponse(
+  state: ProjectCurrentStateResponse
+): ProjectContextResponse | null {
+  if (!state.current_project || !state.context_state) {
+    return null
+  }
+  return {
+    project_root: state.current_project.path,
+    generated_at: state.context_state.generated_at,
+    agents_status: state.context_state.agents_status,
+    managed_files: []
+  }
+}
+
+async function tryRestoreSession(
+  projectPath: string,
+  lifecycleId: number
+): Promise<boolean> {
+  const stored = loadStoredCodexSession(projectPath)
+  if (!stored) {
+    return false
+  }
+  try {
+    const restored = await getCodexTerminalSession(stored.session_id)
+    if (!isActiveLifecycle(lifecycleId)) {
+      return true
+    }
+    session.value = restored
+    nextCursor.value = stored.next_cursor
+    saveSessionState(restored.session_id)
+    await pollOutput(restored.session_id, lifecycleId)
+    return true
+  } catch (error) {
+    if (error instanceof ApiError && error.code === 'codex.session_not_found') {
+      clearStoredCodexSession(projectPath)
+      return false
+    }
+    errorMessage.value = buildErrorMessage(error, '终端会话恢复失败')
+    return true
+  }
+}
+
+function saveSessionState(sessionId: string): void {
+  if (!currentProjectPath.value) {
+    return
+  }
+  saveStoredCodexSession({
+    project_path: currentProjectPath.value,
+    session_id: sessionId,
+    next_cursor: nextCursor.value
+  })
 }
 </script>
 

@@ -30,9 +30,15 @@ export interface RemoteProfileResponse {
 export interface ProjectCurrentStateResponse {
   readonly current_project: CurrentProjectResponse | null
   readonly remote_profile: RemoteProfileResponse | null
+  readonly context_state: ProjectContextStateResponse | null
 }
 
 export type ProjectContextStatus = 'created' | 'kept' | 'updated'
+
+export interface ProjectContextStateResponse {
+  readonly generated_at: string
+  readonly agents_status: ProjectContextStatus
+}
 
 export interface ProjectContextResponse {
   readonly project_root: string

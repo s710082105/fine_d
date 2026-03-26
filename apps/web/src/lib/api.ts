@@ -160,6 +160,14 @@ export function createCodexTerminalSession(
   })
 }
 
+export function getCodexTerminalSession(
+  sessionId: string
+): Promise<CodexTerminalSessionResponse> {
+  return apiRequest<CodexTerminalSessionResponse>(
+    `/codex/terminal/sessions/${sessionId}`
+  )
+}
+
 export function streamCodexTerminalSession(
   sessionId: string,
   cursor: number
