@@ -6,6 +6,7 @@ import type {
   DatasourceConnectionResponse,
   DatasourceSqlPreviewResponse,
   HealthResponse,
+  ProjectContextResponse,
   ProjectCurrentStateResponse,
   ProjectRemoteProfileStateResponse,
   PreviewSessionResponse,
@@ -80,6 +81,18 @@ export function getProjectConfig(): Promise<ProjectConfigResponse> {
 
 export function getCurrentProject(): Promise<ProjectCurrentStateResponse> {
   return apiRequest<ProjectCurrentStateResponse>('/project/current')
+}
+
+export function generateProjectContext(
+  force: boolean
+): Promise<ProjectContextResponse> {
+  return apiRequest<ProjectContextResponse>('/project/context', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ force })
+  })
 }
 
 export function selectProject(path: string): Promise<ProjectCurrentStateResponse> {
@@ -268,7 +281,17 @@ async function parseErrorPayload(response: Response): Promise<ApiErrorPayload | 
   }
   try {
     const payload = JSON.parse(body) as ApiErrorPayload
-    if (typeof payload.message === 'string') {
+    if (
+      payload &&
+      typeof payload === 'object' &&
+      (
+        typeof payload.message === 'string' ||
+        typeof payload.code === 'string' ||
+        'detail' in payload ||
+        typeof payload.source === 'string' ||
+        typeof payload.retryable === 'boolean'
+      )
+    ) {
       return payload
     }
   } catch {

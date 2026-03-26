@@ -24,11 +24,21 @@ export interface RemoteProfileResponse {
   readonly base_url: string
   readonly username: string
   readonly password: string
+  readonly designer_root: string
 }
 
 export interface ProjectCurrentStateResponse {
   readonly current_project: CurrentProjectResponse | null
   readonly remote_profile: RemoteProfileResponse | null
+}
+
+export type ProjectContextStatus = 'created' | 'kept' | 'updated'
+
+export interface ProjectContextResponse {
+  readonly project_root: string
+  readonly generated_at: string
+  readonly agents_status: ProjectContextStatus
+  readonly managed_files: readonly string[]
 }
 
 export interface ProjectRemoteProfileStateResponse {

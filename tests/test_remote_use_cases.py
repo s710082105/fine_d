@@ -98,6 +98,7 @@ def test_test_remote_profile_use_case_reuses_single_profile_for_connection_check
         base_url="http://localhost:8075/webroot/decision",
         username="admin",
         password="admin",
+        designer_root="/Applications/FineReport",
     )
 
     assert result == RemoteProfileTestResult(status="ok", message="连接成功")
@@ -107,6 +108,7 @@ def test_test_remote_profile_use_case_reuses_single_profile_for_connection_check
                 base_url="http://localhost:8075/webroot/decision",
                 username="admin",
                 password="admin",
+                designer_root="/Applications/FineReport",
             ),
             current_project,
         )
@@ -123,6 +125,7 @@ def test_load_remote_overview_use_case_returns_directory_and_connections() -> No
                 base_url="http://localhost:8075/webroot/decision",
                 username="admin",
                 password="admin",
+                designer_root="/Applications/FineReport",
             ),
         )
     )
@@ -144,6 +147,7 @@ def test_load_remote_overview_use_case_returns_directory_and_connections() -> No
                 base_url="http://localhost:8075/webroot/decision",
                 username="admin",
                 password="admin",
+                designer_root="/Applications/FineReport",
             ),
             current_project,
         )
@@ -160,6 +164,7 @@ def test_list_remote_directories_returns_root_entries() -> None:
                 base_url="http://localhost:8075/webroot/decision",
                 username="admin",
                 password="admin",
+                designer_root="/Applications/FineReport",
             ),
         )
     )
@@ -175,6 +180,7 @@ def test_list_remote_directories_returns_root_entries() -> None:
                 base_url="http://localhost:8075/webroot/decision",
                 username="admin",
                 password="admin",
+                designer_root="/Applications/FineReport",
             ),
             current_project,
             None,
@@ -192,6 +198,7 @@ def test_list_remote_directories_returns_children_of_requested_path() -> None:
                 base_url="http://localhost:8075/webroot/decision",
                 username="admin",
                 password="admin",
+                designer_root="/Applications/FineReport",
             ),
         )
     )
@@ -213,6 +220,7 @@ def test_list_remote_directories_returns_children_of_requested_path() -> None:
                 base_url="http://localhost:8075/webroot/decision",
                 username="admin",
                 password="admin",
+                designer_root="/Applications/FineReport",
             ),
             current_project,
             "/reportlets",
@@ -310,6 +318,7 @@ def test_test_remote_profile_use_case_rejects_missing_current_project() -> None:
             base_url="http://localhost:8075/webroot/decision",
             username="admin",
             password="admin",
+            designer_root="/Applications/FineReport",
         )
 
     assert error_info.value.code == "project.current_required"

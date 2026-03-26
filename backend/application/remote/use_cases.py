@@ -59,6 +59,7 @@ class TestRemoteProfileUseCase:
         base_url: str,
         username: str,
         password: str,
+        designer_root: str,
     ) -> RemoteProfileTestResult:
         current_project = _require_current_project(
             self._project_state_reader.get_current(),
@@ -67,6 +68,7 @@ class TestRemoteProfileUseCase:
             base_url=base_url,
             username=username,
             password=password,
+            designer_root=designer_root,
         )
         return self._gateway.test_connection(profile, current_project)
 
@@ -76,11 +78,13 @@ class TestRemoteProfileUseCase:
         base_url: str,
         username: str,
         password: str,
+        designer_root: str,
     ) -> RemoteProfileTestResult:
         return self.execute(
             base_url=base_url,
             username=username,
             password=password,
+            designer_root=designer_root,
         )
 
 
@@ -127,12 +131,14 @@ def _build_remote_profile(
     base_url: str,
     username: str,
     password: str,
+    designer_root: str,
 ) -> RemoteProfile:
     return _require_remote_profile(
         RemoteProfile(
             base_url=base_url,
             username=username,
             password=password,
+            designer_root=designer_root,
         )
     )
 
@@ -152,4 +158,6 @@ def _require_remote_profile(profile: RemoteProfile | None) -> RemoteProfile:
         raise invalid_remote_profile_error("username")
     if profile.password == "":
         raise invalid_remote_profile_error("password")
+    if profile.designer_root == "":
+        raise invalid_remote_profile_error("designer_root")
     return profile

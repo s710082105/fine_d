@@ -73,5 +73,6 @@ def test_remote_profile(
         base_url=request.base_url,
         username=request.username,
         password=request.password,
+        designer_root=request.designer_root,
     )
     return RemoteProfileTestResponse.from_domain(result)

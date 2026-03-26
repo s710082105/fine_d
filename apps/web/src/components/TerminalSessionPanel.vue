@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 import type { CodexTerminalSessionResponse } from '../lib/types'
+import {
+  createTerminalAdapter,
+  type TerminalAdapter
+} from './terminal/xterm-adapter'
 
 const props = defineProps<{
   session: CodexTerminalSessionResponse | null
@@ -14,17 +18,77 @@ const emit = defineEmits<{
   submitInput: [data: string]
 }>()
 
-const commandInput = ref('')
+const hostRef = ref<HTMLElement | null>(null)
+const adapter = ref<TerminalAdapter | null>(null)
+let renderedLength = 0
 
-const statusLabel = computed(() => props.session?.status ?? '未启动')
+const STATUS_LABELS: Record<string, string> = {
+  running: '运行中',
+  closed: '已关闭',
+  failed: '已失败'
+}
 
-function handleSubmit(): void {
-  if (!commandInput.value) {
+const statusLabel = computed(() => {
+  if (!props.session) {
+    return '未启动'
+  }
+  return STATUS_LABELS[props.session.status] ?? props.session.status
+})
+
+function clearTerminal(): void {
+  renderedLength = 0
+  adapter.value?.clear()
+}
+
+function syncOutput(output: string): void {
+  if (!adapter.value) {
     return
   }
-  emit('submitInput', `${commandInput.value}\n`)
-  commandInput.value = ''
+  if (output.length < renderedLength) {
+    clearTerminal()
+  }
+  const nextChunk = output.slice(renderedLength)
+  if (!nextChunk) {
+    return
+  }
+  adapter.value.write(nextChunk)
+  renderedLength = output.length
 }
+
+function mountTerminal(): void {
+  if (!hostRef.value || adapter.value) {
+    return
+  }
+  adapter.value = createTerminalAdapter(hostRef.value, {
+    onInput: (payload) => emit('submitInput', payload)
+  })
+  adapter.value.fit()
+  syncOutput(props.output)
+}
+
+watch(() => props.output, (output) => {
+  mountTerminal()
+  syncOutput(output)
+})
+
+watch(() => props.session?.session_id, () => {
+  clearTerminal()
+  adapter.value?.focus()
+})
+
+onMounted(() => {
+  mountTerminal()
+  syncOutput(props.output)
+})
+
+onBeforeUnmount(() => {
+  adapter.value?.destroy()
+  adapter.value = null
+})
+
+defineExpose({
+  focusTerminal: () => adapter.value?.focus()
+})
 </script>
 
 <template>
@@ -45,19 +109,11 @@ function handleSubmit(): void {
     </p>
 
     <div class="terminal-panel__surface">
-      <pre class="terminal-panel__output">{{ output || '终端已连接，等待输出...' }}</pre>
-      <label class="terminal-panel__prompt">
-        <span>&gt;</span>
-        <input
-          v-model="commandInput"
-          aria-label="终端输入"
-          type="text"
-          :disabled="session?.status !== 'running'"
-          placeholder="在终端内输入命令并按 Enter"
-          @keydown.enter.prevent="handleSubmit"
-        />
-      </label>
+      <div ref="hostRef" class="terminal-panel__viewport" />
     </div>
+    <p class="terminal-panel__hint">
+      点击终端后直接输入，Enter、方向键和快捷键会原样发送给 Codex。
+    </p>
   </section>
 </template>
 
@@ -83,7 +139,8 @@ function handleSubmit(): void {
 
 .terminal-panel__header h2,
 .terminal-panel__header p,
-.terminal-panel__error {
+.terminal-panel__error,
+.terminal-panel__hint {
   margin: 0;
 }
 
@@ -111,8 +168,6 @@ function handleSubmit(): void {
 }
 
 .terminal-panel__surface {
-  display: grid;
-  grid-template-rows: minmax(320px, 1fr) auto;
   min-height: 520px;
   border-radius: 20px;
   overflow: hidden;
@@ -120,32 +175,14 @@ function handleSubmit(): void {
   color: #d7e3f4;
 }
 
-.terminal-panel__output {
-  margin: 0;
-  padding: 24px;
-  overflow: auto;
-  font-family: "SFMono-Regular", "Menlo", monospace;
-  white-space: pre-wrap;
-  word-break: break-word;
+.terminal-panel__viewport {
+  height: 520px;
+  padding: 16px;
 }
 
-.terminal-panel__prompt {
-  align-items: center;
-  padding: 16px 20px;
-  border-top: 1px solid rgba(215, 227, 244, 0.12);
-  font-family: "SFMono-Regular", "Menlo", monospace;
-}
-
-.terminal-panel__prompt input {
-  flex: 1;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-}
-
-.terminal-panel__prompt input:focus {
-  outline: none;
+.terminal-panel__hint {
+  color: #5e738c;
+  font-size: 13px;
 }
 
 .terminal-panel button {

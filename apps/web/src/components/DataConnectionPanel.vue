@@ -6,6 +6,10 @@ import type { DatasourceConnectionResponse } from '../lib/types'
 defineProps<{
   connections: ReadonlyArray<DatasourceConnectionResponse>
 }>()
+
+const emit = defineEmits<{
+  insert: [payload: string]
+}>()
 </script>
 
 <template>
@@ -23,10 +27,16 @@ defineProps<{
         :key="connection.name"
         class="connection-panel__item"
       >
-        <strong>{{ connection.name }}</strong>
-        <ElTag size="small" effect="plain" type="success">
-          {{ connection.database_type || '未标注类型' }}
-        </ElTag>
+        <button
+          type="button"
+          class="connection-panel__button"
+          @click="emit('insert', connection.name)"
+        >
+          <strong>{{ connection.name }}</strong>
+          <ElTag size="small" effect="plain" type="success">
+            {{ connection.database_type || '未标注类型' }}
+          </ElTag>
+        </button>
       </li>
     </ul>
   </section>
@@ -56,7 +66,14 @@ defineProps<{
 }
 
 .connection-panel__item {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.connection-panel__button {
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
@@ -64,10 +81,13 @@ defineProps<{
   border: 1px solid #d8e1ef;
   border-radius: 16px;
   background: #f8fbff;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
 }
 
 @media (max-width: 720px) {
-  .connection-panel__item {
+  .connection-panel__button {
     align-items: flex-start;
     flex-direction: column;
   }

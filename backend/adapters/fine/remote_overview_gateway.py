@@ -71,10 +71,9 @@ class FineRemoteOverviewGateway:
         path: str | None = None,
     ) -> list[RemoteDirectoryEntry]:
         def load_entries() -> list[RemoteDirectoryEntry]:
+            directory_path = _resolve_remote_directory_path(path, self._remote_root)
             client = self._build_remote_client(profile, current_project)
-            entries = client.list_files(
-                _resolve_remote_directory_path(path, self._remote_root),
-            )
+            entries = client.list_files(directory_path)
             return [_build_remote_directory_entry(entry) for entry in entries]
 
         return _run_remote_operation("directory_entries", load_entries)
@@ -102,7 +101,11 @@ class FineRemoteOverviewGateway:
             base_url=profile.base_url,
             username=profile.username,
             password=profile.password,
-            fine_home=_resolve_fine_home(current_project, self._fine_home),
+            fine_home=_resolve_fine_home(
+                current_project,
+                profile.designer_root,
+                self._fine_home,
+            ),
         )
 
 
@@ -127,10 +130,13 @@ def _run_remote_operation(operation: str, action: Callable[[], T]) -> T:
 
 def _resolve_fine_home(
     current_project: CurrentProject,
+    profile_designer_root: str,
     configured_path: Path | None,
 ) -> Path:
     if configured_path is not None:
         fine_home = configured_path.expanduser().resolve()
+    elif profile_designer_root.strip():
+        fine_home = Path(profile_designer_root).expanduser().resolve()
     else:
         fine_home = _load_fine_home_from_env()
     if _has_runtime_jars(fine_home):

@@ -40,10 +40,12 @@ class FakeRemoteProfileTestService:
         base_url: str,
         username: str,
         password: str,
+        designer_root: str,
     ) -> RemoteProfileTestResult:
         assert base_url == "http://localhost:8075/webroot/decision"
         assert username == "admin"
         assert password == "admin"
+        assert designer_root == "/Applications/FineReport"
         return RemoteProfileTestResult(status="ok", message="连接成功")
 
 
@@ -123,6 +125,7 @@ def test_project_remote_profile_test_endpoint_returns_status_and_message() -> No
             "base_url": "http://localhost:8075/webroot/decision",
             "username": "admin",
             "password": "admin",
+            "designer_root": "/Applications/FineReport",
         },
     )
 
@@ -214,6 +217,7 @@ def test_remote_directories_endpoint_rejects_path_outside_reportlets_root(
                         "base_url": "http://localhost:8075/webroot/decision",
                         "username": "admin",
                         "password": "admin",
+                        "designer_root": str(tmp_path / "FineReport"),
                     }
                 },
             }
@@ -224,7 +228,6 @@ def test_remote_directories_endpoint_rejects_path_outside_reportlets_root(
     (fine_home / "lib").mkdir(parents=True)
     (fine_home / "lib" / "core.jar").write_text("", encoding="utf-8")
     monkeypatch.chdir(tmp_path)
-    monkeypatch.setenv("FINE_REMOTE_HOME", str(fine_home))
 
     class FakeFineRemoteClient:
         def __init__(self, **_: object) -> None:
@@ -250,3 +253,70 @@ def test_remote_directories_endpoint_rejects_path_outside_reportlets_root(
         "source": "remote",
         "retryable": False,
     }
+
+
+def test_remote_directories_endpoint_uses_project_designer_root_without_env(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    project_dir = tmp_path / "project-alpha"
+    project_dir.mkdir()
+    fine_home = tmp_path / "FineReport"
+    (fine_home / "lib").mkdir(parents=True)
+    (fine_home / "lib" / "core.jar").write_text("", encoding="utf-8")
+    state_file = tmp_path / STATE_DIR_NAME / STATE_FILE_NAME
+    state_file.parent.mkdir(parents=True, exist_ok=True)
+    state_file.write_text(
+        json.dumps(
+            {
+                "current_project": {
+                    "path": str(project_dir),
+                    "name": "project-alpha",
+                },
+                "remote_profiles": {
+                    str(project_dir): {
+                        "base_url": "http://localhost:8075/webroot/decision",
+                        "username": "admin",
+                        "password": "admin",
+                        "designer_root": str(fine_home),
+                    }
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.delenv("FINE_REMOTE_HOME", raising=False)
+
+    class FakeRemoteFileEntry:
+        def __init__(self, path: str, is_directory: bool) -> None:
+            self.path = path
+            self.is_directory = is_directory
+            self.lock = None
+
+    class FakeFineRemoteClient:
+        def __init__(self, **kwargs: object) -> None:
+            assert kwargs["fine_home"] == fine_home.resolve()
+
+        def list_files(self, path: str) -> list[FakeRemoteFileEntry]:
+            assert path == "reportlets"
+            return [FakeRemoteFileEntry("reportlets/demo", True)]
+
+    monkeypatch.setattr(
+        fine_remote_client_module,
+        "FineRemoteClient",
+        FakeFineRemoteClient,
+    )
+    client = TestClient(create_app())
+
+    response = client.get("/api/remote/directories")
+
+    assert response.status_code == 200
+    assert response.json() == [
+        {
+            "name": "demo",
+            "path": "/reportlets/demo",
+            "is_directory": True,
+            "lock": None,
+        }
+    ]

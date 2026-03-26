@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 
+from backend.domain.project.context_models import ProjectContextState
 from backend.domain.project.remote_models import RemoteProfile
 
 
@@ -20,3 +21,4 @@ class CurrentProject:
 class ProjectState:
     current_project: CurrentProject | None
     remote_profile: RemoteProfile | None
+    context_state: ProjectContextState | None = None

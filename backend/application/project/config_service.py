@@ -1,7 +1,9 @@
 from pathlib import Path
 from urllib.parse import urlparse
 
+from backend.domain.project.context_models import ProjectContextState
 from backend.domain.project.errors import (
+    AppError,
     current_project_required_error,
     invalid_current_project_error,
     invalid_project_path_error,
@@ -42,13 +44,12 @@ class ProjectConfigService:
     def get_current(self) -> ProjectState:
         current_project = self._load_current_project(required=False)
         if current_project is None:
-            return ProjectState(current_project=None, remote_profile=None)
-        return ProjectState(
-            current_project=current_project,
-            remote_profile=self._project_store.load_remote_profile(
-                current_project.path,
-            ),
-        )
+            return ProjectState(
+                current_project=None,
+                remote_profile=None,
+                context_state=None,
+            )
+        return self._build_project_state(current_project)
 
     def select_project(self, path: Path) -> ProjectState:
         project_path = self._validate_project_path(path)
@@ -57,22 +58,21 @@ class ProjectConfigService:
             name=project_path.name,
         )
         self._project_store.save_current_project(current_project)
-        return ProjectState(
-            current_project=current_project,
-            remote_profile=self._project_store.load_remote_profile(project_path),
-        )
+        return self._build_project_state(current_project)
 
     def update_remote_profile(
         self,
         base_url: str,
         username: str,
         password: str,
+        designer_root: str,
     ) -> RemoteProfile:
         current_project = self._load_current_project(required=True)
         profile = RemoteProfile(
             base_url=self._validate_base_url(base_url),
             username=self._validate_non_empty(username, "username"),
             password=self._validate_non_empty(password, "password"),
+            designer_root=self._validate_non_empty(designer_root, "designer_root"),
         )
         self._project_store.save_remote_profile(current_project.path, profile)
         return profile
@@ -109,3 +109,25 @@ class ProjectConfigService:
         if not current_project.path.exists() or not current_project.path.is_dir():
             raise invalid_current_project_error(str(current_project.path))
         return current_project
+
+    def _load_context_state(self, project_path: Path) -> ProjectContextState | None:
+        try:
+            return self._project_store.load_context_state(project_path)
+        except AppError as error:
+            field = None if error.detail is None else error.detail.get("field")
+            if (
+                error.code == "project.state_invalid"
+                and isinstance(field, str)
+                and field.startswith("context_states.")
+            ):
+                return None
+            raise
+
+    def _build_project_state(self, current_project: CurrentProject) -> ProjectState:
+        return ProjectState(
+            current_project=current_project,
+            remote_profile=self._project_store.load_remote_profile(
+                current_project.path,
+            ),
+            context_state=self._load_context_state(current_project.path),
+        )

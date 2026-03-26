@@ -3,13 +3,14 @@ import { ElAlert, ElButton, ElCard, ElDescriptions, ElDescriptionsItem, ElEmpty,
 import { computed, onMounted, reactive, ref } from 'vue'
 import DataConnectionPanel from '../components/DataConnectionPanel.vue'
 import RemoteDirectoryPanel from '../components/RemoteDirectoryPanel.vue'
-import { ApiError, getCurrentProject, getRemoteDirectories, getRemoteOverview, saveRemoteProfile, selectProjectWithDialog, testRemoteProfile } from '../lib/api'
+import { ApiError, getCurrentProject, getRemoteDirectories, getRemoteOverview, saveRemoteProfile, selectProject, selectProjectWithDialog, testRemoteProfile } from '../lib/api'
 import type { CurrentProjectResponse, RemoteOverviewResponse, RemoteProfileResponse } from '../lib/types'
 
 interface RemoteProfileForm {
   base_url: string
   username: string
   password: string
+  designer_root: string
 }
 
 const currentProject = ref<CurrentProjectResponse | null>(null)
@@ -20,10 +21,12 @@ const connectionMessageType = ref<'info' | 'success'>('info')
 const overview = ref<RemoteOverviewResponse | null>(null)
 const overviewLoading = ref(false)
 const remoteTreeVersion = ref(0)
+const manualProjectPath = ref('')
 const form = reactive<RemoteProfileForm>({
   base_url: '',
   username: '',
-  password: ''
+  password: '',
+  designer_root: ''
 })
 
 const canUseRemoteProfile = computed(() => {
@@ -31,7 +34,8 @@ const canUseRemoteProfile = computed(() => {
     currentProject.value &&
       form.base_url.trim() &&
       form.username.trim() &&
-      form.password.trim()
+      form.password.trim() &&
+      form.designer_root.trim()
   )
 })
 
@@ -53,6 +57,21 @@ async function loadCurrentState(): Promise<void> {
 async function handleChooseDirectory(): Promise<void> {
   clearTopFeedback()
   const state = await runTopLevelRequest(selectProjectWithDialog, '项目目录选择失败')
+  if (!state) {
+    return
+  }
+  applyProjectState(state.current_project, state.remote_profile)
+  await refreshOverview()
+}
+
+async function handleApplyProjectPath(): Promise<void> {
+  clearTopFeedback()
+  const path = manualProjectPath.value.trim()
+  if (!path) {
+    errorMessage.value = '请输入项目目录路径'
+    return
+  }
+  const state = await runTopLevelRequest(() => selectProject(path), '项目目录选择失败')
   if (!state) {
     return
   }
@@ -119,6 +138,7 @@ function resetOverviewState(): void {
 
 function applyProjectState(project: CurrentProjectResponse | null, profile: RemoteProfileResponse | null): void {
   currentProject.value = project
+  manualProjectPath.value = project?.path ?? ''
   applyRemoteProfile(profile)
 }
 
@@ -126,6 +146,7 @@ function applyRemoteProfile(profile: RemoteProfileResponse | null): void {
   form.base_url = profile?.base_url ?? ''
   form.username = profile?.username ?? ''
   form.password = profile?.password ?? ''
+  form.designer_root = profile?.designer_root ?? ''
 }
 
 function buildErrorMessage(error: unknown, fallbackMessage: string): string {
@@ -151,11 +172,23 @@ function buildErrorMessage(error: unknown, fallbackMessage: string): string {
         <div class="workbench-view__card-header">
           <div>
             <h3>项目目录</h3>
-            <p>项目目录通过本地系统目录选择器确定。</p>
+            <p>可通过本地系统目录选择器选择；若系统对话框不可用，可直接输入路径。</p>
           </div>
-          <ElButton type="primary" @click="handleChooseDirectory">选择目录</ElButton>
+          <div class="workbench-view__actions">
+            <ElButton plain @click="handleApplyProjectPath">应用路径</ElButton>
+            <ElButton type="primary" @click="handleChooseDirectory">选择目录</ElButton>
+          </div>
         </div>
       </template>
+      <ElForm label-position="top" class="workbench-view__form workbench-view__form--project">
+        <ElFormItem label="项目目录路径">
+          <ElInput
+            v-model="manualProjectPath"
+            clearable
+            placeholder="/Users/name/workspace/project"
+          />
+        </ElFormItem>
+      </ElForm>
       <ElDescriptions v-if="currentProject" :column="1" border>
         <ElDescriptionsItem label="当前路径">{{ currentProject.path }}</ElDescriptionsItem>
         <ElDescriptionsItem label="项目名称">{{ currentProject.name }}</ElDescriptionsItem>
@@ -182,6 +215,13 @@ function buildErrorMessage(error: unknown, fallbackMessage: string): string {
         <ElFormItem label="用户名"><ElInput v-model="form.username" clearable placeholder="admin" /></ElFormItem>
         <ElFormItem label="密码">
           <ElInput v-model="form.password" clearable show-password type="password" placeholder="admin" />
+        </ElFormItem>
+        <ElFormItem label="FineReport 运行时目录">
+          <ElInput
+            v-model="form.designer_root"
+            clearable
+            placeholder="请输入 FineReport 运行时目录"
+          />
         </ElFormItem>
       </ElForm>
       <ElAlert v-if="connectionMessage" :closable="false" show-icon :title="connectionMessage" :type="connectionMessageType" />
@@ -242,6 +282,7 @@ function buildErrorMessage(error: unknown, fallbackMessage: string): string {
 }
 .workbench-view__card { border: 1px solid #d8e1ef; border-radius: 24px; }
 .workbench-view__form { display: grid; gap: 8px; }
+.workbench-view__form--project { margin-bottom: 16px; }
 .workbench-view__overview { display: grid; gap: 20px; }
 .workbench-view__overview-side { display: grid; }
 

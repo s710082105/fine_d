@@ -21,7 +21,7 @@ describe('Remote Panels', () => {
         }
       ])
 
-    render(RemoteDirectoryPanel, {
+    const view = render(RemoteDirectoryPanel, {
       props: {
         loadEntries
       }
@@ -30,7 +30,9 @@ describe('Remote Panels', () => {
     expect(await screen.findByText('reportlets')).toBeInTheDocument()
     expect(loadEntries).toHaveBeenNthCalledWith(1, undefined)
 
-    await fireEvent.click(screen.getByText('reportlets'))
+    const expandIcon = view.container.querySelector('.el-tree-node__expand-icon')
+    expect(expandIcon).not.toBeNull()
+    await fireEvent.click(expandIcon!)
 
     await waitFor(() => {
       expect(loadEntries).toHaveBeenNthCalledWith(2, '/reportlets')
@@ -38,6 +40,34 @@ describe('Remote Panels', () => {
 
     expect(await screen.findByText('demo.cpt')).toBeInTheDocument()
     expect(screen.getByText('alice')).toBeInTheDocument()
+  })
+
+  it('keeps the tree mounted when a child directory load fails', async () => {
+    const loadEntries = vi
+      .fn()
+      .mockResolvedValueOnce([
+        { name: 'reportlets', path: '/reportlets', is_directory: true, lock: null }
+      ])
+      .mockRejectedValueOnce(
+        new Error('remote.request_failed: 远程请求失败')
+      )
+
+    const view = render(RemoteDirectoryPanel, {
+      props: {
+        loadEntries
+      }
+    })
+
+    expect(await screen.findByText('reportlets')).toBeInTheDocument()
+
+    const expandIcon = view.container.querySelector('.el-tree-node__expand-icon')
+    expect(expandIcon).not.toBeNull()
+    await fireEvent.click(expandIcon!)
+
+    expect(
+      await screen.findByText('remote.request_failed: 远程请求失败')
+    ).toBeInTheDocument()
+    expect(await screen.findByText('reportlets')).toBeInTheDocument()
   })
 
   it('shows connection metadata in data connection panel', () => {

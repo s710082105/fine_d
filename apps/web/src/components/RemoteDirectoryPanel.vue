@@ -17,6 +17,10 @@ const props = defineProps<{
   loadEntries: RemoteDirectoryLoader
 }>()
 
+const emit = defineEmits<{
+  insert: [payload: string]
+}>()
+
 const loadErrorMessage = ref('')
 
 const treeProps = {
@@ -87,7 +91,6 @@ function buildErrorMessage(error: unknown, fallbackMessage: string): string {
       :description="loadErrorMessage"
     />
     <ElTree
-      v-else
       class="remote-panel__tree"
       empty-text="暂无远程目录数据"
       node-key="path"
@@ -99,7 +102,13 @@ function buildErrorMessage(error: unknown, fallbackMessage: string): string {
     >
       <template #default="{ data }">
         <div class="remote-panel__node">
-          <span class="remote-panel__name">{{ data.name }}</span>
+          <button
+            type="button"
+            class="remote-panel__trigger"
+            @click.stop="emit('insert', data.path)"
+          >
+            <span class="remote-panel__name">{{ data.name }}</span>
+          </button>
           <div class="remote-panel__meta">
             <ElTag size="small" effect="plain" type="info">
               {{ data.is_directory ? '目录' : '文件' }}
@@ -151,6 +160,17 @@ function buildErrorMessage(error: unknown, fallbackMessage: string): string {
 .remote-panel__node {
   width: 100%;
   justify-content: space-between;
+}
+
+.remote-panel__trigger {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
 }
 
 .remote-panel__name {

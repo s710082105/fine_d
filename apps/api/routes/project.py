@@ -2,11 +2,16 @@ from pathlib import Path
 
 from fastapi import APIRouter, Depends
 
+from backend.adapters.fine.remote_overview_gateway import FineRemoteOverviewGateway
 from backend.adapters.platform.directory_picker import SystemDirectoryPicker
 from backend.application.project.config_service import ProjectConfigService
+from backend.application.project.context_service import ProjectContextService
 from backend.domain.project.errors import directory_selection_cancelled_error
+from backend.infra.project_store import ProjectStore
 from backend.schemas.project import (
     ProjectConfigResponse,
+    ProjectContextGenerateRequest,
+    ProjectContextResponse,
     ProjectCurrentResponse,
     ProjectRemoteProfileResponse,
     ProjectSelectRequest,
@@ -24,6 +29,15 @@ def get_directory_picker() -> SystemDirectoryPicker:
     return SystemDirectoryPicker()
 
 
+def get_project_context_service() -> ProjectContextService:
+    base_dir = Path.cwd()
+    return ProjectContextService(
+        project_state_reader=ProjectConfigService(base_dir=base_dir),
+        project_store=ProjectStore(base_dir=base_dir),
+        remote_gateway=FineRemoteOverviewGateway(),
+    )
+
+
 @router.get("/api/project/config", response_model=ProjectConfigResponse)
 def get_project_config(
     service: ProjectConfigService = Depends(get_project_service),
@@ -37,6 +51,16 @@ def get_current_project(
     service: ProjectConfigService = Depends(get_project_service),
 ) -> ProjectCurrentResponse:
     return ProjectCurrentResponse.from_domain(service.get_current())
+
+
+@router.post("/api/project/context", response_model=ProjectContextResponse)
+def generate_project_context(
+    request: ProjectContextGenerateRequest,
+    service: ProjectContextService = Depends(get_project_context_service),
+) -> ProjectContextResponse:
+    return ProjectContextResponse.from_domain(
+        service.generate(force=request.force),
+    )
 
 
 @router.post("/api/project/select", response_model=ProjectCurrentResponse)
@@ -72,5 +96,6 @@ def update_remote_profile(
         base_url=request.base_url,
         username=request.username,
         password=request.password,
+        designer_root=request.designer_root,
     )
     return ProjectRemoteProfileResponse.from_domain(profile)

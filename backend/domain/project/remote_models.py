@@ -6,3 +6,4 @@ class RemoteProfile:
     base_url: str
     username: str
     password: str
+    designer_root: str = ""

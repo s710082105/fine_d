@@ -1,0 +1,180 @@
+from collections.abc import Iterable
+
+from backend.domain.project.models import CurrentProject
+from backend.domain.project.remote_models import RemoteProfile
+from backend.domain.remote.models import RemoteDirectoryEntry, RemoteOverview
+
+MANAGED_SKILLS = (
+    "fr-create",
+    "fr-db",
+    "fr-remote-check",
+    "fr-remote-pull",
+    "fr-remote-fill",
+    "fr-sync",
+    "fr-verify",
+)
+
+SKILL_DESCRIPTIONS = {
+    "fr-create": "新建 CPT/FVS 前先确认当前项目上下文和远端目录。",
+    "fr-db": "读取远端 overview 中的数据连接并做字段扫描、SQL 试跑。",
+    "fr-remote-check": "核对当前项目远端配置、目录根和连接摘要。",
+    "fr-remote-pull": "从远端 reportlets 拉取目录或单个文件做对照。",
+    "fr-remote-fill": "基于当前 overview 回填模板、SQL 和报表字段。",
+    "fr-sync": "把本地 reportlets 变更同步到远端并记录结果。",
+    "fr-verify": "在交付前复核远端目录、数据连接和生成文件是否一致。",
+}
+
+DELIVERY_CHAIN = (
+    "先确认需求",
+    "检查远端",
+    "按需拉取/补全",
+    "本地修改",
+    "同步推送",
+    "浏览器复核",
+    "最终准确报告",
+)
+
+B_PLAN_BOUNDARIES = (
+    "页面不做流程编排",
+    "最终报告以 Codex 终端输出为准",
+)
+
+
+def render_agents_markdown(
+    project: CurrentProject,
+    profile: RemoteProfile,
+    overview: RemoteOverview,
+) -> str:
+    return "\n".join(
+        (
+            "# Project Agent Rules",
+            "",
+            f"- 项目名称：`{project.name}`",
+            f"- 项目路径：`{project.path}`",
+            f"- 远端地址：`{profile.base_url}`",
+            f"- Designer Root：`{profile.designer_root}`",
+            "- 回复默认使用简体中文。",
+            "- 先读取 `.codex/project-context.md` 与 `.codex/project-rules.md` 再行动。",
+            "- 修改报表、数据集、SQL 必须走完整链路：",
+            _format_markdown_list(DELIVERY_CHAIN),
+            "- B 方案边界：",
+            _format_markdown_list(B_PLAN_BOUNDARIES),
+            "- 修改报表、数据集、SQL 前必须先核对远端 overview 和数据连接。",
+            "- `reportlets/` 相关改动完成后要做远端同步与浏览器复核，不要停在本地文件修改。",
+            "- 已登记数据连接：",
+            _format_markdown_list(_format_connections(overview)),
+        )
+    )
+
+
+def render_project_context_markdown(
+    project: CurrentProject,
+    profile: RemoteProfile,
+    overview: RemoteOverview,
+) -> str:
+    return "\n".join(
+        (
+            "# 项目上下文",
+            "",
+            f"- 项目：`{project.name}`",
+            f"- 本地路径：`{project.path}`",
+            f"- 远端地址：`{profile.base_url}`",
+            f"- Designer Root：`{profile.designer_root}`",
+            f"- 最近 overview 时间：`{overview.last_loaded_at.isoformat()}`",
+            "",
+            "## 本地关键目录",
+            "- `reportlets/`：项目内实际报表与目录结构，修改后要参与同步推送。",
+            "- `templates/`：CPT/FVS 模板和生成参考，不要拿模板当远端真实状态。",
+            "- `.codex/skills/`：项目级 FineReport skill 入口，供 Codex 终端按需调用。",
+            "",
+            "## 数据连接",
+            _format_markdown_list(_format_connections(overview)),
+            "",
+            "## 远端目录样本",
+            _format_markdown_list(_format_directory_entries(overview.directory_entries)),
+        )
+    )
+
+
+def render_project_rules_markdown(
+    project: CurrentProject,
+    overview: RemoteOverview,
+) -> str:
+    return "\n".join(
+        (
+            "# 当前项目上下文规则",
+            "",
+            f"- 当前项目固定为：`{project.name}`",
+            "- 交付必须遵守完整链路：",
+            _format_markdown_list(DELIVERY_CHAIN),
+            "- B 方案边界：",
+            _format_markdown_list(B_PLAN_BOUNDARIES),
+            "- 远端目录默认以 `/reportlets` 为根目录，不要跨根目录猜测路径。",
+            "- 设计报表前先看数据连接摘要，再决定是查库、拉模板还是直接改 CPT。",
+            "- 如果 overview 已列出连接或目录，优先复用这些真实信息，不要自行编造连接名。",
+            "- 当前可见数据连接：",
+            _format_markdown_list(_format_connections(overview)),
+            "- 当前已生成 FineReport 技能入口：",
+            _format_markdown_list(f"`{skill}`" for skill in MANAGED_SKILLS),
+        )
+    )
+
+
+def render_skill_markdown(
+    skill_name: str,
+    project: CurrentProject,
+) -> str:
+    description = SKILL_DESCRIPTIONS[skill_name]
+    return "\n".join(
+        (
+            "---",
+            f"name: {skill_name}",
+            f"description: {description}",
+            "---",
+            "",
+            f"# {skill_name}",
+            "",
+            description,
+            "",
+            "## 使用要求",
+            "- 先读取 `../../project-context.md`。",
+            "- 再读取 `../../project-rules.md`。",
+            f"- 当前项目目录：`{project.path}`。",
+            "- 仅基于真实远端 overview、真实数据连接和真实 reportlets 路径执行。",
+        )
+    )
+
+
+def build_skill_documents(project: CurrentProject) -> dict[str, str]:
+    return {
+        f".codex/skills/{skill_name}/SKILL.md": render_skill_markdown(
+            skill_name,
+            project,
+        )
+        for skill_name in MANAGED_SKILLS
+    }
+
+
+def _format_connections(overview: RemoteOverview) -> tuple[str, ...]:
+    if not overview.data_connections:
+        return ("暂无远端数据连接。",)
+    return tuple(
+        f"{connection.name} ({connection.database_type or 'UNKNOWN'})"
+        for connection in overview.data_connections
+    )
+
+
+def _format_directory_entries(
+    entries: Iterable[RemoteDirectoryEntry],
+) -> tuple[str, ...]:
+    values = tuple(
+        f"{entry.path} [{'目录' if entry.is_directory else '文件'}]"
+        for entry in entries
+    )
+    if not values:
+        return ("暂无远端目录样本。",)
+    return values
+
+
+def _format_markdown_list(items: Iterable[str]) -> str:
+    return "\n".join(f"- {item}" for item in items)
