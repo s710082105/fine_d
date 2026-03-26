@@ -98,3 +98,46 @@ def test_tool_aware_runtime_returns_structured_error_for_unknown_tool() -> None:
     assert runtime.written_inputs == [
         '@@FR_TOOL_RESULT {"id":"req_3","ok":false,"error":{"code":"codex.tool_unknown","message":"unsupported host tool: fr.unknown"}}\n'
     ]
+
+
+def test_tool_aware_runtime_flushes_plain_output_without_waiting_for_newline() -> None:
+    from backend.application.codex_terminal.tool_runtime import ToolAwareTerminalRuntime
+
+    runtime = FakeRuntime("hello")
+    wrapped = ToolAwareTerminalRuntime(runtime, FakeProjectDatasourceUseCases())
+
+    output, next_cursor, completed = wrapped.read(0)
+
+    assert output == "hello"
+    assert next_cursor == len("hello")
+    assert completed is False
+    assert runtime.written_inputs == []
+
+
+def test_tool_aware_runtime_waits_for_complete_tool_line_before_executing() -> None:
+    from backend.application.codex_terminal.tool_runtime import ToolAwareTerminalRuntime
+
+    runtime = FakeRuntime(
+        '@@FR_TOOL {"id":"req_4","name":"fr.list_connections","args":{}'
+    )
+    datasource_use_cases = FakeProjectDatasourceUseCases()
+    wrapped = ToolAwareTerminalRuntime(runtime, datasource_use_cases)
+
+    output, next_cursor, completed = wrapped.read(0)
+
+    assert output == ""
+    assert next_cursor == 0
+    assert completed is False
+    assert datasource_use_cases.connection_calls == []
+    assert runtime.written_inputs == []
+
+    runtime._output += "}\n"
+    output, next_cursor, completed = wrapped.read(next_cursor)
+
+    assert output == ""
+    assert next_cursor == 0
+    assert completed is False
+    assert datasource_use_cases.connection_calls == [Path("/tmp/project-alpha")]
+    assert runtime.written_inputs == [
+        '@@FR_TOOL_RESULT {"id":"req_4","ok":true,"data":{"connections":[{"name":"FRDemo","database_type":"MYSQL"}]}}\n'
+    ]

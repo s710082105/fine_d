@@ -88,7 +88,10 @@ class ToolAwareTerminalRuntime:
         )
         self._raw_cursor = 0
         self._visible_buffer = ""
-        self._pending_line = ""
+        self._pending_prefix = ""
+        self._pending_tool_line = ""
+        self._line_start = True
+        self._skip_lf_after_cr = False
 
     @property
     def status(self) -> str:
@@ -98,11 +101,11 @@ class ToolAwareTerminalRuntime:
         output, next_cursor, completed = self._runtime.read(self._raw_cursor)
         if output:
             self._raw_cursor = next_cursor
-            self._consume(output, completed=False)
+            self._consume(output)
         elif completed:
             self._raw_cursor = next_cursor
-        if completed and self._pending_line:
-            self._consume("", completed=True)
+        if completed:
+            self._flush_pending()
         chunk = self._visible_buffer[cursor:]
         return chunk, len(self._visible_buffer), completed
 
@@ -112,28 +115,61 @@ class ToolAwareTerminalRuntime:
     def close(self) -> None:
         self._runtime.close()
 
-    def _consume(self, raw_output: str, *, completed: bool) -> None:
-        text = self._pending_line + raw_output
-        if not text:
-            return
-        lines = text.splitlines(keepends=True)
-        if not completed and lines and not _is_complete_line(lines[-1]):
-            self._pending_line = lines.pop()
-        else:
-            self._pending_line = ""
-        for line in lines:
-            self._consume_line(line)
-        if completed and self._pending_line:
-            self._consume_line(self._pending_line)
-            self._pending_line = ""
+    def _consume(self, raw_output: str) -> None:
+        for character in raw_output:
+            self._consume_character(character)
 
-    def _consume_line(self, line: str) -> None:
-        stripped = line.rstrip("\r\n")
-        if not stripped.startswith(TOOL_REQUEST_PREFIX):
-            self._visible_buffer += line
+    def _consume_character(self, character: str) -> None:
+        if self._skip_lf_after_cr and character == "\n":
+            self._skip_lf_after_cr = False
+            self._line_start = True
             return
+        self._skip_lf_after_cr = False
+        if self._pending_tool_line:
+            self._pending_tool_line += character
+            if character == "\r":
+                self._finalize_tool_line(skip_following_lf=True)
+            elif character == "\n":
+                self._finalize_tool_line(skip_following_lf=False)
+            return
+        if self._line_start:
+            candidate = self._pending_prefix + character
+            if TOOL_REQUEST_PREFIX.startswith(candidate):
+                self._pending_prefix = candidate
+                if candidate == TOOL_REQUEST_PREFIX:
+                    self._pending_tool_line = candidate
+                    self._pending_prefix = ""
+                return
+            if self._pending_prefix:
+                self._visible_buffer += self._pending_prefix
+                self._pending_prefix = ""
+                self._line_start = False
+            if character in {"\r", "\n"}:
+                self._visible_buffer += character
+                self._line_start = True
+                return
+        self._visible_buffer += character
+        self._line_start = character in {"\r", "\n"}
+
+    def _finalize_tool_line(self, *, skip_following_lf: bool) -> None:
+        stripped = self._pending_tool_line.rstrip("\r\n")
         tool_result = self._execute_tool(stripped)
         self._runtime.write(tool_result)
+        self._pending_tool_line = ""
+        self._line_start = True
+        self._skip_lf_after_cr = skip_following_lf
+
+    def _flush_pending(self) -> None:
+        if self._pending_tool_line:
+            stripped = self._pending_tool_line.rstrip("\r\n")
+            if stripped.startswith(TOOL_REQUEST_PREFIX):
+                self._runtime.write(self._execute_tool(stripped))
+            else:
+                self._visible_buffer += self._pending_tool_line
+            self._pending_tool_line = ""
+        if self._pending_prefix:
+            self._visible_buffer += self._pending_prefix
+            self._pending_prefix = ""
 
     def _execute_tool(self, line: str) -> str:
         try:
@@ -207,7 +243,3 @@ def _error_result(
 def _result_line(payload: dict[str, Any]) -> str:
     encoded = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
     return f"{TOOL_RESULT_PREFIX} {encoded}\n"
-
-
-def _is_complete_line(line: str) -> bool:
-    return line.endswith("\n") or line.endswith("\r")
