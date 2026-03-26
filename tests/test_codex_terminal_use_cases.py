@@ -158,6 +158,61 @@ def test_stream_returns_output_chunk_and_advances_cursor(tmp_path: Path) -> None
     assert result.completed is False
 
 
+def test_stream_limits_large_backlog_to_fixed_chunk_size(tmp_path: Path) -> None:
+    module = _load_terminal_use_cases_module()
+    models = importlib.import_module("backend.domain.codex_terminal.models")
+    runtime = FakeTerminalRuntime(
+        session_id="terminal-session-1",
+        working_directory=tmp_path,
+        output="x" * (models.MAX_STREAM_CHUNK_CHARS + 20),
+    )
+    store = FakeTerminalSessionStore()
+    store.save("terminal-session-1", runtime)
+    use_case = module.CodexTerminalUseCases(
+        gateway=FakeTerminalGateway(),
+        session_store=store,
+        session_id_factory=lambda: "ignored",
+    )
+
+    result = use_case.get_stream_chunk("terminal-session-1", cursor=0)
+
+    assert len(result.output) == models.MAX_STREAM_CHUNK_CHARS
+    assert result.next_cursor == models.MAX_STREAM_CHUNK_CHARS
+    assert result.completed is False
+
+
+def test_stream_keeps_closed_session_until_final_backlog_chunk(
+    tmp_path: Path,
+) -> None:
+    module = _load_terminal_use_cases_module()
+    models = importlib.import_module("backend.domain.codex_terminal.models")
+    runtime = FakeTerminalRuntime(
+        session_id="terminal-session-1",
+        working_directory=tmp_path,
+        status="closed",
+        output="y" * (models.MAX_STREAM_CHUNK_CHARS + 5),
+    )
+    store = FakeTerminalSessionStore()
+    store.save("terminal-session-1", runtime)
+    use_case = module.CodexTerminalUseCases(
+        gateway=FakeTerminalGateway(),
+        session_store=store,
+        session_id_factory=lambda: "ignored",
+    )
+
+    first = use_case.get_stream_chunk("terminal-session-1", cursor=0)
+
+    assert len(first.output) == models.MAX_STREAM_CHUNK_CHARS
+    assert first.completed is False
+    assert store.get("terminal-session-1") is runtime
+
+    second = use_case.get_stream_chunk("terminal-session-1", cursor=first.next_cursor)
+
+    assert second.output == "y" * 5
+    assert second.completed is True
+    assert store.get("terminal-session-1") is None
+
+
 def test_write_input_passes_data_to_runtime(tmp_path: Path) -> None:
     module = _load_terminal_use_cases_module()
     runtime = FakeTerminalRuntime(

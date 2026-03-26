@@ -6,6 +6,7 @@ from backend.domain.project.errors import AppError
 
 CODEX_TERMINAL_SOURCE = "codex_terminal"
 PROJECT_SOURCE = "project"
+MAX_STREAM_CHUNK_CHARS = 16384
 
 TerminalSessionStatus = Literal["running", "closed", "failed"]
 

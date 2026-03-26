@@ -114,6 +114,29 @@ def test_tool_aware_runtime_flushes_plain_output_without_waiting_for_newline() -
     assert runtime.written_inputs == []
 
 
+def test_tool_aware_runtime_limits_large_plain_output_to_fixed_chunk() -> None:
+    models = __import__(
+        "backend.domain.codex_terminal.models",
+        fromlist=["MAX_STREAM_CHUNK_CHARS"],
+    )
+    from backend.application.codex_terminal.tool_runtime import ToolAwareTerminalRuntime
+
+    runtime = FakeRuntime("z" * (models.MAX_STREAM_CHUNK_CHARS + 7))
+    wrapped = ToolAwareTerminalRuntime(runtime, FakeProjectDatasourceUseCases())
+
+    first, next_cursor, completed = wrapped.read(0)
+
+    assert len(first) == models.MAX_STREAM_CHUNK_CHARS
+    assert next_cursor == models.MAX_STREAM_CHUNK_CHARS
+    assert completed is False
+
+    second, next_cursor, completed = wrapped.read(next_cursor)
+
+    assert second == "z" * 7
+    assert next_cursor == models.MAX_STREAM_CHUNK_CHARS + 7
+    assert completed is False
+
+
 def test_tool_aware_runtime_waits_for_complete_tool_line_before_executing() -> None:
     from backend.application.codex_terminal.tool_runtime import ToolAwareTerminalRuntime
 

@@ -7,6 +7,7 @@ from threading import Lock, Thread
 from typing import Callable
 
 from backend.domain.codex_terminal.models import (
+    MAX_STREAM_CHUNK_CHARS,
     codex_command_missing_error,
     terminal_session_close_failed_error,
     terminal_session_input_failed_error,
@@ -78,9 +79,10 @@ class SubprocessTerminalRuntime:
     def read(self, cursor: int) -> tuple[str, int, bool]:
         self._raise_read_error()
         with self._buffer_lock:
-            chunk = self._buffer[cursor:]
-            next_cursor = len(self._buffer)
-        completed = self.status != "running"
+            total_length = len(self._buffer)
+            next_cursor = min(total_length, cursor + MAX_STREAM_CHUNK_CHARS)
+            chunk = self._buffer[cursor:next_cursor]
+        completed = self.status != "running" and next_cursor >= total_length
         return chunk, next_cursor, completed
 
     def write(self, data: str) -> None:

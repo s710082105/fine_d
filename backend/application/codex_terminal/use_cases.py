@@ -6,6 +6,7 @@ from backend.domain.codex_terminal.models import (
     CodexTerminalRuntime,
     CodexTerminalSession,
     CodexTerminalStreamChunk,
+    MAX_STREAM_CHUNK_CHARS,
     invalid_working_directory_error,
     terminal_session_not_found_error,
 )
@@ -46,15 +47,18 @@ class CodexTerminalUseCases:
         cursor: int,
     ) -> CodexTerminalStreamChunk:
         runtime = self._get_runtime(session_id)
-        output, next_cursor, completed = runtime.read(cursor)
+        output, raw_next_cursor, completed = runtime.read(cursor)
+        next_cursor = min(raw_next_cursor, cursor + MAX_STREAM_CHUNK_CHARS)
+        chunk_output = output[: next_cursor - cursor]
+        stream_completed = completed and next_cursor >= raw_next_cursor
         chunk = CodexTerminalStreamChunk(
             session_id=runtime.session_id,
             status=runtime.status,
-            output=output,
+            output=chunk_output,
             next_cursor=next_cursor,
-            completed=completed,
+            completed=stream_completed,
         )
-        self._delete_if_inactive(runtime)
+        self._delete_if_complete(runtime, stream_completed)
         return chunk
 
     def write_input(
@@ -84,6 +88,15 @@ class CodexTerminalUseCases:
         if runtime is None:
             raise terminal_session_not_found_error(session_id)
         return runtime
+
+    def _delete_if_complete(
+        self,
+        runtime: CodexTerminalRuntime,
+        completed: bool,
+    ) -> None:
+        if runtime.status == "running" or not completed:
+            return
+        self._session_store.delete(runtime.session_id)
 
     def _delete_if_inactive(self, runtime: CodexTerminalRuntime) -> None:
         if runtime.status == "running":

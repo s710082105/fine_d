@@ -4,7 +4,10 @@ from pathlib import Path
 from typing import Any
 
 from backend.application.datasource.project_use_cases import ProjectDatasourceUseCases
-from backend.domain.codex_terminal.models import CodexTerminalRuntime
+from backend.domain.codex_terminal.models import (
+    CodexTerminalRuntime,
+    MAX_STREAM_CHUNK_CHARS,
+)
 from backend.domain.datasource.models import ConnectionSummary, SqlPreviewResult
 
 TOOL_REQUEST_PREFIX = "@@FR_TOOL "
@@ -106,8 +109,11 @@ class ToolAwareTerminalRuntime:
             self._raw_cursor = next_cursor
         if completed:
             self._flush_pending()
-        chunk = self._visible_buffer[cursor:]
-        return chunk, len(self._visible_buffer), completed
+        total_length = len(self._visible_buffer)
+        next_visible_cursor = min(total_length, cursor + MAX_STREAM_CHUNK_CHARS)
+        chunk = self._visible_buffer[cursor:next_visible_cursor]
+        stream_completed = completed and next_visible_cursor >= total_length
+        return chunk, next_visible_cursor, stream_completed
 
     def write(self, data: str) -> None:
         self._runtime.write(data)
