@@ -24,6 +24,16 @@ SKILL_DESCRIPTIONS = {
     "fr-verify": "在交付前复核远端目录、数据连接和生成文件是否一致。",
 }
 
+SKILL_TRIGGERS = {
+    "fr-create": "确认需求后，需要新建 CPT/FVS 或从样板派生新报表时。",
+    "fr-db": "涉及数据集、SQL、字段口径或库表扫描时。",
+    "fr-remote-check": "刚接到需求、准备判断远端现状和可复用资产时。",
+    "fr-remote-pull": "远端已有文件，需要先拉取对照或本地缺少样板时。",
+    "fr-remote-fill": "已确定参考模板，准备回填 SQL、参数和字段映射时。",
+    "fr-sync": "本地改动完成，准备把 reportlets 变更推到远端时。",
+    "fr-verify": "同步完成后，准备做浏览器复核和最终交付确认时。",
+}
+
 DELIVERY_CHAIN = (
     "先确认需求",
     "检查远端",
@@ -59,8 +69,11 @@ def render_agents_markdown(
             _format_markdown_list(DELIVERY_CHAIN),
             "- B 方案边界：",
             _format_markdown_list(B_PLAN_BOUNDARIES),
+            "- FineReport 专用 skill 作用与触发时机：",
+            _format_markdown_list(_format_skill_guidance_items()),
             "- 修改报表、数据集、SQL 前必须先核对远端 overview 和数据连接。",
             "- `reportlets/` 相关改动完成后要做远端同步与浏览器复核，不要停在本地文件修改。",
+            "- 未命中对应 skill 的触发时机前，不要自行扩展额外动作或跳步执行。",
             "- 已登记数据连接：",
             _format_markdown_list(_format_connections(overview)),
         )
@@ -153,6 +166,13 @@ def build_skill_documents(project: CurrentProject) -> dict[str, str]:
         )
         for skill_name in MANAGED_SKILLS
     }
+
+
+def _format_skill_guidance_items() -> tuple[str, ...]:
+    return tuple(
+        f"`{skill_name}`：作用：{SKILL_DESCRIPTIONS[skill_name]} 触发时机：{SKILL_TRIGGERS[skill_name]}"
+        for skill_name in MANAGED_SKILLS
+    )
 
 
 def _format_connections(overview: RemoteOverview) -> tuple[str, ...]:

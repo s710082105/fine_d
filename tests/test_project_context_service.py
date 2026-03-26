@@ -7,7 +7,11 @@ from pathlib import Path
 import pytest
 
 from backend.application.project.config_service import ProjectConfigService
-from backend.application.project.context_templates import MANAGED_SKILLS
+from backend.application.project.context_templates import (
+    MANAGED_SKILLS,
+    SKILL_DESCRIPTIONS,
+    SKILL_TRIGGERS,
+)
 from backend.domain.datasource.models import ConnectionSummary
 from backend.domain.project.errors import AppError
 from backend.domain.project.models import CurrentProject
@@ -115,6 +119,11 @@ def test_generate_context_creates_managed_files_and_snapshot(
     assert "最终准确报告" in agents_text
     assert "页面不做流程编排" in agents_text
     assert "最终报告以 Codex 终端输出为准" in agents_text
+    assert "FineReport 专用 skill 作用与触发时机" in agents_text
+    for skill_name in MANAGED_SKILLS:
+        assert f"`{skill_name}`" in agents_text
+        assert SKILL_DESCRIPTIONS[skill_name] in agents_text
+        assert SKILL_TRIGGERS[skill_name] in agents_text
     assert "先确认需求" in rules_text
     assert "检查远端" in rules_text
     assert "按需拉取/补全" in rules_text
