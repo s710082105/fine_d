@@ -168,6 +168,14 @@ export function getCodexTerminalSession(
   )
 }
 
+export function buildCodexTerminalEventStreamUrl(
+  sessionId: string,
+  cursor: number
+): string {
+  const query = new URLSearchParams({ cursor: String(cursor) }).toString()
+  return `${API_PREFIX}/codex/terminal/sessions/${sessionId}/events?${query}`
+}
+
 export function streamCodexTerminalSession(
   sessionId: string,
   cursor: number

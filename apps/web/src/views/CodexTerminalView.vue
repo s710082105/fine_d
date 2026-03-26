@@ -5,6 +5,7 @@ import CodexWorkbenchSidebar from '../components/CodexWorkbenchSidebar.vue'
 import TerminalSessionPanel from '../components/TerminalSessionPanel.vue'
 import {
   ApiError,
+  buildCodexTerminalEventStreamUrl,
   closeCodexTerminalSession,
   createCodexTerminalSession,
   generateProjectContext,
@@ -41,6 +42,7 @@ const errorMessage = ref('')
 const nextCursor = ref(0)
 
 let pollTimer: number | null = null
+let streamSource: EventSource | null = null
 let terminalLifecycleId = 0
 
 onMounted(() => {
@@ -48,13 +50,13 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  stopPolling()
+  stopStreaming()
 })
 
 async function bootWorkbench(forceNewSession = false): Promise<void> {
   terminalLifecycleId += 1
   const lifecycleId = terminalLifecycleId
-  stopPolling()
+  stopStreaming()
   resetTerminalState()
   resetSidebarState()
   errorMessage.value = ''
@@ -111,8 +113,19 @@ async function bootWorkbench(forceNewSession = false): Promise<void> {
   }
   session.value = created
   saveSessionState(created.session_id)
-  await pollOutput(created.session_id, lifecycleId)
+  await startOutputStream(created.session_id, lifecycleId)
   void loadSidebarData()
+}
+
+async function startOutputStream(
+  sessionId: string,
+  lifecycleId: number
+): Promise<void> {
+  if (typeof window !== 'undefined' && typeof window.EventSource !== 'undefined') {
+    startEventStream(sessionId, lifecycleId)
+    return
+  }
+  await pollOutput(sessionId, lifecycleId)
 }
 
 async function pollOutput(
@@ -153,6 +166,72 @@ async function pollOutput(
   }
 }
 
+function startEventStream(sessionId: string, lifecycleId: number): void {
+  stopStreaming()
+  if (!isActiveSession(sessionId, lifecycleId)) {
+    return
+  }
+  const source = new EventSource(
+    buildCodexTerminalEventStreamUrl(sessionId, nextCursor.value)
+  )
+  streamSource = source
+  source.addEventListener('terminal', (event) => {
+    if (!isActiveSession(sessionId, lifecycleId)) {
+      source.close()
+      return
+    }
+    const message = event as MessageEvent<string>
+    const chunk = JSON.parse(message.data) as {
+      session_id: string
+      status: CodexTerminalSessionResponse['status']
+      output: string
+      next_cursor: number
+      completed: boolean
+    }
+    if (chunk.output) {
+      terminalOutput.value += chunk.output
+    }
+    nextCursor.value = chunk.next_cursor
+    saveSessionState(sessionId)
+    if (session.value) {
+      session.value = {
+        ...session.value,
+        status: chunk.status
+      }
+    }
+    if (chunk.completed) {
+      source.close()
+      if (streamSource === source) {
+        streamSource = null
+      }
+    }
+  })
+  source.addEventListener('terminal_error', (event) => {
+    if (!isActiveSession(sessionId, lifecycleId)) {
+      source.close()
+      return
+    }
+    const message = event as MessageEvent<string>
+    const payload = JSON.parse(message.data) as {
+      code?: string
+      message?: string
+      detail?: unknown
+      source?: string
+      retryable?: boolean
+    }
+    if (payload.code === 'codex.session_not_found') {
+      handleMissingSession()
+    }
+    errorMessage.value = payload.code && payload.message
+      ? `${payload.code}: ${payload.message}`
+      : '终端输出读取失败'
+    source.close()
+    if (streamSource === source) {
+      streamSource = null
+    }
+  })
+}
+
 async function handleRestart(): Promise<void> {
   await closeActiveSession()
   clearStoredCodexSession(currentProjectPath.value)
@@ -179,7 +258,7 @@ async function closeActiveSession(): Promise<void> {
     return
   }
   terminalLifecycleId += 1
-  stopPolling()
+  stopStreaming()
   const sessionId = session.value.session_id
   const closed = await request(
     () => closeCodexTerminalSession(sessionId),
@@ -224,6 +303,14 @@ function stopPolling(): void {
   pollTimer = null
 }
 
+function stopStreaming(): void {
+  stopPolling()
+  if (streamSource) {
+    streamSource.close()
+    streamSource = null
+  }
+}
+
 function buildErrorMessage(error: unknown, fallbackMessage: string): string {
   if (error instanceof ApiError) {
     if (error.code === 'codex.session_not_found') {
@@ -236,7 +323,7 @@ function buildErrorMessage(error: unknown, fallbackMessage: string): string {
 
 function handleMissingSession(): void {
   terminalLifecycleId += 1
-  stopPolling()
+  stopStreaming()
   session.value = null
   terminalOutput.value = ''
   nextCursor.value = 0
@@ -319,7 +406,7 @@ async function tryRestoreSession(
     session.value = restored
     nextCursor.value = stored.next_cursor
     saveSessionState(restored.session_id)
-    await pollOutput(restored.session_id, lifecycleId)
+    await startOutputStream(restored.session_id, lifecycleId)
     return true
   } catch (error) {
     if (error instanceof ApiError && error.code === 'codex.session_not_found') {

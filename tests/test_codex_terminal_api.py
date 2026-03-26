@@ -1,4 +1,5 @@
 import importlib
+import json
 from pathlib import Path
 
 import pytest
@@ -62,6 +63,18 @@ class FakeCodexTerminalService:
             session_id=session_id,
             status="closed",
             working_directory=self._working_directory,
+        )
+
+
+class FakeCompletedStreamService(FakeCodexTerminalService):
+    def get_stream_chunk(self, session_id: str, cursor: int):
+        models = _load_terminal_models_module()
+        return models.CodexTerminalStreamChunk(
+            session_id=session_id,
+            status="closed",
+            output="hello",
+            next_cursor=cursor + 5,
+            completed=True,
         )
 
 
@@ -182,6 +195,33 @@ def test_terminal_endpoints_cover_minimum_lifecycle(working_directory: str) -> N
         "session_id": "terminal-session-1",
         "status": "closed",
         "working_directory": working_directory,
+    }
+
+
+def test_terminal_sse_endpoint_streams_terminal_event(working_directory: str) -> None:
+    route_module = _load_terminal_route_module()
+    app = create_app()
+    app.dependency_overrides[route_module.get_codex_terminal_service] = lambda: (
+        FakeCompletedStreamService(working_directory)
+    )
+    client = TestClient(app)
+
+    with client.stream(
+        "GET",
+        "/api/codex/terminal/sessions/terminal-session-1/events?cursor=0",
+    ) as response:
+        body = "".join(response.iter_text())
+
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("text/event-stream")
+    assert "event: terminal" in body
+    payload = json.loads(body.split("data: ", 1)[1].split("\n\n", 1)[0])
+    assert payload == {
+        "session_id": "terminal-session-1",
+        "status": "closed",
+        "output": "hello",
+        "next_cursor": 5,
+        "completed": True,
     }
 
 

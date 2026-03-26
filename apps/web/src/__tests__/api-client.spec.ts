@@ -1,7 +1,11 @@
 import '@testing-library/jest-dom/vitest'
 import { afterEach, expect, it, vi } from 'vitest'
 
-import { ApiError, routeAssistantPrompt } from '../lib/api'
+import {
+  ApiError,
+  buildCodexTerminalEventStreamUrl,
+  routeAssistantPrompt
+} from '../lib/api'
 
 afterEach(() => {
   vi.unstubAllGlobals()
@@ -40,4 +44,10 @@ it('surfaces structured backend errors from the api client', async () => {
     source: 'assistant',
     retryable: false
   })
+})
+
+it('builds the codex terminal event stream url with cursor', () => {
+  expect(
+    buildCodexTerminalEventStreamUrl('terminal-session-1', 42)
+  ).toBe('/api/codex/terminal/sessions/terminal-session-1/events?cursor=42')
 })
