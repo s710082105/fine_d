@@ -1,7 +1,13 @@
+from pathlib import Path
+
+from backend.adapters.fine.http_client import FineHttpClientFactory
 from fastapi import APIRouter, Depends, Query, Request
 
 from backend.adapters.system.terminal_gateway import CodexTerminalGateway
+from backend.application.codex_terminal.tool_runtime import ToolAwareTerminalRuntime
 from backend.application.codex_terminal.use_cases import CodexTerminalUseCases
+from backend.application.datasource.project_use_cases import ProjectDatasourceUseCases
+from backend.infra.project_store import ProjectStore
 from backend.infra.terminal_session_store import TerminalSessionStore
 from backend.schemas.codex_terminal import (
     CodexTerminalCreateSessionRequest,
@@ -21,9 +27,18 @@ def get_terminal_session_store(request: Request) -> TerminalSessionStore:
 def get_codex_terminal_service(
     session_store: TerminalSessionStore = Depends(get_terminal_session_store),
 ) -> CodexTerminalUseCases:
+    project_store = ProjectStore(base_dir=Path.cwd())
+    datasource_use_cases = ProjectDatasourceUseCases(
+        project_store,
+        FineHttpClientFactory(),
+    )
     return CodexTerminalUseCases(
         gateway=CodexTerminalGateway(),
         session_store=session_store,
+        runtime_transformer=lambda runtime: ToolAwareTerminalRuntime(
+            runtime,
+            datasource_use_cases,
+        ),
     )
 
 

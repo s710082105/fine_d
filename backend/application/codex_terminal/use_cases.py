@@ -17,17 +17,20 @@ class CodexTerminalUseCases:
         gateway,
         session_store,
         session_id_factory=None,
+        runtime_transformer=None,
     ) -> None:
         self._gateway = gateway
         self._session_store = session_store
         self._session_id_factory = session_id_factory or (
             lambda: f"codex-terminal-{uuid4().hex}"
         )
+        self._runtime_transformer = runtime_transformer or (lambda runtime: runtime)
 
     def create_session(self, working_directory: str) -> CodexTerminalSession:
         validated_directory = self._validate_working_directory(working_directory)
         session_id = self._session_id_factory()
         runtime = self._gateway.create_runtime(session_id, validated_directory)
+        runtime = self._runtime_transformer(runtime)
         self._session_store.save(session_id, runtime)
         return self._build_session(runtime)
 

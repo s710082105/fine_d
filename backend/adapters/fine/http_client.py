@@ -9,6 +9,7 @@ from urllib.request import Request, urlopen
 from backend.adapters.fine.sql_preview_transport import build_sql_preview_transport
 from backend.domain.datasource.models import ConnectionSummary, SqlPreviewResult
 from backend.domain.project.errors import AppError
+from backend.domain.project.remote_models import RemoteProfile
 
 LOGIN_PATH = "/login"
 LIST_CONNECTIONS_PATH = "/v10/config/connection/list/0"
@@ -125,6 +126,15 @@ class FineHttpClient:
 
     def _url(self, path: str) -> str:
         return f"{self._base_url}{path}"
+
+
+class FineHttpClientFactory:
+    def create(self, profile: RemoteProfile) -> FineHttpClient:
+        return FineHttpClient(
+            base_url=profile.base_url,
+            username=profile.username,
+            password=profile.password,
+        )
 
 
 def _require_env(name: str) -> str:

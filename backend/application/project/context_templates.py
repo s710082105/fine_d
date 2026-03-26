@@ -49,6 +49,14 @@ B_PLAN_BOUNDARIES = (
     "最终报告以 Codex 终端输出为准",
 )
 
+DB_HOST_TOOL_RULES = (
+    "涉及列出现有连接、试运行 SQL、查看预览结果时，禁止自行调用 shell、python、curl 或 `./.codex/fr-data.*` helper。",
+    "必须输出单独一行宿主工具请求，由宿主执行后回写结果。",
+    '列连接：`@@FR_TOOL {"id":"req_list_connections","name":"fr.list_connections","args":{}}`',
+    '试运行 SQL：`@@FR_TOOL {"id":"req_preview_sql","name":"fr.preview_sql","args":{"connection_name":"FRDemo","sql":"select 1 as ok"}}`',
+    "收到 `@@FR_TOOL_RESULT {...}` 后再继续分析，不要在结果返回前自行臆造连接名、字段或 SQL 结果。",
+)
+
 
 def render_agents_markdown(
     project: CurrentProject,
@@ -71,6 +79,8 @@ def render_agents_markdown(
             _format_markdown_list(B_PLAN_BOUNDARIES),
             "- FineReport 专用 skill 作用与触发时机：",
             _format_markdown_list(_format_skill_guidance_items()),
+            "- 试运行 SQL 与连接扫描必须走宿主工具协议：",
+            _format_markdown_list(DB_HOST_TOOL_RULES),
             "- 修改报表、数据集、SQL 前必须先核对远端 overview 和数据连接。",
             "- `reportlets/` 相关改动完成后要做远端同步与浏览器复核，不要停在本地文件修改。",
             "- 未命中对应 skill 的触发时机前，不要自行扩展额外动作或跳步执行。",
@@ -138,6 +148,13 @@ def render_skill_markdown(
     project: CurrentProject,
 ) -> str:
     description = SKILL_DESCRIPTIONS[skill_name]
+    extra_lines: tuple[str, ...] = ()
+    if skill_name == "fr-db":
+        extra_lines = (
+            "",
+            "## 宿主工具协议",
+            *_format_markdown_list(DB_HOST_TOOL_RULES).splitlines(),
+        )
     return "\n".join(
         (
             "---",
@@ -154,6 +171,7 @@ def render_skill_markdown(
             "- 再读取 `../../project-rules.md`。",
             f"- 当前项目目录：`{project.path}`。",
             "- 仅基于真实远端 overview、真实数据连接和真实 reportlets 路径执行。",
+            *extra_lines,
         )
     )
 

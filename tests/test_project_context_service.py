@@ -94,6 +94,9 @@ def test_generate_context_creates_managed_files_and_snapshot(
     agents_text = agents_file.read_text(encoding="utf-8")
     context_text = context_file.read_text(encoding="utf-8")
     rules_text = rules_file.read_text(encoding="utf-8")
+    fr_db_skill_text = (
+        project_dir / ".codex" / "skills" / "fr-db" / "SKILL.md"
+    ).read_text(encoding="utf-8")
 
     assert agents_file.exists()
     assert context_file.exists()
@@ -120,6 +123,10 @@ def test_generate_context_creates_managed_files_and_snapshot(
     assert "页面不做流程编排" in agents_text
     assert "最终报告以 Codex 终端输出为准" in agents_text
     assert "FineReport 专用 skill 作用与触发时机" in agents_text
+    assert "试运行 SQL 与连接扫描必须走宿主工具协议" in agents_text
+    assert "@@FR_TOOL" in agents_text
+    assert "fr.list_connections" in agents_text
+    assert "fr.preview_sql" in agents_text
     for skill_name in MANAGED_SKILLS:
         assert f"`{skill_name}`" in agents_text
         assert SKILL_DESCRIPTIONS[skill_name] in agents_text
@@ -140,6 +147,11 @@ def test_generate_context_creates_managed_files_and_snapshot(
     assert "qzcs" in context_text
     assert "/reportlets/demo.cpt" in context_text
     assert "当前项目上下文" in rules_text
+    assert "宿主工具协议" in fr_db_skill_text
+    assert "@@FR_TOOL" in fr_db_skill_text
+    assert "fr.list_connections" in fr_db_skill_text
+    assert "fr.preview_sql" in fr_db_skill_text
+    assert "./.codex/fr-data.*" in fr_db_skill_text
     assert gateway.calls == [
         (
             RemoteProfile(
