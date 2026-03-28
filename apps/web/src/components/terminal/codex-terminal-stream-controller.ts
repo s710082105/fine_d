@@ -159,6 +159,9 @@ export function createCodexTerminalStreamController(
         return
       }
       acceptChunk(sessionId, lifecycleId, chunk)
+      if (!isActive(sessionId, lifecycleId)) {
+        return
+      }
       if (chunk.completed) {
         state.transport = 'idle'
         return
