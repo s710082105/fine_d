@@ -56,6 +56,48 @@ afterEach(() => {
 })
 
 describe('TerminalSessionPanel', () => {
+  it('clears the terminal when reset is called directly', async () => {
+    const panelRef = ref<TerminalSessionPanelExposed | null>(null)
+    const Harness = defineComponent({
+      components: { TerminalSessionPanel },
+      props: {
+        errorMessage: {
+          required: true,
+          type: String
+        },
+        session: {
+          required: true,
+          type: Object as PropType<CodexTerminalSessionResponse>
+        }
+      },
+      setup() {
+        return { panelRef }
+      },
+      template: `
+        <TerminalSessionPanel
+          ref="panelRef"
+          :session="session"
+          :error-message="errorMessage"
+        />
+      `
+    })
+
+    render(Harness, {
+      props: {
+        session: createSession('terminal-session-1'),
+        errorMessage: ''
+      }
+    })
+
+    await waitFor(() => {
+      expect(panelRef.value).not.toBeNull()
+    })
+
+    panelRef.value?.reset()
+
+    expect(adapterHarness.clear).toHaveBeenCalledTimes(1)
+  })
+
   it('appends output chunks in order and resets on session switch', async () => {
     const panelRef = ref<TerminalSessionPanelExposed | null>(null)
     const session = createSession('terminal-session-1')

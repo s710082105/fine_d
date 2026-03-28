@@ -33,16 +33,12 @@ const statusLabel = computed(() => {
   return STATUS_LABELS[props.session.status] ?? props.session.status
 })
 
-function clearTerminal(): void {
-  adapter.value?.clear()
-}
-
 function appendOutput(chunk: string): void {
   adapter.value?.write(chunk)
 }
 
 function reset(): void {
-  clearTerminal()
+  adapter.value?.clear()
 }
 
 function focusTerminal(): void {
