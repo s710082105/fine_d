@@ -9,7 +9,6 @@ import {
 
 const props = defineProps<{
   session: CodexTerminalSessionResponse | null
-  output: string
   errorMessage: string
 }>()
 
@@ -20,7 +19,6 @@ const emit = defineEmits<{
 
 const hostRef = ref<HTMLElement | null>(null)
 const adapter = ref<TerminalAdapter | null>(null)
-let renderedLength = 0
 
 const STATUS_LABELS: Record<string, string> = {
   running: '运行中',
@@ -36,23 +34,19 @@ const statusLabel = computed(() => {
 })
 
 function clearTerminal(): void {
-  renderedLength = 0
   adapter.value?.clear()
 }
 
-function syncOutput(output: string): void {
-  if (!adapter.value) {
-    return
-  }
-  if (output.length < renderedLength) {
-    clearTerminal()
-  }
-  const nextChunk = output.slice(renderedLength)
-  if (!nextChunk) {
-    return
-  }
-  adapter.value.write(nextChunk)
-  renderedLength = output.length
+function appendOutput(chunk: string): void {
+  adapter.value?.write(chunk)
+}
+
+function reset(): void {
+  clearTerminal()
+}
+
+function focusTerminal(): void {
+  adapter.value?.focus()
 }
 
 function mountTerminal(): void {
@@ -63,22 +57,15 @@ function mountTerminal(): void {
     onInput: (payload) => emit('submitInput', payload)
   })
   adapter.value.fit()
-  syncOutput(props.output)
 }
 
-watch(() => props.output, (output) => {
-  mountTerminal()
-  syncOutput(output)
-})
-
 watch(() => props.session?.session_id, () => {
-  clearTerminal()
-  adapter.value?.focus()
+  reset()
+  focusTerminal()
 })
 
 onMounted(() => {
   mountTerminal()
-  syncOutput(props.output)
 })
 
 onBeforeUnmount(() => {
@@ -87,7 +74,9 @@ onBeforeUnmount(() => {
 })
 
 defineExpose({
-  focusTerminal: () => adapter.value?.focus()
+  appendOutput,
+  reset,
+  focusTerminal
 })
 </script>
 
