@@ -3,6 +3,7 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 import CodexWorkbenchSidebar from '../components/CodexWorkbenchSidebar.vue'
 import TerminalSessionPanel from '../components/TerminalSessionPanel.vue'
+import { createCodexTerminalStreamController } from '../components/terminal/codex-terminal-stream-controller'
 import {
   ApiError,
   buildCodexTerminalEventStreamUrl,
@@ -28,6 +29,8 @@ import type {
   ProjectCurrentStateResponse
 } from '../lib/types'
 
+const MISSING_SESSION_MESSAGE = 'codex.session_not_found: 终端会话不存在，请重新创建会话'
+
 const currentProjectPath = ref('')
 const contextLoading = ref(false)
 const contextState = ref<ProjectContextResponse | null>(null)
@@ -37,29 +40,28 @@ const overviewErrorMessage = ref('')
 const directoryPanelKey = ref(0)
 const session = ref<CodexTerminalSessionResponse | null>(null)
 const terminalPanelRef = ref<InstanceType<typeof TerminalSessionPanel> | null>(null)
-const terminalOutput = ref('')
 const errorMessage = ref('')
-const nextCursor = ref(0)
 
-let pollTimer: number | null = null
-let streamSource: EventSource | null = null
-let terminalLifecycleId = 0
+let workbenchLifecycleId = 0
+
+const streamController = createCodexTerminalStreamController({
+  buildEventStreamUrl: buildCodexTerminalEventStreamUrl,
+  createEventSource: (url) => new EventSource(url),
+  readStreamChunk: streamCodexTerminalSession,
+  schedulePoll: (callback, delayMs) => window.setTimeout(callback, delayMs),
+  clearScheduledPoll: (timerId) => window.clearTimeout(timerId)
+})
 
 onMounted(() => {
   void bootWorkbench()
 })
 
 onBeforeUnmount(() => {
-  stopStreaming()
+  invalidateTransport()
 })
 
 async function bootWorkbench(forceNewSession = false): Promise<void> {
-  terminalLifecycleId += 1
-  const lifecycleId = terminalLifecycleId
-  stopStreaming()
-  resetTerminalState()
-  resetSidebarState()
-  errorMessage.value = ''
+  const lifecycleId = beginBootCycle()
   const state = await request(() => getCurrentProject(), '项目状态加载失败', {
     lifecycleId
   })
@@ -72,10 +74,7 @@ async function bootWorkbench(forceNewSession = false): Promise<void> {
   }
   applyProjectState(state)
   if (!forceNewSession) {
-    const restored = await tryRestoreSession(
-      state.current_project.path,
-      lifecycleId
-    )
+    const restored = await tryRestoreSession(state.current_project.path, lifecycleId)
     if (!isActiveLifecycle(lifecycleId)) {
       return
     }
@@ -88,9 +87,7 @@ async function bootWorkbench(forceNewSession = false): Promise<void> {
   const generatedContext = await request(
     () => generateProjectContext(false),
     '项目上下文生成失败',
-    {
-      lifecycleId
-    }
+    { lifecycleId }
   )
   contextLoading.value = false
   if (!generatedContext || !isActiveLifecycle(lifecycleId)) {
@@ -98,11 +95,9 @@ async function bootWorkbench(forceNewSession = false): Promise<void> {
   }
   contextState.value = generatedContext
   const created = await request(
-    () => createCodexTerminalSession(state.current_project!.path),
+    () => createCodexTerminalSession(state.current_project.path),
     '终端会话创建失败',
-    {
-      lifecycleId
-    }
+    { lifecycleId }
   )
   if (!created) {
     return
@@ -111,123 +106,39 @@ async function bootWorkbench(forceNewSession = false): Promise<void> {
     void closeCodexTerminalSession(created.session_id)
     return
   }
-  session.value = created
-  saveSessionState(created.session_id)
-  await startOutputStream(created.session_id, lifecycleId)
+  startSessionTransport(created, 0)
   void loadSidebarData()
 }
 
-async function startOutputStream(
-  sessionId: string,
-  lifecycleId: number
-): Promise<void> {
-  if (typeof window !== 'undefined' && typeof window.EventSource !== 'undefined') {
-    startEventStream(sessionId, lifecycleId)
-    return
-  }
-  await pollOutput(sessionId, lifecycleId)
+function beginBootCycle(): number {
+  workbenchLifecycleId += 1
+  invalidateTransport()
+  resetTerminalState()
+  resetSidebarState()
+  errorMessage.value = ''
+  return workbenchLifecycleId
 }
 
-async function pollOutput(
-  sessionId: string,
-  lifecycleId: number
-): Promise<void> {
-  if (!session.value || !isActiveSession(sessionId, lifecycleId)) {
-    return
-  }
-  const chunk = await request(
-    () => streamCodexTerminalSession(sessionId, nextCursor.value),
-    '终端输出读取失败',
-    {
-      lifecycleId,
-      onApiError: (error) => {
-        if (error.code === 'codex.session_not_found') {
-          handleMissingSession()
-        }
-      }
-    }
-  )
-  if (!chunk || !isActiveSession(sessionId, lifecycleId)) {
-    return
-  }
-  if (chunk.output) {
-    terminalOutput.value += chunk.output
-  }
-  nextCursor.value = chunk.next_cursor
-  saveSessionState(sessionId)
-  session.value = {
-    ...session.value,
-    status: chunk.status
-  }
-  if (!chunk.completed) {
-    pollTimer = window.setTimeout(() => {
-      void pollOutput(sessionId, lifecycleId)
-    }, 300)
-  }
-}
-
-function startEventStream(sessionId: string, lifecycleId: number): void {
-  stopStreaming()
-  if (!isActiveSession(sessionId, lifecycleId)) {
-    return
-  }
-  const source = new EventSource(
-    buildCodexTerminalEventStreamUrl(sessionId, nextCursor.value)
-  )
-  streamSource = source
-  source.addEventListener('terminal', (event) => {
-    if (!isActiveSession(sessionId, lifecycleId)) {
-      source.close()
-      return
-    }
-    const message = event as MessageEvent<string>
-    const chunk = JSON.parse(message.data) as {
-      session_id: string
-      status: CodexTerminalSessionResponse['status']
-      output: string
-      next_cursor: number
-      completed: boolean
-    }
-    if (chunk.output) {
-      terminalOutput.value += chunk.output
-    }
-    nextCursor.value = chunk.next_cursor
-    saveSessionState(sessionId)
-    if (session.value) {
-      session.value = {
-        ...session.value,
-        status: chunk.status
-      }
-    }
-    if (chunk.completed) {
-      source.close()
-      if (streamSource === source) {
-        streamSource = null
-      }
-    }
-  })
-  source.addEventListener('terminal_error', (event) => {
-    if (!isActiveSession(sessionId, lifecycleId)) {
-      source.close()
-      return
-    }
-    const message = event as MessageEvent<string>
-    const payload = JSON.parse(message.data) as {
-      code?: string
-      message?: string
-      detail?: unknown
-      source?: string
-      retryable?: boolean
-    }
-    if (payload.code === 'codex.session_not_found') {
+function startSessionTransport(
+  nextSession: CodexTerminalSessionResponse,
+  cursor: number
+): void {
+  session.value = nextSession
+  saveSessionState(nextSession.session_id, cursor)
+  streamController.start({
+    projectPath: currentProjectPath.value,
+    sessionId: nextSession.session_id,
+    cursor,
+    preferredTransport: resolvePreferredTransport(),
+    onChunk: (chunk) => terminalPanelRef.value?.appendOutput(chunk),
+    onError: (message) => {
+      errorMessage.value = message
+    },
+    onStatus: (status) => {
+      patchSessionStatus(nextSession.session_id, status)
+    },
+    onMissingSession: () => {
       handleMissingSession()
-    }
-    errorMessage.value = payload.code && payload.message
-      ? `${payload.code}: ${payload.message}`
-      : '终端输出读取失败'
-    source.close()
-    if (streamSource === source) {
-      streamSource = null
     }
   })
 }
@@ -243,7 +154,7 @@ async function handleSubmitInput(data: string): Promise<void> {
     return
   }
   await request(
-    () => writeCodexTerminalInput(session.value!.session_id, data),
+    () => writeCodexTerminalInput(session.value.session_id, data),
     '终端输入写入失败'
   )
 }
@@ -254,11 +165,11 @@ async function handleInsert(payload: string): Promise<void> {
 }
 
 async function closeActiveSession(): Promise<void> {
+  workbenchLifecycleId += 1
+  invalidateTransport()
   if (!session.value) {
     return
   }
-  terminalLifecycleId += 1
-  stopStreaming()
   const sessionId = session.value.session_id
   const closed = await request(
     () => closeCodexTerminalSession(sessionId),
@@ -273,10 +184,7 @@ async function closeActiveSession(): Promise<void> {
 async function request<T>(
   action: () => Promise<T>,
   fallbackMessage: string,
-  options: {
-    lifecycleId?: number
-    onApiError?: (error: ApiError) => void
-  } = {}
+  options: { lifecycleId?: number } = {}
 ): Promise<T | null> {
   try {
     return await action()
@@ -287,34 +195,19 @@ async function request<T>(
     ) {
       return null
     }
-    if (error instanceof ApiError) {
-      options.onApiError?.(error)
-    }
     errorMessage.value = buildErrorMessage(error, fallbackMessage)
     return null
   }
 }
 
-function stopPolling(): void {
-  if (pollTimer === null) {
-    return
-  }
-  window.clearTimeout(pollTimer)
-  pollTimer = null
-}
-
-function stopStreaming(): void {
-  stopPolling()
-  if (streamSource) {
-    streamSource.close()
-    streamSource = null
-  }
+function invalidateTransport(): void {
+  streamController.bumpLifecycle()
 }
 
 function buildErrorMessage(error: unknown, fallbackMessage: string): string {
   if (error instanceof ApiError) {
     if (error.code === 'codex.session_not_found') {
-      return 'codex.session_not_found: 终端会话不存在，请重新创建会话'
+      return MISSING_SESSION_MESSAGE
     }
     return error.code ? `${error.code}: ${error.message}` : error.message
   }
@@ -322,23 +215,14 @@ function buildErrorMessage(error: unknown, fallbackMessage: string): string {
 }
 
 function handleMissingSession(): void {
-  terminalLifecycleId += 1
-  stopStreaming()
+  workbenchLifecycleId += 1
   session.value = null
-  terminalOutput.value = ''
-  nextCursor.value = 0
+  errorMessage.value = MISSING_SESSION_MESSAGE
   clearStoredCodexSession(currentProjectPath.value)
 }
 
 function isActiveLifecycle(lifecycleId: number): boolean {
-  return lifecycleId === terminalLifecycleId
-}
-
-function isActiveSession(sessionId: string, lifecycleId: number): boolean {
-  return (
-    isActiveLifecycle(lifecycleId) &&
-    session.value?.session_id === sessionId
-  )
+  return lifecycleId === workbenchLifecycleId
 }
 
 async function loadSidebarData(): Promise<void> {
@@ -357,8 +241,6 @@ async function loadSidebarData(): Promise<void> {
 
 function resetTerminalState(): void {
   session.value = null
-  terminalOutput.value = ''
-  nextCursor.value = 0
 }
 
 function resetSidebarState(): void {
@@ -403,10 +285,7 @@ async function tryRestoreSession(
     if (!isActiveLifecycle(lifecycleId)) {
       return true
     }
-    session.value = restored
-    nextCursor.value = stored.next_cursor
-    saveSessionState(restored.session_id)
-    await startOutputStream(restored.session_id, lifecycleId)
+    startSessionTransport(restored, stored.next_cursor)
     return true
   } catch (error) {
     if (error instanceof ApiError && error.code === 'codex.session_not_found') {
@@ -418,15 +297,34 @@ async function tryRestoreSession(
   }
 }
 
-function saveSessionState(sessionId: string): void {
+function saveSessionState(sessionId: string, cursor: number): void {
   if (!currentProjectPath.value) {
     return
   }
   saveStoredCodexSession({
     project_path: currentProjectPath.value,
     session_id: sessionId,
-    next_cursor: nextCursor.value
+    next_cursor: cursor
   })
+}
+
+function resolvePreferredTransport(): 'sse' | 'polling' {
+  return typeof window !== 'undefined' && typeof window.EventSource !== 'undefined'
+    ? 'sse'
+    : 'polling'
+}
+
+function patchSessionStatus(
+  sessionId: string,
+  status: CodexTerminalSessionResponse['status']
+): void {
+  if (session.value?.session_id !== sessionId) {
+    return
+  }
+  session.value = {
+    ...session.value,
+    status
+  }
 }
 </script>
 
@@ -448,7 +346,6 @@ function saveSessionState(sessionId: string): void {
       <TerminalSessionPanel
         ref="terminalPanelRef"
         :session="session"
-        :output="terminalOutput"
         :error-message="errorMessage"
         @restart="handleRestart"
         @submit-input="handleSubmitInput"

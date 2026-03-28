@@ -34,16 +34,23 @@ export function createTerminalSession(
   }
 }
 
+interface TerminalStreamOptions {
+  readonly sessionId?: string
+  readonly nextCursor?: number
+  readonly completed?: boolean
+  readonly status?: 'running' | 'closed' | 'failed'
+}
+
 export function createTerminalStream(
   output: string,
-  sessionId = SESSION_ID
+  options: TerminalStreamOptions = {}
 ) {
   return {
-    session_id: sessionId,
-    status: 'running' as const,
+    session_id: options.sessionId ?? SESSION_ID,
+    status: options.status ?? 'running',
     output,
-    next_cursor: output.length,
-    completed: true
+    next_cursor: options.nextCursor ?? output.length,
+    completed: options.completed ?? true
   }
 }
 

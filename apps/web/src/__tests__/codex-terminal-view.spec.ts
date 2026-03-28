@@ -11,6 +11,7 @@ import {
   createTerminalSession,
   createTerminalStream
 } from './codex-terminal-view.helpers'
+import { loadStoredCodexSession } from '../lib/codex-session-storage'
 import CodexTerminalView from '../views/CodexTerminalView.vue'
 import type { TerminalAdapter } from '../components/terminal/xterm-adapter'
 
@@ -45,13 +46,14 @@ const {
 const adapterHarness = vi.hoisted(() => {
   const writes: string[] = []
   let bindings: { onInput: (payload: string) => void } | undefined
+  const clear = vi.fn()
   const focus = vi.fn()
 
   const adapter: TerminalAdapter = {
     write: (content) => {
       writes.push(content)
     },
-    clear: vi.fn(),
+    clear,
     destroy: vi.fn(),
     focus,
     fit: () => undefined
@@ -69,6 +71,7 @@ const adapterHarness = vi.hoisted(() => {
       }
       return bindings
     },
+    clear,
     factory,
     focus,
     reset: () => {
@@ -109,6 +112,7 @@ afterEach(() => {
   getRemoteOverview.mockReset()
   getRemoteDirectories.mockReset()
   adapterHarness.factory.mockClear()
+  adapterHarness.clear.mockClear()
   adapterHarness.focus.mockClear()
   adapterHarness.reset()
   adapterHarness.writes.length = 0
@@ -133,7 +137,9 @@ describe('CodexTerminalView', () => {
       managed_files: ['AGENTS.md', '.codex/project-context.md']
     })
     createCodexTerminalSession.mockResolvedValue(createTerminalSession())
-    streamCodexTerminalSession.mockResolvedValue(createTerminalStream('Welcome to Codex'))
+    streamCodexTerminalSession.mockResolvedValue(
+      createTerminalStream('Welcome to Codex')
+    )
     getRemoteOverview.mockResolvedValue(createRemoteOverview())
     getRemoteDirectories.mockResolvedValue(createDirectoryEntries())
 
@@ -154,7 +160,7 @@ describe('CodexTerminalView', () => {
     expect(await screen.findByText('qzcs')).toBeInTheDocument()
     expect(await screen.findByText('MYSQL')).toBeInTheDocument()
     await waitFor(() => {
-      expect(adapterHarness.writes.join('')).toContain('Welcome to Codex')
+      expect(adapterHarness.writes).toEqual(['Welcome to Codex'])
     })
   })
 
@@ -172,7 +178,10 @@ describe('CodexTerminalView', () => {
       createTerminalSession('terminal-session-restored')
     )
     streamCodexTerminalSession.mockResolvedValue(
-      createTerminalStream('next output', 'terminal-session-restored')
+      createTerminalStream('next output', {
+        sessionId: 'terminal-session-restored',
+        nextCursor: 53
+      })
     )
     getRemoteOverview.mockResolvedValue(createRemoteOverview())
     getRemoteDirectories.mockResolvedValue(createDirectoryEntries())
@@ -188,6 +197,14 @@ describe('CodexTerminalView', () => {
     })
     expect(createCodexTerminalSession).not.toHaveBeenCalled()
     expect(generateProjectContext).not.toHaveBeenCalled()
+    await waitFor(() => {
+      expect(adapterHarness.writes).toEqual(['next output'])
+    })
+    expect(loadStoredCodexSession('/tmp/project-alpha')).toEqual({
+      project_path: '/tmp/project-alpha',
+      session_id: 'terminal-session-restored',
+      next_cursor: 53
+    })
   })
 
   it('does not create a terminal session when context generation fails', async () => {
@@ -329,6 +346,8 @@ describe('CodexTerminalView', () => {
       await screen.findByText('codex.session_not_found: 终端会话不存在，请重新创建会话')
     ).toBeInTheDocument()
     expect(await screen.findByText('尚未获取当前项目目录')).toBeInTheDocument()
+    expect(loadStoredCodexSession('/tmp/project-alpha')).toBeNull()
+    expect(adapterHarness.clear).toHaveBeenCalled()
   })
 
   it('keeps the real terminal active when left sidebar remote data fails', async () => {
@@ -398,6 +417,61 @@ describe('CodexTerminalView', () => {
       expect(closeCodexTerminalSession).toHaveBeenCalledWith('terminal-session-stale')
     })
     expect((await screen.findAllByText('/tmp/project-alpha')).length).toBeGreaterThan(0)
+  })
+
+  it('ignores stale stream callbacks after restarting into a new session', async () => {
+    const deferredStream = createDeferred<ReturnType<typeof createTerminalStream>>()
+
+    getCurrentProject.mockResolvedValue(createCurrentProjectState())
+    generateProjectContext
+      .mockResolvedValueOnce(createProjectContextResponse())
+      .mockResolvedValueOnce(createProjectContextResponse())
+    createCodexTerminalSession
+      .mockResolvedValueOnce(createTerminalSession('terminal-session-1'))
+      .mockResolvedValueOnce(createTerminalSession('terminal-session-2'))
+    streamCodexTerminalSession
+      .mockImplementationOnce(() => deferredStream.promise)
+      .mockResolvedValueOnce(
+        createTerminalStream('fresh output', {
+          sessionId: 'terminal-session-2',
+          nextCursor: 12
+        })
+      )
+    closeCodexTerminalSession.mockResolvedValue(
+      createTerminalSession('terminal-session-1', 'closed')
+    )
+    getRemoteOverview.mockResolvedValue({
+      ...createRemoteOverview(),
+      data_connections: []
+    })
+    getRemoteDirectories.mockResolvedValue([])
+
+    render(CodexTerminalView)
+
+    await waitFor(() => {
+      expect(streamCodexTerminalSession).toHaveBeenCalledTimes(1)
+    })
+
+    await fireEvent.click(
+      await screen.findByRole('button', { name: '重新创建会话' })
+    )
+
+    await waitFor(() => {
+      expect(createCodexTerminalSession).toHaveBeenCalledTimes(2)
+      expect(streamCodexTerminalSession).toHaveBeenCalledTimes(2)
+    })
+
+    deferredStream.resolve(
+      createTerminalStream('stale output', {
+        sessionId: 'terminal-session-1',
+        nextCursor: 24
+      })
+    )
+
+    await waitFor(() => {
+      expect(adapterHarness.writes).toEqual(['fresh output'])
+    })
+    expect(closeCodexTerminalSession).toHaveBeenCalledWith('terminal-session-1')
   })
 
   it('ignores stale boot failure after a newer boot has succeeded', async () => {
