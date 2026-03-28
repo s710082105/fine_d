@@ -1,32 +1,24 @@
+import { clearStoredCodexSession, saveStoredCodexSession } from '../../lib/codex-session-storage'
+import type { CodexTerminalStatus, CodexTerminalStreamResponse } from '../../lib/types'
 import {
-  clearStoredCodexSession,
-  saveStoredCodexSession
-} from '../../lib/codex-session-storage'
-import type {
-  CodexTerminalStatus,
-  CodexTerminalStreamResponse
-} from '../../lib/types'
+  DEFAULT_STREAM_ERROR, createCallbacks, formatStreamError, isMissingSessionError, parseEventPayload
+} from './codex-terminal-stream-controller-helpers'
+import type { CodexTerminalCallbacks } from './codex-terminal-stream-controller-helpers'
 const POLL_INTERVAL_MS = 300
 const TERMINAL_EVENT_NAME = 'terminal'
 const TERMINAL_ERROR_EVENT_NAME = 'terminal_error'
-const MISSING_SESSION_CODE = 'codex.session_not_found'
-const DEFAULT_STREAM_ERROR = '终端输出读取失败'
+const SSE_ERROR_EVENT_NAME = 'error'
 export type CodexTerminalTransport = 'idle' | 'sse' | 'polling'
 export type CodexTerminalPreferredTransport = 'sse' | 'polling'
+export type CodexTerminalEvent = Event | MessageEvent<string>
 export interface CodexTerminalEventSource {
-  addEventListener(
-    type: string,
-    listener: (event: MessageEvent<string>) => void
-  ): void
+  addEventListener(type: string, listener: (event: CodexTerminalEvent) => void): void
   close(): void
 }
 export interface CodexTerminalStreamControllerDeps {
   buildEventStreamUrl(sessionId: string, cursor: number): string
   createEventSource(url: string): CodexTerminalEventSource
-  readStreamChunk(
-    sessionId: string,
-    cursor: number
-  ): Promise<CodexTerminalStreamResponse>
+  readStreamChunk(sessionId: string, cursor: number): Promise<CodexTerminalStreamResponse>
   schedulePoll(callback: () => void, delayMs: number): number
   clearScheduledPoll(timerId: number): void
 }
@@ -53,247 +45,250 @@ interface CodexTerminalStreamState {
   lifecycleId: number
   stopped: boolean
 }
-
-interface CodexTerminalCallbacks {
-  onChunk(output: string): void
-  onStatus(status: CodexTerminalStatus): void
-  onError(message: string): void
-  onMissingSession(): void
+interface CodexTerminalControllerRuntime {
+  readonly deps: CodexTerminalStreamControllerDeps
+  readonly state: CodexTerminalStreamState
+  activeProjectPath: string | null
+  eventSource: CodexTerminalEventSource | null
+  pollTimerId: number | null
+  callbacks: CodexTerminalCallbacks
 }
-
 export function createCodexTerminalStreamController(
   deps: CodexTerminalStreamControllerDeps
 ): CodexTerminalStreamController {
-  const state: CodexTerminalStreamState = {
-    sessionId: null,
-    cursor: 0,
-    transport: 'idle',
-    lifecycleId: 0,
-    stopped: true
-  }
-  let activeProjectPath: string | null = null
-  let eventSource: CodexTerminalEventSource | null = null
-  let pollTimerId: number | null = null
-  let callbacks = createCallbacks()
-
-  function start(options: CodexTerminalStreamStartOptions): void {
-    const lifecycleId = bumpLifecycle()
-    activeProjectPath = options.projectPath
-    state.sessionId = options.sessionId
-    state.cursor = options.cursor
-    state.transport = options.preferredTransport
-    state.stopped = false
-    callbacks = createCallbacks(options)
-    if (options.preferredTransport === 'sse') {
-      startSse(options.sessionId, lifecycleId)
-      return
-    }
-    void readPollingChunk(options.sessionId, lifecycleId)
-  }
-
-  function stop(): void {
-    stopTransport()
-    state.sessionId = null
-    state.transport = 'idle'
-    state.stopped = true
-  }
-
-  function bumpLifecycle(): number {
-    state.lifecycleId += 1
-    stop()
-    return state.lifecycleId
-  }
-
-  function getCursor(): number {
-    return state.cursor
-  }
-
-  function startSse(sessionId: string, lifecycleId: number): void {
-    const source = deps.createEventSource(
-      deps.buildEventStreamUrl(sessionId, state.cursor)
-    )
-    eventSource = source
-    source.addEventListener(TERMINAL_EVENT_NAME, (event) => {
-      if (!isActive(sessionId, lifecycleId)) {
-        closeEventSource(source)
-        return
-      }
-      try {
-        const chunk = parseEventPayload<CodexTerminalStreamResponse>(event)
-        acceptChunk(sessionId, lifecycleId, chunk)
-        if (chunk.completed) {
-          closeEventSource(source)
-          state.transport = 'idle'
-        }
-      } catch (error) {
-        handleStreamError(sessionId, lifecycleId, error)
-      }
-    })
-    source.addEventListener(TERMINAL_ERROR_EVENT_NAME, (event) => {
-      if (!isActive(sessionId, lifecycleId)) {
-        closeEventSource(source)
-        return
-      }
-      try {
-        handleStreamError(
-          sessionId,
-          lifecycleId,
-          parseEventPayload<unknown>(event)
-        )
-      } catch (error) {
-        handleStreamError(sessionId, lifecycleId, error)
-      }
-    })
-  }
-
-  async function readPollingChunk(
-    sessionId: string,
-    lifecycleId: number
-  ): Promise<void> {
-    if (!isActive(sessionId, lifecycleId)) {
-      return
-    }
-    try {
-      const chunk = await deps.readStreamChunk(sessionId, state.cursor)
-      if (!isActive(sessionId, lifecycleId)) {
-        return
-      }
-      acceptChunk(sessionId, lifecycleId, chunk)
-      if (!isActive(sessionId, lifecycleId)) {
-        return
-      }
-      if (chunk.completed) {
-        state.transport = 'idle'
-        return
-      }
-      pollTimerId = deps.schedulePoll(() => {
-        void readPollingChunk(sessionId, lifecycleId)
-      }, POLL_INTERVAL_MS)
-    } catch (error) {
-      handleStreamError(sessionId, lifecycleId, error)
-    }
-  }
-
-  function acceptChunk(
-    sessionId: string,
-    lifecycleId: number,
-    chunk: CodexTerminalStreamResponse
-  ): void {
-    if (!isActive(sessionId, lifecycleId)) {
-      return
-    }
-    state.cursor = chunk.next_cursor
-    if (chunk.output) {
-      callbacks.onChunk(chunk.output)
-    }
-    callbacks.onStatus(chunk.status)
-    saveActiveSession(sessionId)
-  }
-
-  function handleStreamError(
-    sessionId: string,
-    lifecycleId: number,
-    error: unknown
-  ): void {
-    if (!isActive(sessionId, lifecycleId)) {
-      return
-    }
-    if (isMissingSessionError(error)) {
-      const activeSessionId = state.sessionId
-      stop()
-      if (activeProjectPath && activeSessionId) {
-        clearStoredCodexSession(activeProjectPath, activeSessionId)
-      }
-      callbacks.onMissingSession()
-      return
-    }
-    stop()
-    callbacks.onError(formatStreamError(error))
-  }
-
-  function saveActiveSession(sessionId: string): void {
-    if (!activeProjectPath) {
-      return
-    }
-    saveStoredCodexSession({
-      project_path: activeProjectPath,
-      session_id: sessionId,
-      next_cursor: state.cursor
-    })
-  }
-
-  function isActive(sessionId: string, lifecycleId: number): boolean {
-    return (
-      !state.stopped &&
-      state.lifecycleId === lifecycleId &&
-      state.sessionId === sessionId
-    )
-  }
-
-  function stopTransport(): void {
-    if (pollTimerId !== null) {
-      deps.clearScheduledPoll(pollTimerId)
-      pollTimerId = null
-    }
-    if (eventSource) {
-      eventSource.close()
-      eventSource = null
-    }
-  }
-
-  function closeEventSource(source: CodexTerminalEventSource): void {
-    if (eventSource !== source) {
-      return
-    }
-    source.close()
-    eventSource = null
-  }
-
+  const runtime = createRuntime(deps)
   return {
-    start,
-    stop,
-    bumpLifecycle,
-    getCursor
+    start: (options) => startController(runtime, options),
+    stop: () => stopController(runtime),
+    bumpLifecycle: () => bumpLifecycle(runtime),
+    getCursor: () => runtime.state.cursor
   }
 }
 
-function createCallbacks(
-  options: Partial<CodexTerminalStreamStartOptions> = {}
-): CodexTerminalCallbacks {
+function createRuntime(deps: CodexTerminalStreamControllerDeps): CodexTerminalControllerRuntime {
   return {
-    onChunk: options.onChunk ?? (() => undefined),
-    onStatus: options.onStatus ?? (() => undefined),
-    onError: options.onError ?? (() => undefined),
-    onMissingSession: options.onMissingSession ?? (() => undefined)
+    deps,
+    state: { sessionId: null, cursor: 0, transport: 'idle', lifecycleId: 0, stopped: true },
+    activeProjectPath: null,
+    eventSource: null,
+    pollTimerId: null,
+    callbacks: createCallbacks()
   }
 }
 
-function parseEventPayload<T>(event: MessageEvent<string>): T {
-  return JSON.parse(event.data) as T
+function startController(
+  runtime: CodexTerminalControllerRuntime,
+  options: CodexTerminalStreamStartOptions
+): void {
+  const lifecycleId = bumpLifecycle(runtime)
+  runtime.activeProjectPath = options.projectPath
+  runtime.state.sessionId = options.sessionId
+  runtime.state.cursor = options.cursor
+  runtime.state.transport = options.preferredTransport
+  runtime.state.stopped = false
+  runtime.callbacks = createCallbacks(options)
+  if (options.preferredTransport === 'sse') {
+    startSseStream(runtime, options.sessionId, lifecycleId)
+    return
+  }
+  void readPollingChunk(runtime, options.sessionId, lifecycleId)
 }
 
-function isMissingSessionError(error: unknown): boolean {
-  return (
-    typeof error === 'object' &&
-    error !== null &&
-    'code' in error &&
-    error.code === MISSING_SESSION_CODE
+function stopController(runtime: CodexTerminalControllerRuntime): void {
+  stopTransport(runtime)
+  runtime.state.sessionId = null
+  runtime.state.transport = 'idle'
+  runtime.state.stopped = true
+}
+
+function bumpLifecycle(runtime: CodexTerminalControllerRuntime): number {
+  runtime.state.lifecycleId += 1
+  stopController(runtime)
+  return runtime.state.lifecycleId
+}
+
+function startSseStream(
+  runtime: CodexTerminalControllerRuntime,
+  sessionId: string,
+  lifecycleId: number
+): void {
+  const source = runtime.deps.createEventSource(
+    runtime.deps.buildEventStreamUrl(sessionId, runtime.state.cursor)
   )
+  runtime.eventSource = source
+  source.addEventListener(TERMINAL_EVENT_NAME, (event) => {
+    handleSseChunkEvent(runtime, source, sessionId, lifecycleId, event)
+  })
+  source.addEventListener(TERMINAL_ERROR_EVENT_NAME, (event) => {
+    handleSsePayloadError(runtime, source, sessionId, lifecycleId, event)
+  })
+  source.addEventListener(SSE_ERROR_EVENT_NAME, () => {
+    handleSseTransportError(runtime, source, sessionId, lifecycleId)
+  })
 }
 
-function formatStreamError(error: unknown): string {
-  if (
-    typeof error === 'object' &&
-    error !== null &&
-    'code' in error &&
-    typeof error.code === 'string' &&
-    'message' in error &&
-    typeof error.message === 'string'
-  ) {
-    return `${error.code}: ${error.message}`
+function handleSseChunkEvent(
+  runtime: CodexTerminalControllerRuntime,
+  source: CodexTerminalEventSource,
+  sessionId: string,
+  lifecycleId: number,
+  event: CodexTerminalEvent
+): void {
+  if (!isActive(runtime, sessionId, lifecycleId)) {
+    closeEventSource(runtime, source)
+    return
   }
-  if (error instanceof Error) {
-    return error.message
+  try {
+    const chunk = parseEventPayload<CodexTerminalStreamResponse>(event)
+    acceptChunk(runtime, sessionId, lifecycleId, chunk)
+    if (!chunk.completed) {
+      return
+    }
+    closeEventSource(runtime, source)
+    runtime.state.transport = 'idle'
+  } catch (error) {
+    handleStreamError(runtime, sessionId, lifecycleId, error)
   }
-  return DEFAULT_STREAM_ERROR
+}
+
+function handleSsePayloadError(
+  runtime: CodexTerminalControllerRuntime,
+  source: CodexTerminalEventSource,
+  sessionId: string,
+  lifecycleId: number,
+  event: CodexTerminalEvent
+): void {
+  if (!isActive(runtime, sessionId, lifecycleId)) {
+    closeEventSource(runtime, source)
+    return
+  }
+  try {
+    handleStreamError(runtime, sessionId, lifecycleId, parseEventPayload<unknown>(event))
+  } catch (error) {
+    handleStreamError(runtime, sessionId, lifecycleId, error)
+  }
+}
+
+function handleSseTransportError(
+  runtime: CodexTerminalControllerRuntime,
+  source: CodexTerminalEventSource,
+  sessionId: string,
+  lifecycleId: number
+): void {
+  if (!isActive(runtime, sessionId, lifecycleId)) {
+    closeEventSource(runtime, source)
+    return
+  }
+  handleStreamError(runtime, sessionId, lifecycleId, new Error(DEFAULT_STREAM_ERROR))
+}
+
+async function readPollingChunk(
+  runtime: CodexTerminalControllerRuntime,
+  sessionId: string,
+  lifecycleId: number
+): Promise<void> {
+  if (!isActive(runtime, sessionId, lifecycleId)) {
+    return
+  }
+  try {
+    const chunk = await runtime.deps.readStreamChunk(sessionId, runtime.state.cursor)
+    if (!isActive(runtime, sessionId, lifecycleId)) {
+      return
+    }
+    acceptChunk(runtime, sessionId, lifecycleId, chunk)
+    if (!isActive(runtime, sessionId, lifecycleId)) {
+      return
+    }
+    if (chunk.completed) {
+      runtime.state.transport = 'idle'
+      return
+    }
+    runtime.pollTimerId = runtime.deps.schedulePoll(() => {
+      void readPollingChunk(runtime, sessionId, lifecycleId)
+    }, POLL_INTERVAL_MS)
+  } catch (error) {
+    handleStreamError(runtime, sessionId, lifecycleId, error)
+  }
+}
+
+function acceptChunk(
+  runtime: CodexTerminalControllerRuntime,
+  sessionId: string,
+  lifecycleId: number,
+  chunk: CodexTerminalStreamResponse
+): void {
+  if (!isActive(runtime, sessionId, lifecycleId)) {
+    return
+  }
+  runtime.state.cursor = chunk.next_cursor
+  if (chunk.output) {
+    runtime.callbacks.onChunk(chunk.output)
+  }
+  runtime.callbacks.onStatus(chunk.status)
+  saveActiveSession(runtime, sessionId)
+}
+
+function handleStreamError(
+  runtime: CodexTerminalControllerRuntime,
+  sessionId: string,
+  lifecycleId: number,
+  error: unknown
+): void {
+  if (!isActive(runtime, sessionId, lifecycleId)) {
+    return
+  }
+  if (isMissingSessionError(error)) {
+    const activeSessionId = runtime.state.sessionId
+    stopController(runtime)
+    if (runtime.activeProjectPath && activeSessionId) {
+      clearStoredCodexSession(runtime.activeProjectPath, activeSessionId)
+    }
+    runtime.callbacks.onMissingSession()
+    return
+  }
+  stopController(runtime)
+  runtime.callbacks.onError(formatStreamError(error))
+}
+
+function saveActiveSession(runtime: CodexTerminalControllerRuntime, sessionId: string): void {
+  if (!runtime.activeProjectPath) {
+    return
+  }
+  saveStoredCodexSession({
+    project_path: runtime.activeProjectPath,
+    session_id: sessionId,
+    next_cursor: runtime.state.cursor
+  })
+}
+
+function isActive(
+  runtime: CodexTerminalControllerRuntime,
+  sessionId: string,
+  lifecycleId: number
+): boolean {
+  return !runtime.state.stopped
+    && runtime.state.lifecycleId === lifecycleId
+    && runtime.state.sessionId === sessionId
+}
+
+function stopTransport(runtime: CodexTerminalControllerRuntime): void {
+  if (runtime.pollTimerId !== null) {
+    runtime.deps.clearScheduledPoll(runtime.pollTimerId)
+    runtime.pollTimerId = null
+  }
+  if (runtime.eventSource) {
+    runtime.eventSource.close()
+    runtime.eventSource = null
+  }
+}
+
+function closeEventSource(
+  runtime: CodexTerminalControllerRuntime,
+  source: CodexTerminalEventSource
+): void {
+  if (runtime.eventSource !== source) {
+    return
+  }
+  source.close()
+  runtime.eventSource = null
 }
