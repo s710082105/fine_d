@@ -22,12 +22,18 @@ export function saveStoredCodexSession(
   writeStorage(value)
 }
 
-export function clearStoredCodexSession(projectPath?: string): void {
+export function clearStoredCodexSession(
+  projectPath?: string,
+  sessionId?: string
+): void {
   const payload = readStorage()
   if (!payload) {
     return
   }
   if (projectPath && payload.project_path !== projectPath) {
+    return
+  }
+  if (sessionId && payload.session_id !== sessionId) {
     return
   }
   sessionStorage.removeItem(STORAGE_KEY)
