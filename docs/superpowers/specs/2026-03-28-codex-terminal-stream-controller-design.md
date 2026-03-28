@@ -35,7 +35,8 @@
 
 ### 4.1 页面编排层
 
-`apps/web/src/views/CodexTerminalView.vue` 只保留页面级职责：
+`apps/web/src/views/CodexTerminalView.vue` 与页面内组合函数
+`apps/web/src/views/use-codex-terminal-workbench.ts` 共同承担页面编排职责：
 
 1. 启动项目上下文生成。
 2. 创建、恢复、关闭 Codex 终端会话。
@@ -54,6 +55,8 @@
 4. 负责停止旧 transport、丢弃过期回调、推进 `cursor`、维护恢复用游标。
 
 控制器是本次重构的核心。它不负责真正渲染终端，只负责“把输出块可靠送到终端面板”。
+控制器实例必须归属于当前页面实例，不能提升为模块级共享单例，否则一个页面的
+`bumpLifecycle()` 会错误打断另一个页面的 transport。
 
 ### 4.3 终端面板
 

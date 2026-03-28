@@ -44,38 +44,47 @@ const {
 }))
 
 const adapterHarness = vi.hoisted(() => {
-  const writes: string[] = []
-  let bindings: { onInput: (payload: string) => void } | undefined
   const clear = vi.fn()
   const focus = vi.fn()
+  const writes: string[] = []
+  const instances: Array<{
+    bindings: { onInput: (payload: string) => void }
+    writes: string[]
+  }> = []
 
-  const adapter: TerminalAdapter = {
-    write: (content) => {
-      writes.push(content)
-    },
-    clear,
-    destroy: vi.fn(),
-    focus,
-    fit: () => undefined
-  }
-
-  const factory = vi.fn((_host: HTMLElement, nextBindings: { onInput: (payload: string) => void }) => {
-    bindings = nextBindings
-    return adapter
-  })
+  const factory = vi.fn(
+    (_host: HTMLElement, bindings: { onInput: (payload: string) => void }) => {
+      const instance = { bindings, writes: [] as string[] }
+      instances.push(instance)
+      const adapter: TerminalAdapter = {
+        write: (content) => {
+          instance.writes.push(content)
+          writes.push(content)
+        },
+        clear,
+        destroy: vi.fn(),
+        focus,
+        fit: () => undefined
+      }
+      return adapter
+    }
+  )
 
   return {
-    bindings: () => {
-      if (!bindings) {
+    bindings: (index = 0) => {
+      const instance = instances[index]
+      if (!instance) {
         throw new Error('terminal adapter bindings not ready')
       }
-      return bindings
+      return instance.bindings
     },
     clear,
     factory,
     focus,
+    instanceCount: () => instances.length,
+    writesFor: (index: number) => instances[index]?.writes ?? [],
     reset: () => {
-      bindings = undefined
+      instances.length = 0
     },
     writes
   }
@@ -472,6 +481,58 @@ describe('CodexTerminalView', () => {
       expect(adapterHarness.writes).toEqual(['fresh output'])
     })
     expect(closeCodexTerminalSession).toHaveBeenCalledWith('terminal-session-1')
+  })
+
+  it('keeps each terminal view bound to its own stream controller instance', async () => {
+    const firstStream = createDeferred<ReturnType<typeof createTerminalStream>>()
+    const secondStream = createDeferred<ReturnType<typeof createTerminalStream>>()
+
+    getCurrentProject.mockResolvedValue(createCurrentProjectState())
+    generateProjectContext.mockResolvedValue(createProjectContextResponse())
+    createCodexTerminalSession
+      .mockResolvedValueOnce(createTerminalSession('terminal-session-1'))
+      .mockResolvedValueOnce(createTerminalSession('terminal-session-2'))
+    streamCodexTerminalSession
+      .mockImplementationOnce(() => firstStream.promise)
+      .mockImplementationOnce(() => secondStream.promise)
+    getRemoteOverview.mockResolvedValue({
+      ...createRemoteOverview(),
+      data_connections: []
+    })
+    getRemoteDirectories.mockResolvedValue([])
+
+    render({
+      components: { CodexTerminalView },
+      template: `
+        <section>
+          <CodexTerminalView />
+          <CodexTerminalView />
+        </section>
+      `
+    })
+
+    await waitFor(() => {
+      expect(createCodexTerminalSession).toHaveBeenCalledTimes(2)
+      expect(adapterHarness.instanceCount()).toBe(2)
+    })
+
+    firstStream.resolve(
+      createTerminalStream('first output', {
+        sessionId: 'terminal-session-1',
+        nextCursor: 5
+      })
+    )
+    secondStream.resolve(
+      createTerminalStream('second output', {
+        sessionId: 'terminal-session-2',
+        nextCursor: 9
+      })
+    )
+
+    await waitFor(() => {
+      expect(adapterHarness.writesFor(0)).toEqual(['first output'])
+      expect(adapterHarness.writesFor(1)).toEqual(['second output'])
+    })
   })
 
   it('ignores stale boot failure after a newer boot has succeeded', async () => {

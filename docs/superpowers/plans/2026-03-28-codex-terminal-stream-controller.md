@@ -13,6 +13,9 @@
 ## File Structure Map
 
 - `apps/web/src/views/CodexTerminalView.vue`: page-level orchestration only; remove full-output state and delegate stream lifecycle to the controller.
+- `apps/web/src/views/use-codex-terminal-workbench.ts`: page-scoped workbench orchestration; owns the terminal controller instance for one mounted page.
+- `apps/web/src/views/codex-terminal-workbench-helpers.ts`: pure helpers for error formatting, restore-state persistence, and context mapping.
+- `apps/web/src/views/codex-terminal-stream-runtime.ts`: controller factory wiring for the page workbench.
 - `apps/web/src/components/TerminalSessionPanel.vue`: own xterm mount and expose imperative methods for incremental output writes and reset.
 - `apps/web/src/components/terminal/codex-terminal-stream-controller.ts`: new stream controller that unifies `SSE` / polling, cursor management, lifecycle invalidation, and storage updates.
 - `apps/web/src/lib/codex-session-storage.ts`: keep persisted `project_path + session_id + next_cursor`; no schema change expected, but this file remains part of the restore flow touched by tests.
@@ -172,6 +175,9 @@ git commit -m "refactor: 改为终端面板增量写入接口"
 
 **Files:**
 - Modify: `apps/web/src/views/CodexTerminalView.vue`
+- Create: `apps/web/src/views/use-codex-terminal-workbench.ts`
+- Create: `apps/web/src/views/codex-terminal-workbench-helpers.ts`
+- Create: `apps/web/src/views/codex-terminal-stream-runtime.ts`
 - Modify: `apps/web/src/__tests__/codex-terminal-view.spec.ts`
 - Modify: `apps/web/src/__tests__/codex-terminal-view.helpers.ts`
 
@@ -198,7 +204,7 @@ In `apps/web/src/views/CodexTerminalView.vue`:
 
 - [ ] **Step 4: Mount the controller once and delegate transport work**
 
-Create a single controller instance in the page and wire it with:
+Create a single controller instance for each mounted page and wire it with:
 - `onChunk`: `terminalPanelRef.value?.appendOutput(chunk)`
 - `onError`: update `errorMessage.value`
 - `onStatus`: patch `session.value.status`
