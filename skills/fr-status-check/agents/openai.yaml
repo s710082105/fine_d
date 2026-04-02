@@ -1,0 +1,3 @@
+interface:
+  display_name: "FineReport Doctor"
+  short_description: "检查 FineReport 项目环境和远端状态"

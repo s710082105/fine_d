@@ -1,0 +1,3 @@
+interface:
+  display_name: "FineReport Workflow"
+  short_description: "为 FineReport 任务选择下一步 skill"

@@ -14,9 +14,13 @@
 
 - `docs/fine-remote-implementation-guide.md`
 - `docs/fine-remote-design-protocol.md`
+- `docs/superpowers/specs/2026-04-02-finereport-skill-standard/`
+- `docs/superpowers/plans/2026-04-02-finereport-skill-standard/`
+- `skills/fr-workflow/`
 
 ## 说明
 
 - 历史 `Python + Vue + Tauri + Java bridge` 实现已从仓库中移除
-- 本仓库当前不提供可运行入口、测试命令或构建脚本
-- 下一次重构应以 `docs/` 中沉淀的接口、链路和约束为参考重新落实现
+- 当前仓库已补入 Python 版 FineReport skill runtime 骨架，入口为 `python3 -m tooling.fr_runtime.cli`
+- 运行时、skill 标准和 bridge 分发规则以 `docs/superpowers/specs/2026-04-02-finereport-skill-standard/` 为准
+- 下一次继续扩展实现时，应以 `docs/` 中沉淀的接口、链路、skill 标准和实现计划为参考

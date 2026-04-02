@@ -1,0 +1,3 @@
+interface:
+  display_name: "FineReport Create"
+  short_description: "预检冲突并新建 CPT/FVS 目标文件"

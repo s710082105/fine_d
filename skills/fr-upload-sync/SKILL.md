@@ -1,43 +1,37 @@
 ---
 name: fr-upload-sync
-description: Use when local reportlet changes must be pushed back to the remote FineReport runtime and verified.
+description: Use when local FineReport reportlet changes must be pushed back to the remote runtime and verified before browser review. Trigger after CPT or FVS edits are complete and saved.
 ---
 
 # FineReport 上传同步
 
-## 先读这些文件
+## Overview
 
-- `../../project-context.md`
-- `../../project-rules.md`
-- `../../workflow-overview.md`
+Use this skill to publish local reportlet changes and verify the remote state before preview review.
 
-## 执行命令
+## Inputs
 
-单文件同步：
+- `.codex/fr-config.json`
+- Saved local CPT/FVS file under `reportlets/`
+- Publish target path
 
-```bash
-# macOS / Linux
-./.codex/fr-sync.sh sync_file reportlets/<目标文件>
+## Execution
 
-# Windows
-.\.codex\fr-sync.cmd sync_file reportlets\<目标文件>
-```
+- macOS / Linux: `python3 skills/fr-upload-sync/scripts/run.py reportlets/<目标文件>`
+- Windows: `py skills\\fr-upload-sync\\scripts\\run.py reportlets\\<目标文件>`
 
-整项目同步：
+## Expected Evidence
 
-```bash
-# macOS / Linux
-./.codex/fr-sync.sh publish_project
+- Pushed path
+- Remote verify result
+- Any lock or conflict evidence if upload fails
 
-# Windows
-.\.codex\fr-sync.cmd publish_project
-```
+## Failure Handling
 
-## 要求
+- Reject non-`reportlets/` targets
+- Stop on remote lock or verify mismatch
+- Do not claim completion before verify evidence exists
 
-- 同步后必须看命令结果，不要把命令执行当作成功证据
-- 如果远端状态校验失败，先停下，不要直接进入浏览器复核
+## Next Skill
 
-## 下一步
-
-- 同步成功后，切到 `fr-browser-review`
+- `fr-browser-review`

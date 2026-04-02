@@ -1,33 +1,39 @@
 ---
 name: fr-db
-description: Use when FineReport datasets, SQL, field scans, or connection verification are needed for template work.
+description: Use when FineReport datasource connections, SQL previews, field scans, or dataset XML snippets are needed before editing CPT or FVS files. Trigger whenever the request involves connection names, columns, parameters, or data validation.
 ---
 
 # FineReport 数据探测
 
-## 先读这些文件
+## Overview
 
-- `../../project-context.md`
-- `../../project-rules.md`
-- `../../workflow-overview.md`
+Use this skill to turn remote datasource metadata into evidence for CPT or FVS editing. It is the only standard path for connection lookup and SQL preview.
 
-## 宿主工具协议
+## Inputs
 
-- 涉及连接列表、字段扫描、SQL 试跑时，不要自行臆造连接名或结果
-- 必须输出单独一行宿主工具请求，等待结果后再继续
+- `.codex/fr-config.json`
+- Confirmed target datasource or SQL question
+- Remote Decision endpoint from current project config
 
-```text
-@@FR_TOOL {"id":"req_list_connections","name":"fr.list_connections","args":{}}
-@@FR_TOOL {"id":"req_preview_sql","name":"fr.preview_sql","args":{"connection_name":"FRDemo","sql":"select 1 as ok"}}
-```
+## Execution
 
-## 输出要求
+- macOS / Linux: `python3 skills/fr-db/scripts/run.py list-connections`
+- Windows: `py skills\\fr-db\\scripts\\run.py list-connections`
 
-- 连接名摘要
-- 字段扫描或 SQL 试跑结果
-- 可直接写入模板的数据集 XML 片段
-- 对模板编写的影响说明
+## Expected Evidence
 
-## 下一步
+- Connection list summary
+- SQL preview or dataset preview result
+- Field list or dataset XML snippet
+- Impact statement for the next CPT/FVS edit
 
-- SQL、字段和参数明确后，回到 `fr-template-write`
+## Failure Handling
+
+- Do not invent connection names
+- Do not continue with guessed columns
+- Surface HTTP errors directly instead of masking them
+
+## Next Skill
+
+- `fr-cpt`
+- `fr-fvs`

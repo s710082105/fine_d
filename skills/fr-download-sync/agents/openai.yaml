@@ -1,0 +1,3 @@
+interface:
+  display_name: "FineReport Pull"
+  short_description: "先把远端报表拉到本地再编辑"

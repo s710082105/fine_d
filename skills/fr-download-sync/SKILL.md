@@ -1,33 +1,37 @@
 ---
 name: fr-download-sync
-description: Use when a remote reportlet must be pulled into the local reportlets directory before comparison or editing.
+description: Use when a remote reportlet must be pulled into the local project before comparison or editing. Trigger whenever the latest remote CPT or FVS content is required as the editing baseline.
 ---
 
 # FineReport 下载同步
 
-## 先读这些文件
+## Overview
 
-- `../../project-context.md`
-- `../../project-rules.md`
-- `../../workflow-overview.md`
+Use this skill to pull the latest remote reportlet into the local workspace before editing. It prevents editing stale local copies.
 
-## 执行命令
+## Inputs
 
-```bash
-# macOS / Linux
-./.codex/fr-sync.sh pull_remote_file reportlets/<目标文件>
+- `.codex/fr-config.json`
+- Target `reportlets/...` path
 
-# Windows
-.\.codex\fr-sync.cmd pull_remote_file reportlets\<目标文件>
-```
+## Execution
 
-## 要求
+- macOS / Linux: `python3 skills/fr-download-sync/scripts/run.py reportlets/<目标文件>`
+- Windows: `py skills\\fr-download-sync\\scripts\\run.py reportlets\\<目标文件>`
 
-- 目标路径必须位于 `reportlets/` 内
-- 拉取后先确认本地文件已经出现，再开始改动
-- 如果需要多个参考文件，逐个拉取，不要跳过结果确认
+## Expected Evidence
 
-## 下一步
+- Remote target path
+- Local output path
+- Pull result or verify result
 
-- 拉取成功后，切到 `fr-template-write`
-- 如果需要先查字段或 SQL，再切到 `fr-db`
+## Failure Handling
+
+- Reject non-`reportlets/` targets
+- Stop if remote read fails
+- Stop if the pulled local file is missing after sync
+
+## Next Skill
+
+- `fr-cpt`
+- `fr-fvs`

@@ -1,28 +1,52 @@
 ---
 name: fr-workflow
-description: Use when starting a FineReport task inside an initialized project and deciding which workflow skill to invoke next.
+description: Use when starting or resuming a FineReport task in this repository and deciding which FineReport workflow skill should run next. Trigger whenever the request involves reportlets, CPT or FVS editing, FineReport sync, datasource scans, browser preview review, or project initialization.
 ---
 
 # FineReport Workflow Router
 
-## 先读这些文件
+## Overview
 
-- `../../project-context.md`
-- `../../project-rules.md`
-- `../../workflow-overview.md`
+Use this skill to choose the next FineReport skill and keep the task on the standard path. Treat it as the entrypoint for initialized and non-initialized FineReport work.
 
-## 路由规则
+## Inputs
 
-- 需求还不清楚：使用 `fr-requirements`
-- 需要确认远端状态、目录样本、连接摘要：使用 `fr-status-check`
-- 需要把远端文件拉到本地：使用 `fr-download-sync`
-- 需要本地编写或修改 CPT/FVS：使用 `fr-template-write`
-- 需要字段扫描、SQL 试跑或数据集 XML：使用 `fr-db`
-- 需要把本地改动推回远端：使用 `fr-upload-sync`
-- 需要在浏览器里复核查询结果、数据和样式：使用 `fr-browser-review`
+- Current user request
+- Existing `.codex/fr-config.json` state, if any
+- Whether the task is new creation, local edit, sync, data scan, or preview review
 
-## 硬约束
+## Execution
 
-- 主流程默认顺序：`fr-requirements` -> `fr-status-check` -> `fr-download-sync` -> `fr-template-write` -> `fr-upload-sync` -> `fr-browser-review`
-- 如果当前任务只涉及其中一段，只跳过已完成且有证据的步骤
-- 没有上传同步和浏览器复核证据前，不要宣称交付完成
+- If `.codex/fr-config.json` is missing or stale, route to `fr-init`
+- If environment or remote state is unknown, route to `fr-status-check`
+- If datasource, SQL, fields, or dataset XML are unknown, route to `fr-db`
+- If a new reportlet must be created, route to `fr-create`
+- If a `.cpt` file must be edited, route to `fr-cpt`
+- If a `.fvs` file must be edited, route to `fr-fvs`
+- If a remote file must be pulled first, route to `fr-download-sync`
+- If local changes must be published, route to `fr-upload-sync`
+- If synced output must be reviewed in browser, route to `fr-browser-review`
+
+## Expected Evidence
+
+- State the chosen next skill
+- State the reason in one sentence
+- State which prerequisite is already satisfied and which is still missing
+
+## Failure Handling
+
+- Do not route to `fr-cpt` or `fr-fvs` when datasource or target path is still unknown
+- Do not route directly to `fr-browser-review` before upload verification
+- Do not route to deprecated `fr-requirements` or `fr-template-write`
+
+## Next Skill
+
+- `fr-init`
+- `fr-status-check`
+- `fr-db`
+- `fr-create`
+- `fr-cpt`
+- `fr-fvs`
+- `fr-download-sync`
+- `fr-upload-sync`
+- `fr-browser-review`

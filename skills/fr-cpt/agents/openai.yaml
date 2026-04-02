@@ -1,0 +1,3 @@
+interface:
+  display_name: "FineReport CPT"
+  short_description: "编辑 CPT 数据集、参数和布局"

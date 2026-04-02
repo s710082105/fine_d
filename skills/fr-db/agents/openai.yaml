@@ -1,0 +1,3 @@
+interface:
+  display_name: "FineReport DB"
+  short_description: "读取数据连接、试跑 SQL、输出字段证据"

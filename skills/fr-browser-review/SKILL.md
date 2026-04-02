@@ -1,39 +1,38 @@
 ---
 name: fr-browser-review
-description: Use when a synced FineReport change must be opened in the browser and checked against the requirement summary.
+description: Use when a synced FineReport change must be opened in browser and checked against the expected data and layout. Trigger after upload verification succeeds and user-facing evidence is required.
 ---
 
 # FineReport 浏览器复核
 
-## 先读这些文件
+## Overview
 
-- `../../project-context.md`
-- `../../project-rules.md`
-- `../../workflow-overview.md`
+Use this skill to open the synced report and capture the final user-facing evidence. It is the last step of the standard reportlet workflow.
 
-## 执行命令
+## Inputs
 
-```bash
-# macOS / Linux
-./.codex/fr-preview.sh
+- Upload verify evidence
+- Preview URL or report path
+- Query or parameter expectations
 
-# Windows
-.\.codex\fr-preview.cmd
-```
+## Execution
 
-## 复核要求
+- macOS / Linux: `python3 skills/fr-browser-review/scripts/run.py --url <预览地址>`
+- Windows: `py skills\\fr-browser-review\\scripts\\run.py --url <预览地址>`
 
-- 页面打开后，如有参数面板或查询按钮，先执行查询
-- 必须确认页面出现实际数据结果，再检查列名、字段值、样式
-- 对照需求摘要核对：文件是否对、数据是否对、样式是否对
+## Expected Evidence
 
-## 汇报格式
+- Preview URL
+- Whether the page opened
+- Whether the query was executed
+- Whether data and style match expectations
 
-```markdown
-## 浏览器复核
-- 预览地址：
-- 是否成功打开：
-- 是否执行查询：
-- 数据是否符合预期：
-- 样式是否符合预期：
-```
+## Failure Handling
+
+- Stop if upload verification is missing
+- Stop if preview cannot be opened
+- Do not report success without actual query evidence
+
+## Next Skill
+
+- Workflow complete

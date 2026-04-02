@@ -1,0 +1,3 @@
+interface:
+  display_name: "FineReport Push"
+  short_description: "上传本地改动并验证远端状态"

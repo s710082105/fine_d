@@ -1,0 +1,3 @@
+interface:
+  display_name: "FineReport Init"
+  short_description: "用自然语言初始化 FineReport 项目配置"
