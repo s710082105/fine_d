@@ -257,6 +257,30 @@ def test_generate_context_requires_project_state(
     assert gateway.calls == []
 
 
+def test_generate_context_surfaces_write_failures_as_app_errors(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    service, _, project_dir, _ = _build_service(tmp_path)
+    original_write_text = Path.write_text
+
+    def fail_project_context_write(self: Path, *args, **kwargs):
+        if self == project_dir / ".codex" / "project-context.md":
+            raise PermissionError("Operation not permitted")
+        return original_write_text(self, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "write_text", fail_project_context_write)
+
+    with pytest.raises(AppError) as error_info:
+        service.generate(force=False)
+
+    assert error_info.value.code == "project.context_write_failed"
+    assert error_info.value.detail == {
+        "path": str(project_dir / ".codex" / "project-context.md"),
+        "reason": "Operation not permitted",
+    }
+
+
 def test_project_config_service_get_current_ignores_invalid_context_state_metadata(
     tmp_path: Path,
 ) -> None:

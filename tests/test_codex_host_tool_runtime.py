@@ -85,6 +85,25 @@ def test_tool_aware_runtime_executes_list_connections_request() -> None:
     ]
 
 
+def test_tool_aware_runtime_executes_list_connections_request_with_tui_prefix() -> None:
+    from backend.application.codex_terminal.tool_runtime import ToolAwareTerminalRuntime
+
+    runtime = FakeRuntime(
+        '\x1b[2m•\x1b[22m @@FR_TOOL {"id":"req_2","name":"fr.list_connections","args":{}}\n'
+    )
+    datasource_use_cases = FakeProjectDatasourceUseCases()
+    wrapped = ToolAwareTerminalRuntime(runtime, datasource_use_cases)
+
+    output, next_cursor, _ = wrapped.read(0)
+
+    assert output == ""
+    assert next_cursor == 0
+    assert datasource_use_cases.connection_calls == [Path("/tmp/project-alpha")]
+    assert runtime.written_inputs == [
+        '@@FR_TOOL_RESULT {"id":"req_2","ok":true,"data":{"connections":[{"name":"FRDemo","database_type":"MYSQL"}]}}\n'
+    ]
+
+
 def test_tool_aware_runtime_returns_structured_error_for_unknown_tool() -> None:
     from backend.application.codex_terminal.tool_runtime import ToolAwareTerminalRuntime
 
@@ -127,14 +146,34 @@ def test_tool_aware_runtime_limits_large_plain_output_to_fixed_chunk() -> None:
     first, next_cursor, completed = wrapped.read(0)
 
     assert len(first) == models.MAX_STREAM_CHUNK_CHARS
-    assert next_cursor == models.MAX_STREAM_CHUNK_CHARS
+    assert next_cursor == models.MAX_STREAM_CHUNK_CHARS + 7
     assert completed is False
 
-    second, next_cursor, completed = wrapped.read(next_cursor)
+    second, next_cursor, completed = wrapped.read(models.MAX_STREAM_CHUNK_CHARS)
 
     assert second == "z" * 7
     assert next_cursor == models.MAX_STREAM_CHUNK_CHARS + 7
     assert completed is False
+
+
+def test_tool_aware_runtime_discards_consumed_visible_prefix() -> None:
+    models = __import__(
+        "backend.domain.codex_terminal.models",
+        fromlist=["MAX_STREAM_CHUNK_CHARS"],
+    )
+    from backend.application.codex_terminal.tool_runtime import ToolAwareTerminalRuntime
+
+    runtime = FakeRuntime("q" * (models.MAX_STREAM_CHUNK_CHARS * 3))
+    wrapped = ToolAwareTerminalRuntime(runtime, FakeProjectDatasourceUseCases())
+
+    wrapped.read(0)
+    wrapped.read(models.MAX_STREAM_CHUNK_CHARS)
+    second, next_cursor, completed = wrapped.read(models.MAX_STREAM_CHUNK_CHARS * 2)
+
+    assert len(second) == models.MAX_STREAM_CHUNK_CHARS
+    assert next_cursor == models.MAX_STREAM_CHUNK_CHARS * 3
+    assert completed is False
+    assert len(wrapped._visible_buffer) <= models.MAX_STREAM_CHUNK_CHARS * 2
 
 
 def test_tool_aware_runtime_waits_for_complete_tool_line_before_executing() -> None:
@@ -163,4 +202,35 @@ def test_tool_aware_runtime_waits_for_complete_tool_line_before_executing() -> N
     assert datasource_use_cases.connection_calls == [Path("/tmp/project-alpha")]
     assert runtime.written_inputs == [
         '@@FR_TOOL_RESULT {"id":"req_4","ok":true,"data":{"connections":[{"name":"FRDemo","database_type":"MYSQL"}]}}\n'
+    ]
+
+
+def test_tool_aware_runtime_waits_for_multiline_tool_payload_before_executing() -> None:
+    from backend.application.codex_terminal.tool_runtime import ToolAwareTerminalRuntime
+
+    runtime = FakeRuntime(
+        '@@FR_TOOL {"id":"req_5","name":"fr.preview_sql","args":{"connection_name":"FRDemo","sql":"SELECT 1'
+    )
+    datasource_use_cases = FakeProjectDatasourceUseCases()
+    wrapped = ToolAwareTerminalRuntime(runtime, datasource_use_cases)
+
+    output, next_cursor, completed = wrapped.read(0)
+
+    assert output == ""
+    assert next_cursor == 0
+    assert completed is False
+    assert datasource_use_cases.preview_calls == []
+    assert runtime.written_inputs == []
+
+    runtime._output += '\n AS ok"}}\n'
+    output, next_cursor, completed = wrapped.read(next_cursor)
+
+    assert output == ""
+    assert next_cursor == 0
+    assert completed is False
+    assert datasource_use_cases.preview_calls == [
+        (Path("/tmp/project-alpha"), "FRDemo", "SELECT 1\n AS ok")
+    ]
+    assert runtime.written_inputs == [
+        '@@FR_TOOL_RESULT {"id":"req_5","ok":true,"data":{"columns":["ok"],"rows":[[1]]}}\n'
     ]

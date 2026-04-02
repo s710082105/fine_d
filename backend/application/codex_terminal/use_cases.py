@@ -50,12 +50,14 @@ class CodexTerminalUseCases:
         output, raw_next_cursor, completed = runtime.read(cursor)
         next_cursor = min(raw_next_cursor, cursor + MAX_STREAM_CHUNK_CHARS)
         chunk_output = output[: next_cursor - cursor]
+        has_backlog = raw_next_cursor > next_cursor
         stream_completed = completed and next_cursor >= raw_next_cursor
         chunk = CodexTerminalStreamChunk(
             session_id=runtime.session_id,
             status=runtime.status,
             output=chunk_output,
             next_cursor=next_cursor,
+            has_backlog=has_backlog,
             completed=stream_completed,
         )
         self._delete_if_complete(runtime, stream_completed)

@@ -46,9 +46,3 @@ export function saveSessionState(
     next_cursor: cursor
   })
 }
-
-export function resolvePreferredTransport(): 'sse' | 'polling' {
-  return typeof window !== 'undefined' && typeof window.EventSource !== 'undefined'
-    ? 'sse'
-    : 'polling'
-}

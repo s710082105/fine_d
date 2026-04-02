@@ -50,6 +50,7 @@ class FakeCodexTerminalService:
             status="running",
             output="hello",
             next_cursor=cursor + 5,
+            has_backlog=True,
             completed=False,
         )
 
@@ -74,6 +75,7 @@ class FakeCompletedStreamService(FakeCodexTerminalService):
             status="closed",
             output="hello",
             next_cursor=cursor + 5,
+            has_backlog=False,
             completed=True,
         )
 
@@ -186,6 +188,7 @@ def test_terminal_endpoints_cover_minimum_lifecycle(working_directory: str) -> N
         "status": "running",
         "output": "hello",
         "next_cursor": 5,
+        "has_backlog": True,
         "completed": False,
     }
     assert input_response.status_code == 200
@@ -221,6 +224,7 @@ def test_terminal_sse_endpoint_streams_terminal_event(working_directory: str) ->
         "status": "closed",
         "output": "hello",
         "next_cursor": 5,
+        "has_backlog": False,
         "completed": True,
     }
 

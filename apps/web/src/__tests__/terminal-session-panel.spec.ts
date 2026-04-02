@@ -1,11 +1,10 @@
 import '@testing-library/jest-dom/vitest'
-import { render, waitFor } from '@testing-library/vue'
+import { fireEvent, render, screen, waitFor } from '@testing-library/vue'
 import { defineComponent, ref, type PropType } from 'vue'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import TerminalSessionPanel from '../components/TerminalSessionPanel.vue'
 import type { CodexTerminalSessionResponse } from '../lib/types'
-import type { TerminalAdapter } from '../components/terminal/xterm-adapter'
 
 type TerminalSessionPanelExposed = {
   appendOutput: (chunk: string) => void
@@ -13,32 +12,66 @@ type TerminalSessionPanelExposed = {
   focusTerminal: () => void
 }
 
-const adapterHarness = vi.hoisted(() => {
-  const writes: string[] = []
-  const clear = vi.fn()
-  const focus = vi.fn()
+const viewportHarness = vi.hoisted(() => ({
+  appendOutput: vi.fn(),
+  clear: vi.fn(),
+  focus: vi.fn(),
+  lastOnInput: null as ((payload: string) => void) | null
+}))
 
-  const adapter: TerminalAdapter = {
-    write: (content) => {
-      writes.push(content)
-    },
-    clear,
-    destroy: vi.fn(),
-    focus,
-    fit: () => undefined
-  }
+vi.mock('../components/terminal/TerminalViewport.vue', async () => {
+  const { defineComponent, h } = await import('vue')
 
   return {
-    clear,
-    factory: vi.fn(() => adapter),
-    focus,
-    writes
+    default: defineComponent({
+      name: 'TerminalViewport',
+      props: {
+        onInput: {
+          required: true,
+          type: Function as PropType<(payload: string) => void>
+        }
+      },
+      setup(props, { expose }) {
+        viewportHarness.lastOnInput = props.onInput
+        expose({
+          appendOutput: viewportHarness.appendOutput,
+          clear: viewportHarness.clear,
+          focus: viewportHarness.focus
+        })
+
+        return () => h('button', {
+          'data-testid': 'terminal-viewport',
+          type: 'button',
+          onClick: () => props.onInput('pwd\r')
+        })
+      }
+    })
   }
 })
 
-vi.mock('../components/terminal/xterm-adapter', () => ({
-  createTerminalAdapter: adapterHarness.factory
-}))
+vi.mock('../components/terminal/TerminalComposer.vue', async () => {
+  const { defineComponent, h } = await import('vue')
+
+  return {
+    default: defineComponent({
+      name: 'TerminalComposer',
+      emits: ['submit'],
+      props: {
+        disabled: {
+          required: true,
+          type: Boolean
+        }
+      },
+      setup(_props, { emit }) {
+        return () => h('button', {
+          'data-testid': 'terminal-composer',
+          type: 'button',
+          onClick: () => emit('submit', 'help\r')
+        })
+      }
+    })
+  }
+})
 
 function createSession(sessionId: string): CodexTerminalSessionResponse {
   return {
@@ -49,14 +82,14 @@ function createSession(sessionId: string): CodexTerminalSessionResponse {
 }
 
 afterEach(() => {
-  adapterHarness.clear.mockClear()
-  adapterHarness.factory.mockClear()
-  adapterHarness.focus.mockClear()
-  adapterHarness.writes.length = 0
+  viewportHarness.appendOutput.mockClear()
+  viewportHarness.clear.mockClear()
+  viewportHarness.focus.mockClear()
+  viewportHarness.lastOnInput = null
 })
 
 describe('TerminalSessionPanel', () => {
-  it('clears the terminal when reset is called directly', async () => {
+  it('wires viewport append/reset/focus through the exposed panel handle', async () => {
     const panelRef = ref<TerminalSessionPanelExposed | null>(null)
     const Harness = defineComponent({
       components: { TerminalSessionPanel },
@@ -93,58 +126,26 @@ describe('TerminalSessionPanel', () => {
       expect(panelRef.value).not.toBeNull()
     })
 
+    panelRef.value?.appendOutput('hello')
     panelRef.value?.reset()
+    panelRef.value?.focusTerminal()
 
-    expect(adapterHarness.clear).toHaveBeenCalledTimes(1)
+    expect(viewportHarness.appendOutput).toHaveBeenCalledWith('hello')
+    expect(viewportHarness.clear).toHaveBeenCalledTimes(1)
+    expect(viewportHarness.focus).toHaveBeenCalledTimes(1)
   })
 
-  it('appends output chunks in order and resets on session switch', async () => {
-    const panelRef = ref<TerminalSessionPanelExposed | null>(null)
-    const session = createSession('terminal-session-1')
-    const otherSession = createSession('terminal-session-2')
-    const Harness = defineComponent({
-      components: { TerminalSessionPanel },
+  it('forwards viewport and composer input through submitInput', async () => {
+    const view = render(TerminalSessionPanel, {
       props: {
-        errorMessage: {
-          required: true,
-          type: String
-        },
-        session: {
-          required: true,
-          type: Object as PropType<CodexTerminalSessionResponse>
-        }
-      },
-      setup() {
-        return { panelRef }
-      },
-      template: `
-        <TerminalSessionPanel
-          ref="panelRef"
-          :session="session"
-          :error-message="errorMessage"
-        />
-      `
-    })
-
-    const view = render(Harness, {
-      props: {
-        session,
+        session: createSession('terminal-session-1'),
         errorMessage: ''
       }
     })
 
-    await waitFor(() => {
-      expect(adapterHarness.factory).toHaveBeenCalledTimes(1)
-      expect(panelRef.value).not.toBeNull()
-    })
+    await fireEvent.click(screen.getByTestId('terminal-viewport'))
+    await fireEvent.click(screen.getByTestId('terminal-composer'))
 
-    panelRef.value?.appendOutput('hello')
-    panelRef.value?.appendOutput(' world')
-    expect(adapterHarness.writes).toEqual(['hello', ' world'])
-
-    await view.rerender({ session: otherSession, errorMessage: '' })
-
-    expect(adapterHarness.clear).toHaveBeenCalledTimes(1)
-    expect(adapterHarness.focus).toHaveBeenCalledTimes(1)
+    expect(view.emitted('submitInput')).toEqual([['pwd\r'], ['help\r']])
   })
 })

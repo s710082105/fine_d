@@ -85,3 +85,12 @@ def directory_selection_failed_error(reason: str) -> AppError:
         detail={"reason": reason},
         source=PROJECT_ERROR_SOURCE,
     )
+
+
+def project_context_write_failed_error(path: str, reason: str) -> AppError:
+    return AppError(
+        code="project.context_write_failed",
+        message="项目上下文写入失败",
+        detail={"path": path, "reason": reason},
+        source=PROJECT_ERROR_SOURCE,
+    )

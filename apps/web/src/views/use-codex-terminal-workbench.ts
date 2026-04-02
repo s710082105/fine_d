@@ -8,6 +8,7 @@ import {
   getCodexTerminalSession,
   getCurrentProject,
   getRemoteOverview,
+  streamCodexTerminalSession,
   writeCodexTerminalInput
 } from '../lib/api'
 import { clearStoredCodexSession, loadStoredCodexSession } from '../lib/codex-session-storage'
@@ -17,17 +18,28 @@ import type {
   ProjectContextResponse,
   ProjectCurrentStateResponse
 } from '../lib/types'
-import { MISSING_SESSION_MESSAGE, buildErrorMessage, resolvePreferredTransport, saveSessionState, toProjectContextResponse } from './codex-terminal-workbench-helpers'
-import { createCodexTerminalWorkbenchStreamController } from './codex-terminal-stream-runtime'
+import { createTerminalConnection } from '../components/terminal/use-terminal-connection'
+import {
+  createTerminalConnectionState,
+  markClosed,
+  markFailed,
+  markStreaming,
+  startBooting
+} from '../components/terminal/terminal-connection-state'
+import {
+  MISSING_SESSION_MESSAGE,
+  buildErrorMessage,
+  saveSessionState,
+  toProjectContextResponse
+} from './codex-terminal-workbench-helpers'
 
 export interface TerminalSessionPanelHandle {
-  appendOutput(chunk: string): void
+  appendOutput(chunk: string): Promise<void>
   reset(): void
   focusTerminal(): void
 }
 
 export function useCodexTerminalWorkbench() {
-  const streamController = createCodexTerminalWorkbenchStreamController()
   const currentProjectPath = ref('')
   const contextLoading = ref(false)
   const contextState = ref<ProjectContextResponse | null>(null)
@@ -38,8 +50,29 @@ export function useCodexTerminalWorkbench() {
   const session = ref<CodexTerminalSessionResponse | null>(null)
   const terminalPanelRef = ref<TerminalSessionPanelHandle | null>(null)
   const errorMessage = ref('')
+  let connectionState = createTerminalConnectionState()
 
   let workbenchLifecycleId = 0
+
+  const terminalConnection = createTerminalConnection({
+    readStreamChunk: streamCodexTerminalSession,
+    writeInput: async (sessionId, data) => {
+      await writeCodexTerminalInput(sessionId, data)
+    },
+    schedulePoll: (callback, delayMs) => window.setTimeout(callback, delayMs),
+    clearScheduledPoll: (timerId) => window.clearTimeout(timerId),
+    onChunk: (chunk) => terminalPanelRef.value?.appendOutput(chunk),
+    onStatus: (status) => {
+      patchConnectionStatus(status)
+    },
+    onMissingSession: () => {
+      handleMissingSession()
+    },
+    onError: (message) => {
+      connectionState = markFailed(connectionState, message)
+      errorMessage.value = message
+    }
+  })
 
   onMounted(() => {
     void bootWorkbench()
@@ -115,21 +148,10 @@ export function useCodexTerminalWorkbench() {
   ): void {
     session.value = nextSession
     saveSessionState(currentProjectPath.value, nextSession.session_id, cursor)
-    streamController.start({
+    terminalConnection.start({
       projectPath: currentProjectPath.value,
       sessionId: nextSession.session_id,
-      cursor,
-      preferredTransport: resolvePreferredTransport(),
-      onChunk: (chunk) => terminalPanelRef.value?.appendOutput(chunk),
-      onError: (message) => {
-        errorMessage.value = message
-      },
-      onStatus: (status) => {
-        patchSessionStatus(nextSession.session_id, status)
-      },
-      onMissingSession: () => {
-        handleMissingSession()
-      }
+      cursor
     })
   }
 
@@ -140,12 +162,8 @@ export function useCodexTerminalWorkbench() {
   }
 
   async function handleSubmitInput(data: string): Promise<void> {
-    const activeSession = session.value
-    if (!activeSession) {
-      return
-    }
     await request(
-      () => writeCodexTerminalInput(activeSession.session_id, data),
+      () => terminalConnection.write(data),
       '终端输入写入失败'
     )
   }
@@ -192,7 +210,8 @@ export function useCodexTerminalWorkbench() {
   }
 
   function invalidateTransport(): void {
-    streamController.bumpLifecycle()
+    terminalConnection.stop()
+    connectionState = createTerminalConnectionState()
   }
 
   function handleMissingSession(): void {
@@ -200,6 +219,7 @@ export function useCodexTerminalWorkbench() {
     session.value = null
     errorMessage.value = MISSING_SESSION_MESSAGE
     clearStoredCodexSession(currentProjectPath.value)
+    terminalPanelRef.value?.reset()
   }
 
   function isActiveLifecycle(lifecycleId: number): boolean {
@@ -222,6 +242,7 @@ export function useCodexTerminalWorkbench() {
 
   function resetTerminalState(): void {
     session.value = null
+    terminalPanelRef.value?.reset()
   }
 
   function resetSidebarState(): void {
@@ -252,6 +273,10 @@ export function useCodexTerminalWorkbench() {
       if (!isActiveLifecycle(lifecycleId)) {
         return true
       }
+      if (restored.status !== 'running') {
+        clearStoredCodexSession(projectPath, stored.session_id)
+        return false
+      }
       startSessionTransport(restored, stored.next_cursor)
       return true
     } catch (error) {
@@ -274,6 +299,37 @@ export function useCodexTerminalWorkbench() {
     session.value = {
       ...session.value,
       status
+    }
+  }
+
+  function patchConnectionStatus(
+    status: 'idle' | 'booting' | 'streaming' | 'closed' | 'failed'
+  ): void {
+    if (status === 'idle') {
+      connectionState = createTerminalConnectionState()
+      return
+    }
+    if (status === 'booting') {
+      connectionState = startBooting(connectionState)
+      return
+    }
+    if (status === 'streaming') {
+      connectionState = markStreaming(connectionState)
+      if (session.value) {
+        patchSessionStatus(session.value.session_id, 'running')
+      }
+      return
+    }
+    if (status === 'closed') {
+      connectionState = markClosed(connectionState)
+      if (session.value) {
+        patchSessionStatus(session.value.session_id, 'closed')
+      }
+      return
+    }
+    connectionState = markFailed(connectionState, errorMessage.value)
+    if (session.value) {
+      patchSessionStatus(session.value.session_id, 'failed')
     }
   }
 

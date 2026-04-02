@@ -1,7 +1,10 @@
 import errno
+import fcntl
 import os
 import shutil
+import struct
 import subprocess
+import termios
 from pathlib import Path
 from threading import Lock, Thread
 from typing import Callable
@@ -17,6 +20,10 @@ from backend.domain.codex_terminal.models import (
 
 READ_BUFFER_SIZE = 4096
 PROCESS_CLOSE_TIMEOUT_SECONDS = 5
+DEFAULT_INTERACTIVE_TERM = "xterm-256color"
+DEFAULT_TERMINAL_ROWS = 40
+DEFAULT_TERMINAL_COLUMNS = 120
+RETAINED_OUTPUT_CHARS = MAX_STREAM_CHUNK_CHARS
 
 
 class CodexTerminalGateway:
@@ -63,6 +70,7 @@ class SubprocessTerminalRuntime:
         self._write_lock = Lock()
         self._read_error: Exception | None = None
         self._status = "running"
+        self._buffer_start = 0
         self._reader_thread = Thread(target=self._consume_output, daemon=True)
         self._reader_thread.start()
 
@@ -79,11 +87,18 @@ class SubprocessTerminalRuntime:
     def read(self, cursor: int) -> tuple[str, int, bool]:
         self._raise_read_error()
         with self._buffer_lock:
-            total_length = len(self._buffer)
-            next_cursor = min(total_length, cursor + MAX_STREAM_CHUNK_CHARS)
-            chunk = self._buffer[cursor:next_cursor]
-        completed = self.status != "running" and next_cursor >= total_length
-        return chunk, next_cursor, completed
+            self._discard_consumed_prefix(cursor)
+            effective_cursor = max(cursor, self._buffer_start)
+            total_length = self._buffer_start + len(self._buffer)
+            chunk_end = min(
+                total_length,
+                effective_cursor + MAX_STREAM_CHUNK_CHARS,
+            )
+            start_index = effective_cursor - self._buffer_start
+            end_index = start_index + (chunk_end - effective_cursor)
+            chunk = self._buffer[start_index:end_index]
+        completed = self.status != "running" and chunk_end >= total_length
+        return chunk, total_length, completed
 
     def write(self, data: str) -> None:
         if self.status != "running":
@@ -143,6 +158,17 @@ class SubprocessTerminalRuntime:
             str(self._read_error),
         )
 
+    def _discard_consumed_prefix(self, cursor: int) -> None:
+        discard_before = max(
+            self._buffer_start,
+            cursor - RETAINED_OUTPUT_CHARS,
+        )
+        discard_length = discard_before - self._buffer_start
+        if discard_length <= 0:
+            return
+        self._buffer = self._buffer[discard_length:]
+        self._buffer_start = discard_before
+
 
 def _create_runtime(
     command: str,
@@ -162,6 +188,7 @@ def _create_pipe_runtime(
     process = subprocess.Popen(
         [command],
         cwd=str(working_directory),
+        env=_build_terminal_environment(),
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
@@ -190,9 +217,11 @@ def _create_pty_runtime(
     import pty
 
     master_fd, slave_fd = pty.openpty()
+    _configure_pty_window_size(slave_fd)
     process = subprocess.Popen(
         [command],
         cwd=str(working_directory),
+        env=_build_terminal_environment(),
         stdin=slave_fd,
         stdout=slave_fd,
         stderr=slave_fd,
@@ -239,6 +268,27 @@ def _close_fd(fd: int) -> None:
         os.close(fd)
     except OSError:
         return
+
+
+def _build_terminal_environment() -> dict[str, str]:
+    env = os.environ.copy()
+    term = env.get("TERM", "").strip().lower()
+    if not term or term == "dumb":
+        env["TERM"] = DEFAULT_INTERACTIVE_TERM
+    env.setdefault("LINES", str(DEFAULT_TERMINAL_ROWS))
+    env.setdefault("COLUMNS", str(DEFAULT_TERMINAL_COLUMNS))
+    return env
+
+
+def _configure_pty_window_size(fd: int) -> None:
+    payload = struct.pack(
+        "HHHH",
+        DEFAULT_TERMINAL_ROWS,
+        DEFAULT_TERMINAL_COLUMNS,
+        0,
+        0,
+    )
+    fcntl.ioctl(fd, termios.TIOCSWINSZ, payload)
 
 
 def _is_pty_eof(error: OSError) -> bool:

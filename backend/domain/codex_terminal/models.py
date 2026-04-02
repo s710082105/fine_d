@@ -24,6 +24,7 @@ class CodexTerminalStreamChunk:
     status: TerminalSessionStatus
     output: str
     next_cursor: int
+    has_backlog: bool
     completed: bool
 
 

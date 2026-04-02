@@ -2,7 +2,7 @@ import { FitAddon } from '@xterm/addon-fit'
 import { Terminal } from '@xterm/xterm'
 
 export interface TerminalAdapter {
-  write: (content: string) => void
+  write: (content: string) => Promise<void>
   clear: () => void
   destroy: () => void
   focus: () => void
@@ -43,8 +43,60 @@ const TERMINAL_THEME = {
   brightWhite: '#f8fbff'
 } as const
 
+const PRIMARY_DEVICE_ATTRIBUTES = '\u001b[?1;2c'
+
+type CsiParams = readonly (number | readonly number[])[]
+
 function isWindowsHost(): boolean {
   return navigator.userAgent.toLowerCase().includes('windows')
+}
+
+function firstParam(params: CsiParams): number | null {
+  const value = params[0]
+  return typeof value === 'number' ? value : null
+}
+
+function respondCursorPosition(
+  terminal: Terminal,
+  bindings: TerminalAdapterBindings
+): boolean {
+  const row = terminal.buffer.active.cursorY + 1
+  const column = terminal.buffer.active.cursorX + 1
+  bindings.onInput(`\u001b[${row};${column}R`)
+  return true
+}
+
+function registerTerminalQueryHandlers(
+  terminal: Terminal,
+  bindings: TerminalAdapterBindings
+) {
+  const cursorReportDisposable = terminal.parser.registerCsiHandler(
+    { final: 'n' },
+    (params) => {
+      if (firstParam(params) !== 6) {
+        return false
+      }
+      return respondCursorPosition(terminal, bindings)
+    }
+  )
+  const primaryDeviceAttributesDisposable = terminal.parser.registerCsiHandler(
+    { final: 'c' },
+    (params) => {
+      const param = firstParam(params)
+      if (params.length > 0 && param !== 0) {
+        return false
+      }
+      bindings.onInput(PRIMARY_DEVICE_ATTRIBUTES)
+      return true
+    }
+  )
+
+  return {
+    dispose() {
+      cursorReportDisposable.dispose()
+      primaryDeviceAttributesDisposable.dispose()
+    }
+  }
 }
 
 function fitTerminal(terminal: Terminal, fitAddon: FitAddon): void {
@@ -66,6 +118,7 @@ export const createTerminalAdapter: TerminalAdapterFactory = (host, bindings) =>
   })
   const fitAddon = new FitAddon()
   const resizeObserver = new ResizeObserver(() => fitTerminal(terminal, fitAddon))
+  const queryHandlers = registerTerminalQueryHandlers(terminal, bindings)
 
   terminal.loadAddon(fitAddon)
   terminal.open(host)
@@ -78,10 +131,13 @@ export const createTerminalAdapter: TerminalAdapterFactory = (host, bindings) =>
   })
 
   return {
-    write: (content) => terminal.write(content),
+    write: (content) => new Promise((resolve) => {
+      terminal.write(content, () => resolve())
+    }),
     clear: () => terminal.clear(),
     destroy: () => {
       resizeObserver.disconnect()
+      queryHandlers.dispose()
       terminal.dispose()
     },
     focus: () => terminal.focus(),

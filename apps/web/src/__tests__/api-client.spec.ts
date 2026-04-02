@@ -3,8 +3,8 @@ import { afterEach, expect, it, vi } from 'vitest'
 
 import {
   ApiError,
-  buildCodexTerminalEventStreamUrl,
-  routeAssistantPrompt
+  routeAssistantPrompt,
+  streamCodexTerminalSession
 } from '../lib/api'
 
 afterEach(() => {
@@ -46,8 +46,39 @@ it('surfaces structured backend errors from the api client', async () => {
   })
 })
 
-it('builds the codex terminal event stream url with cursor', () => {
-  expect(
-    buildCodexTerminalEventStreamUrl('terminal-session-1', 42)
-  ).toBe('/api/codex/terminal/sessions/terminal-session-1/events?cursor=42')
+it('streams codex terminal output through the polling endpoint', async () => {
+  const fetchMock = vi.fn().mockResolvedValue(
+    new Response(
+      JSON.stringify({
+        session_id: 'terminal-session-1',
+        status: 'running',
+        output: 'hello',
+        next_cursor: 5,
+        has_backlog: true,
+        completed: false
+      }),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+  )
+
+  vi.stubGlobal('fetch', fetchMock)
+
+  await expect(
+    streamCodexTerminalSession('terminal-session-1', 42)
+  ).resolves.toMatchObject({
+    output: 'hello',
+    has_backlog: true,
+    next_cursor: 5
+  })
+  expect(fetchMock).toHaveBeenCalledWith(
+    '/api/codex/terminal/sessions/terminal-session-1/stream?cursor=42',
+    expect.objectContaining({
+      headers: expect.any(Headers)
+    })
+  )
 })

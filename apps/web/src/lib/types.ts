@@ -86,6 +86,7 @@ export interface CodexTerminalStreamResponse {
   readonly status: CodexTerminalStatus
   readonly output: string
   readonly next_cursor: number
+  readonly has_backlog: boolean
   readonly completed: boolean
 }
 

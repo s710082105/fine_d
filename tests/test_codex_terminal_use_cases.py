@@ -178,6 +178,7 @@ def test_stream_limits_large_backlog_to_fixed_chunk_size(tmp_path: Path) -> None
 
     assert len(result.output) == models.MAX_STREAM_CHUNK_CHARS
     assert result.next_cursor == models.MAX_STREAM_CHUNK_CHARS
+    assert result.has_backlog is True
     assert result.completed is False
 
 
@@ -203,14 +204,42 @@ def test_stream_keeps_closed_session_until_final_backlog_chunk(
     first = use_case.get_stream_chunk("terminal-session-1", cursor=0)
 
     assert len(first.output) == models.MAX_STREAM_CHUNK_CHARS
+    assert first.has_backlog is True
     assert first.completed is False
     assert store.get("terminal-session-1") is runtime
 
     second = use_case.get_stream_chunk("terminal-session-1", cursor=first.next_cursor)
 
     assert second.output == "y" * 5
+    assert second.has_backlog is False
     assert second.completed is True
     assert store.get("terminal-session-1") is None
+
+
+def test_stream_marks_backlog_only_while_more_output_is_buffered(
+    tmp_path: Path,
+) -> None:
+    module = _load_terminal_use_cases_module()
+    models = importlib.import_module("backend.domain.codex_terminal.models")
+    runtime = FakeTerminalRuntime(
+        session_id="terminal-session-1",
+        working_directory=tmp_path,
+        output="z" * (models.MAX_STREAM_CHUNK_CHARS + 5),
+    )
+    store = FakeTerminalSessionStore()
+    store.save("terminal-session-1", runtime)
+    use_case = module.CodexTerminalUseCases(
+        gateway=FakeTerminalGateway(),
+        session_store=store,
+        session_id_factory=lambda: "ignored",
+    )
+
+    first = use_case.get_stream_chunk("terminal-session-1", cursor=0)
+    second = use_case.get_stream_chunk("terminal-session-1", cursor=first.next_cursor)
+
+    assert first.has_backlog is True
+    assert second.output == "z" * 5
+    assert second.has_backlog is False
 
 
 def test_write_input_passes_data_to_runtime(tmp_path: Path) -> None:

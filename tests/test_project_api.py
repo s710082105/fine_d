@@ -257,6 +257,50 @@ def test_generate_project_context_rejects_incomplete_remote_profile(
     }
 
 
+def test_generate_project_context_surfaces_write_failures(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    project_client = _build_project_context_client(tmp_path, monkeypatch)
+    project_dir = tmp_path / "project-alpha"
+    project_dir.mkdir()
+    project_client.post("/api/project/select", json={"path": str(project_dir)})
+    project_client.put(
+        "/api/project/remote-profile",
+        json={
+            "base_url": "http://localhost:8075/webroot/decision",
+            "username": "admin",
+            "password": "admin",
+            "designer_root": "/Applications/FineReport",
+        },
+    )
+    original_write_text = Path.write_text
+
+    def fail_project_context_write(self: Path, *args, **kwargs):
+        if self == project_dir / ".codex" / "project-context.md":
+            raise PermissionError("Operation not permitted")
+        return original_write_text(self, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "write_text", fail_project_context_write)
+
+    response = project_client.post(
+        "/api/project/context",
+        json={"force": False},
+    )
+
+    assert response.status_code == 400
+    assert response.json() == {
+        "code": "project.context_write_failed",
+        "message": "项目上下文写入失败",
+        "detail": {
+            "path": str(project_dir / ".codex" / "project-context.md"),
+            "reason": "Operation not permitted",
+        },
+        "source": "project",
+        "retryable": False,
+    }
+
+
 def test_get_current_project_returns_context_state_after_generation(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,

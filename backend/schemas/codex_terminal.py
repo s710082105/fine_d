@@ -46,6 +46,7 @@ class CodexTerminalStreamResponse(BaseModel):
     status: TerminalSessionStatus
     output: str
     next_cursor: int = Field(ge=0)
+    has_backlog: bool
     completed: bool
 
     @classmethod
@@ -58,6 +59,7 @@ class CodexTerminalStreamResponse(BaseModel):
             status=chunk.status,
             output=chunk.output,
             next_cursor=chunk.next_cursor,
+            has_backlog=chunk.has_backlog,
             completed=chunk.completed,
         )
 

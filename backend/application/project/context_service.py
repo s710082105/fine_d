@@ -19,6 +19,7 @@ from backend.domain.project.context_models import (
 from backend.domain.project.errors import (
     current_project_required_error,
     invalid_remote_profile_error,
+    project_context_write_failed_error,
 )
 from backend.domain.project.models import CurrentProject, ProjectState
 from backend.domain.project.remote_models import RemoteProfile
@@ -109,10 +110,13 @@ class ProjectContextService:
 
     @staticmethod
     def _write_text_file(path: Path, content: str) -> None:
-        path.parent.mkdir(parents=True, exist_ok=True)
-        if path.exists() and path.read_text(encoding="utf-8") == content:
-            return
-        path.write_text(content, encoding="utf-8")
+        try:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            if path.exists() and path.read_text(encoding="utf-8") == content:
+                return
+            path.write_text(content, encoding="utf-8")
+        except OSError as error:
+            raise project_context_write_failed_error(str(path), str(error)) from error
 
 
 def _require_current_project(state: ProjectState) -> CurrentProject:

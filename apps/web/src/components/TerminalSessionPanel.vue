@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 import type { CodexTerminalSessionResponse } from '../lib/types'
-import {
-  createTerminalAdapter,
-  type TerminalAdapter
-} from './terminal/xterm-adapter'
+import TerminalComposer from './terminal/TerminalComposer.vue'
+import TerminalViewport from './terminal/TerminalViewport.vue'
+
+interface TerminalViewportHandle {
+  appendOutput(chunk: string): Promise<void>
+  clear(): void
+  focus(): void
+}
 
 const props = defineProps<{
   session: CodexTerminalSessionResponse | null
@@ -17,8 +21,7 @@ const emit = defineEmits<{
   submitInput: [data: string]
 }>()
 
-const hostRef = ref<HTMLElement | null>(null)
-const adapter = ref<TerminalAdapter | null>(null)
+const viewportRef = ref<TerminalViewportHandle | null>(null)
 
 const STATUS_LABELS: Record<string, string> = {
   running: '运行中',
@@ -33,40 +36,30 @@ const statusLabel = computed(() => {
   return STATUS_LABELS[props.session.status] ?? props.session.status
 })
 
-function appendOutput(chunk: string): void {
-  adapter.value?.write(chunk)
+function appendOutput(chunk: string): Promise<void> {
+  return viewportRef.value?.appendOutput(chunk) ?? Promise.resolve()
 }
 
 function reset(): void {
-  adapter.value?.clear()
+  viewportRef.value?.clear()
 }
 
 function focusTerminal(): void {
-  adapter.value?.focus()
+  viewportRef.value?.focus()
 }
 
-function mountTerminal(): void {
-  if (!hostRef.value || adapter.value) {
-    return
-  }
-  adapter.value = createTerminalAdapter(hostRef.value, {
-    onInput: (payload) => emit('submitInput', payload)
-  })
-  adapter.value.fit()
+function emitViewportInput(payload: string): void {
+  emit('submitInput', payload)
+}
+
+function emitComposerInput(payload: string): void {
+  emit('submitInput', payload)
+  focusTerminal()
 }
 
 watch(() => props.session?.session_id, () => {
   reset()
   focusTerminal()
-})
-
-onMounted(() => {
-  mountTerminal()
-})
-
-onBeforeUnmount(() => {
-  adapter.value?.destroy()
-  adapter.value = null
 })
 
 defineExpose({
@@ -94,19 +87,31 @@ defineExpose({
     </p>
 
     <div class="terminal-panel__surface">
-      <div ref="hostRef" class="terminal-panel__viewport" />
+      <TerminalViewport
+        ref="viewportRef"
+        :on-input="emitViewportInput"
+      />
     </div>
+
+    <TerminalComposer
+      :key="session?.session_id ?? 'terminal-composer'"
+      :disabled="!session || session.status !== 'running'"
+      @submit="emitComposerInput"
+    />
+
     <p class="terminal-panel__hint">
-      点击终端后直接输入，Enter、方向键和快捷键会原样发送给 Codex。
+      可直接点击终端输入，也可在下方输入框里组织命令后发送到 Codex。
     </p>
   </section>
 </template>
 
 <style scoped>
 .terminal-panel {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
   min-height: 100%;
+  min-width: 0;
 }
 
 .terminal-panel__header,
@@ -153,16 +158,12 @@ defineExpose({
 }
 
 .terminal-panel__surface {
+  display: flex;
   min-height: 520px;
   border-radius: 20px;
   overflow: hidden;
   background: #07111f;
   color: #d7e3f4;
-}
-
-.terminal-panel__viewport {
-  height: 520px;
-  padding: 16px;
 }
 
 .terminal-panel__hint {
