@@ -159,5 +159,6 @@
 
 - Decision HTTP 接口受 FineReport 版本影响，失败时必须透出原始错误。
 - bridge 预编译产物必须与目标 FineReport 大版本兼容；不兼容时要尽早在 `fr-status-check` 暴露。
+- `.codex/skills/superpowers/` 与 `.codex/skills/skill-creator/` 属于仓库内置依赖，不能再回退为系统级 skill 前置条件。
 - `skill-creator` 只负责创建和校验 skill 骨架，不替代 FineReport 运行时实现。
 - 初始化与环境检查涉及真实凭据，但凭据只能写入项目本地配置，不能进入 tracked 文件。

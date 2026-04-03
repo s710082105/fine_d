@@ -1,26 +1,26 @@
 # finereport-ai
 
-当前仓库已清空历史实现代码，为下一轮重构准备，只保留文档、参考资产和 Codex skill 说明。
+面向帆软设计器联调的 FineReport skill 运行仓。
 
-## 当前保留内容
+## 当前结构
 
-- `docs/`：设计文档和实现归档
-- `skills/`：FineReport Codex skill 说明文件与模板资产
-- `templates/`：基础 `.cpt` / `.fvs` 模板
-- `reportlets/`：样例报表与历史参考产物
-- `AGENTS.md`：仓库协作约束
+- `.codex/skills/`：项目级 skill 目录，包含 FineReport 业务 skill、内置 `superpowers`、`skill-creator`、`chrome-devtools`
+- `tooling/fr_runtime/`：Python 运行时，统一提供 `init`、`doctor`、`db`、`sync`、`preview`
+- `bridge/dist/`：预编译 Java bridge 分发产物
+- `reportlets/`：样例报表与参考产物
+- `tests/fr_runtime/`：运行时回归测试
+- `docs/`：历史设计、协议分析和实施归档
 
-## 首先查看
+## 直接使用
 
-- `docs/fine-remote-implementation-guide.md`
-- `docs/fine-remote-design-protocol.md`
-- `docs/superpowers/specs/2026-04-02-finereport-skill-standard/`
-- `docs/superpowers/plans/2026-04-02-finereport-skill-standard/`
-- `skills/fr-workflow/`
+- 项目初始化：`python3 .codex/skills/fr-init/scripts/run.py --config-path .codex/fr-config.json`
+- 状态检查：`python3 .codex/skills/fr-status-check/scripts/run.py --config-path .codex/fr-config.json`
+- 数据连接：`python3 .codex/skills/fr-db/scripts/run.py list-connections`
+- 浏览器复核：`python3 .codex/skills/fr-browser-review/scripts/run.py --config-path .codex/fr-config.json --report-path reportlets/<目标文件>`
 
 ## 说明
 
-- 历史 `Python + Vue + Tauri + Java bridge` 实现已从仓库中移除
-- 当前仓库已补入 Python 版 FineReport skill runtime 骨架，入口为 `python3 -m tooling.fr_runtime.cli`
-- 运行时、skill 标准和 bridge 分发规则以 `docs/superpowers/specs/2026-04-02-finereport-skill-standard/` 为准
-- 下一次继续扩展实现时，应以 `docs/` 中沉淀的接口、链路、skill 标准和实现计划为参考
+- 仓库不再保留根目录 `skills/` 镜像，实际发现目录只有 `.codex/skills/`
+- 创建报表所需基础模板已内置到 `.codex/skills/fr-create/assets/template/`
+- Java bridge 仅保留 `bridge/dist/` 分发产物，不再保留源码和构建中间产物
+- 浏览器复核中，`.cpt` 走 `view/report?viewlet=...`，`.fvs` 走 `view/duchamp?page_number=1&viewlet=...`

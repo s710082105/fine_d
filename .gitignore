@@ -1,6 +1,8 @@
 .DS_Store
 *.pyc
 __pycache__/
+.venv/
+.pytest_cache/
 .worktrees/
 .pnpm-store/
 node_modules/

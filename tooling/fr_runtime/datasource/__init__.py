@@ -1,5 +1,10 @@
 """Datasource service helpers."""
 
-from .service import normalize_connection
+from .service import DatasourceService, build_preview_payload, normalize_connection, normalize_dataset
 
-__all__ = ["normalize_connection"]
+__all__ = [
+    "DatasourceService",
+    "build_preview_payload",
+    "normalize_connection",
+    "normalize_dataset",
+]

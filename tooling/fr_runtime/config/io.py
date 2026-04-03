@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from .models import REQUIRED_FIELDS, RuntimeConfig
+from .models import DEFAULT_REMOTE_ROOT, DEFAULT_TASK_TYPE, REQUIRED_FIELDS, RuntimeConfig
 
 
 def load_config(path: Path) -> RuntimeConfig:
@@ -13,15 +13,16 @@ def load_config(path: Path) -> RuntimeConfig:
     missing = [field for field in REQUIRED_FIELDS if not payload.get(field)]
     if missing:
         raise ValueError(", ".join(missing))
+    workspace_root = Path(payload["workspace_root"])
     return RuntimeConfig(
-        project_name=payload["project_name"],
+        project_name=payload.get("project_name") or workspace_root.name,
         decision_url=payload["decision_url"],
         designer_root=Path(payload["designer_root"]),
         username=payload["username"],
         password=payload["password"],
-        workspace_root=Path(payload["workspace_root"]),
-        remote_root=payload["remote_root"],
-        task_type=payload["task_type"],
+        workspace_root=workspace_root,
+        remote_root=payload.get("remote_root") or DEFAULT_REMOTE_ROOT,
+        task_type=payload.get("task_type") or DEFAULT_TASK_TYPE,
     )
 
 

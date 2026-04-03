@@ -1,5 +1,5 @@
 """Decision HTTP helpers."""
 
-from .http import build_login_payload
+from .http import DecisionHttpClient, DecisionHttpError, TransmissionProfile, build_login_payload
 
-__all__ = ["build_login_payload"]
+__all__ = ["DecisionHttpClient", "DecisionHttpError", "TransmissionProfile", "build_login_payload"]

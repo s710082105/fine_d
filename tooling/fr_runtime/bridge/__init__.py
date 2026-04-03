@@ -1,6 +1,14 @@
 """Bridge command helpers."""
 
-from .java_runtime import validate_bridge_artifacts
-from .runner import build_bridge_command
+from .java_runtime import read_manifest, validate_bridge_artifacts
+from .runner import BridgeError, BridgeRunner, ConfiguredBridgeRunner, ProcessResult, build_bridge_command
 
-__all__ = ["build_bridge_command", "validate_bridge_artifacts"]
+__all__ = [
+    "BridgeError",
+    "BridgeRunner",
+    "ConfiguredBridgeRunner",
+    "ProcessResult",
+    "build_bridge_command",
+    "read_manifest",
+    "validate_bridge_artifacts",
+]

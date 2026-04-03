@@ -2,9 +2,9 @@
 
 ## 背景
 
-当前仓库只保留了 FineReport 远程链路文档、样例报表和一组说明型 skill：
+当前仓库只保留了 FineReport 远程链路文档、样例报表和一组项目级 skill：
 
-- `skills/` 缺少统一的创建标准、共享 runtime 和可执行脚本骨架。
+- `.codex/skills/` 需要同时承载 FineReport 业务 skill 与 vendored 依赖，并保持 clone 后可直接发现。
 - 多数 skill 仍停留在“告诉 agent 应该做什么”，没有把初始化、环境检查、同步、桥接和验证做成可复用资产。
 - 现有命令示例仍包含 `.sh` 入口，不符合 Windows 无 `bash`/`sh.exe` 的约束。
 - Java bridge 的历史实现已被清空，但桥接策略、设计器 Java 依赖和远端 HTTP/JVM 分层已经在文档中取证完成。
@@ -14,12 +14,13 @@
 ## 目标
 
 1. 以 `obra/superpowers` 的“skills 为入口、共享实现沉底”的模式组织 FineReport skill。
-2. 创建 FineReport skill 时统一遵循 `anthropics/skills` 的 `skill-creator` 工作流，不再手写 skill 骨架。
-3. 提供自然语言对话式项目初始化，并在初始化过程中显式校验输入。
-4. 提供系统环境和远端状态检查能力，确认配置、设计器运行时、bridge 和 Decision 服务都真实可用。
-5. 通过共享 runtime 统一接入 FineReport 设计器远端能力，覆盖目录、文件同步、数据连接和 SQL 试跑。
-6. Java bridge 以预编译产物分发，运行时只使用 FineReport 设计器自带 Java。
-7. 全链路兼容 macOS 和 Windows，命令入口不依赖 `bash` 或 `sh.exe`。
+2. 将 `obra/superpowers` vendoring 到仓库 `.codex/skills/superpowers/`，避免依赖系统级 skill。
+3. 创建 FineReport skill 时统一遵循 `anthropics/skills` 的 `skill-creator` 工作流，并将其 vendoring 到仓库 `.codex/skills/skill-creator/`，不再手写 skill 骨架。
+4. 提供自然语言对话式项目初始化，并在初始化过程中显式校验输入。
+5. 提供系统环境和远端状态检查能力，确认配置、设计器运行时、bridge 和 Decision 服务都真实可用。
+6. 通过共享 runtime 统一接入 FineReport 设计器远端能力，覆盖目录、文件同步、数据连接和 SQL 试跑。
+7. Java bridge 以预编译产物分发，运行时只使用 FineReport 设计器自带 Java。
+8. 全链路兼容 macOS 和 Windows，命令入口不依赖 `bash` 或 `sh.exe`。
 
 ## 非目标
 
@@ -31,13 +32,16 @@
 ## 仓库结构
 
 ```text
-skills/
+.codex/skills/
+  chrome-devtools/
+    SKILL.md
+    agents/openai.yaml
+    references/
   fr-workflow/
     SKILL.md
     agents/openai.yaml
     scripts/
     references/
-    assets/template/
   fr-init/
   fr-status-check/
   fr-db/
@@ -47,6 +51,16 @@ skills/
   fr-download-sync/
   fr-upload-sync/
   fr-browser-review/
+  superpowers/
+    using-superpowers/
+    systematic-debugging/
+    verification-before-completion/
+    ...
+  skill-creator/
+    SKILL.md
+    scripts/
+    references/
+    assets/
 
 tooling/fr_runtime/
   cli.py
@@ -66,24 +80,26 @@ bridge/
 
 ## 分层职责
 
-- `skills/*`
+- `.codex/skills/fr-*`
   定义触发条件、执行入口、失败处理、证据要求和下一步流转。
-- `skills/*/scripts`
+- `.codex/skills/fr-*/scripts`
   仅保留该 skill 的薄入口脚本，真正逻辑统一调用 `tooling/fr_runtime/cli.py`。
-- `skills/*/references`
+- `.codex/skills/fr-*/references`
   存放该 skill 需要按需读取的协议、字段、样例或流程参考。
-- `skills/*/assets/template`
+- `.codex/skills/fr-*/assets/template`
   存放该 skill 真正会复用的模板资产。
 - `tooling/fr_runtime`
   共享配置解析、环境检查、远端调用、数据探测、同步和 bridge 调度。
 - `bridge/dist`
   预编译 bridge 产物及其元数据，供 runtime 直接调用。
+- `.codex/skills/chrome-devtools`
+  仓库内置浏览器 skill，固定官方 MCP server 名称、Codex 配置和浏览器操作规则。
 
 ## Skill 创建标准
 
 ### 一律使用 `skill-creator`
 
-所有新建或重建的 FineReport skill 都必须通过 `anthropics/skills` 的 `skill-creator` 流程创建：
+所有新建或重建的 FineReport skill 都必须通过仓库内置的 `skill-creator` 流程创建：
 
 1. 使用 `init_skill.py` 初始化 skill 目录。
 2. 指定 `--resources scripts,references,assets`。
@@ -94,8 +110,8 @@ bridge/
 示例命令：
 
 ```bash
-python3 scripts/init_skill.py fr-init \
-  --path /Users/wj/data/mcp/finereport/skills \
+python3 .codex/skills/skill-creator/scripts/init_skill.py fr-init \
+  --path .codex/skills \
   --resources scripts,references,assets
 ```
 
@@ -152,6 +168,8 @@ python3 scripts/init_skill.py fr-init \
 
 FineReport skill 不替代 `superpowers`，而是建立在其过程 skill 之上：
 
+- 浏览器操作层由仓库内置 `.codex/skills/chrome-devtools/` 提供
+- 仓库内固定提供 `.codex/skills/superpowers/`，不再要求系统级 `superpowers` 安装
 - 新能力设计：先走 `brainstorming`
 - 多步实施：走 `executing-plans`
 - 排障：走 `systematic-debugging`

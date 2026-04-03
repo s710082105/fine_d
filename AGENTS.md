@@ -2,66 +2,57 @@
 
 ## Project Structure & Module Organization
 
-This repository currently holds planning docs and FineReport assets, not a full Tauri app yet.
+This repository is a FineReport skill runtime workspace.
 
-- `README.md`: product scope, architecture direction, and workflow.
-- `docs/superpowers/specs/`: dated design specs, e.g. `2026-03-18-codex-embedded-chat-panel/`.
-- `templates/`: base `.cpt` and `.fvs` templates.
-- `reportlets/`: sample reports, demos, and reference assets.
-- `.claude/skills/`: repository-local skill definitions for FineReport workflows.
+- `README.md`: current usage and structure overview.
+- `.codex/skills/`: repository-local skills discovered by Codex.
+- `tooling/fr_runtime/`: Python runtime shared by all FineReport skills.
+- `bridge/dist/`: packaged Java bridge artifacts only.
+- `reportlets/`: sample and reference FineReport assets.
+- `tests/fr_runtime/`: automated runtime regression tests.
+- `docs/`: archived design notes and protocol analysis.
 
-When application code is added, keep Rust/Tauri code under dedicated source directories instead of mixing it into `templates/` or `reportlets/`.
+Do not reintroduce root-level `skills/` mirrors, duplicate template directories, or bridge source trees unless the user explicitly requests them.
 
 ## Build, Test, and Development Commands
 
-There is no committed build pipeline yet. Until the Tauri scaffold lands, use repository inspection commands:
+Use repository-root commands only:
 
-- `git status --short`: check staged and unstaged changes.
-- `git log --oneline -5`: review recent commit style.
-- `rg -n "keyword" docs README.md`: search docs and specs quickly.
+- `python3 -m tooling.fr_runtime.cli --help`
+- `pytest tests/fr_runtime -q`
+- `uv run --no-project --with pyyaml python .codex/skills/skill-creator/scripts/quick_validate.py .codex/skills/<skill-name>`
 
-When Rust/Tauri code is introduced, document the canonical run/test commands in `README.md` and keep them consistent with this file.
+Record the exact verification commands you ran before claiming completion.
 
 ## FineReport Workflow
 
-- 涉及数据集、SQL、报表字段时，必须先读取设计器远端已有连接并完成字段扫描，再开始设计报表。
-- 参考其他模板的数据使用方式只能作为写法参考，字段、连接名和 SQL 以设计器远端返回结果为准。
-- 生成命令前先判断当前系统类型；Windows 不能假设存在 `bash`/`sh.exe`。
-- `reportlets/` 相关改动必须同步到远端；优先走宿主自动同步，必要时允许直接触发显式同步，不要停在“本地已修改”。
-- 提交、上传、页面复核属于同一闭环。完成报表改动后，允许在合适时机自动执行 `git`/`gh`/`chrome-cdp` 等必要操作，不需要再向用户二次确认。
-- FineReport 相关 skill 使用边界：
-- `fr-db`：读取设计器远端连接、字段扫描、SQL 试跑
-- `fr-create`：新建 CPT/FVS 并完成创建前远端预检
-- `fr-cpt`：编辑 CPT
-- `fr-fvs`：编辑 FVS
+- 涉及数据集、SQL、报表字段时，先读取设计器远端已有连接并完成字段扫描。
+- `reportlets/` 相关改动必须同步到远端，不能停在“本地已修改”。
+- 浏览器复核固定通过 `.codex/skills/fr-browser-review/` 执行。
+- `.cpt` 预览地址使用 `view/report?viewlet=...`。
+- `.fvs` 预览地址使用 `view/duchamp?page_number=1&viewlet=...`。
 
 ## Coding Style & Naming Conventions
 
-- Markdown: use clear headings, short sections, and repository-specific instructions.
-- Spec directories: `docs/superpowers/specs/YYYY-MM-DD-topic/`.
-- File names: use kebab-case for docs and folders; keep asset names unchanged if they mirror FineReport files.
-- For future Rust code: use `rustfmt` defaults, `snake_case` for modules/functions, `PascalCase` for types, and avoid oversized files or deeply nested logic.
+- 保持 Python 代码小函数、低嵌套、显式错误暴露。
+- 运行时入口统一走 `tooling/fr_runtime/cli.py`，不要在 skill wrapper 里复制业务逻辑。
+- 新增 skill 资源优先放在对应 `.codex/skills/<skill>/assets|references|scripts/` 下。
 
 ## Testing Guidelines
 
-No automated test suite is committed yet. For now:
-
-- Verify docs for path accuracy and internal consistency before commit.
-- If you add executable code, add automated tests in the same change.
-- Record the exact verification command in the PR or commit notes.
+- 修改运行时或 wrapper 时，补充或更新 `tests/fr_runtime/` 回归测试。
+- 修改 skill 文档后，至少运行对应 `quick_validate.py` 校验。
+- 不要跳过失败现场复现；先复现，再修复。
 
 ## Commit & Pull Request Guidelines
 
-Follow the existing history style with conventional prefixes:
-
-- `feat: 初始化 FineReport skill 项目`
-- `docs: split codex embedding design specs`
-
-Use focused commits. Do not bundle asset changes, design docs, and runtime code without a clear reason. PRs should include scope, affected paths, verification performed, and screenshots when UI behavior changes.
+- 使用聚焦提交，遵循现有 Conventional Commits 风格。
+- 不要把无关重构、历史归档和功能修复混成一条提交。
 
 ## Security & Configuration Tips
 
-Do not commit sync credentials, API keys, or host passwords. `SFTP`/`FTP` secrets must stay in local environment or secure storage, never in tracked files.
+- 不要提交设计器账号、密码、Decision 地址以外的敏感信息。
+- `bridge/dist/` 之外不要提交新的 Java 构建输出。
 
 ## Subagent Model Requirement
 

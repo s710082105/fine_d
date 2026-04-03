@@ -7,15 +7,16 @@ from pathlib import Path
 
 
 REQUIRED_FIELDS = (
-    "project_name",
     "decision_url",
     "designer_root",
     "username",
     "password",
     "workspace_root",
-    "remote_root",
-    "task_type",
 )
+DERIVED_FIELDS = ("project_name", "remote_root", "task_type")
+ALL_FIELDS = ("project_name", *REQUIRED_FIELDS, "remote_root", "task_type")
+DEFAULT_REMOTE_ROOT = "reportlets"
+DEFAULT_TASK_TYPE = "未指定"
 
 
 @dataclass(frozen=True)

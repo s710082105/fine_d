@@ -1,0 +1,11 @@
+interface:
+  display_name: "Chrome DevTools"
+  short_description: "内置 Chrome DevTools 浏览器操作说明 skill"
+  default_prompt: "Use $chrome-devtools to operate the browser through Chrome DevTools MCP."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "chrome-devtools"
+      description: "Chrome DevTools MCP server for browser automation and inspection"
+policy:
+  allow_implicit_invocation: true

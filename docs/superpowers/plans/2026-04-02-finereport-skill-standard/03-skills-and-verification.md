@@ -1,16 +1,18 @@
 ### Task 5: 使用 `skill-creator` 重建 FineReport skill 目录
 
+前置：仓库已内置 `.codex/skills/superpowers/` 与 `.codex/skills/skill-creator/`，本任务不得依赖系统级 superpowers 或系统级 skill-creator。
+
 **Files:**
-- Modify/Create: `skills/fr-workflow/**`
-- Create: `skills/fr-init/**`
-- Modify/Create: `skills/fr-status-check/**`
-- Modify/Create: `skills/fr-db/**`
-- Create: `skills/fr-create/**`
-- Create: `skills/fr-cpt/**`
-- Create: `skills/fr-fvs/**`
-- Modify/Create: `skills/fr-download-sync/**`
-- Modify/Create: `skills/fr-upload-sync/**`
-- Modify/Create: `skills/fr-browser-review/**`
+- Modify/Create: `.codex/skills/fr-workflow/**`
+- Create: `.codex/skills/fr-init/**`
+- Modify/Create: `.codex/skills/fr-status-check/**`
+- Modify/Create: `.codex/skills/fr-db/**`
+- Create: `.codex/skills/fr-create/**`
+- Create: `.codex/skills/fr-cpt/**`
+- Create: `.codex/skills/fr-fvs/**`
+- Modify/Create: `.codex/skills/fr-download-sync/**`
+- Modify/Create: `.codex/skills/fr-upload-sync/**`
+- Modify/Create: `.codex/skills/fr-browser-review/**`
 
 - [ ] **Step 1: Initialize skill folders with `skill-creator`**
 
@@ -18,16 +20,16 @@ Run these commands one skill at a time:
 
 ```bash
 # macOS / Linux
-python3 ~/.codex/skills/.system/skill-creator/scripts/init_skill.py fr-init --path skills --resources scripts,references,assets
-python3 ~/.codex/skills/.system/skill-creator/scripts/init_skill.py fr-create --path skills --resources scripts,references,assets
-python3 ~/.codex/skills/.system/skill-creator/scripts/init_skill.py fr-cpt --path skills --resources scripts,references,assets
-python3 ~/.codex/skills/.system/skill-creator/scripts/init_skill.py fr-fvs --path skills --resources scripts,references,assets
+python3 .codex/skills/skill-creator/scripts/init_skill.py fr-init --path .codex/skills --resources scripts,references,assets
+python3 .codex/skills/skill-creator/scripts/init_skill.py fr-create --path .codex/skills --resources scripts,references,assets
+python3 .codex/skills/skill-creator/scripts/init_skill.py fr-cpt --path .codex/skills --resources scripts,references,assets
+python3 .codex/skills/skill-creator/scripts/init_skill.py fr-fvs --path .codex/skills --resources scripts,references,assets
 
 # Windows
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\init_skill.py fr-init --path skills --resources scripts,references,assets
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\init_skill.py fr-create --path skills --resources scripts,references,assets
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\init_skill.py fr-cpt --path skills --resources scripts,references,assets
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\init_skill.py fr-fvs --path skills --resources scripts,references,assets
+py .codex\skills\skill-creator\scripts\init_skill.py fr-init --path .codex\skills --resources scripts,references,assets
+py .codex\skills\skill-creator\scripts\init_skill.py fr-create --path .codex\skills --resources scripts,references,assets
+py .codex\skills\skill-creator\scripts\init_skill.py fr-cpt --path .codex\skills --resources scripts,references,assets
+py .codex\skills\skill-creator\scripts\init_skill.py fr-fvs --path .codex\skills --resources scripts,references,assets
 ```
 
 Expected: each command creates `SKILL.md`, `agents/openai.yaml`, `scripts/`, `references/`, `assets/`
@@ -35,7 +37,7 @@ Expected: each command creates `SKILL.md`, `agents/openai.yaml`, `scripts/`, `re
 - [ ] **Step 2: Author thin runtime entrypoints and template assets**
 
 ```python
-# skills/fr-status-check/scripts/run.py
+# .codex/skills/fr-status-check/scripts/run.py
 import sys
 
 from tooling.fr_runtime.cli import main
@@ -46,7 +48,7 @@ if __name__ == "__main__":
 ```
 
 ```python
-# skills/fr-init/scripts/run.py
+# .codex/skills/fr-init/scripts/run.py
 import sys
 
 from tooling.fr_runtime.cli import main
@@ -58,11 +60,11 @@ if __name__ == "__main__":
 
 Copy assets:
 
-- `templates/blank.cpt` -> `skills/fr-create/assets/template/blank.cpt`
-- `templates/blank.fvs` -> `skills/fr-create/assets/template/blank.fvs`
-- create `skills/fr-init/assets/template/project-context.md`
-- create `skills/fr-init/assets/template/project-rules.md`
-- create `skills/fr-init/assets/template/workflow-overview.md`
+- `templates/blank.cpt` -> `.codex/skills/fr-create/assets/template/blank.cpt`
+- `templates/blank.fvs` -> `.codex/skills/fr-create/assets/template/blank.fvs`
+- create `.codex/skills/fr-init/assets/template/project-context.md`
+- create `.codex/skills/fr-init/assets/template/project-rules.md`
+- create `.codex/skills/fr-init/assets/template/workflow-overview.md`
 
 - [ ] **Step 3: Rewrite SKILL.md bodies to match the standard**
 
@@ -87,16 +89,16 @@ Run:
 
 ```bash
 # macOS / Linux
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fr-init
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fr-create
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fr-cpt
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fr-fvs
+python3 .codex/skills/skill-creator/scripts/quick_validate.py .codex/skills/fr-init
+python3 .codex/skills/skill-creator/scripts/quick_validate.py .codex/skills/fr-create
+python3 .codex/skills/skill-creator/scripts/quick_validate.py .codex/skills/fr-cpt
+python3 .codex/skills/skill-creator/scripts/quick_validate.py .codex/skills/fr-fvs
 
 # Windows
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\fr-init
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\fr-create
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\fr-cpt
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\fr-fvs
+py .codex\skills\skill-creator\scripts\quick_validate.py .codex\skills\fr-init
+py .codex\skills\skill-creator\scripts\quick_validate.py .codex\skills\fr-create
+py .codex\skills\skill-creator\scripts\quick_validate.py .codex\skills\fr-cpt
+py .codex\skills\skill-creator\scripts\quick_validate.py .codex\skills\fr-fvs
 ```
 
 Expected: output contains `valid`
@@ -106,7 +108,7 @@ Expected: output contains `valid`
 **Files:**
 - Modify: `README.md`
 - Verify only: `tests/fr_runtime/*.py`
-- Verify only: `skills/*`
+- Verify only: `.codex/skills/fr-*`
 - Verify only: `bridge/dist/*`
 
 - [ ] **Step 1: Run the targeted Python test suite**
@@ -120,28 +122,28 @@ Run:
 
 ```bash
 # macOS / Linux
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fr-workflow
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fr-init
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fr-status-check
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fr-db
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fr-create
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fr-cpt
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fr-fvs
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fr-download-sync
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fr-upload-sync
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/fr-browser-review
+python3 .codex/skills/skill-creator/scripts/quick_validate.py .codex/skills/fr-workflow
+python3 .codex/skills/skill-creator/scripts/quick_validate.py .codex/skills/fr-init
+python3 .codex/skills/skill-creator/scripts/quick_validate.py .codex/skills/fr-status-check
+python3 .codex/skills/skill-creator/scripts/quick_validate.py .codex/skills/fr-db
+python3 .codex/skills/skill-creator/scripts/quick_validate.py .codex/skills/fr-create
+python3 .codex/skills/skill-creator/scripts/quick_validate.py .codex/skills/fr-cpt
+python3 .codex/skills/skill-creator/scripts/quick_validate.py .codex/skills/fr-fvs
+python3 .codex/skills/skill-creator/scripts/quick_validate.py .codex/skills/fr-download-sync
+python3 .codex/skills/skill-creator/scripts/quick_validate.py .codex/skills/fr-upload-sync
+python3 .codex/skills/skill-creator/scripts/quick_validate.py .codex/skills/fr-browser-review
 
 # Windows
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\fr-workflow
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\fr-init
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\fr-status-check
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\fr-db
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\fr-create
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\fr-cpt
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\fr-fvs
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\fr-download-sync
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\fr-upload-sync
-py %USERPROFILE%\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\fr-browser-review
+py .codex\skills\skill-creator\scripts\quick_validate.py .codex\skills\fr-workflow
+py .codex\skills\skill-creator\scripts\quick_validate.py .codex\skills\fr-init
+py .codex\skills\skill-creator\scripts\quick_validate.py .codex\skills\fr-status-check
+py .codex\skills\skill-creator\scripts\quick_validate.py .codex\skills\fr-db
+py .codex\skills\skill-creator\scripts\quick_validate.py .codex\skills\fr-create
+py .codex\skills\skill-creator\scripts\quick_validate.py .codex\skills\fr-cpt
+py .codex\skills\skill-creator\scripts\quick_validate.py .codex\skills\fr-fvs
+py .codex\skills\skill-creator\scripts\quick_validate.py .codex\skills\fr-download-sync
+py .codex\skills\skill-creator\scripts\quick_validate.py .codex\skills\fr-upload-sync
+py .codex\skills\skill-creator\scripts\quick_validate.py .codex\skills\fr-browser-review
 ```
 
 Expected: no validation errors
@@ -174,6 +176,6 @@ Add a short `README.md` section that points readers to:
 
 - `docs/superpowers/specs/2026-04-02-finereport-skill-standard/`
 - `docs/superpowers/plans/2026-04-02-finereport-skill-standard/`
-- `skills/fr-workflow/`
+- `.codex/skills/fr-workflow/`
 
 Expected: repo root README explains where FineReport skill runtime and skill standard live
