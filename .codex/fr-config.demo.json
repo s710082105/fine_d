@@ -1,0 +1,19 @@
+{
+  "_comment": "示例配置。参考本文件创建 .codex/fr-config.json，并把占位值替换为真实环境。",
+  "project_name": "demo-workspace",
+  "_project_name_comment": "可选；为空时会自动回退为 workspace_root 的目录名。",
+  "decision_url": "http://127.0.0.1:8075/webroot/decision",
+  "_decision_url_comment": "Decision 根地址，不要填写具体报表预览路径。",
+  "designer_root": "/Applications/FineReport",
+  "_designer_root_comment": "FineReport Designer 安装目录，运行时会在这里定位 Java 和 FineReport jars。",
+  "username": "admin",
+  "_username_comment": "Decision 登录账号。",
+  "password": "change-me",
+  "_password_comment": "Decision 登录密码；示例里只放占位符，真实密码不要提交到仓库。",
+  "workspace_root": "/Users/yourname/data/finereport-workspace",
+  "_workspace_root_comment": "当前工作区根目录，必须是本机真实存在的路径。",
+  "remote_root": "reportlets/demo",
+  "_remote_root_comment": "可选；只能位于 reportlets 下，留空时默认是 reportlets。",
+  "task_type": "报表联调",
+  "_task_type_comment": "可选；仅用于记录当前任务类型，留空时默认是 未指定。"
+}
