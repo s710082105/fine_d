@@ -80,3 +80,12 @@ def test_build_bridge_generates_runtime_artifacts(tmp_path: Path) -> None:
         names = set(archive.namelist())
     assert "fine/remote/bridge/Main.class" in names
     assert "fine/remote/bridge/FineRuntime.class" in names
+
+    major_version = _class_major_version(artifacts.jar_path, "fine/remote/bridge/Main.class")
+    assert major_version == 52
+
+
+def _class_major_version(jar_path: Path, class_name: str) -> int:
+    with zipfile.ZipFile(jar_path) as archive:
+        content = archive.read(class_name)
+    return int.from_bytes(content[6:8], "big")

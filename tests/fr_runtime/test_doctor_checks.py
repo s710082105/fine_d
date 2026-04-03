@@ -18,7 +18,9 @@ def test_detect_designer_java_supports_install4j_bundle(tmp_path: Path) -> None:
     assert detect_designer_java(tmp_path) == java_path
 
 
-def test_collect_runtime_checks_runs_remote_probes(tmp_path: Path) -> None:
+def test_collect_runtime_checks_runs_remote_probes(
+    tmp_path: Path,
+) -> None:
     java_path = tmp_path / ".install4j" / "jre.bundle" / "Contents" / "Home" / "bin" / "java"
     java_path.parent.mkdir(parents=True)
     java_path.write_text("")

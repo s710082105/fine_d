@@ -51,17 +51,17 @@ final class JsonOutput {
     if (value == null) {
       return "null";
     }
-    if (value instanceof String text) {
-      return quote(text);
+    if (value instanceof String) {
+      return quote((String) value);
     }
     if (value instanceof Number || value instanceof Boolean) {
       return value.toString();
     }
-    if (value instanceof Map<?, ?> map) {
-      return mapToJson(map);
+    if (value instanceof Map<?, ?>) {
+      return mapToJson((Map<?, ?>) value);
     }
-    if (value instanceof Iterable<?> iterable) {
-      return iterableToJson(iterable);
+    if (value instanceof Iterable<?>) {
+      return iterableToJson((Iterable<?>) value);
     }
     if (value.getClass().isArray()) {
       return arrayToJson(value);

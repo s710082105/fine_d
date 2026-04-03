@@ -14,6 +14,7 @@ from typing import NamedTuple
 BRIDGE_NAME = "fr-remote-bridge"
 VERSION = "0.1.0"
 MAIN_CLASS = "fine.remote.bridge.Main"
+JAVA_RELEASE = "8"
 SUPPORTED_OPERATIONS = [
     "list",
     "read",
@@ -49,7 +50,18 @@ def build_bridge(
     with tempfile.TemporaryDirectory(prefix="fr-bridge-build-") as temp_dir:
         classes_dir = Path(temp_dir) / "classes"
         classes_dir.mkdir()
-        _run([javac, "-encoding", "UTF-8", "-d", str(classes_dir), *map(str, sources)])
+        _run(
+            [
+                javac,
+                "--release",
+                JAVA_RELEASE,
+                "-encoding",
+                "UTF-8",
+                "-d",
+                str(classes_dir),
+                *map(str, sources),
+            ]
+        )
         jar_path = output_dir / f"{BRIDGE_NAME}.jar"
         _run([jar, "cfe", str(jar_path), MAIN_CLASS, "-C", str(classes_dir), "."])
 
