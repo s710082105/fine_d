@@ -19,6 +19,7 @@ final class ReflectionSupport {
       Object... arguments
   ) throws Exception {
     Method method = type.getMethod(methodName, parameterTypes);
+    method.setAccessible(true);
     return method.invoke(null, arguments);
   }
 
@@ -33,12 +34,14 @@ final class ReflectionSupport {
       Object... arguments
   ) throws Exception {
     Method method = target.getClass().getMethod(methodName, parameterTypes);
+    method.setAccessible(true);
     return method.invoke(target, arguments);
   }
 
   static Object newInstance(Class<?> type, Class<?>[] parameterTypes, Object... arguments)
       throws Exception {
     Constructor<?> constructor = type.getConstructor(parameterTypes);
+    constructor.setAccessible(true);
     return constructor.newInstance(arguments);
   }
 

@@ -1,7 +1,10 @@
 import hashlib
 import importlib.util
 import json
+import os
+import subprocess
 import shutil
+import textwrap
 import zipfile
 from pathlib import Path
 
@@ -85,7 +88,109 @@ def test_build_bridge_generates_runtime_artifacts(tmp_path: Path) -> None:
     assert major_version == 52
 
 
+@pytest.mark.skipif(
+    shutil.which("javac") is None or shutil.which("java") is None or shutil.which("jar") is None,
+    reason="javac/java/jar not available",
+)
+def test_bridge_reflection_support_handles_package_private_targets(tmp_path: Path) -> None:
+    module = _load_build_module()
+    artifacts = module.build_bridge(
+        project_root=REPO_ROOT,
+        dist_dir=tmp_path / "dist",
+    )
+    source_root = tmp_path / "src"
+    classes_dir = tmp_path / "classes"
+    classes_dir.mkdir()
+
+    _write_java_source(
+        source_root / "sample" / "PublicFactory.java",
+        """
+        package sample;
+
+        public final class PublicFactory {
+          private PublicFactory() {
+          }
+
+          public static Object createHidden() {
+            return HiddenTarget.create();
+          }
+        }
+        """,
+    )
+    _write_java_source(
+        source_root / "sample" / "HiddenTarget.java",
+        """
+        package sample;
+
+        final class HiddenTarget {
+          static Object create() {
+            return new HiddenTarget();
+          }
+
+          public String hello() {
+            return "ok";
+          }
+        }
+        """,
+    )
+    _write_java_source(
+        source_root / "fine" / "remote" / "bridge" / "ReflectionAccessProbe.java",
+        """
+        package fine.remote.bridge;
+
+        import sample.PublicFactory;
+
+        public final class ReflectionAccessProbe {
+          private ReflectionAccessProbe() {
+          }
+
+          public static void main(String[] args) throws Exception {
+            Object target = PublicFactory.createHidden();
+            System.out.print(ReflectionSupport.invoke(target, "hello"));
+          }
+        }
+        """,
+    )
+
+    subprocess.run(
+        [
+            shutil.which("javac") or "javac",
+            "--release",
+            "8",
+            "-cp",
+            str(artifacts.jar_path),
+            "-d",
+            str(classes_dir),
+            *[str(path) for path in source_root.rglob("*.java")],
+        ],
+        check=True,
+    )
+    result = subprocess.run(
+        [
+            shutil.which("java") or "java",
+            "-cp",
+            _classpath([classes_dir, artifacts.jar_path]),
+            "fine.remote.bridge.ReflectionAccessProbe",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr or result.stdout
+    assert result.stdout == "ok"
+
+
 def _class_major_version(jar_path: Path, class_name: str) -> int:
     with zipfile.ZipFile(jar_path) as archive:
         content = archive.read(class_name)
     return int.from_bytes(content[6:8], "big")
+
+
+def _write_java_source(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(textwrap.dedent(content).strip() + "\n")
+
+
+def _classpath(entries: list[Path]) -> str:
+    return str(entries[0]) + os.pathsep + str(entries[1])

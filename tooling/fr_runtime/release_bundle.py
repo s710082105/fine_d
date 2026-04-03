@@ -11,7 +11,6 @@ from tooling.fr_runtime.bridge.java_runtime import validate_bridge_artifacts
 
 BUNDLE_PATHS = [
     Path(".codex"),
-    Path("bridge/src"),
     Path("tooling"),
     Path("reportlets"),
     Path("README.md"),
