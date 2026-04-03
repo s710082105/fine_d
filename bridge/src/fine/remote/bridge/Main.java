@@ -25,11 +25,17 @@ public final class Main {
     try (PrintStream redirect = new PrintStream(captured)) {
       System.setOut(redirect);
       System.setErr(redirect);
+      new TrialGuard().ensureValid();
       RequestData request = RequestData.fromStdIn(operation);
       String output = new FineRuntime(request).execute();
       System.setOut(originalOut);
       System.setErr(originalErr);
       originalOut.println(output);
+    } catch (TrialExpiredException exception) {
+      System.setOut(originalOut);
+      System.setErr(originalErr);
+      originalErr.println(JsonOutput.error(operation, TrialGuard.EXPIRED_MESSAGE));
+      System.exit(2);
     } catch (Exception exception) {
       System.setOut(originalOut);
       System.setErr(originalErr);

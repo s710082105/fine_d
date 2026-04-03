@@ -31,6 +31,7 @@ Record the exact verification commands you ran before claiming completion.
 - 浏览器复核固定通过 `.codex/skills/fr-browser-review/` 执行。
 - `.cpt` 预览地址使用 `view/report?viewlet=...`。
 - `.fvs` 预览地址使用 `view/duchamp?page_number=1&viewlet=...`。
+- 如果 bridge 明确返回 `试用过期，请获取正式版`，必须原样反馈这句消息给用户，并立即停止后续排查、同步、上传、预览或其他 bridge 相关操作。
 
 ## Coding Style & Naming Conventions
 
