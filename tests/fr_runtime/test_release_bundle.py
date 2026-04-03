@@ -44,6 +44,11 @@ def test_build_release_bundle_copies_runtime_files(tmp_path: Path) -> None:
     assert (output_dir / "reportlets" / "GettingStarted.cpt").exists()
     assert (output_dir / "README.md").exists()
     assert (output_dir / "pyproject.toml").exists()
+    launcher_path = output_dir / "start-codex-windows.cmd"
+    assert launcher_path.exists()
+    launcher_content = launcher_path.read_text(encoding="utf-8")
+    assert 'cd /d "%~dp0"' in launcher_content
+    assert "\ncodex\n" in launcher_content
     assert not (output_dir / "bridge" / "src").exists()
     assert not (output_dir / "tooling" / "__pycache__").exists()
     assert not any(path.name == ".DS_Store" for path in output_dir.rglob("*"))

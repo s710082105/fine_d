@@ -19,6 +19,26 @@ BUNDLE_PATHS = [
 ]
 IGNORED_NAMES = {"__pycache__", ".pytest_cache", ".DS_Store"}
 IGNORED_SUFFIXES = {".pyc", ".pyo"}
+WINDOWS_LAUNCHER_NAME = "start-codex-windows.cmd"
+WINDOWS_LAUNCHER_CONTENT = """@echo off
+setlocal
+cd /d "%~dp0"
+where codex >nul 2>nul
+if errorlevel 1 (
+  echo [ERROR] codex command not found in PATH.
+  echo Install Codex CLI first, then run this launcher again.
+  pause
+  exit /b 1
+)
+codex
+set "EXIT_CODE=%ERRORLEVEL%"
+if not "%EXIT_CODE%"=="0" (
+  echo.
+  echo Codex exited with code %EXIT_CODE%.
+  pause
+)
+exit /b %EXIT_CODE%
+"""
 
 
 def build_release_bundle(
@@ -35,6 +55,7 @@ def build_release_bundle(
         source = project_root / relative_path
         _copy_entry(source, output_dir / relative_path)
     _copy_entry(bridge_dir, output_dir / "bridge" / "dist")
+    _write_windows_launcher(output_dir)
     return output_dir
 
 
@@ -58,6 +79,11 @@ def _copy_entry(source: Path, destination: Path) -> None:
         return
     destination.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(source, destination)
+
+
+def _write_windows_launcher(output_dir: Path) -> None:
+    launcher_path = output_dir / WINDOWS_LAUNCHER_NAME
+    launcher_path.write_text(WINDOWS_LAUNCHER_CONTENT, encoding="utf-8", newline="\r\n")
 
 
 def main(argv: list[str] | None = None) -> int:
