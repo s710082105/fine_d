@@ -4,17 +4,25 @@ on:
   push:
     paths:
       - ".github/workflows/build-bridge.yml"
+      - ".codex/**"
       - "bridge/**"
+      - "reportlets/**"
       - "tests/fr_runtime/**"
       - "tooling/fr_runtime/**"
+      - "AGENTS.md"
       - "README.md"
+      - "pyproject.toml"
   pull_request:
     paths:
       - ".github/workflows/build-bridge.yml"
+      - ".codex/**"
       - "bridge/**"
+      - "reportlets/**"
       - "tests/fr_runtime/**"
       - "tooling/fr_runtime/**"
+      - "AGENTS.md"
       - "README.md"
+      - "pyproject.toml"
   workflow_dispatch:
 
 jobs:
@@ -42,15 +50,16 @@ jobs:
       - name: Build Bridge
         run: python bridge/scripts/build_bridge.py --project-root .
 
+      - name: Build Runtime Bundle
+        run: python -m tooling.fr_runtime.release_bundle --project-root . --output-dir dist/finereport-runtime-bundle
+
       - name: Run Runtime Tests
         run: pytest tests/fr_runtime -q
 
-      - name: Upload Bridge Artifact
+      - name: Upload Runtime Bundle
         uses: actions/upload-artifact@v4
         with:
-          name: fr-remote-bridge-dist
-          path: |
-            bridge/dist/fr-remote-bridge.jar
-            bridge/dist/manifest.json
-            bridge/dist/checksums.txt
+          name: finereport-runtime-bundle
+          path: dist/finereport-runtime-bundle
+          include-hidden-files: true
           if-no-files-found: error
