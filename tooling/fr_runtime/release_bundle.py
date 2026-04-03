@@ -19,25 +19,27 @@ BUNDLE_PATHS = [
 ]
 IGNORED_NAMES = {"__pycache__", ".pytest_cache", ".DS_Store"}
 IGNORED_SUFFIXES = {".pyc", ".pyo"}
-WINDOWS_LAUNCHER_NAME = "start-codex-windows.cmd"
-WINDOWS_LAUNCHER_CONTENT = """@echo off
-setlocal
-cd /d "%~dp0"
-where codex >nul 2>nul
-if errorlevel 1 (
-  echo [ERROR] codex command not found in PATH.
-  echo Install Codex CLI first, then run this launcher again.
-  pause
-  exit /b 1
-)
-codex
-set "EXIT_CODE=%ERRORLEVEL%"
-if not "%EXIT_CODE%"=="0" (
-  echo.
-  echo Codex exited with code %EXIT_CODE%.
-  pause
-)
-exit /b %EXIT_CODE%
+WINDOWS_LAUNCHER_NAME = "start-codex-windows.ps1"
+WINDOWS_LAUNCHER_CONTENT = """$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+Set-Location -Path $scriptDir
+$codexCommand = Get-Command codex -ErrorAction SilentlyContinue
+if (-not $codexCommand) {
+  Write-Host "[ERROR] codex command not found in PATH."
+  Write-Host "Install Codex CLI first, then run this launcher again."
+  Read-Host "Press Enter to exit" | Out-Null
+  exit 1
+}
+& codex
+$exitCode = $LASTEXITCODE
+if ($null -eq $exitCode) {
+  $exitCode = 0
+}
+if ($exitCode -ne 0) {
+  Write-Host ""
+  Write-Host "Codex exited with code $exitCode."
+  Read-Host "Press Enter to exit" | Out-Null
+}
+exit $exitCode
 """
 
 
