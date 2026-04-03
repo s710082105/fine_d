@@ -2,17 +2,17 @@
 
 ## 目的
 
-本文档归档 2026-04-02 删除实现代码前的最后一版关键链路，供下一轮重构时参考。重点覆盖三件事：
+本文档归档当前 FineReport 远程桥接的关键链路，供后续开发和联调时参考。重点覆盖三件事：
 
 - 如何获取远程目录
 - 如何获取数据连接
 - 如何上传和下载远程文件
 
-下文中的文件路径均指删除前的实现位置，用于帮助后续检索设计思路，不代表这些文件仍保留在仓库中。
+当前源码位于 `bridge/src/fine/remote/bridge/`，打包脚本位于 `bridge/scripts/build_bridge.py`。文中如出现历史旧路径，仅用于帮助理解演进过程。
 
 ## 总体结构
 
-历史实现分成两条链路：
+当前实现分成两条链路：
 
 1. 目录和文件链路
    `FastAPI/CLI -> use case -> FineRemoteClient -> JVM bridge -> FineReport Designer 运行时`
@@ -21,19 +21,18 @@
 
 这两条链路不要混用：
 
-- 远程目录、文件读取、文件写回，走 `fine_remote` 桥接
+- 远程目录、文件读取、文件写回，走 `tooling/fr_runtime` + `bridge/dist` 桥接
 - 数据连接列表、SQL 预览，走 HTTP API
 
 ## 远程目录获取
 
-### 历史实现入口
+### 当前实现入口
 
-- 本地 HTTP 路由：`apps/api/routes/remote.py`
-- use case：`backend/application/remote/use_cases.py`
-- gateway：`backend/adapters/fine/remote_overview_gateway.py`
-- Python 客户端：`python/fine_remote/client.py`
-- JVM 调用：`python/fine_remote/jvm.py`
-- Java 桥接：`java/fine_remote/FrRemoteBridge.java`
+- CLI 入口：`tooling/fr_runtime/cli.py`
+- Python 调用：`tooling/fr_runtime/bridge/runner.py`
+- Java 桥接：`bridge/src/fine/remote/bridge/Main.java`
+- Java 运行时：`bridge/src/fine/remote/bridge/FineRuntime.java`
+- 打包脚本：`bridge/scripts/build_bridge.py`
 
 ### 调用链
 
@@ -42,7 +41,7 @@
 3. `FineRemoteOverviewGateway.list_directories(...)`
 4. `FineRemoteClient.list_files(path)`
 5. `JvmBridgeRunner.invoke("list", ...)`
-6. `FrRemoteBridge.listFiles(...)`
+6. `FineRuntime.listPayload(...)`
 7. FineReport `FileNodes.list(path)` 返回目录项
 
 ### 关键约束
@@ -105,12 +104,11 @@ python -m fine_remote.cli list \
 
 ## 数据连接获取
 
-### 历史实现入口
+### 当前实现入口
 
-- HTTP 路由：`apps/api/routes/datasource.py`
-- use case：`backend/application/datasource/use_cases.py`
-- HTTP 客户端：`backend/adapters/fine/http_client.py`
-- 远程概览复用入口：`apps/api/routes/remote.py` + `backend/adapters/fine/remote_overview_gateway.py`
+- CLI 入口：`tooling/fr_runtime/cli.py`
+- HTTP 客户端：`tooling/fr_runtime/remote/http.py`
+- 服务层：`tooling/fr_runtime/datasource/service.py`
 
 ### 调用链
 
@@ -186,13 +184,11 @@ Accept: application/json
 
 ## 文件下载与上传
 
-### 历史实现入口
+### 当前实现入口
 
-- HTTP 路由：`apps/api/routes/sync.py`
-- use case：`backend/application/sync/use_cases.py`
-- gateway：`backend/adapters/fine/sync_gateway.py`
-- 低层客户端：`python/fine_remote/client.py`
-- 旧 Tauri 同步护栏：`src-tauri/src/domain/remote_sync_guard.rs`
+- CLI 入口：`tooling/fr_runtime/cli.py`
+- 同步服务：`tooling/fr_runtime/sync/service.py`
+- 低层 bridge runner：`tooling/fr_runtime/bridge/runner.py`
 
 ### 支持的动作
 
@@ -217,7 +213,7 @@ Accept: application/json
 3. `FineSyncGateway.pull_remote_file(path)`
 4. `_require_remote_file_ready(remote_path, "拉取")`
 5. `FineRemoteClient.read_file(remote_path)`
-6. `FrRemoteBridge.readFile(...)`
+6. `FineRuntime.readPayload(...)`
 7. FineReport `WorkResource.readFully(path)`
 8. 内容写回本地 `reportlets/<path>`
 
@@ -228,7 +224,7 @@ Accept: application/json
 3. `FineSyncGateway.sync_file(path)`
 4. 先检查远端存在且未锁定
 5. `FineRemoteClient.write_file(remote_path, content)`
-6. `FrRemoteBridge.writeFile(...)`
+6. `FineRuntime.writePayload(...)`
 7. FineReport `WorkResource.save(tempPath, path, content)`
 8. 再次读取远端文件，比对字节是否与本地一致
 

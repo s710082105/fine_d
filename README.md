@@ -6,7 +6,9 @@
 
 - `.codex/skills/`：项目级 skill 目录，包含 FineReport 业务 skill、内置 `superpowers`、`skill-creator`、`chrome-devtools`
 - `tooling/fr_runtime/`：Python 运行时，统一提供 `init`、`doctor`、`db`、`sync`、`preview`
-- `bridge/dist/`：预编译 Java bridge 分发产物
+- `bridge/src/`：Java bridge 源码
+- `bridge/scripts/build_bridge.py`：本地与 CI 共用的打包脚本
+- `bridge/dist/`：打包输出目录，运行时读取这里的 bridge 产物
 - `reportlets/`：样例报表与参考产物
 - `tests/fr_runtime/`：运行时回归测试
 - `docs/`：历史设计、协议分析和实施归档
@@ -22,5 +24,6 @@
 
 - 仓库不再保留根目录 `skills/` 镜像，实际发现目录只有 `.codex/skills/`
 - 创建报表所需基础模板已内置到 `.codex/skills/fr-create/assets/template/`
-- Java bridge 仅保留 `bridge/dist/` 分发产物，不再保留源码和构建中间产物
+- Java bridge 源码保留在 `bridge/src/`，可用 `python3 bridge/scripts/build_bridge.py --project-root .` 本地重建
+- `bridge/dist/` 继续作为运行时输入目录，CI 通过 `.github/workflows/build-bridge.yml` 统一产出分发物
 - 浏览器复核中，`.cpt` 走 `view/report?viewlet=...`，`.fvs` 走 `view/duchamp?page_number=1&viewlet=...`

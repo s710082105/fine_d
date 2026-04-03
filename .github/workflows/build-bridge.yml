@@ -1,0 +1,56 @@
+name: build-bridge
+
+on:
+  push:
+    paths:
+      - ".github/workflows/build-bridge.yml"
+      - "bridge/**"
+      - "tests/fr_runtime/**"
+      - "tooling/fr_runtime/**"
+      - "README.md"
+  pull_request:
+    paths:
+      - ".github/workflows/build-bridge.yml"
+      - "bridge/**"
+      - "tests/fr_runtime/**"
+      - "tooling/fr_runtime/**"
+      - "README.md"
+  workflow_dispatch:
+
+jobs:
+  bridge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Install Test Dependencies
+        run: python -m pip install pytest
+
+      - name: Build Bridge
+        run: python bridge/scripts/build_bridge.py --project-root .
+
+      - name: Run Runtime Tests
+        run: pytest tests/fr_runtime -q
+
+      - name: Upload Bridge Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fr-remote-bridge-dist
+          path: |
+            bridge/dist/fr-remote-bridge.jar
+            bridge/dist/manifest.json
+            bridge/dist/checksums.txt
+          if-no-files-found: error

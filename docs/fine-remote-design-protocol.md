@@ -165,9 +165,10 @@ JVM helper 现在走的是：
 
 对应实现文件：
 
-- [java/fine_remote/FrRemoteBridge.java](/Users/wj/data/mcp/finereport/java/fine_remote/FrRemoteBridge.java)
-- [python/fine_remote/jvm.py](/Users/wj/data/mcp/finereport/python/fine_remote/jvm.py)
-- [python/fine_remote/client.py](/Users/wj/data/mcp/finereport/python/fine_remote/client.py)
+- [Main.java](/Users/wj/data/mcp/finereport/bridge/src/fine/remote/bridge/Main.java)
+- [FineRuntime.java](/Users/wj/data/mcp/finereport/bridge/src/fine/remote/bridge/FineRuntime.java)
+- [build_bridge.py](/Users/wj/data/mcp/finereport/bridge/scripts/build_bridge.py)
+- [runner.py](/Users/wj/data/mcp/finereport/tooling/fr_runtime/bridge/runner.py)
 
 ## 当前桥接层职责
 
@@ -177,9 +178,8 @@ Python 只负责：
 
 - 暴露统一 API
 - 组装调用参数
-- 编译 JVM helper
-- 调用 `java`
-- 读取 helper 输出的 JSON 文件
+- 调用 `java -jar bridge/dist/fr-remote-bridge.jar`
+- 读取 bridge 输出的 JSON
 
 ### JVM 层
 
@@ -200,25 +200,29 @@ JVM helper 负责：
 
 ```python
 from pathlib import Path
-from fine_remote import FineRemoteClient
+from tooling.fr_runtime.bridge.runner import BridgeRunner, ConfiguredBridgeRunner
 
-client = FineRemoteClient(
+runner = ConfiguredBridgeRunner(
+    runner=BridgeRunner(
+        java_path=Path("/Applications/FineReport/Contents/runtime/Contents/Home/bin/java"),
+        jar_path=Path("bridge/dist/fr-remote-bridge.jar"),
+    ),
+    fine_home=Path("/Applications/FineReport"),
     base_url="http://localhost:8075/webroot/decision",
     username="admin",
     password="admin",
-    fine_home=Path("/Applications/FineReport"),
 )
 
-entries = client.list_files("reportlets")
-content = client.read_file("reportlets/微信用户列表.cpt")
-client.write_file("reportlets/微信用户列表.cpt", content)
+entries = runner.invoke("list", {"path": "reportlets"})
+content = runner.invoke("read", {"path": "reportlets/微信用户列表.cpt"})
+runner.invoke("write", {"path": "reportlets/微信用户列表.cpt", "inputBase64": content["contentBase64"]})
 ```
 
 主要文件：
 
-- [python/fine_remote/__init__.py](/Users/wj/data/mcp/finereport/python/fine_remote/__init__.py)
-- [python/fine_remote/client.py](/Users/wj/data/mcp/finereport/python/fine_remote/client.py)
-- [python/fine_remote/jvm.py](/Users/wj/data/mcp/finereport/python/fine_remote/jvm.py)
+- [runner.py](/Users/wj/data/mcp/finereport/tooling/fr_runtime/bridge/runner.py)
+- [cli.py](/Users/wj/data/mcp/finereport/tooling/fr_runtime/cli.py)
+- [FineRuntime.java](/Users/wj/data/mcp/finereport/bridge/src/fine/remote/bridge/FineRuntime.java)
 
 ## 已完成验证
 
