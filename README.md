@@ -31,3 +31,25 @@
 - Java bridge 源码保留在 `bridge/src/`，可用 `python3 bridge/scripts/build_bridge.py --project-root .` 本地重建
 - `bridge/dist/` 继续作为运行时输入目录，CI 通过 `.github/workflows/build-bridge.yml` 统一产出分发物
 - 浏览器复核中，`.cpt` 走 `view/report?viewlet=...`，`.fvs` 走 `view/duchamp?page_number=1&viewlet=...`
+
+## Bridge 授权
+
+- bridge 启动时会先检查 jar 同级目录下的 `fr-remote-bridge.auth`，授权通过后才继续试用期校验
+- 如果缺少授权文件、MAC 不匹配、授权已过期或签名无效，bridge 会直接返回 `设备 MAC: <当前设备 MAC>，请联系管理员授权`
+- 授权文件由 `bridge/scripts/generate_authorization.py` 生成，输入设备 MAC 和授权截止时间，输出固定文件名 `fr-remote-bridge.auth`
+- 生成出来的 `fr-remote-bridge.auth` 必须与 `fr-remote-bridge.jar` 放在同一目录
+- 如果要使用自己的授权密钥对，构建 bridge 时通过 `--license-public-key-file` 注入公钥，再用对应私钥生成授权文件
+
+```bash
+python3 bridge/scripts/build_bridge.py \
+  --project-root . \
+  --license-public-key-file /path/to/license-public.pem
+```
+
+```bash
+python3 bridge/scripts/generate_authorization.py \
+  --private-key-file /path/to/license-private.pem \
+  --output-dir bridge/dist \
+  --mac AA:BB:CC:DD:EE:FF \
+  --expires-at 2099-01-01T00:00:00Z
+```
