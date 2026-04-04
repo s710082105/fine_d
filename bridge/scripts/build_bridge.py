@@ -20,7 +20,21 @@ JAVA_RELEASE = "8"
 DEFAULT_TRIAL_DAYS = 3
 DEFAULT_NTP_TIMEOUT_MILLIS = 1000
 DEFAULT_NTP_SERVERS = ("time.cloudflare.com", "ntp.aliyun.com", "time.apple.com")
+DEFAULT_AUTHORIZATION_FILE_NAME = "fr-remote-bridge.auth"
+DEFAULT_LICENSE_PUBLIC_KEY_PEM = """-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxMkG32eiVdcE50L3hBsk
+FBG3dePZ/Zsh/McQ9cN2SBTyKSRDYQPc0pPCsJvVbbboVDZSYeN440Nokve68aif
+OEWHyzAom64ZSL1bpUWn4gYQjGKLt7RwusvOrqR3vYtb8njKvgVqke59lImgvkzv
+79kbQdlU8DcxkfxafdnmeBBCIXk3N1ff9UDEnL7ZKWoXKo6y9hdeUrqd/DF1urLH
+i+aBktEfLv1dRkUkHHYc0Q8BdA16yHtbd0NQ6SZy4yNGtRXBahAu3XMvg06KZuAM
+AkdehjMb585ROr+bvb+WMnU3AKRCqUnyNYBy8KU2RZy5zsWcHklkqfc2ElXMwFhR
+fwIDAQAB
+-----END PUBLIC KEY-----
+"""
 OBFUSCATED_CLASS_NAMES = {
+    "AuthorizationGuard": "A",
+    "AuthorizationException": "X",
+    "AuthorizationBuildConfig": "P",
     "FineRuntime": "R",
     "TransmissionBridge": "T",
     "WorkspaceBridge": "W",
@@ -28,6 +42,7 @@ OBFUSCATED_CLASS_NAMES = {
     "FineLoader": "L",
     "BridgeContext": "C",
     "JsonOutput": "J",
+    "MacAddressResolver": "M",
     "TrialGuard": "G",
     "TrialExpiredException": "E",
     "NtpTimeClient": "N",
@@ -56,6 +71,7 @@ def build_bridge(
     jar_cmd: str | None = None,
     trial_expires_at: str | None = None,
     ntp_servers: Sequence[str] | None = None,
+    license_public_key_file: Path | None = None,
 ) -> BuildArtifacts:
     source_root = project_root / "bridge" / "src"
     output_dir = dist_dir or (project_root / "bridge" / "dist")
@@ -67,11 +83,18 @@ def build_bridge(
     jar = _resolve_tool(jar_cmd or "jar")
     expires_at = _resolve_trial_expires_at(trial_expires_at)
     configured_ntp_servers = _resolve_ntp_servers(ntp_servers)
+    license_public_key_pem = _resolve_license_public_key_pem(license_public_key_file)
 
     with tempfile.TemporaryDirectory(prefix="fr-bridge-build-") as temp_dir:
         temp_root = Path(temp_dir)
         prepared_source_root = temp_root / "source"
-        _prepare_sources(source_root, prepared_source_root, expires_at, configured_ntp_servers)
+        _prepare_sources(
+            source_root,
+            prepared_source_root,
+            expires_at,
+            configured_ntp_servers,
+            license_public_key_pem,
+        )
         sources = sorted(prepared_source_root.rglob("*.java"))
         if not sources:
             raise FileNotFoundError(f"no Java sources found under {source_root}")
@@ -147,14 +170,27 @@ def _resolve_ntp_servers(value: Sequence[str] | None) -> tuple[str, ...]:
     return servers
 
 
+def _resolve_license_public_key_pem(value: Path | None) -> str:
+    env_value = os.environ.get("FR_BRIDGE_LICENSE_PUBLIC_KEY_FILE")
+    candidate = value or (Path(env_value) if env_value else None)
+    if candidate is None:
+        return DEFAULT_LICENSE_PUBLIC_KEY_PEM
+    public_key = candidate.read_text(encoding="utf-8").strip()
+    if not public_key:
+        raise ValueError(f"license public key file is empty: {candidate}")
+    return public_key
+
+
 def _prepare_sources(
     source_root: Path,
     output_root: Path,
     trial_expires_at: str,
     ntp_servers: Sequence[str],
+    license_public_key_pem: str,
 ) -> None:
     shutil.copytree(source_root, output_root)
     _write_trial_build_config(output_root, trial_expires_at, ntp_servers)
+    _write_authorization_build_config(output_root, license_public_key_pem)
     _obfuscate_sources(output_root)
 
 
@@ -195,6 +231,35 @@ def _write_trial_build_config(
                 "",
             ]
         )
+    )
+
+
+def _write_authorization_build_config(output_root: Path, license_public_key_pem: str) -> None:
+    config_path = output_root / "fine" / "remote" / "bridge" / "AuthorizationBuildConfig.java"
+    config_path.write_text(
+        "\n".join(
+            [
+                "package fine.remote.bridge;",
+                "",
+                "final class AuthorizationBuildConfig {",
+                f"  private static final String AUTHORIZATION_FILE_NAME = {json.dumps(DEFAULT_AUTHORIZATION_FILE_NAME)};",
+                f"  private static final String PUBLIC_KEY_PEM = {json.dumps(license_public_key_pem)};",
+                "",
+                "  private AuthorizationBuildConfig() {",
+                "  }",
+                "",
+                "  static String authorizationFileName() {",
+                "    return AUTHORIZATION_FILE_NAME;",
+                "  }",
+                "",
+                "  static String publicKeyPem() {",
+                "    return PUBLIC_KEY_PEM;",
+                "  }",
+                "}",
+                "",
+            ]
+        ),
+        encoding="utf-8",
     )
 
 
@@ -254,6 +319,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--jar", dest="jar_cmd")
     parser.add_argument("--trial-expires-at")
     parser.add_argument("--ntp-server", dest="ntp_servers", action="append")
+    parser.add_argument("--license-public-key-file", type=Path)
     args = parser.parse_args(argv)
     build_bridge(
         project_root=args.project_root.resolve(),
@@ -262,6 +328,7 @@ def main(argv: list[str] | None = None) -> int:
         jar_cmd=args.jar_cmd,
         trial_expires_at=args.trial_expires_at,
         ntp_servers=args.ntp_servers,
+        license_public_key_file=args.license_public_key_file.resolve() if args.license_public_key_file else None,
     )
     return 0
 

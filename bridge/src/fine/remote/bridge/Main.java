@@ -25,12 +25,18 @@ public final class Main {
     try (PrintStream redirect = new PrintStream(captured)) {
       System.setOut(redirect);
       System.setErr(redirect);
+      new AuthorizationGuard().ensureAuthorized();
       new TrialGuard().ensureValid();
       RequestData request = RequestData.fromStdIn(operation);
       String output = new FineRuntime(request).execute();
       System.setOut(originalOut);
       System.setErr(originalErr);
       originalOut.println(output);
+    } catch (AuthorizationException exception) {
+      System.setOut(originalOut);
+      System.setErr(originalErr);
+      originalErr.println(JsonOutput.error(operation, exception.getMessage()));
+      System.exit(2);
     } catch (TrialExpiredException exception) {
       System.setOut(originalOut);
       System.setErr(originalErr);

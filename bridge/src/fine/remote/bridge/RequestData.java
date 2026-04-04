@@ -16,7 +16,7 @@ final class RequestData {
   }
 
   static RequestData fromStdIn(String operation) throws Exception {
-    return new RequestData(operation, parse(readInput()));
+    return new RequestData(operation, parseEncodedContent(readInput()));
   }
 
   static boolean isSupportedOperation(String operation) {
@@ -90,7 +90,7 @@ final class RequestData {
     return new String(buffer.toByteArray(), StandardCharsets.UTF_8);
   }
 
-  private static Map<String, String> parse(String content) {
+  static Map<String, String> parseEncodedContent(String content) {
     Map<String, String> result = new HashMap<>();
     for (String line : content.split("\\r?\\n")) {
       if (line.isEmpty()) {

@@ -1,3 +1,4 @@
+import base64
 import importlib.util
 import json
 import shutil
@@ -11,6 +12,7 @@ import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPT_PATH = REPO_ROOT / "bridge" / "scripts" / "build_bridge.py"
+AUTH_SCRIPT = REPO_ROOT / "bridge" / "scripts" / "generate_authorization.py"
 SOURCE_ROOT = REPO_ROOT / "bridge" / "src" / "fine" / "remote" / "bridge"
 TRIAL_EXPIRED_MESSAGE = "试用过期，请获取正式版"
 
@@ -36,19 +38,32 @@ def test_default_trial_expiry_is_three_days_from_build_time() -> None:
 
 
 @pytest.mark.skipif(
-    shutil.which("javac") is None or shutil.which("java") is None or shutil.which("jar") is None,
-    reason="javac/java/jar not available",
+    any(shutil.which(name) is None for name in ("javac", "java", "jar", "openssl")),
+    reason="javac/java/jar/openssl not available",
 )
 def test_bridge_returns_trial_expired_when_ntp_unavailable(tmp_path: Path) -> None:
+    private_key, public_key = _generate_rsa_key_pair(tmp_path)
+    device_mac = _resolve_device_mac(tmp_path)
     module = _load_build_module()
     artifacts = module.build_bridge(
         project_root=REPO_ROOT,
         dist_dir=tmp_path / "dist",
         trial_expires_at="2099-01-01T00:00:00Z",
         ntp_servers=("127.0.0.1:9",),
+        license_public_key_file=public_key,
+    )
+    _run_authorization_script(
+        private_key=private_key,
+        output_dir=tmp_path / "dist",
+        mac=device_mac,
+        expires_at="2099-01-01T00:00:00Z",
     )
 
-    response = _run_bridge(artifacts.jar_path, "list")
+    response = _run_bridge(
+        artifacts.jar_path,
+        "list",
+        payload={"fineHome": "/tmp", "baseUrl": "http://127.0.0.1", "username": "u", "password": "p"},
+    )
 
     assert response["returncode"] == 2
     assert response["payload"] == {
@@ -86,9 +101,10 @@ def test_trial_guard_allows_requests_before_deadline(tmp_path: Path) -> None:
     assert output == "ok"
 
 
-def _run_bridge(jar_path: Path, operation: str) -> dict[str, object]:
+def _run_bridge(jar_path: Path, operation: str, payload: dict[str, str] | None = None) -> dict[str, object]:
     result = subprocess.run(
         [shutil.which("java") or "java", "-jar", str(jar_path), operation],
+        input=_encode_payload(payload or {}),
         capture_output=True,
         text=True,
         check=False,
@@ -162,3 +178,116 @@ def _run_trial_guard_probe(tmp_path: Path, current_time: str, expires_at: str) -
     )
     assert result.returncode == 0, result.stderr or result.stdout
     return result.stdout.strip()
+def _generate_rsa_key_pair(tmp_path: Path) -> tuple[Path, Path]:
+    private_key = tmp_path / "license-private.pem"
+    public_key = tmp_path / "license-public.pem"
+    subprocess.run(
+        [
+            shutil.which("openssl") or "openssl",
+            "genpkey",
+            "-algorithm",
+            "RSA",
+            "-pkeyopt",
+            "rsa_keygen_bits:2048",
+            "-out",
+            str(private_key),
+        ],
+        capture_output=True,
+        check=True,
+    )
+    subprocess.run(
+        [
+            shutil.which("openssl") or "openssl",
+            "rsa",
+            "-pubout",
+            "-in",
+            str(private_key),
+            "-out",
+            str(public_key),
+        ],
+        capture_output=True,
+        check=True,
+    )
+    return private_key, public_key
+def _run_authorization_script(
+    private_key: Path,
+    output_dir: Path,
+    mac: str,
+    expires_at: str,
+) -> None:
+    subprocess.run(
+        [
+            shutil.which("python3") or "python3",
+            str(AUTH_SCRIPT),
+            "--private-key-file",
+            str(private_key),
+            "--output-dir",
+            str(output_dir),
+            "--mac",
+            mac,
+            "--expires-at",
+            expires_at,
+        ],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+def _resolve_device_mac(tmp_path: Path) -> str:
+    source_root = tmp_path / "mac-src"
+    probe_path = source_root / "fine" / "remote" / "bridge" / "MacAddressProbe.java"
+    probe_path.parent.mkdir(parents=True, exist_ok=True)
+    probe_path.write_text(
+        dedent(
+            """
+            package fine.remote.bridge;
+
+            public final class MacAddressProbe {
+              private MacAddressProbe() {
+              }
+
+              public static void main(String[] args) throws Exception {
+                System.out.print(MacAddressResolver.resolveMacAddresses().get(0));
+              }
+            }
+            """
+        ).strip()
+        + "\n"
+    )
+    classes_dir = tmp_path / "mac-classes"
+    classes_dir.mkdir()
+    subprocess.run(
+        [
+            shutil.which("javac") or "javac",
+            "--release",
+            "8",
+            "-Xlint:-options",
+            "-encoding",
+            "UTF-8",
+            "-d",
+            str(classes_dir),
+            *[str(path) for path in SOURCE_ROOT.glob("*.java")],
+            str(probe_path),
+        ],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    result = subprocess.run(
+        [
+            shutil.which("java") or "java",
+            "-cp",
+            str(classes_dir),
+            "fine.remote.bridge.MacAddressProbe",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr or result.stdout
+    return result.stdout.strip()
+def _encode_payload(payload: dict[str, str]) -> str:
+    lines: list[str] = []
+    for key, value in payload.items():
+        encoded = base64.b64encode(value.encode("utf-8")).decode("ascii")
+        lines.append(f"{key}={encoded}")
+    return "\n".join(lines)
