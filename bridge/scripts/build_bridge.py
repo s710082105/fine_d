@@ -21,16 +21,7 @@ DEFAULT_TRIAL_DAYS = 3
 DEFAULT_NTP_TIMEOUT_MILLIS = 1000
 DEFAULT_NTP_SERVERS = ("time.cloudflare.com", "ntp.aliyun.com", "time.apple.com")
 DEFAULT_AUTHORIZATION_FILE_NAME = "fr-remote-bridge.auth"
-DEFAULT_LICENSE_PUBLIC_KEY_PEM = """-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxMkG32eiVdcE50L3hBsk
-FBG3dePZ/Zsh/McQ9cN2SBTyKSRDYQPc0pPCsJvVbbboVDZSYeN440Nokve68aif
-OEWHyzAom64ZSL1bpUWn4gYQjGKLt7RwusvOrqR3vYtb8njKvgVqke59lImgvkzv
-79kbQdlU8DcxkfxafdnmeBBCIXk3N1ff9UDEnL7ZKWoXKo6y9hdeUrqd/DF1urLH
-i+aBktEfLv1dRkUkHHYc0Q8BdA16yHtbd0NQ6SZy4yNGtRXBahAu3XMvg06KZuAM
-AkdehjMb585ROr+bvb+WMnU3AKRCqUnyNYBy8KU2RZy5zsWcHklkqfc2ElXMwFhR
-fwIDAQAB
------END PUBLIC KEY-----
-"""
+DEFAULT_LICENSE_PUBLIC_KEY_FILE = Path(__file__).resolve().with_name("license-public.pem")
 OBFUSCATED_CLASS_NAMES = {
     "AuthorizationGuard": "A",
     "AuthorizationException": "X",
@@ -172,9 +163,7 @@ def _resolve_ntp_servers(value: Sequence[str] | None) -> tuple[str, ...]:
 
 def _resolve_license_public_key_pem(value: Path | None) -> str:
     env_value = os.environ.get("FR_BRIDGE_LICENSE_PUBLIC_KEY_FILE")
-    candidate = value or (Path(env_value) if env_value else None)
-    if candidate is None:
-        return DEFAULT_LICENSE_PUBLIC_KEY_PEM
+    candidate = value or (Path(env_value) if env_value else None) or DEFAULT_LICENSE_PUBLIC_KEY_FILE
     public_key = candidate.read_text(encoding="utf-8").strip()
     if not public_key:
         raise ValueError(f"license public key file is empty: {candidate}")

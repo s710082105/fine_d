@@ -16,3 +16,4 @@ src-tauri/gen/
 .finereport/
 .superpowers/
 logs/
+bridge/scripts/license-private.pem

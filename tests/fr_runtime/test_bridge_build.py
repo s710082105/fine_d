@@ -14,6 +14,7 @@ import pytest
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SOURCE_ROOT = REPO_ROOT / "bridge" / "src" / "fine" / "remote" / "bridge"
 SCRIPT_PATH = REPO_ROOT / "bridge" / "scripts" / "build_bridge.py"
+PUBLIC_KEY_PATH = REPO_ROOT / "bridge" / "scripts" / "license-public.pem"
 EXPECTED_SOURCES = [
     SOURCE_ROOT / "Main.java",
     SOURCE_ROOT / "RequestData.java",
@@ -33,8 +34,16 @@ def _load_build_module():
 
 def test_bridge_sources_exist() -> None:
     assert SCRIPT_PATH.exists()
+    assert PUBLIC_KEY_PATH.exists()
     for source_path in EXPECTED_SOURCES:
         assert source_path.exists(), source_path
+
+
+def test_build_bridge_uses_repo_public_key_file_by_default() -> None:
+    module = _load_build_module()
+
+    assert module.DEFAULT_LICENSE_PUBLIC_KEY_FILE == PUBLIC_KEY_PATH
+    assert module._resolve_license_public_key_pem(None) == PUBLIC_KEY_PATH.read_text(encoding="utf-8").strip()
 
 
 @pytest.mark.skipif(
