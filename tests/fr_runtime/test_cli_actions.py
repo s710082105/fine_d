@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 
 from tooling.fr_runtime.cli import main
+from tooling.fr_runtime.bridge.runner import BridgeAuthorizationError
 from tooling.fr_runtime.doctor import CheckResult
 
 
@@ -112,6 +113,37 @@ def test_sync_command_uses_runtime_service(
     assert '"status": "pulled"' in output
 
 
+def test_sync_command_stops_immediately_when_bridge_requires_authorization(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    config_path = tmp_path / ".codex" / "fr-config.json"
+    config_path.parent.mkdir(parents=True)
+    config_path.write_text("{}")
+
+    class FakeService:
+        def pull(self, target_path: str) -> dict[str, str]:
+            raise BridgeAuthorizationError("设备 MAC: AA:BB:CC:DD:EE:FF，请联系管理员授权")
+
+    monkeypatch.setattr("tooling.fr_runtime.cli.load_config", lambda _: object())
+    monkeypatch.setattr("tooling.fr_runtime.cli.build_sync_service", lambda *_: FakeService())
+
+    exit_code = main(
+        [
+            "sync",
+            "pull",
+            "reportlets/demo/report.cpt",
+            "--config-path",
+            str(config_path),
+        ]
+    )
+    output = capsys.readouterr().out.strip()
+
+    assert exit_code == 1
+    assert output == "设备 MAC: AA:BB:CC:DD:EE:FF，请联系管理员授权"
+
+
 def test_doctor_command_passes_when_install4j_java_and_bridge_exist(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -155,6 +187,45 @@ def test_doctor_command_passes_when_install4j_java_and_bridge_exist(
     assert exit_code == 0
     assert "Designer Java：通过" in output
     assert "Bridge Jar：通过" in output
+
+
+def test_doctor_command_stops_immediately_when_bridge_requires_authorization(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    java_path = tmp_path / "designer" / ".install4j" / "jre.bundle" / "Contents" / "Home" / "bin" / "java"
+    java_path.parent.mkdir(parents=True)
+    java_path.write_text("")
+    config_path = tmp_path / ".codex" / "fr-config.json"
+    config_path.parent.mkdir(parents=True)
+    config_path.write_text(
+        json.dumps(
+            {
+                "project_name": "demo",
+                "decision_url": "http://127.0.0.1:8075/webroot/decision",
+                "designer_root": str(tmp_path / "designer"),
+                "username": "demo-user",
+                "password": "demo-password",
+                "workspace_root": str(tmp_path),
+                "remote_root": "reportlets",
+                "task_type": "report",
+            }
+        )
+    )
+    monkeypatch.setattr(
+        "tooling.fr_runtime.cli.collect_runtime_checks",
+        lambda **_: (_ for _ in ()).throw(
+            BridgeAuthorizationError("设备 MAC: AA:BB:CC:DD:EE:FF，请联系管理员授权")
+        ),
+    )
+
+    exit_code = main(["doctor", "--config-path", str(config_path)])
+    output = capsys.readouterr().out.strip()
+
+    assert exit_code == 1
+    assert output == "设备 MAC: AA:BB:CC:DD:EE:FF，请联系管理员授权"
 
 
 def test_preview_command_reads_config_for_login_context(

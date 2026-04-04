@@ -14,6 +14,10 @@ class BridgeError(RuntimeError):
     """Raised when the Java bridge fails."""
 
 
+class BridgeAuthorizationError(BridgeError):
+    """Raised when the Java bridge requires authorization before any work can continue."""
+
+
 @dataclass(frozen=True)
 class ProcessResult:
     returncode: int
@@ -39,6 +43,9 @@ def default_run_process(command: list[str], payload: str) -> ProcessResult:
     return ProcessResult(result.returncode, result.stdout, result.stderr)
 
 
+AUTHORIZATION_HINT = "请联系管理员授权"
+
+
 @dataclass(frozen=True)
 class BridgeRunner:
     java_path: Path
@@ -57,7 +64,7 @@ class BridgeRunner:
             raise BridgeError(raw) from exc
         if result.returncode != 0 or response.get("status") == "error":
             message = response.get("message") or raw
-            raise BridgeError(str(message))
+            _raise_bridge_error(str(message))
         return response
 
 
@@ -95,3 +102,9 @@ def _stringify(value: object) -> str:
     if isinstance(value, bool):
         return "true" if value else "false"
     return str(value)
+
+
+def _raise_bridge_error(message: str) -> None:
+    if AUTHORIZATION_HINT in message:
+        raise BridgeAuthorizationError(message)
+    raise BridgeError(message)

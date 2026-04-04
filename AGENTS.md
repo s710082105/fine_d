@@ -32,6 +32,7 @@ Record the exact verification commands you ran before claiming completion.
 - `.cpt` 预览地址使用 `view/report?viewlet=...`。
 - `.fvs` 预览地址使用 `view/duchamp?page_number=1&viewlet=...`。
 - 如果 bridge 明确返回 `试用过期，请获取正式版`，必须原样反馈这句消息给用户，并立即停止后续排查、同步、上传、预览或其他 bridge 相关操作。
+- 如果 bridge 明确返回授权提醒，例如包含 `请联系管理员授权` 的消息，必须把 bridge 返回的原始提醒消息直接反馈给用户，并立即停止后续排查、同步、上传、预览或其他 bridge 相关操作。
 
 ## Coding Style & Naming Conventions
 

@@ -7,7 +7,7 @@ import json
 from collections.abc import Sequence
 from pathlib import Path
 
-from tooling.fr_runtime.bridge import BridgeRunner, ConfiguredBridgeRunner
+from tooling.fr_runtime.bridge import BridgeAuthorizationError, BridgeRunner, ConfiguredBridgeRunner
 from tooling.fr_runtime.config import load_config
 from tooling.fr_runtime.datasource import DatasourceService
 from tooling.fr_runtime.doctor import CheckResult, collect_runtime_checks, detect_designer_java, detect_platform, render_report
@@ -77,16 +77,20 @@ def _build_preview_parser(subparsers: argparse._SubParsersAction[argparse.Argume
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(list(argv) if argv is not None else None)
-    if args.command == "init":
-        return _handle_init(args)
-    if args.command == "doctor":
-        return _handle_doctor(args)
-    if args.command == "db":
-        return _handle_db(args)
-    if args.command == "sync":
-        return _handle_sync(args)
-    if args.command == "preview":
-        return _handle_preview(args)
+    try:
+        if args.command == "init":
+            return _handle_init(args)
+        if args.command == "doctor":
+            return _handle_doctor(args)
+        if args.command == "db":
+            return _handle_db(args)
+        if args.command == "sync":
+            return _handle_sync(args)
+        if args.command == "preview":
+            return _handle_preview(args)
+    except BridgeAuthorizationError as exc:
+        print(str(exc))
+        return 1
     raise NotImplementedError(args.command)
 
 
@@ -115,6 +119,9 @@ def _handle_doctor(args: argparse.Namespace) -> int:
                 bridge_runner=bridge_runner,
             )
         )
+    except BridgeAuthorizationError as exc:
+        print(str(exc))
+        return 1
     except Exception as exc:
         results.append(CheckResult("Runtime Checks", "失败", str(exc)))
         print(render_report(results))
