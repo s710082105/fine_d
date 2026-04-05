@@ -35,8 +35,6 @@ def test_bridge_returns_mac_prompt_when_authorization_file_missing(tmp_path: Pat
     artifacts = module.build_bridge(
         project_root=REPO_ROOT,
         dist_dir=tmp_path / "dist",
-        trial_expires_at="2099-01-01T00:00:00Z",
-        ntp_servers=("127.0.0.1:9",),
         license_public_key_file=public_key,
     )
 

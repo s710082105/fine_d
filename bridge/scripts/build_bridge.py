@@ -8,18 +8,14 @@ import re
 import shutil
 import subprocess
 import tempfile
-from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import NamedTuple, Sequence
+from typing import NamedTuple
 
 
 BRIDGE_NAME = "fr-remote-bridge"
 VERSION = "0.1.0"
 MAIN_CLASS = "fine.remote.bridge.Main"
 JAVA_RELEASE = "8"
-DEFAULT_TRIAL_DAYS = 3
-DEFAULT_NTP_TIMEOUT_MILLIS = 1000
-DEFAULT_NTP_SERVERS = ("time.cloudflare.com", "ntp.aliyun.com", "time.apple.com")
 DEFAULT_AUTHORIZATION_FILE_NAME = "fr-remote-bridge.auth"
 DEFAULT_LICENSE_PUBLIC_KEY_FILE = Path(__file__).resolve().with_name("license-public.pem")
 OBFUSCATED_CLASS_NAMES = {
@@ -60,8 +56,6 @@ def build_bridge(
     dist_dir: Path | None = None,
     javac_cmd: str | None = None,
     jar_cmd: str | None = None,
-    trial_expires_at: str | None = None,
-    ntp_servers: Sequence[str] | None = None,
     license_public_key_file: Path | None = None,
 ) -> BuildArtifacts:
     source_root = project_root / "bridge" / "src"
@@ -72,8 +66,6 @@ def build_bridge(
 
     javac = _resolve_tool(javac_cmd or "javac")
     jar = _resolve_tool(jar_cmd or "jar")
-    expires_at = _resolve_trial_expires_at(trial_expires_at)
-    configured_ntp_servers = _resolve_ntp_servers(ntp_servers)
     license_public_key_pem = _resolve_license_public_key_pem(license_public_key_file)
 
     with tempfile.TemporaryDirectory(prefix="fr-bridge-build-") as temp_dir:
@@ -82,8 +74,6 @@ def build_bridge(
         _prepare_sources(
             source_root,
             prepared_source_root,
-            expires_at,
-            configured_ntp_servers,
             license_public_key_pem,
         )
         sources = sorted(prepared_source_root.rglob("*.java"))
@@ -127,40 +117,6 @@ def _manifest_payload() -> dict[str, object]:
     }
 
 
-def _resolve_trial_expires_at(value: str | None) -> str:
-    candidate = value or os.environ.get("FR_BRIDGE_TRIAL_EXPIRES_AT") or _default_trial_expires_at()
-    return _normalize_utc_timestamp(candidate)
-
-
-def _default_trial_expires_at() -> str:
-    expires_at = datetime.now(timezone.utc) + timedelta(days=DEFAULT_TRIAL_DAYS)
-    return expires_at.replace(microsecond=0).isoformat().replace("+00:00", "Z")
-
-
-def _normalize_utc_timestamp(value: str) -> str:
-    try:
-        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
-    except ValueError as exc:
-        raise ValueError(f"invalid trial expiry timestamp: {value}") from exc
-    if parsed.tzinfo is None:
-        raise ValueError(f"trial expiry timestamp must include timezone: {value}")
-    return parsed.astimezone(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
-
-
-def _resolve_ntp_servers(value: Sequence[str] | None) -> tuple[str, ...]:
-    if value is not None:
-        servers = tuple(item.strip() for item in value if item.strip())
-    else:
-        env_value = os.environ.get("FR_BRIDGE_NTP_SERVERS")
-        if env_value:
-            servers = tuple(item.strip() for item in env_value.split(",") if item.strip())
-        else:
-            servers = DEFAULT_NTP_SERVERS
-    if not servers:
-        raise ValueError("at least one NTP server is required")
-    return servers
-
-
 def _resolve_license_public_key_pem(value: Path | None) -> str:
     env_value = os.environ.get("FR_BRIDGE_LICENSE_PUBLIC_KEY_FILE")
     candidate = value or (Path(env_value) if env_value else None) or DEFAULT_LICENSE_PUBLIC_KEY_FILE
@@ -173,54 +129,11 @@ def _resolve_license_public_key_pem(value: Path | None) -> str:
 def _prepare_sources(
     source_root: Path,
     output_root: Path,
-    trial_expires_at: str,
-    ntp_servers: Sequence[str],
     license_public_key_pem: str,
 ) -> None:
     shutil.copytree(source_root, output_root)
-    _write_trial_build_config(output_root, trial_expires_at, ntp_servers)
     _write_authorization_build_config(output_root, license_public_key_pem)
     _obfuscate_sources(output_root)
-
-
-def _write_trial_build_config(
-    output_root: Path,
-    trial_expires_at: str,
-    ntp_servers: Sequence[str],
-) -> None:
-    config_path = output_root / "fine" / "remote" / "bridge" / "TrialBuildConfig.java"
-    server_entries = ", ".join(json.dumps(server) for server in ntp_servers)
-    config_path.write_text(
-        "\n".join(
-            [
-                "package fine.remote.bridge;",
-                "",
-                "import java.time.Instant;",
-                "",
-                "final class TrialBuildConfig {",
-                f'  private static final String EXPIRES_AT = "{trial_expires_at}";',
-                f"  private static final String[] NTP_SERVERS = new String[]{{{server_entries}}};",
-                f"  private static final int NTP_TIMEOUT_MILLIS = {DEFAULT_NTP_TIMEOUT_MILLIS};",
-                "",
-                "  private TrialBuildConfig() {",
-                "  }",
-                "",
-                "  static Instant expiresAt() {",
-                "    return Instant.parse(EXPIRES_AT);",
-                "  }",
-                "",
-                "  static String[] ntpServers() {",
-                "    return NTP_SERVERS.clone();",
-                "  }",
-                "",
-                "  static int ntpTimeoutMillis() {",
-                "    return NTP_TIMEOUT_MILLIS;",
-                "  }",
-                "}",
-                "",
-            ]
-        )
-    )
 
 
 def _write_authorization_build_config(output_root: Path, license_public_key_pem: str) -> None:
@@ -306,8 +219,6 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--dist-dir", type=Path)
     parser.add_argument("--javac", dest="javac_cmd")
     parser.add_argument("--jar", dest="jar_cmd")
-    parser.add_argument("--trial-expires-at")
-    parser.add_argument("--ntp-server", dest="ntp_servers", action="append")
     parser.add_argument("--license-public-key-file", type=Path)
     args = parser.parse_args(argv)
     build_bridge(
@@ -315,8 +226,6 @@ def main(argv: list[str] | None = None) -> int:
         dist_dir=args.dist_dir.resolve() if args.dist_dir else None,
         javac_cmd=args.javac_cmd,
         jar_cmd=args.jar_cmd,
-        trial_expires_at=args.trial_expires_at,
-        ntp_servers=args.ntp_servers,
         license_public_key_file=args.license_public_key_file.resolve() if args.license_public_key_file else None,
     )
     return 0

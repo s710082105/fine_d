@@ -26,7 +26,6 @@ public final class Main {
       System.setOut(redirect);
       System.setErr(redirect);
       new AuthorizationGuard().ensureAuthorized();
-      new TrialGuard().ensureValid();
       RequestData request = RequestData.fromStdIn(operation);
       String output = new FineRuntime(request).execute();
       System.setOut(originalOut);
@@ -36,11 +35,6 @@ public final class Main {
       System.setOut(originalOut);
       System.setErr(originalErr);
       originalErr.println(JsonOutput.error(operation, exception.getMessage()));
-      System.exit(2);
-    } catch (TrialExpiredException exception) {
-      System.setOut(originalOut);
-      System.setErr(originalErr);
-      originalErr.println(JsonOutput.error(operation, TrialGuard.EXPIRED_MESSAGE));
       System.exit(2);
     } catch (Exception exception) {
       System.setOut(originalOut);

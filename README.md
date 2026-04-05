@@ -34,7 +34,8 @@
 
 ## Bridge 授权
 
-- bridge 启动时会先检查 jar 同级目录下的 `fr-remote-bridge.auth`，授权通过后才继续试用期校验
+- bridge 启动时会先检查 jar 同级目录下的 `fr-remote-bridge.auth`
+- 授权文件需要同时满足 MAC 匹配、有效期未过期、签名有效三项条件
 - 如果缺少授权文件、MAC 不匹配、授权已过期或签名无效，bridge 会直接返回 `设备 MAC: <当前设备 MAC>，请联系管理员授权`
 - 授权文件由 `bridge/scripts/generate_authorization.py` 生成，输入设备 MAC 和授权截止时间，输出固定文件名 `fr-remote-bridge.auth`
 - 生成出来的 `fr-remote-bridge.auth` 必须与 `fr-remote-bridge.jar` 放在同一目录

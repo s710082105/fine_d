@@ -1,4 +1,6 @@
 import importlib.util
+import shutil
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -52,6 +54,9 @@ def test_build_release_bundle_copies_runtime_files(tmp_path: Path) -> None:
     assert "Set-Location -Path $scriptDir" in launcher_content
     assert "Get-Command codex" in launcher_content
     assert "& codex" in launcher_content
+    main_bytecode = _javap_output(output_dir / "bridge" / "dist" / "fr-remote-bridge.jar")
+    assert "ensureAuthorized" in main_bytecode
+    assert "ensureValid" not in main_bytecode
     assert not (output_dir / "bridge" / "src").exists()
     assert not (output_dir / "tooling" / "__pycache__").exists()
     assert not any(path.name == ".DS_Store" for path in output_dir.rglob("*"))
@@ -66,3 +71,17 @@ def test_build_release_bundle_rejects_missing_bridge_artifacts(tmp_path: Path) -
             output_dir=tmp_path / "bundle",
             bridge_dist_dir=tmp_path / "missing-bridge",
         )
+
+
+def _javap_output(jar_path: Path) -> str:
+    return subprocess.check_output(
+        [
+            shutil.which("javap") or "javap",
+            "-classpath",
+            str(jar_path),
+            "-p",
+            "-c",
+            "fine.remote.bridge.Main",
+        ],
+        text=True,
+    )
