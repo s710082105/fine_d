@@ -20,6 +20,13 @@ Use this skill to prove that the current project is runnable before touching rep
 - macOS / Linux: `python3 .codex/skills/fr-status-check/scripts/run.py --config-path .codex/fr-config.json`
 - Windows: `py .codex\\skills\\fr-status-check\\scripts\\run.py --config-path .codex\\fr-config.json`
 
+## Example Index
+
+- `EXAMPLES.md`
+  - 先看这里，按“本地环境检查 / 远端探测通过后的下一步”选入口
+- `references/checklist.md`
+  - 需要逐项核对 doctor 证据时看这个
+
 ## Expected Evidence
 
 - OS and Python version

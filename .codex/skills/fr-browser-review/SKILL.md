@@ -63,6 +63,15 @@ Preview URL rules:
 
 See `references/browser-review-playbook.md` for the exact review routine.
 
+## Example Index
+
+- `EXAMPLES.md`
+  - 先看这里，按“固定复核流程 / 最终证据模板”选入口
+- `references/browser-review-playbook.md`
+  - 需要确认登录顺序、预览 URL 推导、查询与截图顺序时看这个
+- `references/review-template.md`
+  - 需要整理最终浏览器证据时看这个
+
 ## Expected Evidence
 
 - Preview URL

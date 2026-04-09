@@ -300,3 +300,131 @@ ORDER BY u.created_at DESC
 - 先确认是改 `TableDataMap`、参数面板还是 `StyleList`，不要三处同时盲改
 - 扩列时同时检查 `ColumnWidth`、标题单元格、明细单元格、合计公式
 - 改高亮时优先复用现有 `HighlightList`，不要先新增样式编号
+
+## 6. 单元格超链接补充
+
+远端业务样本没有显式超链接配置，这里补本仓 `reportlets/doc/SpecialSubject/HyplinkReport` 里最干净的两种单元格超链模式。
+
+### 普通单元格直挂超链
+
+样本来源：`reportlets/doc/SpecialSubject/HyplinkReport/订单总览表.cpt`、`reportlets/doc/SpecialSubject/HyplinkReport/超链传递网页参数.cpt`
+
+适用场景：
+
+- 某个固定单元格或明细列点击后跳转外部网页
+- 某个单元格点击后打开另一张 `.cpt` 报表
+- 需要把当前行字段作为参数透传给目标页面
+
+核心结构是在目标 `<C>` 节点下直接挂 `NameJavaScriptGroup`。外链用 `com.fr.js.WebHyperlink`，跳报表用 `com.fr.js.ReportletHyperlink`。
+
+```xml
+<C c="3" r="1" s="2">
+  <O><![CDATA[点击修改]]></O>
+  <PrivilegeControl/>
+  <NameJavaScriptGroup>
+    <NameJavaScript name="网页链接1">
+      <JavaScript class="com.fr.js.WebHyperlink">
+        <JavaScript class="com.fr.js.WebHyperlink">
+          <Parameters>
+            <Parameter>
+              <Attributes name="ID"/>
+              <O t="XMLable" class="com.fr.base.Formula">
+                <Attributes><![CDATA[=A2]]></Attributes>
+              </O>
+            </Parameter>
+            <Parameter>
+              <Attributes name="TELEPHONE"/>
+              <O t="XMLable" class="com.fr.base.Formula">
+                <Attributes><![CDATA[=C2]]></Attributes>
+              </O>
+            </Parameter>
+          </Parameters>
+          <TargetFrame><![CDATA[_dialog]]></TargetFrame>
+          <Features width="600" height="400"/>
+          <URL><![CDATA[http://www.finereporthelp.com:8889/demo/update1.jsp]]></URL>
+        </JavaScript>
+      </JavaScript>
+    </NameJavaScript>
+  </NameJavaScriptGroup>
+  <Expand dir="0"/>
+</C>
+```
+
+跳转站内报表时，把 `WebHyperlink` 替换为 `ReportletHyperlink`，目标路径改写到 `<ReportletName>`：
+
+```xml
+<NameJavaScript name="网络报表1">
+  <JavaScript class="com.fr.js.ReportletHyperlink">
+    <JavaScript class="com.fr.js.ReportletHyperlink">
+      <Parameters>
+        <Parameter>
+          <Attributes name="订单号"/>
+          <O t="XMLable" class="com.fr.base.Formula">
+            <Attributes><![CDATA[=$$$]]></Attributes>
+          </O>
+        </Parameter>
+      </Parameters>
+      <TargetFrame><![CDATA[_dialog]]></TargetFrame>
+      <Features width="600" height="400"/>
+      <ReportletName showPI="true"><![CDATA[/doc/SpecialSubject/HyplinkReport/订单明细表.cpt]]></ReportletName>
+      <Attr>
+        <DialogAttr class="com.fr.js.ReportletHyperlinkDialogAttr">
+          <O><![CDATA[订单明细表]]></O>
+          <Location center="true"/>
+        </DialogAttr>
+      </Attr>
+    </JavaScript>
+  </JavaScript>
+</NameJavaScript>
+```
+
+适用结论：
+
+- 最小闭环只需要 4 块：`NameJavaScriptGroup`、链接类、`TargetFrame`、目标地址
+- 透传参数时，`<Parameter>` 的值通常放 `Formula`，直接引用当前行单元格如 `=A2`
+- 若目标是站内报表，优先用 `ReportletHyperlink`，不要手写整段 `view/report?viewlet=...` URL
+- 弹窗标题和居中等对话框行为写在 `DialogAttr`，不是写在 `<Features>`
+
+### 条件高亮附带超链
+
+样本来源：`reportlets/doc/SpecialSubject/HyplinkReport/扩展数据跳转到不同页面.cpt`
+
+适用场景：
+
+- 只有某些值命中条件时才允许点击
+- 需要同时做字体颜色、下划线和超链行为
+- 一列不同值跳到不同地址
+
+核心结构是在 `HighlightList` 里的某个 `Highlight` 同时放字体动作和 `HyperlinkHighlightAction`：
+
+```xml
+<Highlight class="com.fr.report.cell.cellattr.highlight.DefaultHighlight">
+  <Name><![CDATA[条件属性1]]></Name>
+  <Condition class="com.fr.data.condition.ObjectCondition">
+    <Compare op="0"><O><![CDATA[华东]]></O></Compare>
+  </Condition>
+  <HighlightAction class="com.fr.report.cell.cellattr.highlight.FRFontHighlightAction">
+    <FRFont name="微软雅黑" style="0" size="80" foreground="-14131713" underline="17"/>
+  </HighlightAction>
+  <HighlightAction class="com.fr.report.cell.cellattr.highlight.HyperlinkHighlightAction">
+    <NameJavaScriptGroup>
+      <NameJavaScript name="网页链接1">
+        <JavaScript class="com.fr.js.WebHyperlink">
+          <JavaScript class="com.fr.js.WebHyperlink">
+            <Parameters/>
+            <TargetFrame><![CDATA[_blank]]></TargetFrame>
+            <Features width="600" height="400"/>
+            <URL><![CDATA[https://baike.baidu.com/item/华东地区/7596582]]></URL>
+          </JavaScript>
+        </JavaScript>
+      </NameJavaScript>
+    </NameJavaScriptGroup>
+  </HighlightAction>
+</Highlight>
+```
+
+适用结论：
+
+- 需要“像链接一样变蓝带下划线”时，把 `FRFontHighlightAction` 和 `HyperlinkHighlightAction` 配套写
+- 条件判断优先用 `ObjectCondition`，一条值对应一条 `Highlight`
+- 多值跳不同地址时，复制整段 `Highlight` 最稳，不要把 URL 写成复杂脚本再动态分支

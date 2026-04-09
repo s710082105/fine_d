@@ -29,6 +29,13 @@ The process skills referenced by this workflow are expected to come from the rep
 - If local changes must be published, route to `fr-upload-sync`
 - If synced output must be reviewed in browser, route to `fr-browser-review`
 
+## Example Index
+
+- `EXAMPLES.md`
+  - 先看这里，按“缺配置 / 探环境 / 改 CPT / 改 FVS / 预览复核”选入口
+- `references/routing.md`
+  - 只需要快速路由矩阵时直接看这个
+
 ## Expected Evidence
 
 - State the chosen next skill

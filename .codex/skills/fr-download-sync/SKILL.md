@@ -19,6 +19,13 @@ Use this skill to pull the latest remote reportlet into the local workspace befo
 - macOS / Linux: `python3 .codex/skills/fr-download-sync/scripts/run.py reportlets/<目标文件>`
 - Windows: `py .codex\\skills\\fr-download-sync\\scripts\\run.py reportlets\\<目标文件>`
 
+## Example Index
+
+- `EXAMPLES.md`
+  - 先看这里，按“是否必须先拉远端 / 拉完后看 CPT 还是 FVS 示例”选入口
+- `references/sync-rules.md`
+  - 需要确认拉取前提、目标路径约束、最小证据时看这个
+
 ## Expected Evidence
 
 - Remote target path

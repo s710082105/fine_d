@@ -7,6 +7,11 @@ description: Deprecated FineReport skill kept only for compatibility. Use when o
 
 This skill is deprecated and should not be used for new work.
 
+## Example Index
+
+- `EXAMPLES.md`
+  - 先看这里，把旧的“template-write”需求拆成 `create / cpt / fvs` 新流程
+
 - New file creation: use `fr-create`
 - CPT editing: use `fr-cpt`
 - FVS editing: use `fr-fvs`

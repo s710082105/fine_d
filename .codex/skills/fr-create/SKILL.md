@@ -20,6 +20,13 @@ Use this skill to prepare a new target reportlet safely. It checks conflicts, ch
 - macOS / Linux: `python3 .codex/skills/fr-create/scripts/run.py reportlets/<目标文件>`
 - Windows: `py .codex\\skills\\fr-create\\scripts\\run.py reportlets\\<目标文件>`
 
+## Example Index
+
+- `EXAMPLES.md`
+  - 先看这里，按“建空白模板 / 建完后继续改 CPT/FVS”选入口
+- `references/create-flow.md`
+  - 需要确认冲突检查、模板选择、创建顺序时看这个
+
 ## Expected Evidence
 
 - Target path

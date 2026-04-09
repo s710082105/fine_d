@@ -63,6 +63,13 @@ Once all inputs are collected, present one final summary, including derived defa
 - macOS / Linux: `python3 .codex/skills/fr-init/scripts/run.py --config-path .codex/fr-config.json`
 - Windows: `py .codex\\skills\\fr-init\\scripts\\run.py --config-path .codex\\fr-config.json`
 
+## Example Index
+
+- `EXAMPLES.md`
+  - 先看这里，按“字段含义 / 初始化后下一步”选入口
+- `references/init-fields.md`
+  - 需要确认字段含义、校验规则、哪些问题不属于 init 时看这个
+
 ## Init Rules
 
 - `fr-init` only collects, echoes, validates, and writes initialization fields.

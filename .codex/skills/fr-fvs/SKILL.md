@@ -20,6 +20,13 @@ Use this skill for local `.fvs` editing after the project config and datasource 
 - macOS / Linux: `python3 .codex/skills/fr-fvs/scripts/run.py reportlets/<目标文件>.fvs`
 - Windows: `py .codex\\skills\\fr-fvs\\scripts\\run.py reportlets\\<目标文件>.fvs`
 
+## Example Index
+
+- `examples/README.md`
+  - 先看这里，按“结构速查 / 图表类型速查”选入口
+- `examples/chart-type-cookbook.md`
+  - 需要先判断饼图、柱图、折线图、地图、仪表盘时直接看这个
+
 ## Expected Evidence
 
 - Edited FVS path

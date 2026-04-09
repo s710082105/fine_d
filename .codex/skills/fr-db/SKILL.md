@@ -20,6 +20,13 @@ Use this skill to turn remote datasource metadata into evidence for CPT or FVS e
 - macOS / Linux: `python3 .codex/skills/fr-db/scripts/run.py list-connections`
 - Windows: `py .codex\\skills\\fr-db\\scripts\\run.py list-connections`
 
+## Example Index
+
+- `EXAMPLES.md`
+  - 先看这里，按“接口范围 / CPT 数据集 / FVS 数据集”选入口
+- `references/decision-http.md`
+  - 需要确认 Decision HTTP 接口边界或登录载荷时看这个
+
 ## Expected Evidence
 
 - Connection list summary

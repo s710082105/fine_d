@@ -20,6 +20,13 @@ Use this skill to publish local reportlet changes and verify the remote state be
 - macOS / Linux: `python3 .codex/skills/fr-upload-sync/scripts/run.py reportlets/<目标文件>`
 - Windows: `py .codex\\skills\\fr-upload-sync\\scripts\\run.py reportlets\\<目标文件>`
 
+## Example Index
+
+- `EXAMPLES.md`
+  - 先看这里，按“上传验证 / 上传后浏览器复核”选入口
+- `references/publish-rules.md`
+  - 需要确认上传边界、远端校验和交接条件时看这个
+
 ## Expected Evidence
 
 - Pushed path
