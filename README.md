@@ -16,6 +16,7 @@
 ## 直接使用
 
 - 参考示例配置：`.codex/fr-config.demo.json`
+- 详细安装与使用说明：`使用说明.md`
 - 项目初始化：`python3 .codex/skills/fr-init/scripts/run.py --config-path .codex/fr-config.json`
 - 状态检查：`python3 .codex/skills/fr-status-check/scripts/run.py --config-path .codex/fr-config.json`
 - 数据连接：`python3 .codex/skills/fr-db/scripts/run.py list-connections`

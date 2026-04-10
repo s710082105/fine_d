@@ -45,6 +45,14 @@ def test_build_release_bundle_copies_runtime_files(tmp_path: Path) -> None:
     assert (output_dir / "bridge" / "dist" / "checksums.txt").exists()
     assert (output_dir / "reportlets" / "GettingStarted.cpt").exists()
     assert (output_dir / "README.md").exists()
+    guide_path = output_dir / "使用说明.md"
+    assert guide_path.exists()
+    guide_content = guide_path.read_text(encoding="utf-8")
+    assert "## 1. 前置条件" in guide_content
+    assert "## 2. 配置说明" in guide_content
+    assert "## 3. 授权说明" in guide_content
+    assert "## 4. 自动改进教程" in guide_content
+    assert not (output_dir / "docs").exists()
     assert (output_dir / "pyproject.toml").exists()
     launcher_path = output_dir / "start-codex-windows.ps1"
     assert launcher_path.exists()

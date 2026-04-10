@@ -11,6 +11,7 @@ on:
       - "tooling/fr_runtime/**"
       - "AGENTS.md"
       - "README.md"
+      - "使用说明.md"
       - "pyproject.toml"
   pull_request:
     paths:
@@ -22,6 +23,7 @@ on:
       - "tooling/fr_runtime/**"
       - "AGENTS.md"
       - "README.md"
+      - "使用说明.md"
       - "pyproject.toml"
   workflow_dispatch:
 

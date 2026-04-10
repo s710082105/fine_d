@@ -13,6 +13,7 @@ BUNDLE_PATHS = [
     Path(".codex"),
     Path("tooling"),
     Path("reportlets"),
+    Path("使用说明.md"),
     Path("README.md"),
     Path("pyproject.toml"),
     Path("AGENTS.md"),

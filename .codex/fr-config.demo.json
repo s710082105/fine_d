@@ -1,5 +1,6 @@
 {
   "_comment": "示例配置。参考本文件创建 .codex/fr-config.json，并把占位值替换为真实环境。",
+  "_usage_guide_comment": "详细字段说明见仓库根目录“使用说明.md”的“2. 配置说明”章节。",
   "project_name": "demo-workspace",
   "_project_name_comment": "可选；为空时会自动回退为 workspace_root 的目录名。",
   "decision_url": "http://127.0.0.1:8075/webroot/decision",
