@@ -55,3 +55,5 @@ python3 bridge/scripts/generate_authorization.py \
   --mac AA:BB:CC:DD:EE:FF \
   --expires-at 2099-01-01T00:00:00Z
 ```
+## 鸣谢
+感谢 LinuxDo 社区提供的技术支持（https://linux.do/t/topic/431356）
